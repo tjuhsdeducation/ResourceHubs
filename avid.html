@@ -25,6 +25,7 @@
     <h1>🎓 <span class="gradient-text">AVID Hub</span></h1>
     <p>Advancement Via Individual Determination — strategies, tools, and support to get every student college and career ready.</p>
     <a class="btn" href="#wicor">Start with WICOR ↓</a>
+    <a class="btn" href="#practice" style="background: var(--avid)">🎯 Practice WICOR</a>
   </header>
 
   <!-- ===== WICOR EXPLORER ===== -->
@@ -42,6 +43,86 @@
       <div class="strategy" id="stratName">Ready when you are!</div>
       <p class="desc" id="stratDesc">Click the button for a random AVID strategy to try today.</p>
       <button class="btn" id="spinBtn">Give me one!</button>
+    </div>
+  </section>
+
+  <!-- ===== WICOR PRACTICE ZONE (student activities — content lives in practice.js) ===== -->
+  <section class="section" id="practice">
+    <h2 class="section-title reveal">🎯 Practice WICOR</h2>
+    <p class="section-sub reveal">Five quick challenges, one for each WICOR strategy. Finish one to earn its stamp in your WICOR Passport!</p>
+
+    <div class="passport reveal" id="passport">
+      <strong>My WICOR Passport:</strong>
+      <!-- stamps are added by practice.js -->
+    </div>
+
+    <div class="ptabs reveal" id="ptabs" role="tablist"></div>
+
+    <!-- R — Marking the Text -->
+    <div class="activity" id="act-R" style="--c:#e09b00" hidden>
+      <h3>📖 R: Mark the Text</h3>
+      <p class="how"><b>Your mission:</b> (1) Number the paragraphs. (2) Circle the <b>5 key academic terms</b>. (3) Underline the author's <b>main claim</b>, which is one sentence. Then click <b>Check my work</b>.</p>
+      <div class="modebar">
+        <button class="chip-btn" data-mode="number">① Number paragraphs</button>
+        <button class="chip-btn on" data-mode="circle">◯ Circle key terms</button>
+        <button class="chip-btn" data-mode="underline">⎁ Underline the claim</button>
+        <button class="chip-btn primary" id="markCheck">Check my work</button>
+        <button class="chip-btn" id="markClear">Clear</button>
+      </div>
+      <div class="passage" id="markPassage"></div>
+      <div class="feedback" id="markFb"></div>
+    </div>
+
+    <!-- W — Summary Lab -->
+    <div class="activity" id="act-W" style="--c:#0b6fb8" hidden>
+      <h3>✍️ W: Summary Lab</h3>
+      <p class="how"><b>Your mission:</b> Write a 2–4 sentence summary of the passage <i>“Sleep: The Secret Study Tool”</i> (you'll find it in the R challenge). A strong Cornell-notes summary uses academic terms and states the main idea. The checklist updates as you type.</p>
+      <details style="margin-bottom:10px"><summary style="cursor:pointer;font-weight:800">📄 Show the passage</summary><div class="passage" id="sumPassage"></div></details>
+      <textarea class="box" id="sumText" rows="5" placeholder="In the passage, the author explains that…"></textarea>
+      <div class="meter"><div id="sumMeter"></div></div>
+      <ul class="checklist" id="sumChecks">
+        <li data-k="len">30–80 words long</li>
+        <li data-k="sent">2–4 complete sentences</li>
+        <li data-k="terms">Uses at least 3 academic terms (below)</li>
+        <li data-k="claim">States the main idea (why sleep matters for learning)</li>
+        <li data-k="own">Mostly in your own words (doesn't copy long phrases)</li>
+      </ul>
+      <div class="termchips" id="sumTerms"></div>
+      <div class="feedback" id="sumFb"></div>
+    </div>
+
+    <!-- I — Costa's Sorter -->
+    <div class="activity" id="act-I" style="--c:#7b5cff" hidden>
+      <h3>❓ I: Costa's Question Sort</h3>
+      <p class="how"><b>Your mission:</b> Decide what level each question is on Costa's Levels of Thinking. <b>Level 1</b> = gather/recall · <b>Level 2</b> = process/explain · <b>Level 3</b> = apply/evaluate/imagine.</p>
+      <div class="scorebar"><span id="costaProg"></span><span id="costaScore"></span></div>
+      <div class="qcard">
+        <div class="count" id="costaCount"></div>
+        <div class="q" id="costaQ"></div>
+        <div class="choices three" id="costaChoices"></div>
+      </div>
+      <div class="feedback" id="costaFb"></div>
+    </div>
+
+    <!-- C — Collaboration -->
+    <div class="activity" id="act-C" style="--c:#fb6f5b" hidden>
+      <h3>🤝 C: Talk Like a Pro</h3>
+      <p class="how"><b>Your mission:</b> You're in a tutorial group or Socratic Seminar. For each moment, choose the response that moves the group's thinking forward <b>respectfully</b>.</p>
+      <div class="scorebar"><span id="collabProg"></span><span id="collabScore"></span></div>
+      <div class="qcard">
+        <div class="speech"><div class="who" id="collabWho"></div><div id="collabSay"></div></div>
+        <div class="q" id="collabAsk" style="font-size:1.1rem"></div>
+        <div class="choices" id="collabChoices"></div>
+      </div>
+      <div class="feedback" id="collabFb"></div>
+    </div>
+
+    <!-- O — SMART Goal Builder -->
+    <div class="activity" id="act-O" style="--c:#2ec4b6" hidden>
+      <h3>🗂️ O: SMART Goal Builder</h3>
+      <p class="how"><b>Your mission:</b> Build one SMART goal for this grading period. Each letter lights up when that part is strong. <button class="chip-btn" id="smartEx" style="padding:4px 10px">See an example</button></p>
+      <div class="smart-grid" id="smartGrid"></div>
+      <div id="goalOut"></div>
     </div>
   </section>
 
@@ -66,6 +147,7 @@
   <footer>AVID Hub · <a href="index.html">Back to all hubs</a></footer>
 
   <script src="main.js"></script>
+  <script src="practice.js"></script>
   <script>
     /* =========================================================
        ✏️  EDIT HERE — this is where all the hub content lives.
