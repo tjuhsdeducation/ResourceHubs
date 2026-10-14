@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resource Hubs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <a class="brand" href="index.html"><span class="brand-dot"></span>Resource Hubs</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="avid.html">AVID</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+    <h1>Everything you need,<br /><span class="gradient-text">all in one place.</span></h1>
+    <p>Pick a hub to explore strategies, tools, and links for teachers and students.</p>
+    <a class="btn" href="#hubs">Explore the hubs ↓</a>
+  </header>
+
+  <main class="section" id="hubs">
+    <h2 class="section-title reveal">Choose a Hub</h2>
+    <p class="section-sub reveal">Click a card to jump in. More hubs are on the way!</p>
+
+    <div class="hub-grid">
+      <!-- LIVE HUB -->
+      <a class="hub-card reveal" href="avid.html" style="--c: var(--avid)">
+        <span class="emoji">🎓</span>
+        <h3>AVID</h3>
+        <p>WICOR strategies, Cornell notes, binders, tutorials &amp; college readiness.</p>
+        <span class="go">Open hub <span>→</span></span>
+      </a>
+
+      <!-- COMING SOON HUBS: change href and remove "soon" class when each page is built -->
+      <div class="hub-card soon reveal" style="--c: var(--coral)">
+        <span class="pill">Coming soon</span>
+        <span class="emoji">🌱</span>
+        <h3>New Teacher Support</h3>
+        <p>Induction, classroom management, and first-year survival tips.</p>
+        <span class="go">Stay tuned</span>
+      </div>
+
+      <div class="hub-card soon reveal" style="--c: var(--grape)">
+        <span class="pill">Coming soon</span>
+        <span class="emoji">💻</span>
+        <h3>Tech &amp; Tools</h3>
+        <p>How-tos for the digital tools we use every day.</p>
+        <span class="go">Stay tuned</span>
+      </div>
+
+      <div class="hub-card soon reveal" style="--c: var(--mint)">
+        <span class="pill">Coming soon</span>
+        <span class="emoji">🤝</span>
+        <h3>Student Supports</h3>
+        <p>ELD, MTSS, and intervention resources.</p>
+        <span class="go">Stay tuned</span>
+      </div>
+    </div>
+  </main>
+
+  <footer>Tip: use the menu at the top to move between hubs.</footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

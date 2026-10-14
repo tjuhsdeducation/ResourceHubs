@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AVID Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <a class="brand" href="index.html"><span class="brand-dot"></span>Resource Hubs</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="avid.html" class="active">AVID</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="blob b1" style="background: var(--avid)"></div>
+    <div class="blob b2" style="background: var(--sun)"></div>
+    <div class="blob b3"></div>
+    <h1>🎓 <span class="gradient-text">AVID Hub</span></h1>
+    <p>Advancement Via Individual Determination — strategies, tools, and support to get every student college and career ready.</p>
+    <a class="btn" href="#wicor">Start with WICOR ↓</a>
+  </header>
+
+  <!-- ===== WICOR EXPLORER ===== -->
+  <section class="section" id="wicor">
+    <h2 class="section-title reveal">Explore WICOR</h2>
+    <p class="section-sub reveal">Tap a letter to see what it means and strategies to try.</p>
+    <div class="wicor reveal" id="wicorButtons"></div>
+    <div id="wicorPanel"></div>
+  </section>
+
+  <!-- ===== STRATEGY SPINNER ===== -->
+  <section class="section">
+    <div class="spinner-box reveal">
+      <h2>🎲 Strategy of the Day</h2>
+      <div class="strategy" id="stratName">Ready when you are!</div>
+      <p class="desc" id="stratDesc">Click the button for a random AVID strategy to try today.</p>
+      <button class="btn" id="spinBtn">Give me one!</button>
+    </div>
+  </section>
+
+  <!-- ===== RESOURCE LIBRARY ===== -->
+  <section class="section" id="resources">
+    <h2 class="section-title reveal">Resource Library</h2>
+    <p class="section-sub reveal">Filter by who you are, or search for what you need.</p>
+
+    <div class="toolbar reveal">
+      <div class="toggle" role="group" aria-label="Audience filter">
+        <button class="on" data-aud="all">Everyone</button>
+        <button data-aud="teacher">👩‍🏫 Teachers</button>
+        <button data-aud="student">🎒 Students</button>
+      </div>
+      <input class="search" id="search" type="search" placeholder="🔍 Search resources…" />
+    </div>
+
+    <div class="res-grid" id="resGrid"></div>
+    <p class="empty" id="empty">No matches — try another search.</p>
+  </section>
+
+  <footer>AVID Hub · <a href="index.html">Back to all hubs</a></footer>
+
+  <script src="main.js"></script>
+  <script>
+    /* =========================================================
+       ✏️  EDIT HERE — this is where all the hub content lives.
+       To add a resource, copy one { ... } block and change it.
+       audience: "teacher", "student", or "both"
+       url: paste your link (Google Drive, website, etc.)
+       ========================================================= */
+
+    const WICOR = [
+      { letter: "W", name: "Writing", color: "#0b6fb8",
+        about: "Writing to learn: students use writing to think, process, and show what they know.",
+        strategies: ["Cornell / Focused Note-Taking", "Learning logs & quickwrites", "One-pager summaries", "Reflection & exit tickets"] },
+      { letter: "I", name: "Inquiry", color: "#7b5cff",
+        about: "Asking skilled questions to deepen understanding and think critically.",
+        strategies: ["Costa's Levels of Questioning", "Socratic Seminar", "Tutorial Request Form (TRF)", "Question stems"] },
+      { letter: "C", name: "Collaboration", color: "#fb6f5b",
+        about: "Working together toward a shared goal, building on each other's ideas.",
+        strategies: ["Collaborative tutorials", "Philosophical Chairs", "Think-Pair-Share", "Gallery Walk"] },
+      { letter: "O", name: "Organization", color: "#2ec4b6",
+        about: "Managing materials, time, and learning so students can be successful.",
+        strategies: ["AVID binder & binder checks", "Agenda / planner use", "Goal setting (SMART goals)", "Graphic organizers"] },
+      { letter: "R", name: "Reading", color: "#e09b00",
+        about: "Reading to learn: strategies for understanding complex texts.",
+        strategies: ["Marking the text", "Critical reading process", "Pre-reading & previewing", "Summarizing & annotating"] }
+    ];
+
+    const STRATEGIES = [
+      ["Quickwrite", "Give students 3 minutes to write everything they know about today's topic — no stopping!"],
+      ["Think-Pair-Share", "Pose a question, give silent think time, pair up to discuss, then share out."],
+      ["Marking the Text", "Number paragraphs, circle key terms, and underline claims while reading."],
+      ["Costa's Level 3 Question", "Have students write one question that asks to predict, evaluate, or imagine."],
+      ["Philosophical Chairs", "Students choose a side of a statement and move seats as their thinking changes."],
+      ["Binder Check", "A quick 5-minute binder check: notes dated, sections labeled, planner up to date."],
+      ["Gallery Walk", "Post questions around the room; groups rotate and add ideas on sticky notes."],
+      ["Cornell Notes Summary", "End class by having students write a 2–3 sentence summary at the bottom of their notes."],
+      ["One-Pager", "Students show key ideas from a text on one page with a quote, image, and connection."],
+      ["SMART Goal", "Students write one Specific, Measurable, Achievable, Relevant, Time-bound goal for the week."]
+    ];
+
+    const RESOURCES = [
+      { icon: "🌐", title: "AVID.org", desc: "Official AVID website — about AVID, events, and research.", audience: "both", url: "https://www.avid.org" },
+      { icon: "📚", title: "AVID Open Access", desc: "Free lessons, articles, and videos for educators and families.", audience: "both", url: "https://avidopenaccess.org" },
+      { icon: "📝", title: "Cornell Notes Template", desc: "Printable / digital template for focused note-taking.", audience: "both", url: "#" },
+      { icon: "🗂️", title: "Binder Checklist", desc: "What goes in the AVID binder and how it's graded.", audience: "student", url: "#" },
+      { icon: "❓", title: "Tutorial Request Form (TRF)", desc: "Template + example for preparing a point of confusion.", audience: "student", url: "#" },
+      { icon: "🪜", title: "Costa's Levels of Questioning", desc: "Question stems for levels 1, 2, and 3.", audience: "both", url: "#" },
+      { icon: "🧭", title: "Tutorial Process Guide", desc: "Step-by-step guide for running collaborative tutorials.", audience: "teacher", url: "#" },
+      { icon: "🗣️", title: "Socratic Seminar Toolkit", desc: "Norms, roles, sentence frames, and reflection sheets.", audience: "teacher", url: "#" },
+      { icon: "🎯", title: "SMART Goals Worksheet", desc: "Set and track academic and personal goals.", audience: "student", url: "#" },
+      { icon: "🏫", title: "College & Career Readiness", desc: "College research, A–G requirements, scholarships, and FAFSA tips.", audience: "student", url: "#" },
+      { icon: "📅", title: "Site Team Calendar", desc: "AVID site team meetings, PD dates, and events.", audience: "teacher", url: "#" },
+      { icon: "🧑‍🏫", title: "WICOR Lesson Ideas", desc: "Ready-to-use lesson ideas organized by WICOR strategy.", audience: "teacher", url: "#" }
+    ];
+
+    /* ===================== (no need to edit below) ===================== */
+
+    // WICOR explorer
+    const btnWrap = document.getElementById("wicorButtons");
+    const panel = document.getElementById("wicorPanel");
+    function showWicor(i) {
+      const w = WICOR[i];
+      btnWrap.querySelectorAll("button").forEach((b, j) => b.classList.toggle("on", i === j));
+      panel.innerHTML = `
+        <div class="wicor-panel" style="border-top-color:${w.color}">
+          <h3 style="color:${w.color}">${w.letter} is for ${w.name}</h3>
+          <p>${w.about}</p>
+          <ul>${w.strategies.map(s => `<li>✔️ ${s}</li>`).join("")}</ul>
+        </div>`;
+    }
+    WICOR.forEach((w, i) => {
+      const b = document.createElement("button");
+      b.className = "wicor-letter";
+      b.style.setProperty("--c", w.color);
+      b.innerHTML = `${w.letter}<small>${w.name}</small>`;
+      b.addEventListener("click", () => showWicor(i));
+      btnWrap.appendChild(b);
+    });
+    showWicor(0);
+
+    // Strategy of the day
+    const nameEl = document.getElementById("stratName");
+    const descEl = document.getElementById("stratDesc");
+    let last = -1;
+    document.getElementById("spinBtn").addEventListener("click", () => {
+      let n; do { n = Math.floor(Math.random() * STRATEGIES.length); } while (n === last);
+      last = n;
+      [nameEl, descEl].forEach(el => { el.classList.remove("shuffle"); void el.offsetWidth; el.classList.add("shuffle"); });
+      setTimeout(() => { nameEl.textContent = STRATEGIES[n][0]; descEl.textContent = STRATEGIES[n][1]; }, 250);
+    });
+
+    // Resource library
+    const grid = document.getElementById("resGrid");
+    const label = { teacher: "Teachers", student: "Students", both: "Everyone" };
+    RESOURCES.forEach(r => {
+      const a = document.createElement("a");
+      a.className = "res-card";
+      a.href = r.url;
+      if (r.url !== "#") { a.target = "_blank"; a.rel = "noopener"; }
+      a.dataset.aud = r.audience;
+      a.dataset.text = (r.title + " " + r.desc).toLowerCase();
+      a.innerHTML = `
+        <span class="icon">${r.icon}</span>
+        <h4>${r.title}</h4>
+        <p>${r.desc}</p>
+        <div class="tags">
+          <span class="tag ${r.audience}">${label[r.audience]}</span>
+          ${r.url === "#" ? '<span class="tag">Link coming soon</span>' : ""}
+        </div>`;
+      grid.appendChild(a);
+    });
+
+    let audience = "all";
+    const search = document.getElementById("search");
+    function filter() {
+      const q = search.value.trim().toLowerCase();
+      let shown = 0;
+      grid.querySelectorAll(".res-card").forEach(c => {
+        const audOk = audience === "all" || c.dataset.aud === audience || c.dataset.aud === "both";
+        const ok = audOk && c.dataset.text.includes(q);
+        c.classList.toggle("hide", !ok);
+        if (ok) shown++;
+      });
+      document.getElementById("empty").style.display = shown ? "none" : "block";
+    }
+    document.querySelectorAll(".toggle button").forEach(b => b.addEventListener("click", () => {
+      document.querySelectorAll(".toggle button").forEach(x => x.classList.remove("on"));
+      b.classList.add("on");
+      audience = b.dataset.aud;
+      filter();
+    }));
+    search.addEventListener("input", filter);
+  </script>
+</body>
+</html>
