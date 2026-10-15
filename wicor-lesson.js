@@ -12,6 +12,9 @@
     C: { name: "Collaboration", color: "var(--C)" }, O: { name: "Organization", color: "var(--O)" },
     R: { name: "Reading", color: "var(--R)" }
   };
+  /* ✏️ Teacher and period choices for the sign-in screen */
+  const TEACHERS = ["Langlie", "Maness", "Salazar", "Mueller"];
+  const PERIODS = ["1", "2", "3", "4", "5", "6", "7", "8"];
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -43,12 +46,21 @@
         <div class="kicker">WICOR Lesson · ${esc(L.subject)}</div>
         <h1>${esc(L.title)}</h1>
         <p>${esc(L.intro)}</p>
-        <div class="student-info">
-          <label>Name <input data-save="name" autocomplete="off"></label>
-          <label>Period <input data-save="period" style="width:70px" autocomplete="off"></label>
-          <label>Date <input data-save="date" style="width:120px" autocomplete="off"></label>
-        </div>
+        <div class="who-chip" id="whoChip"></div>
         <span class="art" aria-hidden="true">${L.emoji || "🧪"}</span>
+      </section>
+      <section class="lt-box" style="--lc:${LC}">
+        <div class="lt-eq"><span class="lt-lbl">Essential Question</span><p>${esc(L.eq || "")}</p></div>
+        <div class="lt-list"><span class="lt-lbl">Learning Targets</span><ul>${ORDER.map(k => L.targets && L.targets[k] ? `<li><b style="color:${META[k].color}">${k}</b> ${esc(L.targets[k])}</li>` : "").join("")}</ul></div>
+      </section>
+      <section class="lgate" id="lgate">
+        <form class="g-form" autocomplete="off" novalidate><h3>✋ Sign in to start this lesson</h3>
+          <label>Full name<input id="g-name" placeholder="First and last name"></label>
+          <label>Student ID<input id="g-id" inputmode="numeric" placeholder="Your student ID number"></label>
+          <div class="g-row"><label>Period<select id="g-per"><option value="">Choose…</option>${PERIODS.map(p => `<option>${p}</option>`).join("")}</select></label>
+          <label>Teacher<select id="g-t"><option value="">Choose…</option>${TEACHERS.map(t => `<option>${t}</option>`).join("")}</select></label></div>
+          <button class="g-start" type="submit" disabled>Start ▶</button><p class="g-msg" aria-live="polite">Fill in all four boxes to start.</p>
+        </form>
       </section>
       <nav class="map" id="map" aria-label="WICOR stations"></nav>
       <div class="progress"><div id="progress"></div></div>
@@ -77,7 +89,8 @@
     sec.innerHTML = `
       <div class="st-head"><div class="st-badge">${k}</div>
         <div><h2>${esc(d.title)}</h2><div class="time">${META[k].name} · ⏱ ${esc(d.time || "5–10 min")}</div></div></div>
-      <div class="goal">🎯 ${d.goal}</div>
+      ${L.targets && L.targets[k] ? `<div class="target"><b>Learning target:</b> ${esc(L.targets[k])}</div>` : ""}
+      <div class="goal">📝 ${d.goal}</div>
       <div class="st-body"></div>
       <div class="st-foot"><span class="status" id="status-${k}">Not finished yet</span>
         ${next ? `<button class="btn solid" data-next="${next}">Next: ${next} · ${META[next].name} →</button>` : `<button class="btn solid" data-print>🖨️ Print my work</button>`}</div>`;
@@ -576,7 +589,28 @@
   document.head.appendChild(ps);
   $("#resetAll") && ($("#resetAll").onclick = () => { if (confirm("Erase all your work on this lesson and start over?")) { try { localStorage.removeItem(KEY); } catch (e) {} location.reload(); } });
 
-  /* ---------- start ---------- */
+  /* ---------- sign-in, then start ---------- */
   paintDone();
-  show(S.current && ORDER.includes(S.current) ? S.current : ORDER[0], false);
+  const hashSt = (location.hash || "").slice(1).toUpperCase();
+  function begin(d) {
+    S.student = d; save();
+    try { localStorage.setItem("wicorStudent", JSON.stringify(d)); } catch (e) {}
+    document.body.classList.remove("locked");
+    $("#whoChip").innerHTML = `👤 <b>${esc(d.name)}</b> · ID ${esc(d.id)} · Period ${esc(d.period)} · ${esc(d.teacher)} · ${new Date().toLocaleDateString()} <button class="pill-btn" id="switchUser" style="padding:4px 10px;font-size:.8rem">Not you?</button>`;
+    $("#switchUser").onclick = () => { document.body.classList.add("locked"); $("#lgate").scrollIntoView({ behavior: "smooth" }); };
+    show(ORDER.includes(hashSt) ? hashSt : (S.current && ORDER.includes(S.current) ? S.current : ORDER[0]), false);
+  }
+  (function gate() {
+    document.body.classList.add("locked");
+    let prev = S.student; if (!prev) { try { prev = JSON.parse(localStorage.getItem("wicorStudent") || "null"); } catch (e) {} }
+    const f = $("#lgate form"), q = x => f.querySelector(x);
+    if (prev) { q("#g-name").value = prev.name || ""; q("#g-id").value = prev.id || ""; q("#g-per").value = prev.period || ""; q("#g-t").value = prev.teacher || ""; }
+    const read = () => ({ name: q("#g-name").value.trim(), id: q("#g-id").value.trim(), period: q("#g-per").value, teacher: q("#g-t").value });
+    const okId = v => /^[A-Za-z0-9-]{3,12}$/.test(v);
+    const ok = d => /[A-Za-z].*[A-Za-z]/.test(d.name) && okId(d.id) && d.period && d.teacher;
+    const upd = () => { const d = read(), good = ok(d); q(".g-start").disabled = !good;
+      q(".g-msg").textContent = good ? "Looks good! Press Start." : !d.name ? "Type your full name." : !okId(d.id) ? "Type your student ID (numbers only)." : !d.period ? "Choose your period." : !d.teacher ? "Choose your teacher." : "Fill in all four boxes to start."; };
+    f.addEventListener("input", upd); f.addEventListener("change", upd); upd();
+    f.onsubmit = e => { e.preventDefault(); const d = read(); if (ok(d)) begin(d); };
+  })();
 })();

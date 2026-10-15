@@ -117,6 +117,40 @@ h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
 .rcard .ico svg{width:21px;height:21px}
 .kpill{font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;color:var(--k);background:color-mix(in srgb,var(--k) 14%,var(--surface))}
 .k-handout{--k:var(--k-handout)}.k-lesson{--k:var(--k-lesson)}.k-graded{--k:var(--k-graded)}.k-link{--k:var(--k-link)}.k-nav{--k:var(--c)}.k-note{--k:var(--muted)}
+
+/* WICOR letter/subject buttons */
+.wh{font-size:1.5rem;margin:30px 0 0;text-align:center}
+.tiles.wt{padding-block:18px 10px;gap:18px}
+.tiles.wt .tile{flex:0 1 calc((100% - 72px)/5)}
+@media (max-width:1000px){.tiles.wt .tile{flex-basis:calc((100% - 36px)/3)}}
+@media (max-width:640px){.tiles.wt .tile{flex-basis:calc((100% - 18px)/2)}}
+.tiles.wt .tile .stk{width:104px;height:104px}
+.tiles.wt .tile small{color:var(--muted);font-weight:700;margin-top:-8px}
+.biglet{font:700 64px/1 var(--display);color:var(--c)}
+.bigemoji{font-size:54px;line-height:1}
+.banner .art .biglet{font-size:76px}.banner .art .bigemoji{font-size:64px}
+.wsub{padding-block:16px 48px;display:grid;gap:18px}
+/* student sign-in */
+.gate{display:grid;grid-template-columns:1.1fr 1fr;gap:22px;align-items:start}
+@media (max-width:760px){.gate{grid-template-columns:1fr}}
+.g-kick{font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:.8rem;color:var(--c)}
+.gate h2{font-size:1.6rem;margin:4px 0 14px}
+.g-lbl{display:block;font-weight:800;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.g-eq,.g-lt{background:color-mix(in srgb,var(--c) 10%,var(--surface));border-left:5px solid var(--c);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.g-eq p{margin:0;font-family:var(--display);font-size:1.15rem;font-weight:600}
+.g-lt ul{margin:0;padding-left:20px;font-weight:600}
+.g-form{background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;gap:12px}
+.g-form h3{margin:0;font-size:1.2rem}
+.g-form label{display:grid;gap:4px;font-weight:800;font-size:.92rem}
+.g-form input,.g-form select{font:600 1rem var(--body);padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--fg)}
+.g-form input:focus,.g-form select:focus{outline:none;border-color:var(--c)}
+.g-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g-start{font:800 1.1rem var(--body);padding:12px;border-radius:999px;border:0;background:var(--c);color:#fff;cursor:pointer;transition:transform .15s}
+.g-start:hover:not(:disabled){transform:translateY(-2px)}
+.g-start:disabled{opacity:.45;cursor:not-allowed}
+.g-msg{margin:0;color:var(--muted);font-weight:700;font-size:.9rem;text-align:center}
+.tstrip{display:grid;gap:4px;background:color-mix(in srgb,var(--c) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--c) 30%,var(--line));border-radius:14px;padding:10px 14px;margin-bottom:16px;font-size:.92rem}
+.tstrip .who{font-weight:800;color:var(--muted)}
 .k-print{--k:var(--c)}.k-page{--k:#8a54e0}
 .rcard.printable{cursor:default}
 .rcard .pmeta{display:flex;gap:6px;flex-wrap:wrap}
@@ -748,7 +782,7 @@ const L = {
 const SUBMIT={
   formUrl:'',
   fields:{name:'',period:'',teacher:'',activity:'',score:'',responses:''},
-  teachers:[]
+  teachers:['Langlie','Maness','Salazar','Mueller']
 };
 
 /* ---------- THIS OR THAT (Would you rather) ---------- */
@@ -1027,16 +1061,16 @@ function runChallenge(el,ch){
     const ag=el.querySelector('#again');if(ag)ag.onclick=()=>{checked=null;ch.items.forEach((it,k)=>{if(it.t==='mark')st[k]=mkNew(it);if(it.t==='mc')st[k].v=null;if(it.t==='match')st[k].pick={};if(it.t==='order')st[k].order=shuffle(it.steps.map((_,i)=>i))});draw()};
     if(checked)wireSubmit();
   };
-  const sv={name:'',period:'',teacher:''};
+  const sv={name:CUR?CUR.name:'',period:CUR?CUR.period:'',teacher:CUR?CUR.teacher:''};
   function submitPanel(){
     const tsel=SUBMIT.teachers.length?`<select id="sbt"><option value="">Choose your teacher</option>${SUBMIT.teachers.map(t=>`<option ${sv.teacher===t?'selected':''}>${esc(t)}</option>`).join('')}</select>`:`<input class="txt" id="sbt" placeholder="Teacher’s name" value="${esc(sv.teacher)}">`;
-    return `<div class="submit"><h3>Send my score to my teacher</h3><div class="sgrid"><div><span class="lab">Your name</span><input class="txt" id="sbn" value="${esc(sv.name)}" placeholder="First and last name"></div><div><span class="lab">Period</span><select id="sbp"><option value="">Period</option>${[0,1,2,3,4,5,6,7].map(p=>`<option ${sv.period==p?'selected':''}>${p}</option>`).join('')}</select></div><div><span class="lab">Teacher</span>${tsel}</div></div>
+    return `<div class="submit"><h3>Send my score to my teacher</h3><div class="sgrid"><div><span class="lab">Your name</span><input class="txt" id="sbn" value="${esc(sv.name)}" placeholder="First and last name"></div><div><span class="lab">Period</span><select id="sbp"><option value="">Period</option>${[1,2,3,4,5,6,7,8].map(p=>`<option ${sv.period==p?'selected':''}>${p}</option>`).join('')}</select></div><div><span class="lab">Teacher</span>${tsel}</div></div>
     <div class="btnrow">${SUBMIT.formUrl?`<a class="btn" id="sblink" target="_blank" rel="noopener" aria-disabled="true">Open the form to submit</a>`:`<button class="btn" id="sbcopy">Copy my results</button>`}<span id="sbmsg" style="color:var(--muted)"></span></div>
     <p style="color:var(--muted);font-size:.88rem;margin:8px 0 0">${SUBMIT.formUrl?'Your answers are filled in for you. Press Submit on the Google Form that opens.':'Paste your results where your teacher tells you to (for example, a Google Classroom assignment).'}</p></div>`;
   }
   function wireSubmit(){
     const get=()=>{sv.name=el.querySelector('#sbn').value.trim();sv.period=el.querySelector('#sbp').value;sv.teacher=el.querySelector('#sbt').value.trim()};
-    const payload=()=>({name:sv.name,period:sv.period,teacher:sv.teacher,activity:`${ch.strat} · ${ch.title}`,score:`${checked.score}/${total} (${Math.round(checked.score/total*100)}%)`,responses:checked.lines.join(' | ').slice(0,1500)});
+    const payload=()=>({name:sv.name+(CUR&&CUR.id?` (ID ${CUR.id})`:''),period:sv.period,teacher:sv.teacher,activity:`${ch.strat} · ${ch.title}`,score:`${checked.score}/${total} (${Math.round(checked.score/total*100)}%)`,responses:checked.lines.join(' | ').slice(0,1500)});
     const upd=()=>{get();const ok=sv.name&&sv.teacher&&sv.period!=='';const a=el.querySelector('#sblink');
       if(a){if(ok){const d=payload(),q=Object.entries(SUBMIT.fields).filter(([k,v])=>v).map(([k,v])=>`entry.${String(v).replace(/^entry\./,'')}=${encodeURIComponent(d[k])}`).join('&');a.href=`${SUBMIT.formUrl}${SUBMIT.formUrl.includes('?')?'&':'?'}usp=pp_url&${q}`;a.removeAttribute('aria-disabled')}else{a.removeAttribute('href');a.setAttribute('aria-disabled','true')}}
       el.querySelector('#sbmsg').textContent=ok?'':'Add your name, period, and teacher.'};
@@ -1296,6 +1330,143 @@ const POCX=[
 H.pocexamples={title:'Point of Confusion Examples by Class', html:`<h2>Point of Confusion Examples by Class</h2><small>Each example starts with a real question from homework, a quiz, a lab, or class, and names exactly where the student is stuck.</small>
  <div class="pocx">${[...new Set(POCX.map(x=>x[0]))].map(sub=>`<div class="pocx-sub"><h4>${sub}</h4>${POCX.filter(x=>x[0]===sub).map(x=>`<div class="pocx-card"><div><b>Initial question:</b> ${x[1]}</div><div class="pocx-poc"><b>POC:</b> ${x[2]}</div></div>`).join('')}</div>`).join('')}</div>`};
 
+/* ---------- LEARNING TARGETS & ESSENTIAL QUESTIONS (one per activity) ----------
+   ✏️ To edit: find the activity id, change the eq (question) or lt (list of "I can" statements). */
+const ACT_INFO={
+ /* AVID space */
+ cornell:{eq:'How does taking and interacting with focused notes help me remember and use what I learn?',lt:['I can take two-column notes with clear questions and key ideas.','I can process my notes and write a summary that connects to the essential question.']},
+ costasort:{eq:'How do the questions I ask shape how deeply I think?',lt:['I can identify Level 1, 2, and 3 questions using Costa’s Levels.','I can explain what makes a question higher-level.']},
+ pocbuilder:{eq:'How can I turn “I don’t get it” into a specific question someone can help me answer?',lt:['I can identify exactly where my thinking breaks down in a problem.','I can write a specific, tutorial-ready point of confusion.']},
+ i4:{eq:'What makes a point of confusion strong enough to get real help?',lt:['I can tell the difference between a vague and a specific point of confusion.','I can revise a vague point of confusion to make it specific.']},
+ /* W */
+ mk_w1:{eq:'How do scientists use claim, evidence, and reasoning to explain results?',lt:['I can identify the claim, evidence, and reasoning in a lab conclusion.','I can explain how evidence supports a scientific claim.']},
+ mk_w2:{eq:'How do writers build a strong analysis paragraph?',lt:['I can identify the topic sentence, quote, commentary, and conclusion in a paragraph.','I can explain how commentary connects evidence to a claim.']},
+ wm:{eq:'Why is explaining my math in writing just as important as getting the answer?',lt:['I can choose the clearest written explanation of a math solution.','I can explain the steps of a problem in complete sentences.']},
+ ws:{eq:'How do scientists turn data into a convincing conclusion?',lt:['I can use real data as evidence in a lab conclusion.','I can write a claim, evidence, and reasoning paragraph about an experiment.']},
+ we:{eq:'How do strong writers blend quotes into their own writing?',lt:['I can embed a quote smoothly into my own sentence.','I can write commentary that explains why a quote matters.']},
+ wh:{eq:'How do historians make and support an argument about the past?',lt:['I can choose a strong, arguable thesis.','I can label historical evidence and analysis in a paragraph.']},
+ w1:{eq:'What makes a summary short, accurate, and useful?',lt:['I can choose the summary that best captures the main idea.','I can write my own summary in my own words.']},
+ w2:{eq:'How do claim, evidence, and reasoning work together to make an argument convincing?',lt:['I can label the claim, evidence, and reasoning in an argument.','I can write my own CER paragraph.']},
+ w3:{eq:'How does specific language make my writing stronger?',lt:['I can choose the more specific of two sentences.','I can revise a vague sentence to make it precise.']},
+ /* I */
+ mk_i1:{eq:'How can finding a mistake help me understand a math problem better?',lt:['I can find the exact step where an algebra solution goes wrong.','I can write a point of confusion about that step.']},
+ mk_i2:{eq:'How do different levels of questions help me understand history more deeply?',lt:['I can tag questions about the Dust Bowl as Level 1, 2, or 3.','I can explain why a question belongs at its level.']},
+ im:{eq:'How can asking questions before I solve help me understand a word problem?',lt:['I can ask questions to break down a word problem.','I can identify what a problem is asking before I solve it.']},
+ is:{eq:'What makes a question testable in science?',lt:['I can sort questions into testable and not testable.','I can name the independent and dependent variables in an investigation.']},
+ ie:{eq:'How does asking questions while I read help me understand a story?',lt:['I can ask questions about a short story passage.','I can answer questions using evidence from the text.']},
+ ih:{eq:'How do historians decide whether a source is reliable and useful?',lt:['I can source a primary document using HIPP.','I can explain how a source’s author and purpose affect its meaning.']},
+ i1:{eq:'How do Costa’s Levels help me ask better questions?',lt:['I can sort questions by Costa’s level.','I can write my own Level 2 and Level 3 questions.']},
+ i2:{eq:'How can I turn a simple question into one that makes me think harder?',lt:['I can identify a Level 1 question.','I can rewrite a Level 1 question as a Level 2 or Level 3 question.']},
+ i3:{eq:'How does the AVID tutorial process help me solve my own confusion?',lt:['I can put the steps of an AVID tutorial in order.','I can explain the purpose of each tutorial step.']},
+ /* C */
+ mk_c1:{eq:'What do strong academic conversations sound like?',lt:['I can identify talk moves in a real discussion.','I can explain how each talk move helps a group think.']},
+ cm:{eq:'How can my group learn from different answers in math?',lt:['I can respond respectfully when group members get different answers.','I can explain how group roles help a math team succeed.']},
+ cs:{eq:'How do lab teams work together safely and effectively?',lt:['I can solve common lab-team problems.','I can put the steps of a group lab in order.']},
+ ce:{eq:'How do I contribute to a Socratic Seminar in a way that moves the discussion forward?',lt:['I can choose the right seminar move for a situation.','I can identify habits that help a discussion.']},
+ chh:{eq:'How do I argue about history using evidence instead of opinion?',lt:['I can take a position on the New Deal and support it with evidence.','I can respond respectfully to a different position.']},
+ c1:{eq:'How do group roles help a team work better together?',lt:['I can match each group role to its job.','I can explain why each role matters.']},
+ c2:{eq:'How does academic language make my ideas clearer and more respectful?',lt:['I can choose the most academic response in a discussion.','I can use sentence stems to agree, disagree, and build on ideas.']},
+ c3:{eq:'What does a respectful, productive discussion look like?',lt:['I can identify the norms of Philosophical Chairs.','I can explain how norms keep a discussion respectful.']},
+ /* O */
+ mk_o1:{eq:'How can organizing my tasks help me manage my time?',lt:['I can sort tasks into today, this week, and later.','I can make a realistic plan for my work.']},
+ om:{eq:'How does organizing my steps help me solve problems and prepare for tests?',lt:['I can order the steps for solving a word problem.','I can make a plan to study for a math test.']},
+ os:{eq:'How can a graphic organizer help me compare plant and animal cells?',lt:['I can sort cell parts into plant, animal, or both.','I can explain how plant and animal cells are alike and different.']},
+ oe:{eq:'How does a clear structure make an essay easier to follow?',lt:['I can put the parts of an essay in order.','I can label the purpose of each sentence in a paragraph.']},
+ oh:{eq:'How does putting events in order help me understand cause and effect in history?',lt:['I can put key U.S. history events in chronological order.','I can explain how one event led to another.']},
+ o1:{eq:'How do I decide what to do first when I have a lot to do?',lt:['I can prioritize tasks by deadline and importance.','I can explain my reasons for choosing what to do first.']},
+ o2:{eq:'How does an organized binder help me succeed in every class?',lt:['I can put each item in the right section of my binder.','I can explain how my binder system helps me find what I need.']},
+ o3:{eq:'How do SMART goals help me reach what I want to achieve?',lt:['I can identify a goal that is Specific, Measurable, Achievable, Relevant, and Time-bound.','I can write my own SMART goal.']},
+ /* R */
+ mk_r1:{eq:'How does marking the text help me understand an argument?',lt:['I can number paragraphs, circle key terms, and underline the claim.','I can explain the author’s main argument.']},
+ mk_r2:{eq:'How do historians read a passage closely to find what matters most?',lt:['I can mark a history passage to find key terms and the main idea.','I can identify the evidence an author uses.']},
+ rm:{eq:'How can careful reading help me solve a math word problem?',lt:['I can find key phrases in a word problem.','I can identify extra information that I do not need.']},
+ rs:{eq:'How do scientists read data tables to find patterns?',lt:['I can identify the trend in a data table.','I can make a prediction based on data.']},
+ re:{eq:'How does figurative language shape meaning and tone?',lt:['I can identify similes, metaphors, and other figurative language.','I can describe the tone an author creates.']},
+ rh:{eq:'What do the words of the Preamble tell us about the purpose of the Constitution?',lt:['I can close-read the Preamble phrase by phrase.','I can explain the goals of the Constitution in my own words.']},
+ r1:{eq:'How do I find what an author is arguing and how they support it?',lt:['I can find the claim in a short passage.','I can identify the evidence that supports the claim.']},
+ r2:{eq:'How can I figure out unfamiliar words without a dictionary?',lt:['I can use context clues to determine the meaning of a word.','I can explain which clue helped me.']},
+ r3:{eq:'How do good readers use strategies before, during, and after reading?',lt:['I can sort reading strategies by when to use them.','I can choose a strategy that fits my reading task.']},
+ /* Warm-ups */
+ wicorx:{eq:'How do the five WICOR strategies help me learn in every class?',lt:['I can explain what each letter of WICOR stands for.','I can give an example of each WICOR strategy.']},
+ wx_W:{eq:'How does writing help me think?',lt:['I can write continuously for a set time to get my ideas down.']},
+ wx_I:{eq:'How quickly can I recognize the level of a question?',lt:['I can tag questions as Level 1, 2, or 3.']},
+ wx_C:{eq:'What should I say to keep a discussion going?',lt:['I can match discussion moments to helpful sentence stems.']},
+ wx_O:{eq:'Where does everything belong in my AVID binder?',lt:['I can sort items into the right binder section.']},
+ wx_R:{eq:'When should I use each reading strategy?',lt:['I can sort reading strategies into before, during, or after reading.']}
+};
+
+/* ---------- STUDENT SIGN-IN (required before each student activity) ----------
+   ✏️ To change the teacher list or periods, edit TEACHERS and PERIODS. */
+const TEACHERS=['Langlie','Maness','Salazar','Mueller'];
+const PERIODS=['1','2','3','4','5','6','7','8'];
+const NO_SIGNIN=new Set(['qotd','seminar']); /* teacher-led projector tools skip sign-in */
+let CUR=null; try{CUR=JSON.parse(localStorage.getItem('wicorStudent')||'null')}catch(e){CUR=null}
+function infoHTML(info){ if(!info) return '';
+  return `<div class="g-eq"><span class="g-lbl">Essential Question</span><p>${esc(info.eq)}</p></div>
+  <div class="g-lt"><span class="g-lbl">Learning Target${info.lt.length>1?'s':''}</span><ul>${info.lt.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`;}
+function studentGate(el,title,info,onStart){
+  const v=CUR||{};
+  el.innerHTML=`<div class="gate"><div class="g-left"><span class="g-kick">Before you start</span><h2>${esc(title)}</h2>${infoHTML(info)}</div>
+   <form class="g-form" autocomplete="off" novalidate><h3>Sign in to begin</h3>
+    <label>Full name<input id="g-name" placeholder="First and last name" value="${esc(v.name||'')}"></label>
+    <label>Student ID<input id="g-id" inputmode="numeric" placeholder="Your student ID number" value="${esc(v.id||'')}"></label>
+    <div class="g-row"><label>Period<select id="g-per"><option value="">Choose…</option>${PERIODS.map(p=>`<option ${String(v.period)===p?'selected':''}>${p}</option>`).join('')}</select></label>
+    <label>Teacher<select id="g-t"><option value="">Choose…</option>${TEACHERS.map(t=>`<option ${v.teacher===t?'selected':''}>${t}</option>`).join('')}</select></label></div>
+    <button class="g-start" type="submit" disabled>Start ▶</button><p class="g-msg" aria-live="polite">Fill in all four boxes to start.</p></form></div>`;
+  const f=el.querySelector('.g-form'), q=x=>f.querySelector(x);
+  const read=()=>({name:q('#g-name').value.trim(),id:q('#g-id').value.trim(),period:q('#g-per').value,teacher:q('#g-t').value});
+  const ok=d=>/[A-Za-z].*[A-Za-z]/.test(d.name)&&/^[A-Za-z0-9-]{3,12}$/.test(d.id)&&d.period&&d.teacher;
+  const upd=()=>{const d=read(),good=ok(d);q('.g-start').disabled=!good;
+    q('.g-msg').textContent=good?'Looks good! Press Start.':!d.name?'Type your full name.':!/^[A-Za-z0-9-]{3,12}$/.test(d.id)?'Type your student ID (numbers only).':!d.period?'Choose your period.':!d.teacher?'Choose your teacher.':'Fill in all four boxes to start.'};
+  f.addEventListener('input',upd); f.addEventListener('change',upd); upd();
+  f.onsubmit=e=>{e.preventDefault();const d=read();if(!ok(d))return;CUR=d;try{localStorage.setItem('wicorStudent',JSON.stringify(d))}catch(err){} onStart(d)};
+  setTimeout(()=>q(v.name?'.g-start':'#g-name').focus(),50);
+}
+function targetStrip(info,d){return `<div class="tstrip">${info?`<div><b>🎯 Essential Question:</b> ${esc(info.eq)}</div><div><b>Learning target:</b> ${info.lt.map(esc).join(' · ')}</div>`:''}<div class="who">👤 ${esc(d.name)} · ID ${esc(d.id)} · Period ${esc(d.period)} · ${esc(d.teacher)}</div></div>`}
+
+/* ---------- WICOR SPACE: letter and subject buttons ---------- */
+const WLET=[['W','Writing','#2b7de9'],['I','Inquiry','#8a54e0'],['C','Collaboration','#f05a28'],['O','Organization','#0e9f6e'],['R','Reading','#e08a00']];
+const WSUB=[['science','Science','🔬','#1aa36f','Science'],['math','Math','📐','#5b5fe0','Math'],['english','English','📚','#e8368f','English'],['history','History','🏛️','#e08a00','History'],['avid','AVID Skills','🎓','#2b7de9','AVID skills']];
+const wTopic=(s,L)=>s.topics.find(t=>t.name.startsWith(L+' ·'));
+const wFull=s=>(s.topics.find(t=>t.name==='Full WICOR Lessons')||{items:[]}).items;
+const wSubjOf=it=>it.subj||(CH[it.id]&&CH[it.id].subj)||'';
+const navChips=(s,key)=>`<nav class="switch" aria-label="WICOR buttons"><a class="back" href="#wicor">← WICOR</a>${WLET.map(([L,n,c])=>`<a class="swchip ${key===L?'on':''}" style="--c:${c}" href="#wicor/${L}">${L} · ${n}</a>`).join('')}${WSUB.map(([k,n,e,c])=>`<a class="swchip ${key===k?'on':''}" style="--c:${c}" href="#wicor/${k}">${e} ${n}</a>`).join('')}</nav>`;
+const group=(title,items,sub)=>items.length?`<section class="topic"><header><span class="dot"></span><h2>${title}</h2><small>${items.length} ${items.length===1?'item':'items'}</small></header>${sub?`<p class="sub">${sub}</p>`:''}<div class="cards">${items.map(it=>itemHTML(it)).join('')}</div></section>`:'';
+function wicorHome(s){
+  crumb.innerHTML=`<span>›</span><b>${s.name}</b>`;
+  const nL=L=>(wTopic(s,L)||{items:[]}).items.length;
+  const nS=v=>WLET.reduce((a,[L])=>a+(wTopic(s,L)||{items:[]}).items.filter(it=>wSubjOf(it)===v).length,0)+wFull(s).filter(it=>it.subj===v).length;
+  const warm=(s.topics.find(t=>t.name==='Warm-Up Games')||{items:[]}).items, setup=(s.topics.find(t=>t.name==='Teacher Setup')||{items:[]}).items;
+  app.innerHTML=`<div class="wrap" style="--c:${s.color}">
+   <nav class="switch" aria-label="Spaces"><a class="back" href="#home">← All spaces</a>${SECTIONS.map(x=>`<a class="swchip ${x===s?'on':''}" style="--c:${x.color}" href="#${x.id}">${x.name}</a>`).join('')}</nav>
+   <div class="banner"><h1>${s.name}</h1><p>5–10 minute practice for every WICOR strategy, plus full lessons that walk through all five letters. Pick a letter or a subject to start.</p><span class="art">${ART[s.id]}</span></div>
+   <h2 class="wh">Practice by WICOR letter</h2>
+   <div class="tiles wt">${WLET.map(([L,n,c])=>`<a class="tile" href="#wicor/${L}" style="--c:${c}"><span class="stk"><span class="biglet">${L}</span></span><h2>${n}</h2><small>${nL(L)} activities</small></a>`).join('')}</div>
+   <h2 class="wh">Practice by subject</h2>
+   <div class="tiles wt">${WSUB.map(([k,n,e,c,v])=>`<a class="tile" href="#wicor/${k}" style="--c:${c}"><span class="stk"><span class="bigemoji">${e}</span></span><h2>${n}</h2><small>${nS(v)} activities</small></a>`).join('')}</div>
+   <div style="padding-bottom:48px">${group('Full WICOR Lessons',wFull(s),'One topic, all five letters, about 5–10 minutes per station.')}${group('Warm-Up Games',warm,'Ungraded, fast, and great to project.')}${group('Teacher Setup',setup)}</div></div>`;
+}
+function wicorSub(s,key){
+  const let_=WLET.find(x=>x[0]===key), sub=WSUB.find(x=>x[0]===key);
+  if(!let_&&!sub){wicorHome(s);return}
+  let title,color,blurb,body='',art;
+  if(let_){const [L,n,c]=let_;title=`${L} · ${n}`;color=c;art=`<span class="biglet" style="color:${c}">${L}</span>`;
+    const t=wTopic(s,L)||{items:[],sub:''};blurb=t.sub||'';
+    body+=WSUB.map(([k,sn,e,sc,v])=>group(`${e} ${sn}`,t.items.filter(it=>wSubjOf(it)===v))).join('');
+    const warm=(s.topics.find(t=>t.name==='Warm-Up Games')||{items:[]}).items.filter(it=>it.id==='wx_'+L);
+    body+=group('⚡ Warm-Up Game',warm);
+    body+=group(`🧪 Practice ${n} inside a full lesson`,wFull(s).map(it=>({...it,feature:false,url:it.url+'#'+L,meta:`Jump to the ${L} station`})));
+  } else {const [k,n,e,c,v]=sub;title=n;color=c;art=`<span class="bigemoji">${e}</span>`;
+    blurb=`Every ${n} WICOR activity, organized by letter.`;
+    body+=group('🧪 Full WICOR Lessons',wFull(s).filter(it=>it.subj===v));
+    body+=WLET.map(([L,ln])=>group(`${L} · ${ln}`,(wTopic(s,L)||{items:[]}).items.filter(it=>wSubjOf(it)===v))).join('');
+  }
+  crumb.innerHTML=`<span>›</span><a href="#wicor">${s.name}</a><span>›</span><b>${esc(title)}</b>`;
+  app.innerHTML=`<div class="wrap" style="--c:${color}">${navChips(s,key)}
+   <div class="banner"><h1>${esc(title)}</h1><p>${esc(blurb)}</p><span class="art">${art}</span></div>
+   <div class="wsub">${body||'<p class="empty">Activities coming soon.</p>'}</div></div>`;
+}
+
 /* ---------- RENDERING ---------- */
 const app=document.getElementById('app'), modal=document.getElementById('modal'), crumb=document.getElementById('crumb'), qInput=document.getElementById('q');
 const deco=(id,cls='deco')=>`<svg class="${cls}" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">${I[id]}</svg>`;
@@ -1332,6 +1503,7 @@ function home(filter=''){
 }
 let spy=null;
 function section(s){
+  if(s.id==='wicor'){wicorHome(s);return}
   crumb.innerHTML=`<span>›</span><b>${s.name}</b>`;
   const all=s.topics.flatMap(t=>t.items);
   const kinds=['print','page','handout','lesson','graded','link'].filter(k=>all.some(it=>kindOf(it)===k));
@@ -1365,7 +1537,9 @@ function openItem(k,id,color){
   modal.style.setProperty('--c',color);
   modal.innerHTML=`<div class="dialog ${isL?'wide':''}" role="dialog" aria-modal="true" aria-label="${d.title}"><div class="dhead"><h3>${d.title}</h3>${isL?'<button id="fs">Present</button>':''}<button id="cl">Close</button></div><div class="dbody">${isL?'<div id="lz"></div>':`<div class="note">Starter template — project it, or use it as a model for your own copy. Printable PDF versions are coming soon.</div><div class="paper">${d.html}</div>`}</div></div>`;
   modal.hidden=false; modal.classList.remove('full'); document.body.style.overflow='hidden';
-  if(isL) cleanup=d.run(modal.querySelector('#lz'))||null;
+  if(isL){const lz=modal.querySelector('#lz');
+    if(NO_SIGNIN.has(id)) cleanup=d.run(lz)||null;
+    else studentGate(lz,d.title,ACT_INFO[id],st=>{lz.innerHTML=targetStrip(ACT_INFO[id],st)+'<div id="lz2"></div>';cleanup=d.run(lz.querySelector('#lz2'))||null;});}
   modal.querySelector('#cl').onclick=closeModal;
   const fs=modal.querySelector('#fs'); if(fs) fs.onclick=()=>{const on=modal.classList.toggle('full');fs.textContent=on?'Exit present':'Present';try{on?document.documentElement.requestFullscreen?.()?.catch(()=>{}):document.fullscreenElement&&document.exitFullscreen()}catch(e){}};
   modal.querySelector('#cl').focus();
@@ -1374,7 +1548,7 @@ function closeModal(){if(cleanup){cleanup();cleanup=null}modal.hidden=true;modal
 modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)closeModal()});
 app.addEventListener('click',e=>{const b=e.target.closest('button.rcard');if(!b)return;const c=getComputedStyle(b).getPropertyValue('--c');openItem(b.dataset.k,b.dataset.id,c)});
-function route(){closeModal();const id=location.hash.slice(1);const s=SECTIONS.find(x=>x.id===id);qInput.value='';s?section(s):home();window.scrollTo(0,0)}
+function route(){closeModal();const id=location.hash.slice(1);const [main,sub]=id.split('/');const s=SECTIONS.find(x=>x.id===main);qInput.value='';if(s&&s.id==='wicor'&&sub)wicorSub(s,sub);else s?section(s):home();window.scrollTo(0,0)}
 qInput.addEventListener('input',()=>{if(qInput.value.trim()){home(qInput.value.trim())}else route()});
 window.addEventListener('hashchange',route);route();
 </script>
