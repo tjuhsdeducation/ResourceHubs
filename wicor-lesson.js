@@ -13,8 +13,10 @@
     R: { name: "Reading", color: "var(--R)" }
   };
   /* ✏️ Teacher and period choices for the sign-in screen */
-  const TEACHERS = ["Langlie", "Maness", "Salazar", "Mueller"];
-  const PERIODS = ["1", "2", "3", "4", "5", "6", "7", "8"];
+  const CFG = window.HUB_CONFIG || {};
+  const TEACHERS = CFG.teachers || ["Langlie", "Maness", "Salazar", "Mueller"];
+  const PERIODS = CFG.periods || ["1", "2", "3", "4", "5", "6", "7", "8"];
+  const HUB_URL = (CFG.scriptUrl || "").trim();
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -39,6 +41,7 @@
       <span class="spacer"></span>
       <a class="pill-btn" href="index.html#wicor">← All WICOR lessons</a>
       <button class="pill-btn" id="resetAll" title="Erase your answers on this lesson">↺ Start over</button>
+      <button class="pill-btn" data-turnin>📤 Turn in</button>
       <button class="pill-btn dark" data-print>🖨️ Print my work</button>
     </div></header>
     <div class="wrap">
@@ -67,8 +70,9 @@
       <main id="stations"></main>
       <div class="finish" id="finish" hidden>
         <h2>🎉 You completed all five WICOR stations!</h2>
-        <p>Print your work or show your teacher.</p>
-        <button class="pill-btn" data-print>🖨️ Print my work</button>
+        <p>Turn in your work to your teacher, or print it.</p>
+        <button class="pill-btn dark" data-turnin>📤 Turn in to my teacher</button> <button class="pill-btn" data-print>🖨️ Print my work</button>
+        <p class="turnin-msg" aria-live="polite"></p>
       </div>
     </div>`);
 
@@ -588,6 +592,33 @@
   ps.textContent = `.print-copy{display:none}@media print{textarea.box{display:none!important}.print-copy{display:block;border:1px solid #999;border-radius:8px;padding:8px 10px;min-height:3em;white-space:pre-wrap;font-family:Georgia,serif}}`;
   document.head.appendChild(ps);
   $("#resetAll") && ($("#resetAll").onclick = () => { if (confirm("Erase all your work on this lesson and start over?")) { try { localStorage.removeItem(KEY); } catch (e) {} location.reload(); } });
+
+  /* ---------- turn in to the teacher's Google Sheet ---------- */
+  async function turnIn(btn) {
+    const msgs = $$(".turnin-msg"), say = t => { msgs.forEach(m => m.textContent = t); if (!msgs.length || btn.closest("header")) alert(t); };
+    if (!S.student) { say("Sign in first."); return; }
+    const done = ORDER.filter(k => S.done[k]).length;
+    if (done < ORDER.length && !confirm(`You have finished ${done} of ${ORDER.length} stations. Turn in anyway?`)) return;
+    const I = S.inputs, lab = { "r-gist": "R: In my own words", "w-claim": "W: Claim", "w-evidence": "W: Evidence", "w-reasoning": "W: Reasoning",
+      "i-pred": "I: Prediction", "i-hyp": "I: Hypothesis", "i-supported": "I: Supported?", "i-analysis": "I: Analysis", "i-q3": "I: Level 3 question",
+      "c-stance1": "C: First stance", "c-reason": "C: Reason", "c-partner": "C: Partner", "c-respond": "C: Response", "c-stance2": "C: Final stance", "c-reflect": "C: Reflection", "o-sum": "O: Summary" };
+    const answers = Object.keys(lab).filter(k => I[k]).map(k => `${lab[k]}: ${String(I[k]).replace(/\s+/g, " ").trim()}`).join("  |  ");
+    const body = { action: "lesson", student: S.student, lesson: `${L.subject}: ${L.title}`, stationsDone: done, answers };
+    btn.disabled = true; say("Turning in…");
+    try {
+      if (!HUB_URL) {
+        let d = {}; try { d = JSON.parse(localStorage.getItem("hubDemo") || "{}"); } catch (e) {}
+        (d.lessons = d.lessons || []).push({ ...body, time: new Date().toISOString() }); try { localStorage.setItem("hubDemo", JSON.stringify(d)); } catch (e) {}
+        say("👀 Preview mode: saved on this computer only. Your teacher still needs to connect the Google Sheet.");
+      } else {
+        const r = await (await fetch(HUB_URL, { method: "POST", body: JSON.stringify(body) })).json();
+        if (!r.ok) throw new Error(r.error);
+        say(`✅ Turned in to ${S.student.teacher}! (${done} of ${ORDER.length} stations)`);
+      }
+    } catch (e) { say("⚠️ " + (e.message || "Could not turn in. Check your internet and try again.")); }
+    btn.disabled = false;
+  }
+  $$("[data-turnin]").forEach(b => b.addEventListener("click", () => turnIn(b)));
 
   /* ---------- sign-in, then start ---------- */
   paintDone();

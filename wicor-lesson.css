@@ -229,7 +229,7 @@ canvas.graph { width: 100%; background: var(--surface); border-radius: 14px; bor
   body { background: var(--surface); font-size: 12pt; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-shadow: none !important; animation: none !important; }
   .topbar, .map, .progress, .tools, .st-foot .btn, .no-print, .finish, .confetti, .grad { animation: none; }
-  .lgate, #switchUser, header.top, .topbar, .map, .progress, .tools, .no-print, .st-foot, .finish, .confetti, .banner .art { display: none !important; }
+  .lgate, #switchUser, [data-turnin], .turnin-msg, header.top, .topbar, .map, .progress, .tools, .no-print, .st-foot, .finish, .confetti, .banner .art { display: none !important; }
   :root { --bg:#fff; --surface:#fff; --fg:#1f2430; --muted:#5d6577; --line:#ccc; }
   .banner { padding: 10px 14px; border-width: 1px; }
   .grad { color: var(--ink); background: none; }
@@ -239,3 +239,6 @@ canvas.graph { width: 100%; background: var(--surface); border-radius: 14px; bor
   textarea.box { border: 1px solid #999; min-height: 3em; overflow: visible; }
   .lab { grid-template-columns: 1fr 1fr; }
 }
+
+.turnin-msg { margin: 10px 0 0; font-weight: 800; }
+body.locked [data-turnin] { display: none; }

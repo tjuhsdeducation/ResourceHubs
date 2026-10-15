@@ -151,6 +151,64 @@ h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
 .g-msg{margin:0;color:var(--muted);font-weight:700;font-size:.9rem;text-align:center}
 .tstrip{display:grid;gap:4px;background:color-mix(in srgb,var(--c) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--c) 30%,var(--line));border-radius:14px;padding:10px 14px;margin-bottom:16px;font-size:.92rem}
 .tstrip .who{font-weight:800;color:var(--muted)}
+
+/* folder tiles */
+.tiles.folders .tile h2{font-size:1.2rem}
+/* discussion board */
+.demo-note{margin:14px 0 0;padding:10px 14px;border-radius:12px;background:#fff6dc;color:#6b4e00;font-weight:600;border:1px solid #f1d98a}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.how div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px;font-weight:700}
+.how b{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;margin-right:6px}
+@media (max-width:760px){.how{grid-template-columns:1fr}}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.dcard{position:relative;display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--fg);background:color-mix(in srgb,var(--c) var(--mix),var(--tilebase));border:3px solid color-mix(in srgb,var(--c) 45%,var(--tilebase));box-shadow:0 5px 0 color-mix(in srgb,var(--c) 55%,var(--tilebase));border-radius:24px;padding:18px;transition:transform .2s cubic-bezier(.3,1.6,.5,1)}
+.dcard:hover{transform:translateY(-5px) rotate(-1deg)}
+.dcard .dic{font-size:2.2rem}
+.dtag{align-self:flex-start;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:var(--surface);color:var(--c)}
+.dcard h3{font-size:1.15rem;margin:0}
+.dcard p{margin:0;color:var(--muted);font-size:.92rem}
+.dcard .go{margin-top:auto;font-weight:800;color:var(--c)}
+.dhero{margin-top:10px;border-radius:28px;background:color-mix(in srgb,var(--c) var(--mix),var(--tilebase));border:3px solid color-mix(in srgb,var(--c) 40%,var(--tilebase));padding:24px 28px}
+.dhero h1{font-size:clamp(1.6rem,4vw,2.4rem);margin:8px 0}
+.dprompt{font-size:1.1rem;font-weight:600;margin:0 0 10px;max-width:80ch}
+.rubric{background:var(--surface);border-radius:14px;padding:10px 14px}
+.rubric summary{cursor:pointer;font-weight:800}
+.rubric table{border-collapse:collapse;margin:8px 0;width:100%;max-width:620px}
+.rubric td{padding:4px 8px;border-bottom:1px solid var(--line)}
+.rubric td:last-child{text-align:right;font-weight:800;white-space:nowrap}
+#dz{margin-top:18px}
+.dcompose{background:var(--surface);border:2px solid color-mix(in srgb,var(--c) 40%,var(--line));border-radius:20px;padding:16px;margin-bottom:18px}
+.dcompose.small{margin:10px 0 0;padding:12px;border-radius:14px}
+.dcompose h3{margin:0 0 8px}
+.dcompose textarea{width:100%;font:600 1rem/1.5 var(--body);padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--fg);resize:vertical}
+.dcompose textarea:focus{outline:none;border-color:var(--c)}
+.dframes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.dframe{border:2px dashed var(--c);background:var(--surface);color:var(--c);border-radius:999px;padding:4px 10px;font:800 .8rem var(--body);cursor:pointer}
+.dchecks{list-style:none;padding:0;margin:8px 0;display:grid;gap:3px;font-weight:700;color:var(--muted)}
+.dchecks li::before{content:"○ "}.dchecks li.ok{color:var(--ok)}.dchecks li.ok::before{content:"✔ "}
+.dbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px;font-weight:700;color:var(--muted)}
+.dbtn{font:800 1rem var(--body);padding:10px 18px;border-radius:999px;border:0;background:var(--c);color:#fff;cursor:pointer}
+.dbtn:disabled{opacity:.45;cursor:not-allowed}
+.dbtn.ghost{background:var(--surface);color:var(--c);border:2px solid var(--c)}
+.dmsg{margin:6px 0 0;font-weight:700;color:var(--bad)}
+.dscore{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:color-mix(in srgb,var(--c) 12%,var(--surface));border-radius:16px;padding:12px 16px;margin-bottom:16px}
+.dthread-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin:10px 0}
+.dthread-head h2{margin:0;font-size:1.4rem}
+.dview{display:flex;gap:6px}
+.locked{background:var(--surface);border:2px dashed var(--line);border-radius:18px;padding:24px;text-align:center;font-size:1.05rem}
+.dpost{display:flex;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px}
+.dpost.mine{border-color:color-mix(in srgb,var(--c) 50%,var(--line))}
+.dpost.reply{background:var(--bg);margin:10px 0 0;padding:12px}
+.dav{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;background:var(--c)}
+.dpost.reply .dav{width:32px;height:32px;font-size:.8rem;opacity:.85}
+.dbody2{flex:1;min-width:0}
+.dmeta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.dmeta b{color:var(--fg);font-size:.95rem}
+.you{background:var(--c);color:#fff;border-radius:999px;padding:1px 8px;font-weight:800;font-size:.72rem}
+.dtext{margin:6px 0;white-space:normal;overflow-wrap:anywhere}
+.dreply-btn{border:0;background:none;color:var(--c);font:800 .9rem var(--body);cursor:pointer;padding:4px 0}
+.dkids{border-left:3px solid color-mix(in srgb,var(--c) 35%,var(--line));padding-left:10px;margin-top:6px}
+.crumb a{color:var(--muted);text-decoration:none;font-weight:700}.crumb a:hover{color:var(--fg);text-decoration:underline}
 .k-print{--k:var(--c)}.k-page{--k:#8a54e0}
 .rcard.printable{cursor:default}
 .rcard .pmeta{display:flex;gap:6px;flex-wrap:wrap}
@@ -372,6 +430,7 @@ a.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
   </div>
 </header>
 <main id="app"></main>
+<script src="hub-config.js"></script>
 <div id="modal" class="modal" hidden></div>
 
 <script>
@@ -412,6 +471,8 @@ const SECTIONS = [
    ]},
    {name:'Start Here', items:[
      {k:'handout', id:'wicor', title:'WICOR at a Glance', desc:'Writing, Inquiry, Collaboration, Organization, Reading — with classroom look-fors'},
+     {k:'nav', url:'#avid/discuss', title:'💬 Discussion Board', desc:'College-style discussions: post, reply to classmates, and get scored automatically'},
+     {k:'handout', id:'sheetsetup', title:'Teacher Setup: Connect the Hub to a Google Sheet', desc:'Send discussion posts, scores, and lesson turn-ins to one Google Sheet'},
      {k:'nav', url:'#wicor', title:'WICOR Practice Space', desc:'Tap each letter of WICOR to learn it, play, and take graded challenges'},
      {k:'note', title:'Add your site AVID coordinator', desc:'Name, room, and best way to reach them', add:true}
    ]},
@@ -595,7 +656,7 @@ const SECTIONS = [
      {k:'lesson', id:'wx_R', title:'Before, During, or After?', desc:'Rapid-fire: reading strategies', meta:'Ungraded'}
    ]},
    {name:'Teacher Setup', items:[
-     {k:'handout', id:'sheetsetup', title:'Connect Scores to a Google Sheet', desc:'One Google Form collects every student score, with a tab for each teacher'}
+     {k:'handout', id:'sheetsetup', title:'Connect the Hub to a Google Sheet', desc:'Send discussion posts, scores, and lesson turn-ins to one Google Sheet with a tab for each teacher'}
    ]}
   ]}
 ];
@@ -782,7 +843,7 @@ const L = {
 const SUBMIT={
   formUrl:'',
   fields:{name:'',period:'',teacher:'',activity:'',score:'',responses:''},
-  teachers:['Langlie','Maness','Salazar','Mueller']
+  teachers:(window.HUB_CONFIG&&window.HUB_CONFIG.teachers)||['Langlie','Maness','Salazar','Mueller']
 };
 
 /* ---------- THIS OR THAT (Would you rather) ---------- */
@@ -1063,12 +1124,18 @@ function runChallenge(el,ch){
   };
   const sv={name:CUR?CUR.name:'',period:CUR?CUR.period:'',teacher:CUR?CUR.teacher:''};
   function submitPanel(){
+    if(HUB_URL&&CUR) return `<div class="submit"><h3>Send my score to my teacher</h3><p style="margin:4px 0 10px">👤 ${esc(CUR.name)} · ID ${esc(CUR.id)} · Period ${esc(CUR.period)} · ${esc(CUR.teacher)}</p><div class="btnrow"><button class="btn" id="sbsend">📤 Send to ${esc(CUR.teacher)}</button><span id="sbmsg" style="color:var(--muted)"></span></div></div>`;
     const tsel=SUBMIT.teachers.length?`<select id="sbt"><option value="">Choose your teacher</option>${SUBMIT.teachers.map(t=>`<option ${sv.teacher===t?'selected':''}>${esc(t)}</option>`).join('')}</select>`:`<input class="txt" id="sbt" placeholder="Teacher’s name" value="${esc(sv.teacher)}">`;
     return `<div class="submit"><h3>Send my score to my teacher</h3><div class="sgrid"><div><span class="lab">Your name</span><input class="txt" id="sbn" value="${esc(sv.name)}" placeholder="First and last name"></div><div><span class="lab">Period</span><select id="sbp"><option value="">Period</option>${[1,2,3,4,5,6,7,8].map(p=>`<option ${sv.period==p?'selected':''}>${p}</option>`).join('')}</select></div><div><span class="lab">Teacher</span>${tsel}</div></div>
     <div class="btnrow">${SUBMIT.formUrl?`<a class="btn" id="sblink" target="_blank" rel="noopener" aria-disabled="true">Open the form to submit</a>`:`<button class="btn" id="sbcopy">Copy my results</button>`}<span id="sbmsg" style="color:var(--muted)"></span></div>
     <p style="color:var(--muted);font-size:.88rem;margin:8px 0 0">${SUBMIT.formUrl?'Your answers are filled in for you. Press Submit on the Google Form that opens.':'Paste your results where your teacher tells you to (for example, a Google Classroom assignment).'}</p></div>`;
   }
   function wireSubmit(){
+    const sb=el.querySelector('#sbsend');
+    if(sb){sb.onclick=async()=>{sb.disabled=true;el.querySelector('#sbmsg').textContent='Sending…';
+      try{const r=await hubSend({action:'score',student:CUR,activity:`${ch.strat} · ${ch.title}`,score:`${checked.score}/${total}`,percent:Math.round(checked.score/total*100)+'%',responses:checked.lines.join(' | ').slice(0,1500)});
+        if(!r.ok)throw new Error(r.error);el.querySelector('#sbmsg').textContent='✅ Sent! Your teacher can see your score.';sb.textContent='✅ Sent';}
+      catch(e){sb.disabled=false;el.querySelector('#sbmsg').textContent='⚠️ '+(e.message||'Could not send. Try again.')}};return}
     const get=()=>{sv.name=el.querySelector('#sbn').value.trim();sv.period=el.querySelector('#sbp').value;sv.teacher=el.querySelector('#sbt').value.trim()};
     const payload=()=>({name:sv.name+(CUR&&CUR.id?` (ID ${CUR.id})`:''),period:sv.period,teacher:sv.teacher,activity:`${ch.strat} · ${ch.title}`,score:`${checked.score}/${total} (${Math.round(checked.score/total*100)}%)`,responses:checked.lines.join(' | ').slice(0,1500)});
     const upd=()=>{get();const ok=sv.name&&sv.teacher&&sv.period!=='';const a=el.querySelector('#sblink');
@@ -1082,12 +1149,12 @@ function runChallenge(el,ch){
 }
 Object.entries(CH).forEach(([id,ch])=>{L[id]={title:`${ch.strat} Challenge: ${ch.title}`,run(el){runChallenge(el,ch)}}});
 
-H.sheetsetup={title:'Connect Scores to a Google Sheet', html:`<h2>Connect WICOR Scores to a Google Sheet</h2><small>One Google Form collects every student’s score. Its response Sheet gets a tab for each teacher. About 10 minutes, done once.</small>
- <h4>1 · Make the form</h4><ol><li>Go to forms.google.com and start a blank form called <b>WICOR Challenge Scores</b>.</li><li>Add six <b>Short answer</b> questions, in this order: <b>Student Name, Period, Teacher, Activity, Score, Responses</b>.</li><li>In Settings, turn off “Collect email addresses” and “Limit to 1 response” so students without sign-in can submit.</li></ol>
- <h4>2 · Get the pre-filled link</h4><ol><li>Click the ⋮ menu → <b>Get pre-filled link</b>.</li><li>Type a placeholder in each box (for example NAME, PERIOD, TEACHER, ACTIVITY, SCORE, RESPONSES) and click <b>Get link</b> → <b>Copy link</b>.</li><li>Send that link and your list of teacher names to whoever manages this site. The site uses it to fill in each student’s results automatically.</li></ol>
- <h4>3 · Connect the Sheet</h4><ol><li>In the form’s <b>Responses</b> tab, click <b>Link to Sheets</b>.</li><li>In the Sheet, add a tab for each teacher and paste this in cell A1 (change the name):</li></ol>
- <div class="box" style="font-family:ui-monospace,Menlo,monospace;font-size:.9rem;overflow-x:auto">=FILTER('Form Responses 1'!A:G, 'Form Responses 1'!D:D="Ms. Garcia")</div>
- <small>Each teacher’s tab updates by itself every time a student submits. Share the Sheet with teachers so they can see their tab.</small>`};
+H.sheetsetup={title:'Connect the Hub to a Google Sheet', html:`<h2>Connect the Hub to a Google Sheet</h2><small>One Google Sheet collects every discussion post (auto-graded), practice score, and lesson turn-in, with a tab for each teacher. About 10 minutes, done once. Download it as Excel anytime: File → Download → Microsoft Excel.</small>
+ <h4>1 · Make the Sheet</h4><ol><li>Go to <b>sheets.google.com</b> and create a blank sheet named <b>AVID Hub Responses</b>.</li><li>Click <b>Extensions → Apps Script</b>.</li></ol>
+ <h4>2 · Add the script</h4><ol><li>Delete the sample code. Open <b>Code.gs</b> from the hub’s GitHub files, copy everything, and paste it in. Click 💾 <b>Save</b>.</li><li>In the toolbar, pick the function <b>setup</b> and click ▶ <b>Run</b>. Approve the permissions (it only uses this Sheet).</li><li>Back in the Sheet you will see tabs: Discussion Posts, Discussion Grades, Activity Scores, Lesson Turn-Ins, and a <b>Teacher:</b> tab for each teacher.</li></ol>
+ <h4>3 · Publish it</h4><ol><li>Click <b>Deploy → New deployment</b> → ⚙ <b>Web app</b>.</li><li>Execute as: <b>Me</b>. Who has access: <b>Anyone</b>. Click <b>Deploy</b> and copy the <b>Web app URL</b>.</li></ol>
+ <h4>4 · Connect the website</h4><ol><li>On GitHub, open <b>hub-config.js</b> → ✏️ edit.</li><li>Paste the URL between the quotes: <span class="box" style="font-family:ui-monospace,Menlo,monospace;font-size:.85rem">scriptUrl: "https://script.google.com/macros/s/…/exec",</span></li><li>Commit. In 1–2 minutes, discussion posts and scores go straight to the Sheet.</li></ol>
+ <h4>Good to know</h4><ul><li><b>Grades:</b> each discussion is out of 10 (main post 6, two replies 4). Type in the <b>Teacher Score</b> column to change a grade. It is never overwritten.</li><li><b>Hide a post:</b> type <b>X</b> in the post’s <b>Hide</b> column on the Discussion Posts tab.</li><li><b>Privacy:</b> classmates see only first name + last initial. Student IDs stay in the Sheet.</li><li><b>Changed the script?</b> Use Deploy → Manage deployments → ✏️ → New version so the same URL keeps working.</li></ul>`};
 
 /* ---------- WICOR EXPLORER ---------- */
 const WX={
@@ -1397,8 +1464,10 @@ const ACT_INFO={
 
 /* ---------- STUDENT SIGN-IN (required before each student activity) ----------
    ✏️ To change the teacher list or periods, edit TEACHERS and PERIODS. */
-const TEACHERS=['Langlie','Maness','Salazar','Mueller'];
-const PERIODS=['1','2','3','4','5','6','7','8'];
+const HUBCFG=window.HUB_CONFIG||{};
+const TEACHERS=HUBCFG.teachers||['Langlie','Maness','Salazar','Mueller'];
+const PERIODS=HUBCFG.periods||['1','2','3','4','5','6','7','8'];
+const HUB_URL=(HUBCFG.scriptUrl||'').trim();
 const NO_SIGNIN=new Set(['qotd','seminar']); /* teacher-led projector tools skip sign-in */
 let CUR=null; try{CUR=JSON.parse(localStorage.getItem('wicorStudent')||'null')}catch(e){CUR=null}
 function infoHTML(info){ if(!info) return '';
@@ -1467,6 +1536,194 @@ function wicorSub(s,key){
    <div class="wsub">${body||'<p class="empty">Activities coming soon.</p>'}</div></div>`;
 }
 
+
+/* =====================================================================
+   FOLDER BUTTONS for every space (AVID, Interactive Lessons, etc.)
+   ===================================================================== */
+const FOLDER_ICON=[[/community/i,'🤝'],[/start here/i,'🚀'],[/binder/i,'🗂️'],[/focused|note-taking/i,'📝'],[/tutorial/i,'❓'],[/confusion/i,'🤔'],[/graphic/i,'🧩'],[/goal|contract/i,'🎯'],[/^tutors$/i,'🧑‍🏫'],[/field trip/i,'🚌'],[/site team|certif/i,'🏅'],[/collaboration/i,'💬'],[/science/i,'🔬'],[/math/i,'📐'],[/english/i,'📚'],[/history/i,'🏛️'],[/coming soon/i,'🚧']];
+const FOLDER_COLORS=['#5b5fe0','#14a37f','#ee7d1c','#1f95e0','#e0408a','#8a54e0','#f25c54','#0e9f6e','#e08a00','#2b7de9','#c2185b','#00897b'];
+const ficon=n=>(FOLDER_ICON.find(([r])=>r.test(n))||[0,'📁'])[1];
+const spaceChips=s=>`<nav class="switch" aria-label="Spaces"><a class="back" href="#home">← All spaces</a>${SECTIONS.map(x=>`<a class="swchip ${x===s?'on':''}" style="--c:${x.color}" href="#${x.id}">${x.name}</a>`).join('')}</nav>`;
+function spaceHome(s){
+  crumb.innerHTML=`<span>›</span><b>${s.name}</b>`;
+  const all=s.topics.flatMap(t=>t.items).filter(i=>i.k!=='note');
+  const tiles=s.topics.map((t,i)=>{const n=t.items.filter(x=>x.k!=='note').length;
+    return `<a class="tile" href="#${s.id}/${i}" style="--c:${FOLDER_COLORS[i%FOLDER_COLORS.length]}"><span class="stk"><span class="bigemoji">${ficon(t.name)}</span></span><h2>${esc(t.name)}</h2><small>${n?n+(n===1?' resource':' resources'):'Coming soon'}</small></a>`});
+  if(s.id==='avid') tiles.unshift(`<a class="tile" href="#avid/discuss" style="--c:#e0408a"><span class="stk"><span class="bigemoji">💬</span></span><h2>Discussion Board</h2><small>${DISCUSSIONS.length} discussions</small></a>`);
+  app.innerHTML=`<div class="wrap" style="--c:${s.color}">${spaceChips(s)}
+   <div class="banner"><h1>${s.name}</h1><p>${s.blurb}</p><div class="stats"><span>${s.topics.length+(s.id==='avid'?1:0)} folders</span><span>${all.length} resources</span></div><span class="art">${ART[s.id]}</span></div>
+   <h2 class="wh">Pick a folder</h2><div class="tiles wt folders">${tiles.join('')}</div><div style="height:40px"></div></div>`;
+}
+function folderChips(s,key){return `<nav class="switch" aria-label="Folders"><a class="back" href="#${s.id}">← ${s.name}</a>${s.id==='avid'?`<a class="swchip ${key==='discuss'?'on':''}" style="--c:#e0408a" href="#avid/discuss">💬 Discussion Board</a>`:''}${s.topics.map((t,i)=>`<a class="swchip ${key===i?'on':''}" style="--c:${FOLDER_COLORS[i%FOLDER_COLORS.length]}" href="#${s.id}/${i}">${ficon(t.name)} ${esc(t.name)}</a>`).join('')}</nav>`}
+function spaceFolder(s,i){
+  const t=s.topics[i]; if(!t){spaceHome(s);return}
+  const col=FOLDER_COLORS[i%FOLDER_COLORS.length], hasAud=t.items.some(it=>it.k==='print');
+  crumb.innerHTML=`<span>›</span><a href="#${s.id}">${s.name}</a><span>›</span><b>${esc(t.name)}</b>`;
+  app.innerHTML=`<div class="wrap" style="--c:${col}">${folderChips(s,i)}
+   <div class="banner"><h1>${ficon(t.name)} ${esc(t.name)}</h1><p>${esc(t.sub||s.blurb)}</p><div class="stats"><span>${t.items.filter(x=>x.k!=='note').length} resources</span></div><span class="art">${ART[s.id]}</span></div>
+   ${hasAud?`<div class="filters" role="group" aria-label="Filter by audience" style="margin-top:16px"><span class="flbl">For</span><button class="fchip au on" data-au="all">Everyone</button><button class="fchip au" data-au="student">🎒 Students</button><button class="fchip au" data-au="teacher">👩‍🏫 Teachers</button></div>`:''}
+   <div class="cards folder-cards">${t.items.map(it=>itemHTML(it)).join('')}</div><div style="height:48px"></div></div>`;
+  app.querySelectorAll('.fchip.au').forEach(b=>b.onclick=()=>{app.querySelectorAll('.fchip.au').forEach(x=>x.classList.toggle('on',x===b));const f=b.dataset.au;
+    app.querySelectorAll('.folder-cards .rcard').forEach(c=>{c.hidden=!(f==='all'||!c.dataset.aud||c.dataset.aud===f||c.dataset.aud==='both')})});
+}
+
+/* =====================================================================
+   💬 DISCUSSION BOARD (AVID)
+   ✏️ To add a discussion: copy one { ... } block in DISCUSSIONS and change it.
+      id must be unique (letters and dashes). minWords = main post length for full credit.
+   ===================================================================== */
+const DISCUSSIONS=[
+ {id:'college-ready', tag:'AVID', icon:'🎓', title:'What Does “College Ready” Really Mean?', minWords:75,
+  eq:'What habits, skills, and mindsets prepare a student for college and career?',
+  lt:['I can explain what it means to be college ready using a specific example.','I can respond to classmates’ ideas respectfully and add new thinking.'],
+  prompt:'AVID’s goal is to prepare every student for college and career. In your own words, what does it mean to be “college ready”? Is it mostly about grades, habits, mindset, or something else? Support your answer with a specific example from your own life or from one of your classes.',
+  frames:['Being college ready means… because…','One habit that shows this is…','For example, in my ___ class…','I agree with ___, and I would add…','I see it differently because…']},
+ {id:'productive-struggle', tag:'AVID', icon:'💪', title:'Productive Struggle: When Learning Gets Hard', minWords:75,
+  eq:'How do successful learners keep going when something is difficult?',
+  lt:['I can describe a learning struggle and the strategy that helped me.','I can give a classmate useful advice or encouragement.'],
+  prompt:'Describe a time you struggled to learn something difficult, in school or outside of it. What strategy helped you keep going (asking a question, a tutorial, taking notes, practicing, a person who helped)? What would you tell a younger student who is facing the same challenge?',
+  frames:['One time I struggled with… because…','What helped me was…','If I could tell a younger student one thing, it would be…','Your story reminds me of…','Have you ever tried…?']},
+ {id:'phones-class', tag:'English', icon:'📵', title:'Phones in Class: Helpful or Harmful?', minWords:75,
+  eq:'How do writers use evidence to build a convincing argument?',
+  lt:['I can take a position and support it with a specific piece of evidence.','I can respond to a counterclaim respectfully.'],
+  prompt:'California now requires every school district to adopt a policy limiting student smartphone use. Does a phone-free classroom help or hurt learning? State your claim, support it with evidence (a fact, a personal example, or something from the “Silence the Phones” lesson), and explain your reasoning.',
+  frames:['My claim is that…','One piece of evidence is…','This shows that… because…','Some people might argue… but…','I respectfully disagree with ___ because…']},
+ {id:'later-start', tag:'Science', icon:'😴', title:'Should School Start Even Later?', minWords:75,
+  eq:'How should scientific evidence guide decisions that affect students?',
+  lt:['I can use scientific evidence to support a position.','I can evaluate a classmate’s reasoning.'],
+  prompt:'Most teenagers need 8 to 10 hours of sleep, and during adolescence the body’s internal clock shifts later. California law now says most high schools cannot start classes before 8:30 a.m. Should schools start even later? Use scientific evidence and explain your reasoning.',
+  frames:['I think school should / should not start later because…','The science shows that…','A later start would affect…','I agree with ___ that… but I wonder…','What evidence makes you think…?']},
+ {id:'invention', tag:'History', icon:'🏛️', title:'Which Invention Changed History the Most?', minWords:75,
+  eq:'How do inventions change the way societies live, work, and think?',
+  lt:['I can argue for the historical importance of one invention using evidence.','I can compare my argument with a classmate’s.'],
+  prompt:'Pick ONE invention (the printing press, the steam engine, vaccines, electricity, the internet, or another) and argue that it changed human history more than any other. Include at least one specific historical fact or example, and explain why its effects were so big.',
+  frames:['The invention that changed history the most is… because…','Before this invention…, but after…','One specific example is…','Your choice is interesting, but…','How would you compare ___ to…?']},
+ {id:'math-life', tag:'Math', icon:'📐', title:'Where Do You See Math Outside of School?', minWords:75,
+  eq:'How does math help people make better decisions in everyday life?',
+  lt:['I can explain a real-life situation that uses a math concept.','I can connect a classmate’s example to my own.'],
+  prompt:'Describe a real situation outside of school where math matters, such as shopping, sports, cooking, a job, a phone plan, or saving money. Name the math concept (percent, slope, ratio, area, probability…) and explain how understanding it helps someone make a better decision.',
+  frames:['I see math when I… because…','The math concept is…, which means…','Understanding this helps people…','Your example connects to mine because…','Another way to use that math is…']},
+ {id:'four-year', tag:'College & Career', icon:'🧭', title:'Is a Four-Year College the Only Path to Success?', minWords:75,
+  eq:'What are the different paths to a successful future, and how do I choose mine?',
+  lt:['I can compare at least two paths after high school.','I can explain which path fits my goals and why.'],
+  prompt:'After high school, some people go to a four-year university, while others choose community college, a trade or technical program, the military, or start working. Is a four-year degree the best path for everyone? Compare at least two paths and explain which fits your own goals and why.',
+  frames:['I think the best path depends on…','One path is…, which is good for…','For my goals, I plan to… because…','I had not thought about ___ until you said…','What made you choose…?']},
+ {id:'open-topic', tag:'Teacher’s Choice', icon:'📰', title:'Teacher’s Choice: Current Events', minWords:75,
+  eq:'How can I respond thoughtfully to what is happening in the world?',
+  lt:['I can summarize a topic and take a clear position on it.','I can build on or respectfully challenge a classmate’s thinking.'],
+  prompt:'Your teacher will share a topic, article, or video in class. Summarize it in 2–3 sentences, take a position or share your reaction, and explain your reasoning with at least one specific detail.',
+  frames:['This topic is about…','My position is… because…','One detail that stood out to me is…','I agree with ___ and want to add…','I see this differently because…']}
+];
+const TAG_COLOR={'AVID':'#5b5fe0','English':'#e8368f','Science':'#1aa36f','History':'#e08a00','Math':'#2b7de9','College & Career':'#e0408a','Teacher’s Choice':'#8a54e0'};
+
+/* grading rules: keep in sync with Code.gs */
+const dWords=s=>(String(s||'').trim().match(/\S+/g)||[]).length;
+function mainPostPoints(text,min){const w=dWords(text);let p=w>=min?4:w>=min/2?2:w>0?1:0;if(/because|for example|for instance|according to|evidence|["“]|\d/i.test(text))p+=1;if(/\?/.test(text))p+=1;return Math.min(6,p)}
+const replyPoints=text=>{const w=dWords(text);return w>=30?2:w>=15?1:0};
+
+/* ---------- talking to the Google Sheet (or preview mode on this computer) ---------- */
+function demoDB(){let d;try{d=JSON.parse(localStorage.getItem('hubDemo')||'null')}catch(e){}
+  if(!d){d={posts:[],scores:[],lessons:[]};
+    DISCUSSIONS.forEach((q,i)=>{d.posts.push({id:'s'+i+'a',prompt:q.id,parent:'',type:'Main post',name:'Sample Student',teacher:TEACHERS[0],period:'1',sid:'sample',sample:true,
+      text:'(Sample post) This is an example of what a classmate’s main post will look like. Real posts from your class will appear here once students start posting. What do you think?',time:new Date(Date.now()-36e5*(i+2)).toISOString()})})}
+  return d}
+function demoSave(d){try{localStorage.setItem('hubDemo',JSON.stringify(d))}catch(e){}}
+async function hubList(prompt,sid){
+  if(!HUB_URL){const d=demoDB();return {ok:true,demo:true,posts:d.posts.filter(p=>p.prompt===prompt).map(p=>({...p,mine:p.sid===sid}))}}
+  const r=await fetch(HUB_URL+'?'+new URLSearchParams({action:'list',prompt,sid}));return r.json();
+}
+async function hubSend(body){
+  if(!HUB_URL){const d=demoDB(),st=body.student;
+    if(body.action==='post'){
+      if(!body.parent&&d.posts.some(p=>p.prompt===body.prompt&&p.type==='Main post'&&p.sid===st.id))return {ok:false,error:'You already posted. Reply to your classmates next!'};
+      const parts=st.name.trim().split(/\s+/),nm=parts.length>1?parts[0]+' '+parts[parts.length-1][0].toUpperCase()+'.':parts[0];
+      const p={id:Math.random().toString(36).slice(2,10),prompt:body.prompt,parent:body.parent||'',type:body.parent?'Reply':'Main post',name:nm,teacher:st.teacher,period:st.period,sid:st.id,text:body.text,time:new Date().toISOString()};
+      d.posts.push(p);demoSave(d);return {ok:true,demo:true,post:{...p,mine:true}}}
+    (body.action==='score'?d.scores:d.lessons).push({...body,time:new Date().toISOString()});demoSave(d);return {ok:true,demo:true}}
+  const r=await fetch(HUB_URL,{method:'POST',body:JSON.stringify(body)});return r.json();
+}
+const ago=t=>{const m=Math.round((Date.now()-new Date(t))/6e4);return m<1?'just now':m<60?m+' min ago':m<1440?Math.round(m/60)+' hr ago':new Date(t).toLocaleDateString()};
+const initials=n=>esc(String(n).split(/\s+/).map(x=>x[0]||'').join('').slice(0,2).toUpperCase());
+
+function discussHome(s){
+  crumb.innerHTML=`<span>›</span><a href="#avid">AVID</a><span>›</span><b>Discussion Board</b>`;
+  app.innerHTML=`<div class="wrap" style="--c:#e0408a">${folderChips(s,'discuss')}
+   <div class="banner"><h1>💬 Discussion Board</h1><p>College-style discussions. Sign in, share your thinking in a main post, then reply to at least two classmates. Your posts are saved and scored for your teacher.</p><span class="art"><span class="bigemoji">💬</span></span></div>
+   ${HUB_URL?'':`<div class="demo-note">👀 <b>Preview mode:</b> posts are saved only on this computer until your teacher connects the Google Sheet (see WICOR → Teacher Setup).</div>`}
+   <div class="how"><div><b>1</b> Sign in with your name, ID, period &amp; teacher</div><div><b>2</b> Write a main post (${DISCUSSIONS[0].minWords}+ words) with evidence and a question</div><div><b>3</b> Unlock classmates’ posts and reply to 2 of them (30+ words each)</div></div>
+   <div class="dgrid">${DISCUSSIONS.map(d=>`<a class="dcard" href="#avid/discuss/${d.id}" style="--c:${TAG_COLOR[d.tag]||'#5b5fe0'}"><span class="dic">${d.icon}</span><span class="dtag">${esc(d.tag)}</span><h3>${esc(d.title)}</h3><p>${esc(d.prompt.slice(0,130))}…</p><span class="go">Join the discussion →</span></a>`).join('')}</div><div style="height:48px"></div></div>`;
+}
+let boardTimer=null;
+function discussPage(s,id){
+  const d=DISCUSSIONS.find(x=>x.id===id); if(!d){discussHome(s);return}
+  const col=TAG_COLOR[d.tag]||'#5b5fe0';
+  crumb.innerHTML=`<span>›</span><a href="#avid">AVID</a><span>›</span><a href="#avid/discuss">Discussion Board</a><span>›</span><b>${esc(d.title)}</b>`;
+  app.innerHTML=`<div class="wrap" style="--c:${col}"><nav class="switch"><a class="back" href="#avid/discuss">← All discussions</a></nav>
+   <div class="dhero"><span class="dtag">${d.icon} ${esc(d.tag)}</span><h1>${esc(d.title)}</h1><p class="dprompt">${esc(d.prompt)}</p>
+    <details class="rubric"><summary>📋 How this is graded (10 points)</summary><table><tr><td>Main post: ${d.minWords}+ words</td><td>4 pts</td></tr><tr><td>Main post uses evidence (because, for example, a quote, a fact or number)</td><td>1 pt</td></tr><tr><td>Main post asks classmates a question</td><td>1 pt</td></tr><tr><td>Reply #1: 30+ words</td><td>2 pts</td></tr><tr><td>Reply #2: 30+ words</td><td>2 pts</td></tr></table><small>Your teacher may adjust your score after reading your posts.</small></details></div>
+   ${HUB_URL?'':`<div class="demo-note">👀 <b>Preview mode:</b> posts are saved only on this computer until your teacher connects the Google Sheet.</div>`}
+   <div id="dz"></div><div style="height:48px"></div></div>`;
+  studentGate(app.querySelector('#dz'),d.title,{eq:d.eq,lt:d.lt},st=>board(app.querySelector('#dz'),d,st));
+}
+function board(el,d,st){
+  let posts=[],view='class',openReply=null,busy=false,loadErr='';
+  const draft={main:'',reply:{}};
+  async function load(){try{const r=await hubList(d.id,st.id);if(!r.ok)throw new Error(r.error||'Could not load posts');posts=r.posts;loadErr=''}catch(e){loadErr='Could not load posts. Check your internet connection and try Refresh.'}draw()}
+  const mineMain=()=>posts.find(p=>p.mine&&p.type==='Main post');
+  const myScore=()=>{const m=mineMain();const rs=posts.filter(p=>p.mine&&p.type==='Reply').map(p=>replyPoints(p.text)).sort((a,b)=>b-a);const mp=m?mainPostPoints(m.text,d.minWords):0,rp=(rs[0]||0)+(rs[1]||0);return {mp,rp,n:rs.length,total:mp+rp}};
+  const inView=p=>view==='all'||(p.teacher===st.teacher&&String(p.period)===String(st.period));
+  function postHTML(p,isReply){
+    const kids=posts.filter(c=>c.parent===p.id).sort((a,b)=>new Date(a.time)-new Date(b.time));
+    return `<article class="dpost ${isReply?'reply':''} ${p.mine?'mine':''}"><div class="dav">${initials(p.name)}</div><div class="dbody2">
+     <div class="dmeta"><b>${esc(p.name)}</b>${p.mine?'<span class="you">You</span>':''}${p.sample?'<span class="you">Sample</span>':''}<span>${esc(p.teacher)} · P${esc(p.period)}</span><span>${ago(p.time)}</span></div>
+     <div class="dtext">${esc(p.text).replace(/\n/g,'<br>')}</div>
+     ${!isReply&&!p.mine&&mineMain()?`<button class="dreply-btn" data-reply="${p.id}">↩ Reply</button>`:''}
+     ${openReply===p.id?`<div class="dcompose small"><div class="dframes">${d.frames.map(f=>`<button class="dframe" data-frame="${esc(f)}">${esc(f)}</button>`).join('')}</div>
+       <textarea id="rtext" rows="4" placeholder="Reply to ${esc(p.name)}: build on, question, or respectfully challenge their idea…">${esc(draft.reply[p.id]||'')}</textarea>
+       <div class="dbar"><span id="rwc">${dWords(draft.reply[p.id]||'')} / 30 words</span><button class="dbtn" id="rsend" data-parent="${p.id}">Post reply</button></div></div>`:''}
+     ${kids.length?`<div class="dkids">${kids.map(k=>postHTML(k,true)).join('')}</div>`:''}</div></article>`;
+  }
+  function draw(){
+    const m=mineMain(), sc=myScore();
+    const mains=posts.filter(p=>p.type==='Main post').sort((a,b)=>new Date(b.time)-new Date(a.time));
+    const cls=mains.filter(p=>p.teacher===st.teacher&&String(p.period)===String(st.period)).length;
+    const shown=mains.filter(inView);
+    el.innerHTML=`${targetStrip({eq:d.eq,lt:d.lt},st)}
+     ${loadErr?`<div class="demo-note">⚠️ ${loadErr}</div>`:''}
+     ${m?`<div class="dscore"><div><b>Your score so far: ${sc.total} / 10</b><br><small>Main post ${sc.mp}/6 · Replies ${sc.rp}/4 (${sc.n} posted${sc.n<2?`, ${2-sc.n} more to go`:' ✓'})</small></div><button class="dbtn ghost" id="drefresh">↻ Refresh</button></div>`:
+     `<div class="dcompose"><h3>✍️ Your main post</h3><div class="dframes">${d.frames.map(f=>`<button class="dframe" data-frame="${esc(f)}">${esc(f)}</button>`).join('')}</div>
+      <textarea id="mtext" rows="8" placeholder="Share your thinking. Use evidence and end with a question for your classmates.">${esc(draft.main)}</textarea>
+      <ul class="dchecks" id="mchk"></ul>
+      <div class="dbar"><span id="mwc"></span><button class="dbtn" id="msend">Post to the discussion</button></div><p class="dmsg" id="mmsg"></p></div>`}
+     <div class="dthread-head"><h2>Class discussion</h2><div class="dview"><button class="fchip ${view==='class'?'on':''}" data-view="class">My class (${cls})</button><button class="fchip ${view==='all'?'on':''}" data-view="all">All classes (${mains.length})</button></div></div>
+     ${m?(shown.length?shown.map(p=>postHTML(p,false)).join(''):`<p class="empty">No posts from your class yet. Try “All classes”.</p>`)
+       :`<div class="locked">🔒 <b>${mains.length} ${mains.length===1?'classmate has':'classmates have'} posted.</b> Share your own thinking first to unlock their posts, just like a college discussion board.</div>`}
+     <p class="dmsg" id="rmsg"></p>`;
+    wire();
+  }
+  function checks(){const t=draft.main,w=dWords(t);const c=[[w>=d.minWords,`${w} / ${d.minWords} words`],[/because|for example|for instance|according to|evidence|["“]|\d/i.test(t),'Uses evidence (because, for example, a quote, or a fact)'],[/\?/.test(t),'Asks your classmates a question']];
+    const ul=el.querySelector('#mchk');if(ul)ul.innerHTML=c.map(([ok,l])=>`<li class="${ok?'ok':''}">${l}</li>`).join('');
+    const wc=el.querySelector('#mwc');if(wc)wc.textContent=`Points if you post now: ${mainPostPoints(t,d.minWords)} / 6`;
+    const b=el.querySelector('#msend');if(b)b.disabled=w<20||busy;}
+  function wire(){
+    el.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{view=b.dataset.view;draw()});
+    const mt=el.querySelector('#mtext'); if(mt){mt.oninput=()=>{draft.main=mt.value;checks()};checks()}
+    el.querySelectorAll('.dframe').forEach(b=>b.onclick=()=>{const ta=el.querySelector(openReply?'#rtext':'#mtext')||el.querySelector('#mtext');if(!ta)return;ta.value=(ta.value?ta.value.trim()+' ':'')+b.dataset.frame+' ';ta.focus();ta.dispatchEvent(new Event('input'))});
+    const ms=el.querySelector('#msend'); if(ms) ms.onclick=async()=>{busy=true;checks();el.querySelector('#mmsg').textContent='Posting…';
+      try{const r=await hubSend({action:'post',student:st,prompt:d.id,promptTitle:d.title,minWords:d.minWords,text:draft.main});if(!r.ok)throw new Error(r.error);draft.main='';await load();}
+      catch(e){busy=false;checks();el.querySelector('#mmsg').textContent='⚠️ '+(e.message||'Could not post. Try again.')}busy=false};
+    el.querySelectorAll('[data-reply]').forEach(b=>b.onclick=()=>{openReply=openReply===b.dataset.reply?null:b.dataset.reply;draw();const t=el.querySelector('#rtext');if(t)t.focus()});
+    const rt=el.querySelector('#rtext'); if(rt) rt.oninput=()=>{draft.reply[openReply]=rt.value;el.querySelector('#rwc').textContent=`${dWords(rt.value)} / 30 words`};
+    const rs=el.querySelector('#rsend'); if(rs) rs.onclick=async()=>{const txt=draft.reply[openReply]||'';if(dWords(txt)<5){el.querySelector('#rwc').textContent='Write a little more first.';return}
+      rs.disabled=true;rs.textContent='Posting…';
+      try{const r=await hubSend({action:'post',student:st,prompt:d.id,promptTitle:d.title,minWords:d.minWords,parent:openReply,text:txt});if(!r.ok)throw new Error(r.error);delete draft.reply[openReply];openReply=null;await load();}
+      catch(e){rs.disabled=false;rs.textContent='Post reply';el.querySelector('#rmsg').textContent='⚠️ '+(e.message||'Could not post. Try again.')}};
+    const rf=el.querySelector('#drefresh'); if(rf) rf.onclick=load;
+  }
+  clearInterval(boardTimer); boardTimer=setInterval(()=>{if(!openReply&&!busy&&document.activeElement?.id!=='mtext'&&mineMain())load()},45000);
+  el.innerHTML='<p class="empty">Loading the discussion…</p>'; load();
+}
+
 /* ---------- RENDERING ---------- */
 const app=document.getElementById('app'), modal=document.getElementById('modal'), crumb=document.getElementById('crumb'), qInput=document.getElementById('q');
 const deco=(id,cls='deco')=>`<svg class="${cls}" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">${I[id]}</svg>`;
@@ -1504,6 +1761,7 @@ function home(filter=''){
 let spy=null;
 function section(s){
   if(s.id==='wicor'){wicorHome(s);return}
+  spaceHome(s);return;
   crumb.innerHTML=`<span>›</span><b>${s.name}</b>`;
   const all=s.topics.flatMap(t=>t.items);
   const kinds=['print','page','handout','lesson','graded','link'].filter(k=>all.some(it=>kindOf(it)===k));
@@ -1548,7 +1806,11 @@ function closeModal(){if(cleanup){cleanup();cleanup=null}modal.hidden=true;modal
 modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)closeModal()});
 app.addEventListener('click',e=>{const b=e.target.closest('button.rcard');if(!b)return;const c=getComputedStyle(b).getPropertyValue('--c');openItem(b.dataset.k,b.dataset.id,c)});
-function route(){closeModal();const id=location.hash.slice(1);const [main,sub]=id.split('/');const s=SECTIONS.find(x=>x.id===main);qInput.value='';if(s&&s.id==='wicor'&&sub)wicorSub(s,sub);else s?section(s):home();window.scrollTo(0,0)}
+function route(){closeModal();clearInterval(boardTimer);const id=location.hash.slice(1);const [main,sub,third]=id.split('/');const s=SECTIONS.find(x=>x.id===main);qInput.value='';
+  if(s&&s.id==='wicor'&&sub)wicorSub(s,sub);
+  else if(s&&s.id==='avid'&&sub==='discuss')third?discussPage(s,third):discussHome(s);
+  else if(s&&sub!==undefined&&sub!==''&&!isNaN(+sub))spaceFolder(s,+sub);
+  else s?section(s):home();window.scrollTo(0,0)}
 qInput.addEventListener('input',()=>{if(qInput.value.trim()){home(qInput.value.trim())}else route()});
 window.addEventListener('hashchange',route);route();
 </script>
