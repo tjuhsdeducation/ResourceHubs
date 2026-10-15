@@ -242,3 +242,31 @@ canvas.graph { width: 100%; background: var(--surface); border-radius: 14px; bor
 
 .turnin-msg { margin: 10px 0 0; font-weight: 800; }
 body.locked [data-turnin] { display: none; }
+
+/* visual reading */
+.vis-wrap { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; align-items: start; }
+@media (max-width: 820px) { .vis-wrap { grid-template-columns: 1fr; } }
+.figure { background: #fff; color: #1f2430; border: 2px solid var(--line); border-radius: 18px; padding: 12px; }
+.figure svg { width: 100%; height: auto; display: block; }
+[data-hot] { cursor: pointer; transition: filter .15s; }
+[data-hot]:hover { filter: drop-shadow(0 0 4px #e08a00) drop-shadow(0 0 2px #e08a00); }
+[data-hot].found { filter: drop-shadow(0 0 3px #1aa36f) drop-shadow(0 0 3px #1aa36f); }
+[data-hot].miss { animation: shake .35s; filter: drop-shadow(0 0 4px #d9534f); }
+@keyframes shake { 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+.vtasks ol { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 6px; }
+.vtask { display: flex; gap: 8px; align-items: flex-start; background: var(--surface); border: 2px solid var(--line); border-radius: 12px; padding: 8px 10px; cursor: pointer; font-weight: 700; font-size: .95rem; }
+.vtask .vn { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--soft); font-size: .8rem; }
+.vtask.cur { border-color: var(--R); background: color-mix(in srgb, var(--R) 10%, var(--surface)); }
+.vtask.ok { color: #1aa36f; }
+.vtask.ok .vn { background: #1aa36f; color: #fff; }
+/* worked-solution figures */
+.steps { font: 600 1.15rem/1.4 "Cambria Math", Georgia, serif; display: grid; gap: 6px; }
+.steps .prob { font-weight: 800; padding: 6px 10px; }
+.steps .stepline { display: flex; gap: 14px; align-items: baseline; padding: 8px 12px; border-radius: 10px; border: 2px dashed #d7dbe4; }
+.steps .stepline b { font: 800 .8rem var(--body); color: #5d6577; min-width: 52px; }
+.steps .stepline.found { border-color: #1aa36f; background: #e7f8ee; }
+.steps span[data-hot] { border-bottom: 3px dotted #e08a00; padding: 0 2px; }
+.bigopt { display: block; font: 700 1.5rem var(--display); padding: 14px 4px 6px; }
+.choice small { display: block; color: var(--muted); font-weight: 700; }
+.vtask .vq { flex: 1; min-width: 0; }
+header.top .bar .pill-btn { padding: 7px 12px; }

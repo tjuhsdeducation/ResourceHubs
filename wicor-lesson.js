@@ -39,7 +39,7 @@
       <a class="brand" href="index.html#home"><span class="mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3zm-7 9.2V16l7 4 7-4v-3.8l-7 3.8-7-3.8z"/></svg></span>Teacher Resource Hub</a>
       <span class="crumb"><span>›</span><a href="index.html#wicor">WICOR</a><span>›</span><b>${esc(L.short || L.subject)}</b></span>
       <span class="spacer"></span>
-      <a class="pill-btn" href="index.html#wicor">← All WICOR lessons</a>
+      <a class="pill-btn" href="index.html#wicor">← Lessons</a>
       <button class="pill-btn" id="resetAll" title="Erase your answers on this lesson">↺ Start over</button>
       <button class="pill-btn" data-turnin>📤 Turn in</button>
       <button class="pill-btn dark" data-print>🖨️ Print my work</button>
@@ -144,6 +144,7 @@
      ===================================================================== */
   (function () {
     const A = L.stations.R;
+    if (A.mode === "visual") { visualReading(A); return; }
     let html = `<div class="legend no-print">
         <span><span style="display:inline-block;width:16px;border-bottom:3px solid var(--claim);vertical-align:3px"></span> Underline the CLAIM (1 sentence)</span>
         <span><span class="sw" style="display:inline-block;width:14px;height:14px;border-radius:4px;background:color-mix(in srgb,var(--evid) 40%,#fff)"></span> Highlight EVIDENCE</span>
@@ -254,6 +255,55 @@
     };
   })();
 
+
+  /* =====================================================================
+     R (visual): READ A GRAPH, DIAGRAM, OR WORKED EQUATION
+     Students complete "click the…" tasks on the figure, then notice & wonder.
+     ===================================================================== */
+  function visualReading(A) {
+    S.vis = S.vis || { done: [] };
+    const done = new Set(S.vis.done);
+    let cur = A.tasks.findIndex((_, i) => !done.has(i)); if (cur < 0) cur = 0;
+    body("R").innerHTML = `
+      ${part(1, esc(A.figureTitle || "Read the figure"), `<p class="hint" style="margin-top:0">${A.intro || "Pick a task, then click the matching part of the figure."}</p>
+        <div class="vis-wrap"><div class="figure" id="figure">${A.figure}</div>
+          <div class="vtasks"><div class="lt-lbl">Your reading tasks</div><ol id="vtasks"></ol><div class="feedback" id="vfb"></div></div></div>`)}
+      ${part(2, "Notice & wonder", `<label class="hint" style="display:block;margin:0 0 4px"><b>I notice…</b> (something you see in the ${esc(A.kind || "figure")})</label>
+        <textarea class="box" rows="2" data-save="r-notice" placeholder="I notice that…"></textarea>
+        <label class="hint" style="display:block;margin:10px 0 4px"><b>I wonder…</b> (a question it makes you ask)</label>
+        <textarea class="box" rows="2" data-save="r-wonder" placeholder="I wonder why / what would happen if…"></textarea>`)}
+      ${part("✍", "Quick check: in your own words", `<p class="hint" style="margin-top:0">${esc(A.gist)}</p><textarea class="box" rows="2" data-save="r-gist" placeholder="This ${esc(A.kind || "figure")} shows…"></textarea>`)}
+      <ul class="checks" id="rChecks"><li data-k="tasks">Completed every reading task</li><li data-k="nw">Wrote a notice and a wonder (6+ words each)</li><li data-k="gist">Summed it up in your own words (8+ words)</li></ul>`;
+    const fig = $("#figure"), list = $("#vtasks"), fb = $("#vfb");
+    function paint() {
+      list.innerHTML = A.tasks.map((t, i) => `<li class="vtask ${done.has(i) ? "ok" : ""} ${i === cur ? "cur" : ""}" data-i="${i}"><span class="vn">${done.has(i) ? "✔" : i + 1}</span><span class="vq">${t.q}</span></li>`).join("");
+      $$("[data-hot]", fig).forEach(h => h.classList.toggle("found", A.tasks.some((t, i) => done.has(i) && t.hot === h.dataset.hot)));
+      check();
+    }
+    list.addEventListener("click", e => { const li = e.target.closest(".vtask"); if (li) { cur = +li.dataset.i; fb.textContent = ""; fb.className = "feedback"; paint(); } });
+    fig.addEventListener("click", e => {
+      const h = e.target.closest("[data-hot]"); if (!h) return;
+      const t = A.tasks[cur];
+      if (done.has(cur)) { fb.className = "feedback"; fb.textContent = "That task is done. Pick another task from the list."; return; }
+      if (h.dataset.hot === t.hot) {
+        done.add(cur); S.vis.done = [...done]; save();
+        fb.className = "feedback good"; fb.innerHTML = "✅ " + (t.why || "Correct!");
+        const next = A.tasks.findIndex((_, i) => !done.has(i)); if (next >= 0) cur = next;
+      } else {
+        h.classList.add("miss"); setTimeout(() => h.classList.remove("miss"), 600);
+        fb.className = "feedback try"; fb.innerHTML = "🤔 Not quite. " + (t.hint || "Look again.");
+      }
+      paint();
+    });
+    function check() {
+      const i = S.inputs;
+      const r = { tasks: done.size === A.tasks.length, nw: words(i["r-notice"] || "") >= 6 && words(i["r-wonder"] || "") >= 6, gist: words(i["r-gist"] || "") >= 8 };
+      $$("#rChecks li").forEach(li => li.classList.toggle("ok", r[li.dataset.k]));
+      if (r.tasks && r.nw && r.gist) complete("R", "Reading complete!");
+    }
+    body("R").addEventListener("input", check);
+    setTimeout(paint, 0);
+  }
   /* =====================================================================
      W: CER WRITING
      ===================================================================== */
@@ -307,7 +357,7 @@
       ? `<div class="control"><label>${c.label}</label><div class="seg" data-ctrl="${c.id}">${c.options.map(([v, l]) => `<button data-v="${v}">${esc(l)}</button>`).join("")}</div></div>`
       : `<div class="control"><label>${c.label} <span data-val="${c.id}"></span></label><input type="range" data-ctrl="${c.id}" min="${c.min}" max="${c.max}" step="${c.step || 1}"></div>`;
     root.innerHTML = `
-      ${part(1, esc(P.q), `<div class="choices" id="predChoices" style="color:var(--I)">${P.options.map(o => `<button class="choice" data-v="${o.v}">${ax(o.d, o.label)}</button>`).join("")}</div>
+      ${part(1, esc(P.q), `<div class="choices" id="predChoices" style="color:var(--I)">${P.options.map(o => `<button class="choice" data-v="${o.v}">${o.d ? ax(o.d, o.label) : `<span class="bigopt">${esc(o.label)}</span>${o.sub ? `<small>${esc(o.sub)}</small>` : ""}`}</button>`).join("")}</div>
         <textarea class="box" rows="2" data-save="i-hyp" style="margin-top:12px" placeholder="${esc(P.placeholder)}"></textarea>
         <p class="hint">Write your hypothesis as <b>If… then… because…</b></p>`)}
       ${part(2, esc(B.title), `<p class="hint" style="margin-top:0">${B.intro}</p>
@@ -599,7 +649,7 @@
     if (!S.student) { say("Sign in first."); return; }
     const done = ORDER.filter(k => S.done[k]).length;
     if (done < ORDER.length && !confirm(`You have finished ${done} of ${ORDER.length} stations. Turn in anyway?`)) return;
-    const I = S.inputs, lab = { "r-gist": "R: In my own words", "w-claim": "W: Claim", "w-evidence": "W: Evidence", "w-reasoning": "W: Reasoning",
+    const I = S.inputs, lab = { "r-notice": "R: I notice", "r-wonder": "R: I wonder", "r-gist": "R: In my own words", "w-claim": "W: Claim", "w-evidence": "W: Evidence", "w-reasoning": "W: Reasoning",
       "i-pred": "I: Prediction", "i-hyp": "I: Hypothesis", "i-supported": "I: Supported?", "i-analysis": "I: Analysis", "i-q3": "I: Level 3 question",
       "c-stance1": "C: First stance", "c-reason": "C: Reason", "c-partner": "C: Partner", "c-respond": "C: Response", "c-stance2": "C: Final stance", "c-reflect": "C: Reflection", "o-sum": "O: Summary" };
     const answers = Object.keys(lab).filter(k => I[k]).map(k => `${lab[k]}: ${String(I[k]).replace(/\s+/g, " ").trim()}`).join("  |  ");

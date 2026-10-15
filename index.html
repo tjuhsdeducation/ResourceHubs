@@ -209,6 +209,33 @@ h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
 .dreply-btn{border:0;background:none;color:var(--c);font:800 .9rem var(--body);cursor:pointer;padding:4px 0}
 .dkids{border-left:3px solid color-mix(in srgb,var(--c) 35%,var(--line));padding-left:10px;margin-top:6px}
 .crumb a{color:var(--muted);text-decoration:none;font-weight:700}.crumb a:hover{color:var(--fg);text-decoration:underline}
+.dsource{margin-top:18px;background:var(--paper);color:#1f2430;border:2px solid var(--line);border-left:8px solid var(--c);border-radius:20px;padding:18px 22px}
+.dsource h2{margin:6px 0 10px;font-size:1.4rem}
+.dsrc-body{font-size:1.02rem;line-height:1.6}
+.dsrc-body p{margin:0 0 10px}
+.dsrc-body .dtab{border-collapse:collapse;width:100%;max-width:640px}
+.dsrc-body .dtab th,.dsrc-body .dtab td{border:1px solid #d7dbe4;padding:6px 10px;text-align:left}
+.dsrc-body .dtab th{background:#eef1f6}
+.dcite{margin:10px 0 0;font-size:.85rem;color:#5d6577;font-style:italic}
+.readgate{text-align:center}.readgate p{color:var(--muted);font-weight:600}
+.daily{margin:20px 0 6px;background:linear-gradient(135deg,color-mix(in srgb,#ffd166 22%,var(--surface)),color-mix(in srgb,#e8368f 12%,var(--surface)));border:3px solid color-mix(in srgb,#e8368f 30%,var(--line));border-radius:28px;padding:20px 22px}
+.daily-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.daily-head h2{margin:2px 0 0;font-size:1.5rem}
+.dkick{font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:.78rem;color:#c2185b}
+.daily-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:18px;margin-top:14px;align-items:start}
+@media (max-width:900px){.daily-grid{grid-template-columns:1fr}}
+.wyr-host{background:var(--surface);border-radius:20px;padding:14px;border:1px solid var(--line)}
+.d5{background:var(--surface);border-radius:20px;padding:14px 16px;border:1px solid var(--line)}
+.d5 h3{margin:0 0 10px;font-size:1.2rem}.d5 h3 small{font:700 .8rem var(--body);color:var(--muted);margin-left:6px}
+.d5card{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.d5card:first-of-type{border-top:0}
+.d5n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--k);color:#fff;display:grid;place-items:center;font:800 .95rem var(--display)}
+.d5card b{color:var(--k)}.d5card p{margin:3px 0 6px;font-weight:600}
+.d5rev,.d5tf{border:2px solid var(--k);background:var(--surface);color:var(--k);border-radius:999px;padding:4px 12px;font:800 .82rem var(--body);cursor:pointer}
+.d5tf{margin-right:6px}.d5tf.on{background:var(--k);color:#fff}
+.d5ans,.tfout{margin:4px 0 0;font-weight:700;color:var(--fg)}
+.daily.present{position:fixed;inset:0;z-index:100;margin:0;border-radius:0;overflow:auto;font-size:1.25rem;padding:32px 40px}
+.daily.present .daily-head h2{font-size:2.2rem}.daily.present .d5card p{font-size:1.2rem}
 .k-print{--k:var(--c)}.k-page{--k:#8a54e0}
 .rcard.printable{cursor:default}
 .rcard .pmeta{display:flex;gap:6px;flex-wrap:wrap}
@@ -466,9 +493,6 @@ const CONFETTI=`<svg class="confetti" viewBox="0 0 1000 260" preserveAspectRatio
 const SECTIONS = [
  {id:'avid', name:'AVID', color:'var(--c-avid)', blurb:'WICOR strategies, binder systems, tutorials, and printable forms for your AVID elective and schoolwide AVID classrooms.',
   topics:[
-   {name:'Community Builders', items:[
-     {k:'lesson', id:'qotd', feature:true, title:'Would You Rather? Question of the Day', desc:'Silly either/or questions to get students talking, with partner prompts and a class vote count', meta:'5 min'}
-   ]},
    {name:'Start Here', items:[
      {k:'handout', id:'wicor', title:'WICOR at a Glance', desc:'Writing, Inquiry, Collaboration, Organization, Reading — with classroom look-fors'},
      {k:'nav', url:'#avid/discuss', title:'💬 Discussion Board', desc:'College-style discussions: post, reply to classmates, and get scored automatically'},
@@ -571,6 +595,10 @@ const SECTIONS = [
      {k:'page', subj:'Science', url:'lesson-reaction-rates.html', title:'Chemistry: Collision Course, Why Cold Keeps Food Fresh', desc:'Collision theory article, fizzing-tablet temperature lab with live graph, debate, and a reaction-rate organizer', meta:'5 stations · 45 min'},
    ]},
    {name:'Math WICOR Lessons', items:[
+     {k:'page', subj:'Math', url:'lesson-find-the-mistake.html', title:'Algebra 1: Find the Mistake', desc:'Read a worked solution with an error, prove the right answer, use a balance lab, debate, and sort equation moves (visual reading)', meta:'5 stations · 45 min'},
+     {k:'page', subj:'Math', url:'lesson-race-to-school.html', title:'Algebra 1: Race to School', desc:'Read a distance-time graph, write with graph evidence, run a catch-up lab, debate, and organize slope and intercepts (visual reading)', meta:'5 stations · 45 min'},
+     {k:'page', subj:'Math', url:'lesson-shadow-math.html', title:'Geometry: Shadow Math', desc:'Read a similar-triangles diagram, solve a proportion, run a shadow lab, debate, and sort similar triangles (visual reading)', meta:'5 stations · 45 min'},
+     {k:'page', subj:'Math', url:'lesson-angle-detectives.html', title:'Geometry: Angle Detectives', desc:'Read a parallel-lines diagram, prove roads are parallel, run an angle lab, debate, and sort angle pairs (visual reading)', meta:'5 stations · 45 min'},
      {k:'page', subj:'Math', url:'lesson-linear-functions.html', title:'Algebra 1: The Price Is Linear', desc:'Slope and y-intercept through phone plans, a plan calculator that graphs two lines, debate, and a linear-function sort', meta:'5 stations · 45 min'},
      {k:'page', subj:'Math', url:'lesson-pythagorean.html', title:'Geometry: Reach for the Sky', desc:'The Pythagorean theorem, a ladder lab with a safety check and graph, debate, and a right-triangle sort', meta:'5 stations · 45 min'},
    ]},
@@ -585,6 +613,10 @@ const SECTIONS = [
  {id:'wicor', name:'WICOR', color:'var(--c-wicor)', blurb:'Hands-on, graded practice for every WICOR strategy in Math, Science, English, and History. Students mark, sort, and write, then send their score to their teacher.',
   topics:[
    {name:'Full WICOR Lessons', sub:'One topic, all five letters: students read, write, inquire, collaborate, and organize, about 5–10 minutes per station.', items:[
+     {k:'page', subj:'Math', url:'lesson-find-the-mistake.html', title:'Algebra 1: Find the Mistake', desc:'Read a worked solution with an error, prove the right answer, use a balance lab, debate, and sort equation moves (visual reading)', meta:'5 stations · 45 min'},
+     {k:'page', subj:'Math', url:'lesson-race-to-school.html', title:'Algebra 1: Race to School', desc:'Read a distance-time graph, write with graph evidence, run a catch-up lab, debate, and organize slope and intercepts (visual reading)', meta:'5 stations · 45 min'},
+     {k:'page', subj:'Math', url:'lesson-shadow-math.html', title:'Geometry: Shadow Math', desc:'Read a similar-triangles diagram, solve a proportion, run a shadow lab, debate, and sort similar triangles (visual reading)', meta:'5 stations · 45 min'},
+     {k:'page', subj:'Math', url:'lesson-angle-detectives.html', title:'Geometry: Angle Detectives', desc:'Read a parallel-lines diagram, prove roads are parallel, run an angle lab, debate, and sort angle pairs (visual reading)', meta:'5 stations · 45 min'},
      {k:'page', subj:'Science', url:'lesson-photosynthesis.html', title:'Biology: Photosynthesis, The Factory in Every Leaf', desc:'Annotate an article, write a CER, run a virtual plant lab and graph it, debate, and build a graphic organizer', meta:'5 stations · 45 min'},
      {k:'page', subj:'Science', url:'lesson-reaction-rates.html', title:'Chemistry: Collision Course, Why Cold Keeps Food Fresh', desc:'Collision theory article, fizzing-tablet temperature lab with live graph, debate, and a reaction-rate organizer', meta:'5 stations · 45 min'},
      {k:'page', subj:'History', url:'lesson-black-death.html', title:'World History: The Plague That Remade Europe', desc:'The Black Death’s effects on work and power, an outbreak model with quarantine, debate, and a cause-and-effect organizer', meta:'5 stations · 45 min'},
@@ -594,6 +626,8 @@ const SECTIONS = [
      {k:'page', subj:'English', url:'lesson-fast-fashion.html', title:'English 2: The Real Price of a $5 T-Shirt', desc:'Claims, counterclaims and rebuttals, a cost-per-wear lab, debate, and an argument map', meta:'5 stations · 45 min'},
    ]},
    {name:'W · Writing', sub:'Write to learn in every class: color-code paragraphs, explain your math, and write like a scientist and historian.', items:[
+     {k:'lesson', id:'am_w', title:'Explain Each Step (Algebra)', desc:'Match each step to its move, then explain your own solution'},
+     {k:'lesson', id:'gm_w', title:'Justify It (Geometry)', desc:'Find a missing angle and write a justification'},
      {k:'lesson', id:'mk_w1', title:'Color-Code a CER Paragraph', desc:'Tap each sentence of a lab conclusion: claim, evidence, or reasoning'},
      {k:'lesson', id:'mk_w2', title:'Color-Code an Analysis Paragraph', desc:'Find the topic sentence, quote, commentary, and conclusion'},
      {k:'lesson', id:'wm', title:'Explain Your Math', desc:'Pick the clearest explanation, order the steps, and explain area in writing'},
@@ -605,6 +639,8 @@ const SECTIONS = [
      {k:'lesson', id:'w3', title:'Make It Specific', desc:'Choose the stronger sentence and revise a vague one'}
    ]},
    {name:'I · Inquiry', sub:'Ask better questions: spot mistakes, test ideas, question texts, and investigate sources.', items:[
+     {k:'lesson', id:'am_i', title:'Ask Before You Solve: Systems', desc:'Set up a ticket-sales system and write a specific POC'},
+     {k:'lesson', id:'gm_i', title:'Notice & Wonder: The Diagonal', desc:'Find a hidden right triangle and ask higher-level questions'},
      {k:'lesson', id:'mk_i1', title:'Spot the Mistake', desc:'Underline where a student’s algebra went wrong, then write their POC'},
      {k:'lesson', id:'mk_i2', title:'Color-Code Costa’s Questions', desc:'Tag Dust Bowl questions as Level 1, 2, or 3'},
      {k:'lesson', id:'im', title:'Ask Before You Solve', desc:'Break down a phone-plan word problem with questions'},
@@ -617,6 +653,8 @@ const SECTIONS = [
      {k:'lesson', id:'i4', title:'Strong or Vague? Point of Confusion', desc:'Sort POCs and rewrite a vague one'}
    ]},
    {name:'C · Collaboration', sub:'Practice academic talk in math groups, lab teams, seminars, and debates.', items:[
+     {k:'lesson', id:'am_c', title:'Two Methods, One Answer', desc:'Compare substitution and elimination like a math team'},
+     {k:'lesson', id:'gm_c', title:'Peer Review a Proof', desc:'Find a missing reason and give respectful feedback'},
      {k:'lesson', id:'mk_c1', title:'Code the Conversation', desc:'Color-code a real discussion by talk move'},
      {k:'lesson', id:'cm', title:'Math Talk', desc:'Handle different answers and group roles in math'},
      {k:'lesson', id:'cs', title:'Lab Partners', desc:'Solve lab-team problems and order the group lab steps'},
@@ -627,6 +665,8 @@ const SECTIONS = [
      {k:'lesson', id:'c3', title:'Philosophical Chairs Norms', desc:'True or false: what good discussion looks like'}
    ]},
    {name:'O · Organization', sub:'Organize work, ideas, and time across your classes.', items:[
+     {k:'lesson', id:'am_o', title:'Organize: Solving a System', desc:'Order substitution steps and sort equation forms'},
+     {k:'lesson', id:'gm_o', title:'Organize Triangle Facts', desc:'Classify triangles and order Pythagorean steps'},
      {k:'lesson', id:'mk_o1', title:'Color-Code Your Planner', desc:'Sort a real to-do list into today, this week, and later'},
      {k:'lesson', id:'om', title:'Organize Your Problem Solving', desc:'Order the steps for a word problem and plan for a test'},
      {k:'lesson', id:'os', title:'Cell Organizer', desc:'Sort cell parts into plant, animal, or both'},
@@ -637,6 +677,8 @@ const SECTIONS = [
      {k:'lesson', id:'o3', title:'SMART Goals', desc:'Spot a SMART goal and write your own'}
    ]},
    {name:'R · Reading', sub:'Read with purpose: mark the text, read data, and close-read sources.', items:[
+     {k:'lesson', id:'am_r', title:'Read the Graph: Slope & Intercept', desc:'Read a bike-rental graph: slope, intercept, and equation'},
+     {k:'lesson', id:'gm_r', title:'Read the Diagram: Parallel Lines', desc:'Read an angle diagram and find missing angles'},
      {k:'lesson', id:'mk_r1', title:'Mark the Text: Sleep and Learning', desc:'Number paragraphs, circle key terms, and underline the claim'},
      {k:'lesson', id:'mk_r2', title:'Mark the Text: The Dust Bowl', desc:'Mark a history passage like a pro'},
      {k:'lesson', id:'rm', title:'Read the Word Problem', desc:'Find extra information and key phrases in a math problem'},
@@ -1007,6 +1049,67 @@ const P_SLEEP='Most teenagers need between 8 and 10 hours of sleep each night, b
 const P_PHONE=['Many students keep their phones on the desk while they study.','Even when the phone is silent, it can pull attention away from the task.','Each time a notification appears, the brain has to switch tasks and then refocus.','These small switches add up, making studying take longer and feel harder.','Students who want to get more done in less time should put their phones out of sight while they work.'];
 const mc=(q,opts,a,why)=>({t:'mc',q,opts,a,why});
 const CH={
+ /* ---------- ALGEBRA 1 & GEOMETRY focused practice (support + challenge) ---------- */
+ am_r:{title:'Read the Graph: Slope & Intercept',strat:'Reading',subj:'Math',items:[
+   {t:'passage',html:'<b>Bike rental: total cost (y) after renting for x hours</b><svg viewBox="0 0 320 230" style="width:100%;max-width:420px;display:block;margin-top:6px"><g font-family="Nunito" font-size="11" fill="#5d6577">'+[0,1,2,3,4,5].map(x=>'<line x1="'+(40+x*50)+'" y1="10" x2="'+(40+x*50)+'" y2="200" stroke="#eceff4"/><text x="'+(40+x*50)+'" y="215" text-anchor="middle">'+x+'</text>').join('')+[0,2,4,6,8,10,12].map(y=>'<line x1="40" y1="'+(200-y*15)+'" x2="290" y2="'+(200-y*15)+'" stroke="#eceff4"/><text x="34" y="'+(204-y*15)+'" text-anchor="end">$'+y+'</text>').join('')+'</g><line x1="40" y1="200" x2="290" y2="200" stroke="#1f2430" stroke-width="2"/><line x1="40" y1="10" x2="40" y2="200" stroke="#1f2430" stroke-width="2"/><line x1="40" y1="185" x2="290" y2="35" stroke="#2b7de9" stroke-width="4"/>'+[0,1,2,3,4,5].map(x=>'<circle cx="'+(40+x*50)+'" cy="'+(200-(2*x+1)*15)+'" r="5" fill="#2b7de9"/>').join('')+'<text x="165" y="228" text-anchor="middle" font-family="Nunito" font-weight="800" font-size="11" fill="#1f2430">Hours rented (x)</text></svg>'},
+   mc('What is the y-intercept of this graph?',['0','1','2','3'],1,'The line crosses the y-axis at $1. That is the cost before you ride at all.'),
+   mc('What is the slope?',['1','2','3','½'],1,'Each extra hour adds $2: from (0, 1) to (1, 3) the cost rises 2 while time rises 1.'),
+   mc('What does the slope MEAN in this situation?',['The rental shop charges a $1 fee','It costs $2 for each hour','You rode for 2 hours','The bike is $11'],1,'Slope is the rate of change: dollars per hour.'),
+   mc('Which equation matches the graph?',['y = x + 2','y = 2x + 1','y = 2x','y = 3x + 1'],1,'Slope 2, y-intercept 1 → y = 2x + 1.'),
+   mc('CHALLENGE: How much would a 9-hour rental cost?',['$18','$19','$20','$11'],1,'y = 2(9) + 1 = 19.')]},
+ gm_r:{title:'Read the Diagram: Parallel Lines',strat:'Reading',subj:'Math',items:[
+   {t:'passage',html:'<b>Lines m and n are parallel. ∠1 = 70°.</b><svg viewBox="0 0 320 200" style="width:100%;max-width:420px;display:block;margin-top:6px"><line x1="10" y1="60" x2="310" y2="60" stroke="#2b7de9" stroke-width="3"/><line x1="10" y1="140" x2="310" y2="140" stroke="#2b7de9" stroke-width="3"/><line x1="105" y1="5" x2="190" y2="195" stroke="#e0408a" stroke-width="3"/><g font-family="Nunito" font-weight="900" font-size="13" fill="#1f2430"><text x="112" y="52">1</text><text x="140" y="52">2</text><text x="112" y="80">3</text><text x="140" y="80">4</text><text x="148" y="132">5</text><text x="176" y="132">6</text><text x="148" y="160">7</text><text x="176" y="160">8</text><text x="14" y="52" fill="#2b7de9">m</text><text x="14" y="132" fill="#2b7de9">n</text></g></svg><small>Angles are numbered top-left, top-right, bottom-left, bottom-right at each intersection.</small>'},
+   mc('What is the measure of ∠5?',['70°','110°','20°','180°'],0,'∠1 and ∠5 are corresponding angles, so they are congruent: 70°.'),
+   mc('What is the measure of ∠2?',['70°','110°','90°','20°'],1,'∠1 and ∠2 form a linear pair, so they add to 180°: 180 − 70 = 110°.'),
+   mc('Which pair are alternate interior angles?',['∠1 and ∠5','∠3 and ∠6','∠1 and ∠4','∠2 and ∠6'],1,'∠3 and ∠6 are between the parallel lines on opposite sides of the transversal.'),
+   mc('CHALLENGE: What is ∠8?',['70°','110°','20°','160°'],0,'∠8 is alternate exterior to ∠1, so it is also 70°.'),
+   {t:'write',q:'Explain how you found ∠2. Name the angle relationship you used.',min:15}]},
+ am_w:{title:'Explain Each Step (Algebra)',strat:'Writing',subj:'Math',items:[
+   {t:'passage',html:'<b>Solve 2(x + 3) = 14</b><div style="font:600 1.1rem Georgia,serif;line-height:1.9;margin-top:6px">Step A: 2x + 6 = 14<br>Step B: 2x = 8<br>Step C: x = 4</div>'},
+   {t:'match',q:'Match each step to the move that was made.',labels:['Distributive property','Subtract 6 from both sides','Divide both sides by 2'],rows:[['Step A: 2x + 6 = 14','Distributive property'],['Step B: 2x = 8','Subtract 6 from both sides'],['Step C: x = 4','Divide both sides by 2']]},
+   mc('Which is the clearest written explanation of Step B?',['I moved the 6','The 6 goes away','I subtracted 6 from both sides to undo adding 6, so 2x = 8','Then it’s 8'],2,'A strong explanation names the operation, says “both sides,” and gives the reason.'),
+   mc('How can you CHECK that x = 4 is correct?',['Ask a friend','Substitute 4 for x: 2(4 + 3) = 14 ✓','Look at the answer key','Solve it again the same way'],1,'Substituting proves the answer makes the equation true.'),
+   {t:'write',q:'Solve 4(x − 1) = 20. Explain each step in a complete sentence, then check your answer.',min:30}]},
+ gm_w:{title:'Justify It (Geometry)',strat:'Writing',subj:'Math',items:[
+   {t:'passage',html:'<b>Find x.</b><svg viewBox="0 0 300 180" style="width:100%;max-width:360px;display:block;margin-top:6px"><polygon points="30,160 270,160 110,30" fill="#fff3e0" stroke="#ee7d1c" stroke-width="3"/><g font-family="Nunito" font-weight="900" font-size="14" fill="#1f2430"><text x="50" y="152">50°</text><text x="226" y="152">60°</text><text x="106" y="60">x</text></g></svg>'},
+   mc('What is x?',['60°','70°','80°','110°'],1,'50 + 60 + x = 180, so x = 70.'),
+   mc('Which theorem justifies your answer?',['Pythagorean Theorem','Triangle Angle Sum Theorem','Vertical Angles Theorem','Corresponding Angles Postulate'],1,'The angles of any triangle add to 180°.'),
+   mc('Which justification is strongest?',['It looks like 70°','Because 180 − 110 = 70','x = 70° because the interior angles of a triangle add to 180°, and 50° + 60° + 70° = 180°','My calculator said so'],2,'A strong justification names the rule AND shows the math.'),
+   {t:'write',q:'Write a justification for x = 70° using the Triangle Angle Sum Theorem. Name the rule and show the math.',min:20}]},
+ am_i:{title:'Ask Before You Solve: Systems',strat:'Inquiry',subj:'Math',items:[
+   {t:'passage',html:'<b>The AVID club sold 20 tickets to a game night.</b> Adult tickets cost $8 and student tickets cost $5. The club collected $130. How many adult tickets were sold?'},
+   mc('What is the BEST first question to ask yourself?',['What is the answer?','What am I trying to find, and what do the variables stand for?','Is this on the test?','Can I skip this one?'],1,'Defining the unknowns is the first step in setting up a system.'),
+   mc('If a = adult tickets and s = student tickets, which equation shows the TOTAL number of tickets?',['8a + 5s = 130','a + s = 20','a + s = 130','8a = 130'],1,'Each ticket counts once: a + s = 20.'),
+   mc('Which equation shows the MONEY collected?',['a + s = 20','8a + 5s = 20','8a + 5s = 130','13(a + s) = 130'],2,'Adult tickets earn $8 each and student tickets $5 each.'),
+   mc('CHALLENGE: How many adult tickets were sold?',['8','10','12','15'],1,'Substitute s = 20 − a: 8a + 5(20 − a) = 130 → 3a = 30 → a = 10.'),
+   mc('Which question is Level 3 (Costa)?',['How much is an adult ticket?','What would happen to the number of adult tickets if prices doubled but the total stayed $130?','How many tickets were sold?','What does a stand for?'],1,'Level 3 questions ask you to predict or imagine.'),
+   {t:'write',q:'Write a specific point of confusion (POC) you could bring to tutorials about this problem. Name the exact step.',min:15}]},
+ gm_i:{title:'Notice & Wonder: The Diagonal',strat:'Inquiry',subj:'Math',items:[
+   {t:'passage',html:'<b>A rectangular phone screen is 6 inches tall and 8 inches wide.</b><svg viewBox="0 0 300 200" style="width:100%;max-width:340px;display:block;margin-top:6px"><rect x="40" y="30" width="200" height="150" rx="10" fill="#e9eefb" stroke="#1f2430" stroke-width="3"/><line x1="40" y1="180" x2="240" y2="30" stroke="#e0408a" stroke-width="3" stroke-dasharray="8 6"/><g font-family="Nunito" font-weight="900" font-size="14" fill="#1f2430"><text x="140" y="198" text-anchor="middle">8 in</text><text x="248" y="110">6 in</text><text x="120" y="98" fill="#e0408a">d = ?</text></g></svg>'},
+   mc('What shape does the diagonal make with two sides of the screen?',['A square','A right triangle','A circle','A trapezoid'],1,'The corner of the rectangle is 90°, so the diagonal forms a right triangle.'),
+   mc('How long is the diagonal?',['10 in','14 in','12 in','48 in'],0,'6² + 8² = 36 + 64 = 100, and √100 = 10.'),
+   mc('Which is a Level 2 question about the diagram?',['What is the width?','Why is the diagonal longer than either side?','What color is the screen?','What would a 100-inch screen look like in my room?'],1,'Level 2 questions ask you to explain or analyze.'),
+   {t:'write',q:'Write one “I notice…” and one “I wonder…” about the diagram.',min:15}]},
+ am_c:{title:'Two Methods, One Answer',strat:'Collaboration',subj:'Math',items:[
+   {t:'passage',html:'<b>Solve: x + y = 5 and x − y = 1</b><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px"><div style="background:#e9eefb;border-radius:10px;padding:8px"><b>Ana (substitution)</b><br>x = 5 − y<br>(5 − y) − y = 1<br>5 − 2y = 1 → y = 2<br>x = 3</div><div style="background:#fdece8;border-radius:10px;padding:8px"><b>Ben (elimination)</b><br>Add the equations:<br>2x = 6 → x = 3<br>3 + y = 5 → y = 2</div></div>'},
+   mc('Ana and Ben used different methods. What is the best response?',['One of them must be wrong','“We both got (3, 2). Can you explain why adding the equations worked?”','Just copy whoever finished first','Ask the teacher who is right'],1,'Comparing methods and asking “why” builds understanding for both partners.'),
+   {t:'order',q:'Put the steps of a strong math group discussion in order.',steps:['Each person solves on their own first','Share answers and methods','Ask questions about any differences','Agree on the answer and check it together','Write a summary of the best method']},
+   mc('Which statement BUILDS ON a partner’s idea?',['“That’s wrong.”','“I’d add that we can check by substituting (3, 2) into both equations.”','“Whatever.”','“I did it my way.”'],1,'Building on an idea adds something new.'),
+   mc('CHALLENGE: Which method is faster for 2x + 3y = 12 and 2x − 3y = 0?',['Substitution, because no variable is alone','Elimination, because adding the equations cancels the y terms','Graphing is the only way','They cannot be solved'],1,'+3y and −3y cancel when you add, so elimination is quick.')]},
+ gm_c:{title:'Peer Review a Proof',strat:'Collaboration',subj:'Math',items:[
+   {t:'passage',html:'<b>Given:</b> ∠1 and ∠2 form a linear pair, and m∠2 = 120°. <b>Prove:</b> m∠1 = 60°.<table class="dtab" style="margin-top:6px"><tr><th>Statement</th><th>Reason</th></tr><tr><td>1. ∠1 and ∠2 form a linear pair; m∠2 = 120°</td><td>Given</td></tr><tr><td>2. m∠1 + m∠2 = 180°</td><td>Linear Pair Postulate</td></tr><tr><td>3. m∠1 + 120° = 180°</td><td><b>?</b></td></tr><tr><td>4. m∠1 = 60°</td><td>Subtraction Property of Equality</td></tr></table>'},
+   mc('What is the missing reason in step 3?',['Given','Substitution Property of Equality','Vertical Angles Theorem','Definition of midpoint'],1,'You replaced m∠2 with its value, 120°: that is substitution.'),
+   mc('Which peer feedback is MOST helpful and respectful?',['“This is bad.”','“Step 3 needs a reason. I think it’s Substitution because you replaced m∠2 with 120°.”','“Looks fine.”','“Just copy mine.”'],1,'Helpful feedback is specific, gives a reason, and stays kind.'),
+   {t:'write',q:'Write feedback for a classmate who wrote “Because it looks like 60°” as a reason. Use the frame: “I noticed ___. One suggestion is ___ because ___.”',min:20}]},
+ am_o:{title:'Organize: Solving a System',strat:'Organization',subj:'Math',items:[
+   {t:'order',q:'Put the steps for solving a system by SUBSTITUTION in order.',steps:['Solve one equation for one variable','Substitute that expression into the other equation','Solve for the remaining variable','Substitute back to find the other variable','Check the ordered pair in BOTH equations']},
+   {t:'match',q:'Sort each equation by its form.',labels:['Slope-intercept','Standard','Point-slope'],rows:[['y = 2x + 3','Slope-intercept'],['3x + 4y = 12','Standard'],['y − 2 = 5(x − 1)','Point-slope'],['y = −x','Slope-intercept'],['x − y = 7','Standard']]},
+   mc('Where should a worked example go in your Cornell notes?',['In the left column only','In the right column, with each step labeled','In the summary only','Nowhere'],1,'Worked examples with labeled steps belong in the notes column.')]},
+ gm_o:{title:'Organize Triangle Facts',strat:'Organization',subj:'Math',items:[
+   {t:'match',q:'Classify each triangle by its sides.',labels:['Equilateral','Isosceles','Scalene'],rows:[['Sides 5, 5, 5','Equilateral'],['Sides 5, 5, 8','Isosceles'],['Sides 4, 6, 7','Scalene'],['Sides 9, 9, 3','Isosceles'],['Sides 3, 4, 5','Scalene']]},
+   {t:'order',q:'Put the steps for finding a missing side with the Pythagorean Theorem in order.',steps:['Identify the legs (a, b) and the hypotenuse (c)','Write a² + b² = c²','Substitute the known lengths','Solve for the missing value','Take the square root and label the units']},
+   mc('A triangle has sides 7, 24, and 25. Is it a right triangle?',['Yes, because 7² + 24² = 25²','No, because 25 is too big','No, because it is scalene','You can’t tell without a picture'],0,'49 + 576 = 625 = 25², so it is a right triangle.')]},
+
  w1:{title:'Summary Sprint',strat:'Writing',items:[{t:'passage',text:P_SLEEP},
    mc('Which is the best one-sentence summary?',['Teens are lazy and stay up too late.','Because teens’ body clocks shift later, early start times cost them sleep that affects learning, so schools should rethink schedules.','Some districts changed their start times.','Sleep is important for everyone.'],1,'A strong summary names the main idea and the key reason, in your own words.'),
    mc('What makes a summary different from a retelling?',['It includes every detail','It states the main idea and key points in your own words','It adds your opinion','It copies the first sentence'],1,'Summaries are short and focus on what matters most.'),
@@ -1400,6 +1503,16 @@ H.pocexamples={title:'Point of Confusion Examples by Class', html:`<h2>Point of 
 /* ---------- LEARNING TARGETS & ESSENTIAL QUESTIONS (one per activity) ----------
    ✏️ To edit: find the activity id, change the eq (question) or lt (list of "I can" statements). */
 const ACT_INFO={
+ am_r:{eq:'What can a graph tell me about a real situation?',lt:['I can identify the slope and y-intercept on a graph.','I can explain what slope and y-intercept mean in context.']},
+ gm_r:{eq:'How do angle relationships help me find unknown angles?',lt:['I can read an angle diagram and name angle pairs.','I can use angle relationships to find missing angle measures.']},
+ am_w:{eq:'Why does explaining each step make me a stronger problem solver?',lt:['I can name the property or operation used in each step of a solution.','I can explain my steps in complete sentences and check my answer.']},
+ gm_w:{eq:'How do mathematicians prove that an answer is correct?',lt:['I can find a missing angle in a triangle.','I can write a justification that names a theorem and shows the math.']},
+ am_i:{eq:'How do good questions help me set up and solve a system of equations?',lt:['I can define variables and write a system of equations from a word problem.','I can write a specific point of confusion about a math problem.']},
+ gm_i:{eq:'What can I notice and wonder about a diagram before I solve?',lt:['I can recognize a right triangle inside a real-world shape.','I can use the Pythagorean theorem and ask a higher-level question.']},
+ am_c:{eq:'How can comparing methods help my group understand math more deeply?',lt:['I can compare two methods for solving a system.','I can respond to a partner’s method respectfully and build on it.']},
+ gm_c:{eq:'How can peer feedback make a proof stronger?',lt:['I can identify a missing reason in a two-column proof.','I can give specific, respectful feedback on a classmate’s proof.']},
+ am_o:{eq:'How does organizing my steps help me solve systems accurately?',lt:['I can order the steps for solving a system by substitution.','I can sort linear equations by their form.']},
+ gm_o:{eq:'How can I organize what I know about triangles?',lt:['I can classify triangles by their sides.','I can order the steps for using the Pythagorean theorem.']},
  /* AVID space */
  cornell:{eq:'How does taking and interacting with focused notes help me remember and use what I learn?',lt:['I can take two-column notes with clear questions and key ideas.','I can process my notes and write a summary that connects to the essential question.']},
  costasort:{eq:'How do the questions I ask shape how deeply I think?',lt:['I can identify Level 1, 2, and 3 questions using Costa’s Levels.','I can explain what makes a question higher-level.']},
@@ -1537,6 +1650,112 @@ function wicorSub(s,key){
 }
 
 
+
+/* =====================================================================
+   📅 DAILY 5 + WOULD YOU RATHER (header above the AVID folders)
+   A new set appears every day automatically (picked by the date).
+   ✏️ Add more questions to any list below; the rotation adjusts itself.
+   ===================================================================== */
+const D5_RIDDLE=[
+ ['What has keys but can’t open locks?','A piano'],['What gets wetter the more it dries?','A towel'],['What has hands but can’t clap?','A clock'],
+ ['What can you catch but not throw?','A cold'],['The more you take, the more you leave behind. What are they?','Footsteps'],['What has a neck but no head?','A bottle'],
+ ['What goes up but never comes down?','Your age'],['What has many teeth but can’t bite?','A comb'],['I’m tall when I’m young and short when I’m old. What am I?','A candle'],
+ ['What can travel around the world while staying in a corner?','A stamp'],['What has one eye but can’t see?','A needle'],['What belongs to you, but other people use it more than you do?','Your name'],
+ ['What runs but never walks, and has a mouth but never talks?','A river'],['What has a head and a tail but no body?','A coin'],['What month has 28 days?','All of them!'],
+ ['What can fill a room but takes up no space?','Light'],['If you have me, you want to share me. If you share me, you don’t have me. What am I?','A secret'],
+ ['What is full of holes but still holds water?','A sponge'],['What word is spelled incorrectly in every dictionary?','“Incorrectly”'],
+ ['What comes once in a minute, twice in a moment, but never in a thousand years?','The letter M'],['What has cities but no houses, forests but no trees, and water but no fish?','A map'],
+ ['What can’t talk but will reply when spoken to?','An echo'],['What has words but never speaks?','A book'],['What building has the most stories?','A library'],
+ ['What invention lets you look right through a wall?','A window'],['What starts with T, ends with T, and has T in it?','A teapot'],['What kind of band never plays music?','A rubber band'],
+ ['Forward I am heavy, but backward I am not. What am I?','The word “ton”'],['What gets bigger the more you take away from it?','A hole'],['What has a thumb and four fingers but isn’t alive?','A glove']];
+const D5_MATH=[
+ ['Solve: 3x + 7 = 22','x = 5'],['What is 15% of 80?','12'],['Find the slope of the line through (2, 3) and (6, 11).','m = 8 ÷ 4 = 2'],
+ ['A right triangle has legs 6 and 8. How long is the hypotenuse?','10 (6² + 8² = 100)'],['Simplify: 4(x − 3) + 2x','6x − 12'],['Two angles are supplementary. One is 65°. What is the other?','115°'],
+ ['Evaluate 2x² − 3 when x = 4.','29'],['Solve: x ÷ 5 − 2 = 4','x = 30'],['A triangle has angles of 50° and 60°. What is the third angle?','70°'],
+ ['Write the equation of a line with slope 3 and y-intercept −2.','y = 3x − 2'],['Solve: 2(x + 4) = 18','x = 5'],['What comes next: 3, 7, 11, 15, …?','19 (add 4 each time)'],
+ ['A rectangle has a perimeter of 30 and a length of 9. What is its width?','6'],['Solve the system: x + y = 10 and x − y = 4','x = 7, y = 3'],['Simplify: 2³ · 2²','2⁵ = 32'],
+ ['What is the y-intercept of y = −4x + 9?','9'],['What is the sum of the interior angles of a hexagon?','720° ((6 − 2) × 180°)'],['Solve: |x − 3| = 5','x = 8 or x = −2'],
+ ['Factor: x² + 5x + 6','(x + 2)(x + 3)'],['Find the midpoint of (2, 4) and (8, 10).','(5, 7)'],['A $40 shirt is 25% off. What is the sale price?','$30'],
+ ['Solve: 5x − 3 = 2x + 12','x = 5'],['Find the distance between (1, 2) and (4, 6).','5'],['If f(x) = 2x + 1, what is f(7)?','15'],
+ ['One vertical angle measures 47°. What does the other measure?','47° (vertical angles are congruent)'],['What is the volume of a cube with side length 4?','64 cubic units'],
+ ['Solve: −3x > 12','x < −4 (flip the sign when dividing by a negative!)'],['What is the slope of a horizontal line?','0'],['What is the complement of a 28° angle?','62°'],
+ ['Solve: x² = 49','x = 7 or x = −7']];
+const D5_WORD=[
+ ['analyze','verb','to break something into parts to understand it'],['evaluate','verb','to judge the value or quality of something using evidence'],['infer','verb','to figure out something from clues and evidence'],
+ ['synthesize','verb','to combine ideas from different sources into something new'],['evidence','noun','facts or information that show something is true'],['perspective','noun','a particular way of seeing or thinking about something'],
+ ['hypothesis','noun','a testable prediction or explanation'],['justify','verb','to give reasons that show something is right'],['persevere','verb','to keep going even when something is difficult'],
+ ['collaborate','verb','to work together toward a shared goal'],['articulate','verb','to express an idea clearly'],['ambiguous','adjective','having more than one possible meaning'],
+ ['coherent','adjective','logical and easy to follow'],['concise','adjective','clear and brief, without extra words'],['credible','adjective','believable and trustworthy'],
+ ['empathy','noun','the ability to understand and share someone else’s feelings'],['initiative','noun','the ability to start something without being told'],['integrity','noun','being honest and doing what is right'],
+ ['resilient','adjective','able to recover quickly from difficulties'],['relevant','adjective','closely connected to the topic'],['significant','adjective','important or meaningful'],
+ ['interpret','verb','to explain the meaning of something'],['contrast','verb','to show how two things are different'],['summarize','verb','to state the main ideas briefly'],
+ ['objective','adjective','based on facts, not personal feelings'],['bias','noun','a preference that can make a judgment unfair'],['cite','verb','to name the source of information'],
+ ['proportion','noun','an equation stating that two ratios are equal'],['variable','noun','a symbol or factor that can change'],['theorem','noun','a statement that has been proven to be true']];
+const D5_TF=[
+ ['Octopuses have three hearts.',true,'True! Two pump blood to the gills and one pumps it to the rest of the body.'],
+ ['The Great Wall of China is easy to see from space with your bare eyes.',false,'False. Astronauts say it is very hard or impossible to see without help. It is long but narrow.'],
+ ['A day on Venus is longer than a year on Venus.',true,'True! Venus spins so slowly that one rotation takes longer than one trip around the Sun.'],
+ ['Bananas are berries, but strawberries are not (botanically speaking).',true,'True! In botany, a berry grows from one flower with one ovary. Bananas qualify; strawberries don’t.'],
+ ['Humans only use 10% of their brains.',false,'False. Brain scans show we use virtually all of our brain, just not all at the same time.'],
+ ['Sharks existed before trees.',true,'True! Sharks appear in the fossil record before the first trees.'],
+ ['Lightning never strikes the same place twice.',false,'False. Tall buildings like the Empire State Building are struck many times every year.'],
+ ['An adult human body has 206 bones.',true,'True! Babies are born with more, and some fuse together as they grow.'],
+ ['Goldfish have only a 3-second memory.',false,'False. Experiments show goldfish can remember things for months.'],
+ ['Light from the Sun takes about 8 minutes to reach Earth.',true,'True! Sunlight travels about 150 million kilometers to get here.'],
+ ['A group of flamingos is called a “flamboyance.”',true,'True! It’s a real collective noun.'],
+ ['Cleopatra lived closer in time to the Moon landing than to the building of the Great Pyramid of Giza.',true,'True! The Great Pyramid was built around 2560 BCE; Cleopatra lived around 69–30 BCE.'],
+ ['Bulls get angry when they see the color red.',false,'False. Bulls are red-green colorblind; they react to the movement of the cape.'],
+ ['A bolt of lightning is hotter than the surface of the Sun.',true,'True! Lightning can reach about 30,000 K, roughly five times hotter than the Sun’s surface.'],
+ ['The dot over a lowercase i or j is called a “tittle.”',true,'True! It’s a real word.'],
+ ['Mount Everest is the tallest mountain when measured from base to peak.',false,'False. Mauna Kea in Hawaii is taller from its base on the ocean floor, though Everest has the highest peak above sea level.'],
+ ['Butterflies taste with their feet.',true,'True! Taste sensors on their feet help them find the right plants.'],
+ ['California has the largest economy of any U.S. state.',true,'True! If it were a country, it would rank among the largest economies in the world.'],
+ ['The Pacific is the largest and deepest ocean on Earth.',true,'True! It covers about one-third of Earth’s surface.'],
+ ['Koalas can sleep up to about 20 hours a day.',true,'True! Their diet of eucalyptus leaves gives them very little energy.'],
+ ['Cracking your knuckles causes arthritis.',false,'False. Studies have not found a link between knuckle cracking and arthritis.'],
+ ['Sea otters sometimes hold hands while they sleep so they don’t drift apart.',true,'True! It’s called “rafting.”'],
+ ['A single cloud can weigh more than a million pounds.',true,'True! A typical puffy cumulus cloud holds that much water.'],
+ ['Albert Einstein failed math in school.',false,'False. Einstein was excellent at math. This is a popular myth.'],
+ ['There are more possible chess games than atoms in the observable universe.',true,'True! Estimates of possible chess games are far larger than the estimated number of atoms.'],
+ ['The shortest war in recorded history lasted less than an hour.',true,'True! The Anglo-Zanzibar War of 1896 lasted about 40 minutes.']];
+const D5_REFLECT=[
+ 'What is one goal you have for this week, and what is your first step?','Describe a time someone helped you learn something. What did they do?','What is one thing you are proud of from the last month?',
+ 'Which class challenges you the most right now? What is one strategy you could try?','If you could master one skill this year, what would it be and why?','What does a great group member do?',
+ 'What is a mistake you learned from? What did it teach you?','Describe your ideal study space. How close is it to the one you have?','What is one question you still have from a class this week?',
+ 'Who is someone you admire, and what quality of theirs would you like to build?','What helps you focus when you have a lot to do?','What is one way you could make someone’s day better today?',
+ 'What does being “college and career ready” mean to you right now?','What is something you used to think was hard that is easier now? What changed?','How do you handle stress before a big test?',
+ 'What is a career you are curious about? What would you need to learn to get there?','Describe a time you persevered through something difficult.','What is one habit you want to build, and one you want to break?',
+ 'If you could teach your class one thing, what would it be?','What is one thing you can do this week to stay organized?','What makes a teacher or tutor easy to ask for help?',
+ 'What is a book, show, or song that changed the way you think?','When do you feel most confident at school?','What advice would you give a new AVID student?',
+ 'What is one thing you want your future self to remember about this year?','How do you know when you really understand something?','What is a small win you had this week?',
+ 'Describe a point of confusion you had recently and how you worked through it.','What is something you are looking forward to this month?','How has your thinking changed about a topic this year?'];
+function dayIndex(d=new Date()){return Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(2024,0,1))/864e5)}
+function dailyHeader(){
+  const n=dayIndex(), pick=(arr,k)=>arr[((n*k)%arr.length+arr.length)%arr.length];
+  const r=pick(D5_RIDDLE,1), m=pick(D5_MATH,7), w=pick(D5_WORD,11), tf=pick(D5_TF,5), q=pick(D5_REFLECT,13);
+  const today=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
+  return `<section class="daily" id="daily"><div class="daily-head"><div><span class="dkick">Question of the Day · ${esc(today)}</span><h2>☀️ Start Here: Today’s Community Builder</h2></div>
+     <button class="dbtn ghost" id="dpresent">📽️ Present</button></div>
+   <div class="daily-grid"><div class="wyr-host" id="wyrHost"></div>
+    <div class="d5"><h3>📅 Daily 5 <small>New questions every day</small></h3>
+     <div class="d5card" style="--k:#8a54e0"><span class="d5n">1</span><div><b>🧠 Brain Teaser</b><p>${esc(r[0])}</p><button class="d5rev" data-a="${esc(r[1])}">Reveal answer</button></div></div>
+     <div class="d5card" style="--k:#2b7de9"><span class="d5n">2</span><div><b>🔢 Math Warm-Up</b><p>${esc(m[0])}</p><button class="d5rev" data-a="${esc(m[1])}">Reveal answer</button></div></div>
+     <div class="d5card" style="--k:#0e9f6e"><span class="d5n">3</span><div><b>📖 Word of the Day: <i>${esc(w[0])}</i></b> <small>(${esc(w[1])})</small><p>What do you think it means? Use it in a sentence about school.</p><button class="d5rev" data-a="${esc(w[0])}: ${esc(w[2])}">Reveal meaning</button></div></div>
+     <div class="d5card" style="--k:#e08a00"><span class="d5n">4</span><div><b>✅ True or False?</b><p>${esc(tf[0])}</p><span class="tfbtns"><button class="d5tf" data-v="1">True</button><button class="d5tf" data-v="0">False</button></span><p class="tfout" data-ans="${tf[1]?1:0}" data-why="${esc(tf[2])}"></p></div></div>
+     <div class="d5card" style="--k:#e8368f"><span class="d5n">5</span><div><b>💬 Quickwrite</b><p>${esc(q)}</p><small>Write for 2 minutes, then share with an elbow partner.</small></div></div>
+    </div></div></section>`;
+}
+function wireDaily(){
+  const host=document.getElementById('wyrHost'); if(!host) return;
+  try{L.qotd.run(host)}catch(e){host.innerHTML='<p class="empty">Would You Rather is unavailable.</p>'}
+  app.querySelectorAll('.d5rev').forEach(b=>b.onclick=()=>{b.outerHTML=`<p class="d5ans">💡 ${b.dataset.a}</p>`});
+  app.querySelectorAll('.d5tf').forEach(b=>b.onclick=()=>{const out=b.closest('.d5card').querySelector('.tfout');const right=b.dataset.v===out.dataset.ans;
+    b.closest('.tfbtns').querySelectorAll('.d5tf').forEach(x=>x.classList.toggle('on',x===b));out.innerHTML=`${right?'🎉 Correct!':'🤔 Not quite.'} ${out.dataset.why}`});
+  const d=document.getElementById('daily'), pb=document.getElementById('dpresent');
+  pb.onclick=()=>{const on=d.classList.toggle('present');pb.textContent=on?'✖ Exit present':'📽️ Present';document.body.style.overflow=on?'hidden':''};
+  document.addEventListener('keydown',function esc_(e){if(e.key==='Escape'&&d.classList.contains('present')){pb.click()}});
+}
+
 /* =====================================================================
    FOLDER BUTTONS for every space (AVID, Interactive Lessons, etc.)
    ===================================================================== */
@@ -1552,7 +1771,9 @@ function spaceHome(s){
   if(s.id==='avid') tiles.unshift(`<a class="tile" href="#avid/discuss" style="--c:#e0408a"><span class="stk"><span class="bigemoji">💬</span></span><h2>Discussion Board</h2><small>${DISCUSSIONS.length} discussions</small></a>`);
   app.innerHTML=`<div class="wrap" style="--c:${s.color}">${spaceChips(s)}
    <div class="banner"><h1>${s.name}</h1><p>${s.blurb}</p><div class="stats"><span>${s.topics.length+(s.id==='avid'?1:0)} folders</span><span>${all.length} resources</span></div><span class="art">${ART[s.id]}</span></div>
+   ${s.id==='avid'?dailyHeader():''}
    <h2 class="wh">Pick a folder</h2><div class="tiles wt folders">${tiles.join('')}</div><div style="height:40px"></div></div>`;
+  if(s.id==='avid') wireDaily();
 }
 function folderChips(s,key){return `<nav class="switch" aria-label="Folders"><a class="back" href="#${s.id}">← ${s.name}</a>${s.id==='avid'?`<a class="swchip ${key==='discuss'?'on':''}" style="--c:#e0408a" href="#avid/discuss">💬 Discussion Board</a>`:''}${s.topics.map((t,i)=>`<a class="swchip ${key===i?'on':''}" style="--c:${FOLDER_COLORS[i%FOLDER_COLORS.length]}" href="#${s.id}/${i}">${ficon(t.name)} ${esc(t.name)}</a>`).join('')}</nav>`}
 function spaceFolder(s,i){
@@ -1614,11 +1835,74 @@ const DISCUSSIONS=[
   prompt:'Your teacher will share a topic, article, or video in class. Summarize it in 2–3 sentences, take a position or share your reaction, and explain your reasoning with at least one specific detail.',
   frames:['This topic is about…','My position is… because…','One detail that stood out to me is…','I agree with ___ and want to add…','I see this differently because…']}
 ];
+
+/* ---------- 📖 DISCUSSION SOURCES: what students read before they post ----------
+   ✏️ Each discussion id has: type (Article, Data, Chart, Timeline…), title, html (the reading),
+      cite (where it comes from), and keys (words/numbers that show a post used the source). */
+const barChart=(title,rows,unit,max,color)=>`<svg viewBox="0 0 460 ${60+rows.length*44}" role="img" aria-label="${title}" style="width:100%;max-width:560px;display:block">
+  <text x="0" y="18" font-family="Nunito" font-weight="800" font-size="14" fill="#1f2430">${title}</text>
+  ${rows.map(([l,v],i)=>`<text x="0" y="${56+i*44}" font-family="Nunito" font-weight="700" font-size="12" fill="#1f2430">${l}</text>
+  <rect x="170" y="${40+i*44}" width="${Math.max(4,v/max*230)}" height="24" rx="6" fill="${color}"/>
+  <text x="${178+v/max*230}" y="${57+i*44}" font-family="Nunito" font-weight="900" font-size="13" fill="#1f2430">${unit==='$'?'$'+v.toLocaleString():v+unit}</text>`).join('')}</svg>`;
+const DSRC={
+ 'college-ready':{type:'Article + data',title:'Getting In vs. Getting Through',keys:['6 in 10','six in ten','six years','60%','office hours','nces','national center','persist','time management'],
+  html:`<p>Getting accepted to college is a big goal, but finishing is a different challenge. According to the National Center for Education Statistics, only about <b>6 in 10</b> students who start at a four-year college earn a bachelor’s degree within <b>six years</b>.</p>
+   <p>Researchers who study college success point out that grades in high school matter, but so do habits that are harder to see on a transcript: managing your own time, asking for help early (for example, going to a professor’s <b>office hours</b>), keeping organized notes, and continuing after a setback. In college, no one checks your binder or reminds you about a deadline. Students who already practice these habits are more likely to <b>persist</b> when classes get hard.</p>`,
+  cite:'Source: National Center for Education Statistics (NCES), undergraduate graduation rates; summary written for AVID discussion.'},
+ 'productive-struggle':{type:'Article',title:'Why Struggling Can Help You Learn',keys:['desirable difficult','bjork','dweck','growth mindset','quizzing','spacing','information about what to try','productive struggle'],
+  html:`<p>It feels like learning should be smooth and easy. But psychologist <b>Robert Bjork</b> found that some challenges actually make learning stick. He calls them <b>“desirable difficulties.”</b> Quizzing yourself instead of rereading, spacing out study sessions, and mixing different types of problems all feel harder in the moment, yet they lead to stronger long-term memory.</p>
+   <p>Psychologist <b>Carol Dweck</b> describes a <b>growth mindset</b>: the belief that abilities can grow with effort, good strategies, and help from others. Students with a growth mindset tend to see a <b>mistake</b> as information about what to try next, not as proof that they are “bad at” something.</p>
+   <p>The key word is <i>productive</i>. Struggle helps when you keep trying with a strategy, such as asking a specific question, checking an example, or bringing a point of confusion to tutorials. Struggling with no strategy just leads to frustration.</p>`,
+  cite:'Sources: R. A. Bjork, research on “desirable difficulties” (UCLA); C. S. Dweck, Mindset (2006). Summary written for AVID discussion.'},
+ 'phones-class':{type:'Chart + law',title:'What Teachers Say About Phones',keys:['72','33','6%','6 percent','pew','phone-free','2026','3216'],
+  html:`${barChart('Teachers who say phone distraction is a MAJOR problem in their classroom',[['High school teachers',72],['Middle school teachers',33],['Elementary teachers',6]],'%',100,'#e8368f')}
+   <p style="margin-top:10px">In 2024, California passed the <b>Phone-Free School Act</b>, which requires every school district to adopt a policy limiting student smartphone use by <b>July 2026</b>. Districts can decide the details, such as whether phones are stored in backpacks, in pouches, or turned in at the door.</p>`,
+  cite:'Sources: Pew Research Center survey of U.S. public K–12 teachers (2024); California Assembly Bill 3216, Phone-Free School Act (2024).'},
+ 'later-start':{type:'Data + recommendations',title:'Teens, Sleep, and School Start Times',keys:['8:30','8 to 10','8–10','7 in 10','seven in ten','aap','pediatrics','cdc','circadian','sb 328','328'],
+  html:`<table class="dtab"><tr><th>Fact</th><th>Source</th></tr>
+   <tr><td>Teens ages 13–18 need <b>8 to 10 hours</b> of sleep per night.</td><td>American Academy of Sleep Medicine</td></tr>
+   <tr><td>About <b>7 in 10</b> U.S. high school students do not get enough sleep on school nights.</td><td>Centers for Disease Control and Prevention (CDC)</td></tr>
+   <tr><td>Middle and high schools should start <b>no earlier than 8:30 a.m.</b></td><td>American Academy of Pediatrics (2014 policy)</td></tr>
+   <tr><td>Since 2022, most California public high schools may not start regular classes before <b>8:30 a.m.</b></td><td>California Senate Bill 328</td></tr></table>
+   <p style="margin-top:10px">During adolescence, the body’s internal clock (the <b>circadian</b> rhythm) shifts later, so many teens do not feel sleepy until 11 p.m. or later. Critics of later start times point to challenges with bus schedules, after-school sports, and parents’ work schedules.</p>`,
+  cite:'Sources: AASM sleep duration recommendations; CDC Youth Risk Behavior Survey data; AAP policy statement (2014); CA SB 328 (2019, effective 2022).'},
+ 'invention':{type:'Timeline',title:'Five Inventions That Changed the World',keys:['1440','1450','gutenberg','1769','watt','1796','jenner','smallpox','1980','1876','graham bell','1969','arpanet','1991','world wide web','industrial revolution','world health organization'],
+  html:`<svg viewBox="0 0 560 210" role="img" aria-label="Timeline of five inventions" style="width:100%;display:block">
+   <line x1="20" y1="100" x2="540" y2="100" stroke="#1f2430" stroke-width="3"/>
+   ${[[40,'c. 1440s','Printing press','Gutenberg’s movable type'],[150,'1769','Steam engine','James Watt’s improved design'],[260,'1796','Vaccine','Edward Jenner: smallpox'],[370,'1876','Telephone','Alexander Graham Bell'],[480,'1969 / 1991','Internet','ARPANET / World Wide Web']].map(([x,y,n,d],i)=>`
+   <circle cx="${x}" cy="100" r="9" fill="#e08a00"/><text x="${x}" y="${i%2?140:72}" text-anchor="middle" font-family="Nunito" font-weight="900" font-size="13" fill="#1f2430">${y}</text>
+   <text x="${x}" y="${i%2?160:52}" text-anchor="middle" font-family="Nunito" font-weight="800" font-size="12" fill="#e08a00">${n}</text>
+   <text x="${x}" y="${i%2?176:36}" text-anchor="middle" font-family="Nunito" font-weight="600" font-size="10" fill="#5d6577">${d}</text>`).join('')}</svg>
+   <ul style="margin:8px 0 0;padding-left:20px"><li><b>Printing press:</b> books could be copied quickly, spreading ideas and literacy across Europe.</li>
+   <li><b>Steam engine:</b> powered factories, trains, and ships during the Industrial Revolution.</li>
+   <li><b>Vaccines:</b> smallpox, which killed millions, was declared eradicated by the World Health Organization in <b>1980</b>.</li>
+   <li><b>Telephone:</b> people could talk instantly across long distances for the first time.</li>
+   <li><b>Internet:</b> connects billions of people to information and each other.</li></ul>`,
+  cite:'Sources: dates from standard world history references; smallpox eradication declared by the World Health Organization (1980).'},
+ 'math-life':{type:'Data table',title:'The Math of Saving $5 a Day',keys:['$5','1,825','1825','18,250','22,9','interest','percent','5%','linear','exponential','compound'],
+  html:`<p>Imagine saving <b>$5 a day</b>. That is $5 × 365 = <b>$1,825 a year</b>. The table compares keeping the money in a jar with putting it in an account that earns <b>5% interest</b> per year (compounded once a year, deposit made at the end of each year).</p>
+   <table class="dtab"><tr><th>Year</th><th>In a jar</th><th>Earning 5% interest</th></tr>
+   <tr><td>1</td><td>$1,825</td><td>$1,825</td></tr><tr><td>2</td><td>$3,650</td><td>$3,741</td></tr><tr><td>5</td><td>$9,125</td><td>$10,084</td></tr><tr><td>10</td><td>$18,250</td><td>$22,955</td></tr></table>
+   <p style="margin-top:8px">The jar grows in a <b>linear</b> pattern (the same amount each year). The account grows faster over time because you earn interest on your interest: <b>compound</b> growth.</p>`,
+  cite:'Calculations: deposits of $1,825 at the end of each year, 5% annual interest compounded yearly (future value of an annuity). Rounded to the nearest dollar.'},
+ 'four-year':{type:'Chart',title:'Education, Earnings, and Unemployment',keys:['1,493','1493','1,058','1058','899','2.2','2.7','3.9','bls','labor statistics','electrician','61,','apprentice','median'],
+  html:`${barChart('Median weekly earnings by education (2023)',[['High school diploma',899],['Associate degree',1058],['Bachelor’s degree',1493]],'$',1600,'#e0408a')}
+   <table class="dtab" style="margin-top:8px"><tr><th>Education</th><th>Unemployment rate (2023)</th></tr><tr><td>High school diploma</td><td>3.9%</td></tr><tr><td>Associate degree</td><td>2.7%</td></tr><tr><td>Bachelor’s degree</td><td>2.2%</td></tr></table>
+   <p style="margin-top:8px">These are <b>medians</b>, so many people earn more or less. Some skilled trades pay well without a four-year degree. For example, electricians, who usually train through paid <b>apprenticeships</b>, had a median pay of about <b>$61,000</b> a year in 2023.</p>`,
+  cite:'Source: U.S. Bureau of Labor Statistics, “Education pays” (2023 data) and Occupational Outlook Handbook: Electricians (May 2023).'},
+ 'open-topic':{type:'Reading guide',title:'Read Like a Fact-Checker: SIFT',keys:['sift','source','investigate','trace','coverage','author','evidence','article'],
+  html:`<p>Your teacher will share today’s article, video, or source in class. Before you post, read it like a professional fact-checker using <b>SIFT</b>:</p>
+   <ol><li><b>S</b>top: notice your first reaction before you share or decide.</li><li><b>I</b>nvestigate the source: who made it, and why?</li><li><b>F</b>ind better coverage: what do other trusted sources say?</li><li><b>T</b>race claims, quotes, and numbers back to where they came from.</li></ol>
+   <p>In your post, name the source and use at least one specific detail from it.</p>`,
+  cite:'SIFT method: Mike Caulfield, Washington State University, “SIFT (The Four Moves).”'}
+};
+
 const TAG_COLOR={'AVID':'#5b5fe0','English':'#e8368f','Science':'#1aa36f','History':'#e08a00','Math':'#2b7de9','College & Career':'#e0408a','Teacher’s Choice':'#8a54e0'};
 
 /* grading rules: keep in sync with Code.gs */
 const dWords=s=>(String(s||'').trim().match(/\S+/g)||[]).length;
-function mainPostPoints(text,min){const w=dWords(text);let p=w>=min?4:w>=min/2?2:w>0?1:0;if(/because|for example|for instance|according to|evidence|["“]|\d/i.test(text))p+=1;if(/\?/.test(text))p+=1;return Math.min(6,p)}
+const usesSource=(text,keys)=>keys&&keys.length?(keys.some(k=>String(text).toLowerCase().includes(String(k).toLowerCase()))||/["“][^"”]{8,}["”]/.test(text)):/because|for example|for instance|according to|evidence|["“]|\d/i.test(text);
+function mainPostPoints(text,min,keys){const w=dWords(text);let p=w>=min?4:w>=min/2?2:w>0?1:0;if(usesSource(text,keys))p+=1;if(/\?/.test(text))p+=1;return Math.min(6,p)}
 const replyPoints=text=>{const w=dWords(text);return w>=30?2:w>=15?1:0};
 
 /* ---------- talking to the Google Sheet (or preview mode on this computer) ---------- */
@@ -1660,17 +1944,19 @@ function discussPage(s,id){
   crumb.innerHTML=`<span>›</span><a href="#avid">AVID</a><span>›</span><a href="#avid/discuss">Discussion Board</a><span>›</span><b>${esc(d.title)}</b>`;
   app.innerHTML=`<div class="wrap" style="--c:${col}"><nav class="switch"><a class="back" href="#avid/discuss">← All discussions</a></nav>
    <div class="dhero"><span class="dtag">${d.icon} ${esc(d.tag)}</span><h1>${esc(d.title)}</h1><p class="dprompt">${esc(d.prompt)}</p>
-    <details class="rubric"><summary>📋 How this is graded (10 points)</summary><table><tr><td>Main post: ${d.minWords}+ words</td><td>4 pts</td></tr><tr><td>Main post uses evidence (because, for example, a quote, a fact or number)</td><td>1 pt</td></tr><tr><td>Main post asks classmates a question</td><td>1 pt</td></tr><tr><td>Reply #1: 30+ words</td><td>2 pts</td></tr><tr><td>Reply #2: 30+ words</td><td>2 pts</td></tr></table><small>Your teacher may adjust your score after reading your posts.</small></details></div>
+    <details class="rubric"><summary>📋 How this is graded (10 points)</summary><table><tr><td>Main post: ${d.minWords}+ words</td><td>4 pts</td></tr><tr><td>Main post uses evidence from the source (a detail, number, or quote)</td><td>1 pt</td></tr><tr><td>Main post asks classmates a question</td><td>1 pt</td></tr><tr><td>Reply #1: 30+ words</td><td>2 pts</td></tr><tr><td>Reply #2: 30+ words</td><td>2 pts</td></tr></table><small>Your teacher may adjust your score after reading your posts.</small></details></div>
    ${HUB_URL?'':`<div class="demo-note">👀 <b>Preview mode:</b> posts are saved only on this computer until your teacher connects the Google Sheet.</div>`}
+   ${DSRC[d.id]?`<section class="dsource" id="dsource"><div class="dsrc-head"><span class="dtag">📖 Read first · ${esc(DSRC[d.id].type)}</span><h2>${esc(DSRC[d.id].title)}</h2></div><div class="dsrc-body">${DSRC[d.id].html}</div><p class="dcite">${esc(DSRC[d.id].cite)}</p></section>`:''}
    <div id="dz"></div><div style="height:48px"></div></div>`;
   studentGate(app.querySelector('#dz'),d.title,{eq:d.eq,lt:d.lt},st=>board(app.querySelector('#dz'),d,st));
 }
 function board(el,d,st){
   let posts=[],view='class',openReply=null,busy=false,loadErr='';
+  const SRC=DSRC[d.id], KEYS=SRC?SRC.keys:null; let readOK=!SRC; try{readOK=readOK||localStorage.getItem('read-'+d.id+'-'+st.id)==='1'}catch(e){}
   const draft={main:'',reply:{}};
   async function load(){try{const r=await hubList(d.id,st.id);if(!r.ok)throw new Error(r.error||'Could not load posts');posts=r.posts;loadErr=''}catch(e){loadErr='Could not load posts. Check your internet connection and try Refresh.'}draw()}
   const mineMain=()=>posts.find(p=>p.mine&&p.type==='Main post');
-  const myScore=()=>{const m=mineMain();const rs=posts.filter(p=>p.mine&&p.type==='Reply').map(p=>replyPoints(p.text)).sort((a,b)=>b-a);const mp=m?mainPostPoints(m.text,d.minWords):0,rp=(rs[0]||0)+(rs[1]||0);return {mp,rp,n:rs.length,total:mp+rp}};
+  const myScore=()=>{const m=mineMain();const rs=posts.filter(p=>p.mine&&p.type==='Reply').map(p=>replyPoints(p.text)).sort((a,b)=>b-a);const mp=m?mainPostPoints(m.text,d.minWords,KEYS):0,rp=(rs[0]||0)+(rs[1]||0);return {mp,rp,n:rs.length,total:mp+rp}};
   const inView=p=>view==='all'||(p.teacher===st.teacher&&String(p.period)===String(st.period));
   function postHTML(p,isReply){
     const kids=posts.filter(c=>c.parent===p.id).sort((a,b)=>new Date(a.time)-new Date(b.time));
@@ -1691,7 +1977,8 @@ function board(el,d,st){
     el.innerHTML=`${targetStrip({eq:d.eq,lt:d.lt},st)}
      ${loadErr?`<div class="demo-note">⚠️ ${loadErr}</div>`:''}
      ${m?`<div class="dscore"><div><b>Your score so far: ${sc.total} / 10</b><br><small>Main post ${sc.mp}/6 · Replies ${sc.rp}/4 (${sc.n} posted${sc.n<2?`, ${2-sc.n} more to go`:' ✓'})</small></div><button class="dbtn ghost" id="drefresh">↻ Refresh</button></div>`:
-     `<div class="dcompose"><h3>✍️ Your main post</h3><div class="dframes">${d.frames.map(f=>`<button class="dframe" data-frame="${esc(f)}">${esc(f)}</button>`).join('')}</div>
+     !readOK?`<div class="dcompose readgate"><h3>📖 Step 1: Read the source above</h3><p>Read the source carefully. Look for a detail, number, or quote you can use as evidence in your post.</p><button class="dbtn" id="didread">✅ I read the source. Let me post.</button></div>`:
+     `<div class="dcompose"><h3>✍️ Your main post</h3><p class="hint" style="margin:0 0 8px;color:var(--muted);font-weight:700">Make a claim, support it with evidence from the source, and end with a question for your classmates.</p><div class="dframes">${d.frames.map(f=>`<button class="dframe" data-frame="${esc(f)}">${esc(f)}</button>`).join('')}</div>
       <textarea id="mtext" rows="8" placeholder="Share your thinking. Use evidence and end with a question for your classmates.">${esc(draft.main)}</textarea>
       <ul class="dchecks" id="mchk"></ul>
       <div class="dbar"><span id="mwc"></span><button class="dbtn" id="msend">Post to the discussion</button></div><p class="dmsg" id="mmsg"></p></div>`}
@@ -1701,16 +1988,17 @@ function board(el,d,st){
      <p class="dmsg" id="rmsg"></p>`;
     wire();
   }
-  function checks(){const t=draft.main,w=dWords(t);const c=[[w>=d.minWords,`${w} / ${d.minWords} words`],[/because|for example|for instance|according to|evidence|["“]|\d/i.test(t),'Uses evidence (because, for example, a quote, or a fact)'],[/\?/.test(t),'Asks your classmates a question']];
+  function checks(){const t=draft.main,w=dWords(t);const c=[[w>=d.minWords,`${w} / ${d.minWords} words`],[usesSource(t,KEYS),KEYS?'Uses evidence from the source (a detail, number, or quote)':'Uses evidence (because, for example, a quote, or a fact)'],[/\?/.test(t),'Asks your classmates a question']];
     const ul=el.querySelector('#mchk');if(ul)ul.innerHTML=c.map(([ok,l])=>`<li class="${ok?'ok':''}">${l}</li>`).join('');
-    const wc=el.querySelector('#mwc');if(wc)wc.textContent=`Points if you post now: ${mainPostPoints(t,d.minWords)} / 6`;
+    const wc=el.querySelector('#mwc');if(wc)wc.textContent=`Points if you post now: ${mainPostPoints(t,d.minWords,KEYS)} / 6`;
     const b=el.querySelector('#msend');if(b)b.disabled=w<20||busy;}
   function wire(){
     el.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{view=b.dataset.view;draw()});
+    const dr=el.querySelector('#didread'); if(dr) dr.onclick=()=>{readOK=true;try{localStorage.setItem('read-'+d.id+'-'+st.id,'1')}catch(e){};draw();const t=el.querySelector('#mtext');if(t)t.focus()};
     const mt=el.querySelector('#mtext'); if(mt){mt.oninput=()=>{draft.main=mt.value;checks()};checks()}
     el.querySelectorAll('.dframe').forEach(b=>b.onclick=()=>{const ta=el.querySelector(openReply?'#rtext':'#mtext')||el.querySelector('#mtext');if(!ta)return;ta.value=(ta.value?ta.value.trim()+' ':'')+b.dataset.frame+' ';ta.focus();ta.dispatchEvent(new Event('input'))});
     const ms=el.querySelector('#msend'); if(ms) ms.onclick=async()=>{busy=true;checks();el.querySelector('#mmsg').textContent='Posting…';
-      try{const r=await hubSend({action:'post',student:st,prompt:d.id,promptTitle:d.title,minWords:d.minWords,text:draft.main});if(!r.ok)throw new Error(r.error);draft.main='';await load();}
+      try{const r=await hubSend({action:'post',student:st,prompt:d.id,promptTitle:d.title,minWords:d.minWords,sourceKeys:KEYS||[],text:draft.main});if(!r.ok)throw new Error(r.error);draft.main='';await load();}
       catch(e){busy=false;checks();el.querySelector('#mmsg').textContent='⚠️ '+(e.message||'Could not post. Try again.')}busy=false};
     el.querySelectorAll('[data-reply]').forEach(b=>b.onclick=()=>{openReply=openReply===b.dataset.reply?null:b.dataset.reply;draw();const t=el.querySelector('#rtext');if(t)t.focus()});
     const rt=el.querySelector('#rtext'); if(rt) rt.oninput=()=>{draft.reply[openReply]=rt.value;el.querySelector('#rwc').textContent=`${dWords(rt.value)} / 30 words`};

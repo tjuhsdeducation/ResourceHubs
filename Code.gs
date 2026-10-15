@@ -61,10 +61,14 @@ function setup() {
 
 /* ---------- grading rules (keep in sync with the website) ---------- */
 function countWords(s) { return (String(s || '').trim().match(/\S+/g) || []).length; }
-function mainPostPoints(text, minWords) {
+function usesSource(text, keys) {               // evidence point: uses a detail/number/quote from the discussion's source
+  if (keys && keys.length) return keys.some(k => String(text).toLowerCase().indexOf(String(k).toLowerCase()) >= 0) || /["“][^"”]{8,}["”]/.test(text);
+  return /because|for example|for instance|according to|evidence|["“]|\d/i.test(text);
+}
+function mainPostPoints(text, minWords, keys) {
   const w = countWords(text);
   let p = w >= minWords ? 4 : w >= minWords / 2 ? 2 : w > 0 ? 1 : 0;
-  if (/because|for example|for instance|according to|evidence|["“]|\d/i.test(text)) p += 1;   // supports with evidence
+  if (usesSource(text, keys)) p += 1;                                                          // supports with evidence from the source
   if (/\?/.test(text)) p += 1;                                                                 // asks classmates a question
   return Math.min(6, p);
 }
@@ -152,7 +156,8 @@ function savePost(d, s, now) {
     throw new Error('You already posted. Reply to your classmates next!');
   }
   const id = Utilities.getUuid().slice(0, 8);
-  const pts = isReply ? replyPoints(text) : mainPostPoints(text, minWords);
+  const keys = Array.isArray(d.sourceKeys) ? d.sourceKeys.slice(0, 40).map(k => String(k).slice(0, 40)) : [];
+  const pts = isReply ? replyPoints(text) : mainPostPoints(text, minWords, keys);
   sh.appendRow([now, id, clean(d.prompt, 60), clean(d.promptTitle, 200), isReply ? 'Reply' : 'Main post', isReply ? clean(d.parent, 20) : '', replyToName,
                 s.teacher, s.period, s.name, asText(s.id), displayName(s.name), text, countWords(text), pts, '']);
   const grade = updateGrade(clean(d.prompt, 60), clean(d.promptTitle, 200), s, now);
