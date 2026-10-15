@@ -99,7 +99,7 @@ textarea.box:focus, input.box:focus, select.box:focus { border-color: var(--c); 
 .wd { cursor: pointer; }
 .wd.circ { box-shadow: 0 0 0 2.5px var(--R); border-radius: 999px; }
 .note { display: inline-flex; align-items: center; gap: 4px; background: #fff3b0; border-radius: 8px; padding: 0 6px; margin: 0 4px; font-family: "Nunito", sans-serif; font-size: .85rem; font-weight: 700; vertical-align: 1px; }
-.note input { border: 0; background: transparent; font: 700 .85rem "Nunito", sans-serif; width: 170px; outline: none; }
+.note input { border: 0; background: transparent; font: 700 .85rem "Nunito", sans-serif; width: 220px; max-width: 60vw; outline: none; }
 .note button { border: 0; background: none; cursor: pointer; font-size: .8rem; }
 
 /* ===== W: CER builder ===== */

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resource Hubs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script>
+/* =====================================================================
+   ✏️ YOUR SITE'S CONTENT: everything you'll edit is in this block.
+
+   HOW IT'S ORGANIZED
+     Hub (AVID)  →  Folder (W, I, C, O, R)  →  Category (Cornell Notes…)  →  Items (links)
+
+   TO ADD A RESOURCE: copy a line like
+       { title: "Summary Lab", file: "wicor-summary-lab.html", for: "student" },
+   and paste it into the "items" list of the right category.
+     • title: what the button says
+     • file:  a page you uploaded to GitHub (same place as this index.html)
+              OR a full web link, like "https://docs.google.com/..."
+     • for:   "student", "teacher", or "both" (shows a little tag)
+     • isNew: true    adds a NEW badge (optional)
+     • note: "..."    adds a small note under the title (optional)
+   Google Docs, Slides and Sheets links automatically get a 🖨️ Print/PDF button.
+
+   TO ADD A CATEGORY: copy a whole { name: "...", items: [ ... ] } block.
+   ===================================================================== */
+const SITE = {
+  title: "Resource Hubs",
+  subtitle: "Pick a hub, then a folder, then dive in.",
+  hubs: [
+
+    { name: "AVID", emoji: "🎓", color: "#0b6fb8", soft: "#e4f0fa",
+      blurb: "Printables and WICOR lessons for students and teachers",
+      folders: [
+
+        /* ---------- FOLDER 1: PRINTABLES (from the AVID Useful Documents, 26-27) ---------- */
+        { letter: "🖨️", name: "Printables", color: "#0b6fb8", soft: "#e4f0fa", filter: true,
+          about: "Forms, templates, and examples, ready to open or print. Use the buttons to show only student or teacher resources.",
+          categories: [
+            { name: "Focused Notes", icon: "📝", items: [
+              { title: "Cornell Notes Template", file: "https://drive.google.com/file/d/11UrEi2-LprR-hRh1TxU9itW6UllWqXAH/view?usp=sharing", for: "both" },
+              { title: "Focused Notes Interaction Examples", file: "https://docs.google.com/document/d/1FfFUc9R9lqEaenKT6BcUENRqrtkoZOoSgXR645XSGJE/edit?usp=sharing", for: "both" },
+              { title: "Graded Focused Notes Examples", file: "https://drive.google.com/file/d/1ASJjm_qdqQC9e_mLcOC2L2UNm8Pq0Wvy/view?usp=sharing", for: "both", isNew: true },
+              { title: "Focused Notes Checklist & Tutor Rubric", file: "https://docs.google.com/document/d/1MgoIwqQuTujCNJ3iU7kcz3AZjeMw2b9a3DS7yjGWf_s/edit?usp=sharing", for: "both" },
+              { title: "Focused Notes Slides", file: "https://docs.google.com/presentation/d/1pWnETQuacG66fWJxaobcDtxwwjmlolJJaHyNA9Hkjdw/edit?usp=sharing", for: "teacher" },
+              { title: "Focused Notes Slides (Langlie's)", file: "https://docs.google.com/presentation/d/1l3ZXqdFHakKsEvQmifktkdaEei0KH3K5JkUCko0fz-s/edit?usp=sharing", for: "teacher" } ] },
+
+            { name: "Graphic Organizers", icon: "🧩", items: [
+              { title: "Graphic Organizers", file: "https://docs.google.com/presentation/d/1xQoh20QALtYrz5cGlk9ypN5cTTOI6hl9K21-h6tkgMw/edit?usp=sharing", for: "both" },
+              { title: "Graphic Organizers (Large)", file: "https://docs.google.com/presentation/d/1wD4HNJSi3oadfh2T6bLwSZzG-OvIhI8d4apTmWmhQsw/edit?usp=sharing", for: "both", isNew: true } ] },
+
+            { name: "Binder Checks", icon: "🗂️", items: [
+              { title: "Binder Check Checklist", file: "https://drive.google.com/file/d/1dkMBwJ2tEH0zmXMPr75IK5wLbSzRmXxp/view?usp=sharing", for: "both" },
+              { title: "Binder Check Form 26-27", file: "https://docs.google.com/document/d/12QbCwmoGMfEwauX-42mVwua-uh8YWbitlc1d6PoZFq0/edit?usp=sharing", for: "both" },
+              { title: "Binder Dividers", file: "https://docs.google.com/document/d/1zZM-9gFaBwRObCs2ZDG5I5RZS44BySU2lJwYni7bFJs/edit?usp=sharing", for: "both", note: "Print on cardstock" } ] },
+
+            { name: "Tutorials & TRFs", icon: "❓", items: [
+              { title: "TRF Form 26-27", file: "https://drive.google.com/file/d/1Aqe4LiQPpwCPDEQluxlXIugKv1ldUpDn/view?usp=sharing", for: "both" },
+              { title: "TRF Examples", file: "https://drive.google.com/file/d/1erWzi9EhvkdPQE0FEQx0WO1fskEMTdED/view?usp=sharing", for: "both" },
+              { title: "Make-Up TRFs", file: "https://docs.google.com/document/d/1SbkRPUYqqShCEeDmffn54bfu9JoNvRaFBOWXeHT1dtA/edit?usp=sharing", for: "student" },
+              { title: "Tutorial Speech Support", file: "https://drive.google.com/file/d/1B_c_pAHs1Pac4BO0eWLMJsr5xhRDXZT1/view?usp=sharing", for: "student", isNew: true },
+              { title: "Tutorial Question Support", file: "https://drive.google.com/file/d/1RqqvHwYnaKpQvRbXccU9SNLwf_dSDo0t/view?usp=sharing", for: "student", isNew: true },
+              { title: "Focused Note-Taking During Tutorials", file: "https://drive.google.com/file/d/1fZ4t7dN1wxy1zx7acJP8QP5FD-6n9Zgq/view?usp=sharing", for: "student" },
+              { title: "Tutorial Grouping", file: "https://docs.google.com/presentation/d/17fHW6Fow46tolYpE_Cy0L56-MVlVc9sTrOgUViPPfdI/edit?usp=sharing", for: "teacher" } ] },
+
+            { name: "Goals & Contracts", icon: "🎯", items: [
+              { title: "Goal Setting Example", file: "https://drive.google.com/file/d/1cyOxDNf7V5i2txJdIuBq41EENpybn8LG/view?usp=sharing", for: "student" },
+              { title: "AVID Contract: 9th Grade", file: "https://docs.google.com/document/d/1pPvQFy21uD_BA3VoabkXcqHHBCfqHdvMduX7UO66xHg/edit?usp=sharing", for: "both" },
+              { title: "AVID Contract: 10th Grade", file: "https://docs.google.com/document/d/1onHmWA5VbtZJbW8etRu7KMa9d27eqqjfeluIUUj2zkg/edit?usp=sharing", for: "both" },
+              { title: "AVID Contract: 11th Grade", file: "https://docs.google.com/document/d/1_bNk3nGXuVzK-fhBxP3IcT4dNhotDxk4WX3C2ORPEd8/edit?usp=sharing", for: "both" },
+              { title: "AVID Contract: 12th Grade", file: "https://docs.google.com/document/d/1yErZPXTiibcAWfcuzI5gamASXxVKxAs-rIazyOQpevY/edit?usp=sharing", for: "both" },
+              { title: "Probation Contract", file: "https://docs.google.com/document/d/1IlIlfjx5XboBvTeJBwVd-iv0xCviMsxg6OXv7nCDy1I/edit?usp=sharing", for: "teacher" } ] },
+
+            { name: "Tutors", icon: "🧑‍🏫", items: [
+              { title: "AVID Tutor Schedule 26-27", file: "https://docs.google.com/spreadsheets/d/1GEX0qttdnUDV8IlADrrlEwFv14jS-JtG0iEVf26H0jk/edit?usp=sharing", for: "teacher" } ] },
+
+            { name: "Field Trips", icon: "🚌", items: [
+              { title: "Field Trip Form", file: "https://drive.google.com/file/d/1I4lJDbfwJIEgAeN6Ht15cWOSrdFdhTnr/view?usp=sharing", for: "teacher" },
+              { title: "Maria Bueno Email Regarding Trips", file: "https://docs.google.com/document/d/1UQjk9hjBUxSCcg-zlZKkZ-9jHw34wP5WYKp2eAMtkyA/edit?usp=sharing", for: "teacher" },
+              { title: "Sample #1 Field Trip Agenda", file: "https://docs.google.com/document/d/1d7P06NajluH8yoijR5kUHl3otRa2jBbrNJfEd_fiyqQ/edit?usp=sharing", for: "teacher" },
+              { title: "Sample #2 Field Trip Agenda", file: "https://docs.google.com/document/d/1CrpjDbbnKbNNKvhzqYpF-sv5KcIQYKF9SRAfTNfMt88/edit?usp=sharing", for: "teacher" } ] },
+
+            { name: "Site Team & Certification", icon: "🏅", items: [
+              { title: "Evidence List by Domain (CCI)", file: "https://docs.google.com/document/d/1lZJ8iBLQLsEyYQ5C-OZ-l38gP7QR84iVnREkM3rVvD8/edit?usp=sharing", for: "teacher" } ] }
+          ] },
+
+        /* ---------- FOLDER 2: WICOR LESSONS (one topic, all five letters) ---------- */
+        { letter: "🧪", name: "WICOR Lessons", color: "#7b5cff", soft: "#efebff",
+          about: "One topic, five stations. Students read, write, inquire, collaborate, and organize, about 5 to 10 minutes each.",
+          categories: [
+            { name: "Biology", icon: "🌿", items: [
+              { title: "Photosynthesis: The Factory in Every Leaf", file: "lesson-photosynthesis.html", for: "student", note: "Includes a light-intensity simulation and graph" } ] },
+            { name: "Chemistry", icon: "⚗️", items: [] },
+            { name: "World History", icon: "🌍", items: [] },
+            { name: "Algebra 1", icon: "📈", items: [] },
+            { name: "Geometry", icon: "📐", items: [] },
+            { name: "English 1", icon: "📚", items: [] },
+            { name: "English 2", icon: "✒️", items: [] }
+          ] }
+      ] }
+
+    /* To add another hub later (like New Teacher Support), add a comma after
+       the AVID hub's closing } above and paste a new hub block here. */
+  ]
+};
+/* ===================================================================== */
+</script>
+<style>
+:root{
+  --ink:#1b1f3b; --muted:#4f5677; --paper:#fffaf3; --line:#ece4d6; --card:#fff;
+  --sun:#ffb703; --coral:#fb6f5b; --grape:#7b5cff; --avid:#0b6fb8; --mint:#2ec4b6;
+  --shadow:0 10px 30px rgba(27,31,59,.10); --shadow-lg:0 20px 50px rgba(27,31,59,.18);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Nunito",system-ui,sans-serif;font-size:17px;line-height:1.55;overflow-x:hidden}
+h1,h2,h3{font-family:"Fredoka","Nunito",sans-serif;line-height:1.15;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 18px 48px;position:relative}
+
+/* header */
+header{position:relative;padding:34px 0 8px;overflow:visible}
+header h1{font-size:clamp(34px,6vw,58px);font-weight:700;letter-spacing:-.01em}
+header p{margin:6px 0 0;color:var(--muted);font-size:1.1rem}
+.grad{background:linear-gradient(90deg,var(--coral),var(--grape),var(--avid),var(--mint),var(--coral));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:slide 9s linear infinite}
+.blobs{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(10px);opacity:.35;animation:float 14s ease-in-out infinite}
+.blob.b1{width:300px;height:300px;background:var(--sun);top:-90px;left:-90px}
+.blob.b2{width:240px;height:240px;background:var(--grape);bottom:-80px;right:-60px;animation-delay:-5s}
+.blob.b3{width:160px;height:160px;background:var(--mint);top:35%;right:-70px;animation-delay:-9s}
+
+/* breadcrumbs */
+.crumbs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:18px 0 8px;font-size:15px}
+.crumbs a{color:var(--muted);text-decoration:none;font-weight:800;padding:4px 10px;border-radius:999px;background:#fff;border:1px solid var(--line);transition:all .2s}
+.crumbs a:hover{background:var(--ink);color:#fff}
+.crumbs span{color:var(--muted)}
+.crumbs b{padding:4px 10px}
+
+/* page enter animation */
+.enter>*{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+.enter>*:nth-child(2){animation-delay:.06s}.enter>*:nth-child(3){animation-delay:.12s}.enter>*:nth-child(4){animation-delay:.18s}
+.stagger>*{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+.stagger>*:nth-child(1){animation-delay:.05s}.stagger>*:nth-child(2){animation-delay:.12s}.stagger>*:nth-child(3){animation-delay:.19s}
+.stagger>*:nth-child(4){animation-delay:.26s}.stagger>*:nth-child(5){animation-delay:.33s}.stagger>*:nth-child(6){animation-delay:.4s}
+
+/* HOME: hub tiles */
+.hubs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,300px));gap:18px;margin:22px 0}
+@media (max-width:980px){.hubs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.hub{border:3px solid var(--c);background:#fff;border-radius:22px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.hub:hover{box-shadow:var(--shadow-lg)}
+.hub .art{position:relative;background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 55%,#000));display:flex;align-items:center;justify-content:center;aspect-ratio:16/10;overflow:hidden}
+.hub .art .em{font-size:clamp(56px,7vw,80px);transition:transform .45s cubic-bezier(.2,.8,.2,1);filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
+.hub:hover .art .em{transform:scale(1.18) rotate(-8deg)}
+.hub .art::before,.hub .art::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.14)}
+.hub .art::before{width:120px;height:120px;top:-40px;right:-30px}
+.hub .art::after{width:80px;height:80px;bottom:-30px;left:-20px}
+.hub .lab{padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.hub .lab b{font-family:"Fredoka",sans-serif;font-size:23px;color:var(--c);font-weight:600}
+.hub .lab span{color:var(--muted);font-size:14px}
+.hub .lab .count{font-weight:800;color:var(--ink);font-size:13px;margin-top:4px}
+@media (max-width:640px){.hubs{grid-template-columns:1fr}.hub{flex-direction:row}.hub .art{aspect-ratio:auto;width:110px;flex:none}.hub .lab{justify-content:center}}
+
+/* search */
+.search{margin:10px 0 4px}
+.search label{font-family:"Fredoka",sans-serif;font-size:1.2rem}
+.search input{width:100%;font:600 1rem "Nunito",sans-serif;padding:13px 16px;border:2px solid var(--line);border-radius:999px;background:#fff;margin-top:6px;outline:none;transition:border-color .2s,box-shadow .2s}
+.search input:focus{border-color:var(--avid);box-shadow:0 0 0 4px rgba(11,111,184,.15)}
+.results{display:grid;gap:8px;margin-top:10px}
+
+/* HUB page: folder tiles */
+.subhead{display:flex;align-items:center;gap:16px;margin:8px 0 18px}
+.subhead .icon{width:72px;height:72px;border-radius:18px;background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 55%,#000));display:flex;align-items:center;justify-content:center;flex:none;font-size:38px;color:#fff;font-family:"Fredoka",sans-serif;font-weight:700;box-shadow:var(--shadow)}
+.subhead h2{font-size:clamp(28px,4.5vw,44px);color:var(--c)}
+.subhead p{margin:4px 0 0;color:var(--muted)}
+.folders{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.folder{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:22px 16px 18px;border-radius:22px;background:#fff;border:3px solid transparent;text-decoration:none;box-shadow:var(--shadow);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+.folder:hover{transform:translateY(-8px) rotate(-1.5deg);box-shadow:var(--shadow-lg);border-color:var(--c)}
+.folder .big{width:96px;height:96px;border-radius:26px;display:grid;place-items:center;font:700 58px/1 "Fredoka",sans-serif;color:#fff;background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 60%,#000));box-shadow:0 10px 22px color-mix(in srgb,var(--c) 40%,transparent);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.folder:hover .big{transform:scale(1.1) rotate(6deg)}
+.folder h3{font-size:22px;color:var(--c);margin-top:6px}
+.folder p{margin:0;color:var(--muted);font-size:14px}
+.folder .count{font-size:13px;font-weight:800;color:var(--ink);background:var(--s);padding:3px 10px;border-radius:999px;margin-top:4px}
+.folder.empty .count{color:var(--muted)}
+.acronym{display:flex;justify-content:center;gap:clamp(6px,2vw,18px);margin:6px 0 22px;flex-wrap:wrap}
+.acronym span{font:700 clamp(22px,4vw,34px) "Fredoka",sans-serif;color:var(--c)}
+.acronym small{color:var(--muted);font-weight:700;font-size:.55em;margin-left:2px}
+
+/* FOLDER page: categories */
+.cats{display:grid;gap:16px}
+.cat{background:#fff;border:1px solid var(--line);border-left:8px solid var(--c);border-radius:18px;padding:18px 20px;box-shadow:var(--shadow)}
+.cat h3{font-size:21px;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.cat h3 .badge{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--s);font-size:22px;flex:none}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:10px}
+.item{display:flex;align-items:center;gap:12px;border:2px solid var(--line);border-radius:14px;padding:12px 14px;text-decoration:none;background:#fff;transition:border-color .2s,background .2s,transform .2s}
+.item:hover{border-color:var(--c);background:var(--s);transform:translateX(4px)}
+.item .dot{width:12px;height:12px;border-radius:50%;background:var(--c);flex:none}
+.item b{font-weight:800}
+.item small{display:block;color:var(--muted);font-size:13px}
+.tag{display:inline-block;margin-left:6px;font-size:11px;font-weight:800;padding:2px 9px;border-radius:999px;margin-top:3px;letter-spacing:.02em}
+.tag.student{background:#fff1cf;color:#8a5a00}.tag.teacher{background:#ece6ff;color:#5b3fd6}.tag.both{background:#e4f0fa;color:#0b5b98}
+.none{color:var(--muted);font-style:italic;margin:0}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+.pager a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;padding:10px 18px;border-radius:999px;background:#fff;border:2px solid var(--line);transition:all .2s}
+.pager a:hover{border-color:var(--ink);transform:translateY(-2px)}
+
+
+.item[hidden],.cat[hidden]{display:none}
+.item small{margin-top:2px}
+.item.rich{cursor:default}
+.item.rich:hover{transform:none}
+.item .grow{flex:1;min-width:0}
+.btns{display:flex;gap:6px;flex:none}
+.mini{text-decoration:none;font-weight:800;font-size:13px;padding:6px 11px;border-radius:999px;border:2px solid var(--c);color:var(--c);background:#fff;transition:all .2s;white-space:nowrap}
+.mini:hover{background:var(--c);color:#fff}
+.mini.pr{background:var(--c);color:#fff}
+.mini.pr:hover{filter:brightness(1.12)}
+.tag.new{background:#ffe1dc;color:#c0392b}
+.filterbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px}
+.filterbar span{font-weight:800;color:var(--muted)}
+.filterbar button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font:800 .95rem "Nunito",sans-serif;cursor:pointer;color:var(--ink);transition:all .2s}
+.filterbar button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.folder .big{font-size:52px}
+@media (max-width:520px){.item.rich{flex-wrap:wrap}.btns{width:100%;padding-left:22px}}
+footer{color:var(--muted);font-size:14px;margin-top:34px;text-align:center}
+
+@keyframes slide{to{background-position:300% 0}}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-25px) scale(1.08)}}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="blobs" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="wrap">
+  <header><h1 id="title"></h1><p id="subtitle"></p></header>
+  <nav class="crumbs" id="crumbs" aria-label="Breadcrumb"></nav>
+  <main id="main"></main>
+  <footer>Tip: use the buttons at the top, or your browser's back button, to go back a page.</footer>
+</div>
+<script>
+/* ===================== (no need to edit below) ===================== */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const $ = s => document.querySelector(s);
+const fColor = (h, f) => f.color || h.color;
+const fSoft = (h, f) => f.soft || h.soft;
+const sty = (c, s) => `--c:${c};--s:${s}`;
+const countFolder = f => f.categories.reduce((a, c) => a + c.items.length, 0);
+const countHub = h => h.folders.reduce((a, f) => a + countFolder(f), 0);
+const isExternal = f => /^https?:/i.test(f);
+const linkAttrs = f => `href="${esc(f)}"${isExternal(f) ? ' target="_blank" rel="noopener"' : ""}`;
+/* Google Docs / Slides / Sheets → direct PDF link for printing */
+function printURL(u) {
+  let m;
+  if ((m = u.match(/docs\.google\.com\/document\/d\/([\w-]+)/))) return `https://docs.google.com/document/d/${m[1]}/export?format=pdf`;
+  if ((m = u.match(/docs\.google\.com\/presentation\/d\/([\w-]+)/))) return `https://docs.google.com/presentation/d/${m[1]}/export/pdf`;
+  if ((m = u.match(/docs\.google\.com\/spreadsheets\/d\/([\w-]+)/))) return `https://docs.google.com/spreadsheets/d/${m[1]}/export?format=pdf`;
+  if (/drive\.google\.com\/file\//.test(u)) return u; /* Drive PDFs open in a viewer with a print button */
+  return null;
+}
+function itemHTML(it) {
+  const pu = printURL(it.file);
+  const meta = `${tag(it.for)}${it.isNew ? '<span class="tag new">NEW</span>' : ""}${it.note ? `<small>${esc(it.note)}</small>` : ""}`;
+  if (!pu) return `<a class="item" data-for="${it.for || "both"}" ${linkAttrs(it.file)}><span class="dot"></span><span><b>${esc(it.title)}</b>${meta}</span></a>`;
+  return `<div class="item rich" data-for="${it.for || "both"}"><span class="dot"></span><span class="grow"><b>${esc(it.title)}</b>${meta}</span>
+    <span class="btns"><a class="mini" ${linkAttrs(it.file)}>Open</a><a class="mini pr" href="${esc(pu)}" target="_blank" rel="noopener" title="Download a PDF to print">🖨️ Print</a></span></div>`;
+}
+const tag = w => w ? `<span class="tag ${w}">${({student:"Students",teacher:"Teachers",both:"Everyone"})[w] || esc(w)}</span>` : "";
+
+document.title = SITE.title;
+$("#title").innerHTML = `<span class="grad">${esc(SITE.title)}</span>`;
+$("#subtitle").textContent = SITE.subtitle;
+
+function crumbs(parts) {
+  $("#crumbs").innerHTML = parts.map((p, i) => i < parts.length - 1
+    ? `<a href="#${p[1]}" data-go="${p[1]}">${esc(p[0])}</a><span aria-hidden="true">›</span>`
+    : `<b aria-current="page">${esc(p[0])}</b>`).join("");
+}
+function render(html) { const m = $("#main"); m.className = ""; m.innerHTML = html; void m.offsetWidth; m.className = "enter"; }
+
+/* ---------- HOME ---------- */
+function home() {
+  crumbs([["Home", ""]]);
+  render(`<div class="hubs stagger">${SITE.hubs.map(h => {
+      const n = countHub(h);
+      return `<a class="hub tilt" href="#${slug(h.name)}" data-go="${slug(h.name)}" style="${sty(h.color, h.soft)}">
+        <span class="art"><span class="em">${h.emoji}</span></span>
+        <span class="lab"><b>${esc(h.name)}</b><span>${esc(h.blurb || "")}</span>
+        <span class="count">${h.folders.length} folders · ${n ? n + " resources" : "coming soon"}</span></span></a>`;
+    }).join("")}</div>
+    <div class="search"><label for="q">Looking for something?</label>
+      <input id="q" type="search" placeholder="Type a topic, like Cornell notes or SMART goals" autocomplete="off">
+      <div class="results" id="results"></div></div>`);
+  tilt();
+  $("#q").addEventListener("input", e => {
+    const q = e.target.value.trim().toLowerCase();
+    if (q.length < 2) { $("#results").innerHTML = ""; return; }
+    const hits = [];
+    SITE.hubs.forEach(h => h.folders.forEach(f => f.categories.forEach(c => {
+      const catHit = c.name.toLowerCase().includes(q);
+      c.items.forEach(it => { if (catHit || it.title.toLowerCase().includes(q) || f.name.toLowerCase().includes(q)) hits.push({ h, f, c, it }); });
+      if (catHit) hits.push({ h, f, c });
+    })));
+    $("#results").innerHTML = hits.length ? hits.slice(0, 30).map(x => x.it
+      ? `<a class="item" style="${sty(fColor(x.h, x.f), fSoft(x.h, x.f))}" ${linkAttrs(x.it.file)}><span class="dot"></span><span><b>${esc(x.it.title)}</b><small>${esc(x.h.name)} · ${esc(x.f.name)} · ${esc(x.c.name)}</small></span></a>`
+      : `<a class="item" style="${sty(fColor(x.h, x.f), fSoft(x.h, x.f))}" href="#${slug(x.h.name)}/${slug(x.f.name)}" data-go="${slug(x.h.name)}/${slug(x.f.name)}"><span class="dot"></span><span><b>📁 ${esc(x.c.name)}</b><small>${esc(x.h.name)} · ${esc(x.f.name)} folder</small></span></a>`
+    ).join("") : `<p class="none">No matches yet.</p>`;
+  });
+}
+
+/* ---------- HUB (e.g., AVID → W I C O R) ---------- */
+function hub(h) {
+  crumbs([["Home", ""], [h.name, slug(h.name)]]);
+  const acronym = h.folders.every(f => /^[A-Z]$/.test(f.letter))
+    ? `<div class="acronym">${h.folders.map(f => `<span style="--c:${fColor(h, f)}">${f.letter}<small>${esc(f.name.slice(1))}</small></span>`).join("")}</div>` : "";
+  render(`<div class="subhead" style="${sty(h.color, h.soft)}"><span class="icon">${h.emoji}</span>
+      <div><h2>${esc(h.name)}</h2><p>${esc(h.blurb || "")}</p></div></div>
+    ${acronym}
+    <div class="folders stagger">${h.folders.map(f => {
+      const n = countFolder(f);
+      return `<a class="folder${n ? "" : " empty"}" style="${sty(fColor(h, f), fSoft(h, f))}" href="#${slug(h.name)}/${slug(f.name)}" data-go="${slug(h.name)}/${slug(f.name)}">
+        <span class="big">${esc(f.letter)}</span><h3>${esc(f.name)}</h3>
+        <p>${f.categories.length} categories</p><span class="count">${n ? n + " resource" + (n > 1 ? "s" : "") : "Coming soon"}</span></a>`;
+    }).join("")}</div>`);
+}
+
+/* ---------- FOLDER (e.g., W → categories) ---------- */
+function folder(h, fi) {
+  const f = h.folders[fi], c = fColor(h, f), s = fSoft(h, f);
+  crumbs([["Home", ""], [h.name, slug(h.name)], [f.name, `${slug(h.name)}/${slug(f.name)}`]]);
+  const prev = h.folders[fi - 1], next = h.folders[fi + 1];
+  const pg = (x, label) => x ? `<a href="#${slug(h.name)}/${slug(x.name)}" data-go="${slug(h.name)}/${slug(x.name)}" style="--c:${fColor(h, x)}">${label}</a>` : "<span></span>";
+  render(`<div class="subhead" style="${sty(c, s)}"><span class="icon">${esc(f.letter)}</span>
+      <div><p style="margin:0;color:var(--muted);font-weight:800">${esc(h.name)}</p><h2>${esc(f.name)}</h2>${f.about ? `<p>${esc(f.about)}</p>` : ""}</div></div>
+    ${f.filter ? `<div class="filterbar"><span>Show:</span><button class="on" data-f="all">Everything</button><button data-f="student">🎒 Students</button><button data-f="teacher">👩‍🏫 Teachers</button></div>` : ""}
+    <div class="cats stagger">${f.categories.map(cat => `
+      <section class="cat" style="${sty(c, s)}"><h3><span class="badge">${cat.icon || "📁"}</span>${esc(cat.name)}</h3>
+        ${cat.items.length ? `<div class="items">${cat.items.map(itemHTML).join("")}</div>`
+          : `<p class="none">Nothing posted here yet.</p>`}
+      </section>`).join("")}</div>
+    <div class="pager">${pg(prev, prev ? `← ${esc(prev.letter)} · ${esc(prev.name)}` : "")}${pg(next, next ? `${esc(next.letter)} · ${esc(next.name)} →` : "")}</div>`);
+}
+
+/* ---------- Student / teacher filter (Printables) ---------- */
+document.addEventListener("click", e => {
+  const b = e.target.closest(".filterbar button"); if (!b) return;
+  document.querySelectorAll(".filterbar button").forEach(x => x.classList.toggle("on", x === b));
+  const f = b.dataset.f;
+  document.querySelectorAll(".cat").forEach(cat => {
+    let shown = 0;
+    cat.querySelectorAll(".item").forEach(it => { const ok = f === "all" || it.dataset.for === f || it.dataset.for === "both"; it.hidden = !ok; if (ok) shown++; });
+    cat.hidden = cat.querySelector(".item") ? !shown : f !== "all";
+  });
+});
+
+/* ---------- 3D tilt on hub tiles ---------- */
+function tilt() {
+  if (!matchMedia("(hover: hover)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  document.querySelectorAll(".tilt").forEach(el => {
+    el.addEventListener("mousemove", e => {
+      const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      el.style.transform = `perspective(800px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateY(-6px)`;
+    });
+    el.addEventListener("mouseleave", () => el.style.transform = "");
+  });
+}
+
+/* ---------- Router ---------- */
+function route(target) {
+  let raw = target;
+  if (raw == null) { try { raw = decodeURIComponent(location.hash.slice(1)); } catch (e) { raw = ""; } }
+  const [hs, fs] = raw.split("/");
+  const h = SITE.hubs.find(x => slug(x.name) === hs);
+  const fi = h ? h.folders.findIndex(f => slug(f.name) === fs) : -1;
+  if (!h) home(); else if (fi >= 0) folder(h, fi); else hub(h);
+  window.scrollTo(0, 0);
+  const t = $("#main h2"); if (t) { t.setAttribute("tabindex", "-1"); t.focus({ preventScroll: true }); }
+}
+document.addEventListener("click", e => {
+  const a = e.target.closest("[data-go]"); if (!a) return;
+  e.preventDefault(); const t = a.dataset.go;
+  try { history.pushState(null, "", t ? "#" + t : location.pathname); } catch (err) {}
+  route(t);
+});
+window.addEventListener("popstate", () => route());
+route();
+</script>
+</body>
+</html>
