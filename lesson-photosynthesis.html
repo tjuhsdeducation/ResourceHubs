@@ -9,25 +9,6 @@
 <link rel="stylesheet" href="wicor-lesson.css">
 </head>
 <body>
-<div class="wrap">
-  <div class="topbar">
-    <a class="pill-btn" href="index.html#wicor">← Back to WICOR</a>
-    <span style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="pill-btn" id="resetAll" title="Erase your answers on this lesson">↺ Start over</button>
-      <button class="pill-btn dark" data-print>🖨️ Print my work</button>
-    </span>
-  </div>
-  <header class="lesson-head" id="lessonHead"></header>
-  <nav class="map" id="map" aria-label="WICOR stations"></nav>
-  <div class="progress"><div id="progress"></div></div>
-  <main id="stations"></main>
-  <div class="finish" id="finish" hidden>
-    <h2>🎉 You completed all five WICOR stations!</h2>
-    <p>Print your work or show your teacher.</p>
-    <button class="pill-btn" data-print>🖨️ Print my work</button>
-  </div>
-</div>
-
 <script>
 /* =====================================================================
    ✏️ LESSON CONTENT: Photosynthesis (Biology)
@@ -39,6 +20,9 @@
 const LESSON = {
   id: "bio-photosynthesis",
   subject: "Biology",
+  short: "Biology: Photosynthesis",
+  color: "#1aa36f",
+  emoji: "🌿",
   title: "Photosynthesis: The Factory in Every Leaf",
   intro: "Read, write, question, discuss, and organize your way through one of the most important processes on Earth. Complete all five stations, about 5–10 minutes each.",
   order: ["R", "W", "I", "C", "O"],   /* the order students move through the stations */

@@ -26,17 +26,39 @@
   let saveT;
   function save() { clearTimeout(saveT); saveT = setTimeout(() => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }, 250); }
 
-  /* ---------- page header ---------- */
+  /* ---------- page shell (hub header bar + pastel banner) ---------- */
   document.title = `${L.title} | WICOR ${L.subject}`;
-  $("#lessonHead").innerHTML = `
-    <div class="kicker">AVID WICOR Lesson · ${esc(L.subject)}</div>
-    <h1><span class="grad">${esc(L.title)}</span></h1>
-    <p>${esc(L.intro)}</p>
-    <div class="student-info no-print-hide">
-      <label>Name <input data-save="name" autocomplete="off"></label>
-      <label>Period <input data-save="period" style="width:70px" autocomplete="off"></label>
-      <label>Date <input data-save="date" style="width:120px" autocomplete="off"></label>
-    </div>`;
+  const LC = L.color || "#8a54e0";
+  document.body.insertAdjacentHTML("afterbegin", `
+    <header class="top"><div class="bar">
+      <a class="brand" href="index.html#home"><span class="mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3zm-7 9.2V16l7 4 7-4v-3.8l-7 3.8-7-3.8z"/></svg></span>Teacher Resource Hub</a>
+      <span class="crumb"><span>›</span><a href="index.html#wicor">WICOR</a><span>›</span><b>${esc(L.short || L.subject)}</b></span>
+      <span class="spacer"></span>
+      <a class="pill-btn" href="index.html#wicor">← All WICOR lessons</a>
+      <button class="pill-btn" id="resetAll" title="Erase your answers on this lesson">↺ Start over</button>
+      <button class="pill-btn dark" data-print>🖨️ Print my work</button>
+    </div></header>
+    <div class="wrap">
+      <section class="banner" style="--lc:${LC}">
+        <div class="kicker">WICOR Lesson · ${esc(L.subject)}</div>
+        <h1>${esc(L.title)}</h1>
+        <p>${esc(L.intro)}</p>
+        <div class="student-info">
+          <label>Name <input data-save="name" autocomplete="off"></label>
+          <label>Period <input data-save="period" style="width:70px" autocomplete="off"></label>
+          <label>Date <input data-save="date" style="width:120px" autocomplete="off"></label>
+        </div>
+        <span class="art" aria-hidden="true">${L.emoji || "🧪"}</span>
+      </section>
+      <nav class="map" id="map" aria-label="WICOR stations"></nav>
+      <div class="progress"><div id="progress"></div></div>
+      <main id="stations"></main>
+      <div class="finish" id="finish" hidden>
+        <h2>🎉 You completed all five WICOR stations!</h2>
+        <p>Print your work or show your teacher.</p>
+        <button class="pill-btn" data-print>🖨️ Print my work</button>
+      </div>
+    </div>`);
 
   /* ---------- station map ---------- */
   $("#map").innerHTML = ORDER.map((k, i) => `
@@ -252,9 +274,181 @@
      ===================================================================== */
   (function () {
     const I = L.stations.I;
+    if (I.lab) { genericInquiry(I); return; }
     body("I").innerHTML = I.html;
     I.mount({ root: body("I"), state: S, save, complete: msg => complete("I", msg), part, esc, words });
   })();
+
+  /* Generic Inquiry station: predict → virtual lab (sliders, record, live graph) → analyze + Level 3 question */
+  function genericInquiry(I) {
+    const P = I.predict, B = I.lab, A = I.analyze, root = body("I");
+    const curve = B.mode === "curve";
+    S.sim.ctrl = S.sim.ctrl || {}; S.sim.trials = S.sim.trials || []; S.sim.runs = S.sim.runs || [];
+    B.controls.forEach(c => { if (S.sim.ctrl[c.id] === undefined) S.sim.ctrl[c.id] = c.value; });
+    const ax = (d, l) => `<svg viewBox="0 0 120 70"><path d="M10 62 L110 62 M10 62 L10 6" stroke="#bbb" stroke-width="2"/><path d="${d}" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/></svg>${esc(l)}`;
+    const ctrlHTML = c => c.type === "seg"
+      ? `<div class="control"><label>${c.label}</label><div class="seg" data-ctrl="${c.id}">${c.options.map(([v, l]) => `<button data-v="${v}">${esc(l)}</button>`).join("")}</div></div>`
+      : `<div class="control"><label>${c.label} <span data-val="${c.id}"></span></label><input type="range" data-ctrl="${c.id}" min="${c.min}" max="${c.max}" step="${c.step || 1}"></div>`;
+    root.innerHTML = `
+      ${part(1, esc(P.q), `<div class="choices" id="predChoices" style="color:var(--I)">${P.options.map(o => `<button class="choice" data-v="${o.v}">${ax(o.d, o.label)}</button>`).join("")}</div>
+        <textarea class="box" rows="2" data-save="i-hyp" style="margin-top:12px" placeholder="${esc(P.placeholder)}"></textarea>
+        <p class="hint">Write your hypothesis as <b>If… then… because…</b></p>`)}
+      ${part(2, esc(B.title), `<p class="hint" style="margin-top:0">${B.intro}</p>
+        <div class="lab">
+          <div class="panel">
+            <div id="scene">${B.scene}</div>
+            ${B.controls.map(ctrlHTML).join("")}
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:8px">
+              <div><div class="hint" style="margin:0">${esc(B.readout)}</div><div class="readout" id="readout">–</div></div>
+              <button class="btn solid" id="record">${curve ? "▶ Run & graph it" : "📍 Record this trial"}</button>
+            </div>
+          </div>
+          <div>
+            <canvas class="graph" id="graph" height="260"></canvas>
+            <div class="hint" id="legend"></div>
+            <table class="data"><thead><tr id="thead"></tr></thead><tbody id="rows"></tbody></table>
+            <button class="btn" id="clearData" style="margin-top:8px;padding:6px 12px;font-size:.85rem">Clear data</button>
+          </div>
+        </div>`)}
+      ${part(3, "Analyze & ask", `<label style="font-weight:800">Was your prediction supported?</label>
+        <div class="seg" id="supported" style="margin:6px 0 10px"><button data-v="yes">Yes</button><button data-v="partly">Partly</button><button data-v="no">No</button></div>
+        <textarea class="box" rows="3" data-save="i-analysis" placeholder="${esc(A.placeholder)}"></textarea>
+        <p class="hint">${A.hint}</p>
+        <label style="font-weight:800;display:block;margin-top:12px">Write a Level 3 question you could investigate next (Costa's Levels):</label>
+        <div class="stems">${A.stems.map(t => `<button class="stem">${esc(t)}</button>`).join("")}</div>
+        <input class="box" data-save="i-q3" style="margin-top:8px" placeholder="What would happen if…?">
+        <ul class="checks" id="iChecks">
+          <li data-k="pred">Chose a prediction + wrote an If/then hypothesis</li>
+          <li data-k="data">${esc(B.needLabel)}</li>
+          <li data-k="ana">${esc(A.checkLabel)}</li>
+          <li data-k="q3">Wrote a Level 3 question</li>
+        </ul>`)}`;
+    const $r = q => root.querySelector(q);
+
+    /* prediction */
+    root.querySelectorAll("#predChoices .choice").forEach(b => {
+      b.classList.toggle("on", S.inputs["i-pred"] === b.dataset.v);
+      b.onclick = () => { S.inputs["i-pred"] = b.dataset.v; save(); root.querySelectorAll("#predChoices .choice").forEach(x => x.classList.toggle("on", x === b)); check(); };
+    });
+    root.querySelectorAll("#supported button").forEach(b => {
+      b.classList.toggle("on", S.inputs["i-supported"] === b.dataset.v);
+      b.onclick = () => { S.inputs["i-supported"] = b.dataset.v; save(); root.querySelectorAll("#supported button").forEach(x => x.classList.toggle("on", x === b)); check(); };
+    });
+
+    /* controls */
+    const ctrl = S.sim.ctrl;
+    const fmt = c => (c.fmt ? c.fmt(ctrl[c.id]) : ctrl[c.id] + (c.unit || ""));
+    B.controls.forEach(c => {
+      if (c.type === "seg") {
+        const g = $r(`[data-ctrl="${c.id}"]`);
+        const paint = () => g.querySelectorAll("button").forEach(b => b.classList.toggle("on", String(ctrl[c.id]) === b.dataset.v));
+        g.querySelectorAll("button").forEach(b => b.onclick = () => { ctrl[c.id] = isNaN(+b.dataset.v) ? b.dataset.v : +b.dataset.v; save(); paint(); refresh(); });
+        paint();
+      } else {
+        const r = $r(`input[data-ctrl="${c.id}"]`); r.value = ctrl[c.id];
+        r.oninput = () => { ctrl[c.id] = +r.value; save(); refresh(); };
+      }
+    });
+    let current = null;
+    const round = v => { const d = B.digits || 0; return Math.round(v * 10 ** d) / 10 ** d; };
+    function measure() {
+      if (curve) return null;
+      const exact = B.model({ ...ctrl });
+      const n = B.noise ? (Math.random() * 2 - 1) * B.noise : 0;
+      return round(Math.max(B.y.min || 0, exact + (exact === 0 ? 0 : n)));
+    }
+    function refresh() {
+      B.controls.forEach(c => { const v = $r(`[data-val="${c.id}"]`); if (v) v.textContent = fmt(c); });
+      if (curve) { const pts = B.curve({ ...ctrl }); current = B.summary(pts, { ...ctrl }); $r("#readout").textContent = current.text; }
+      else { current = measure(); $r("#readout").textContent = (B.prefix || "") + (B.digits ? current.toFixed(B.digits) : current) + (B.unit || ""); }
+      if (B.draw) B.draw($r("#scene svg"), { ...ctrl }, curve ? current : current);
+    }
+
+    /* animation hook */
+    if (B.animate && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      let last = 0;
+      const tick = t => { const dt = Math.min(.05, (t - last) / 1000 || 0); last = t; B.animate($r("#scene svg"), { ...ctrl }, curve ? current : current, dt); requestAnimationFrame(tick); };
+      requestAnimationFrame(tick);
+    }
+
+    /* data + graph */
+    const COLORS = ["#8a54e0", "#f05a28", "#0e9f6e", "#e08a00", "#2b7de9", "#e8368f"];
+    const groupOf = c => (B.group ? B.group(c) : "Trials");
+    const xId = B.x.id;
+    function table() {
+      const cols = curve ? ["Run", ...B.controls.map(c => c.short || c.id), B.summaryCol] : ["Trial", ...B.controls.map(c => c.short || c.id), B.yShort];
+      $r("#thead").innerHTML = cols.map(c => `<th>${esc(c)}</th>`).join("");
+      const list = curve ? S.sim.runs : S.sim.trials;
+      $r("#rows").innerHTML = list.map((t, i) => `<tr><td>${i + 1}</td>${B.controls.map(c => `<td>${esc(c.fmt ? c.fmt(t.c[c.id]) : t.c[c.id] + (c.unit || ""))}</td>`).join("")}<td><b>${esc(curve ? t.sum : (B.prefix || "") + (B.digits ? (+t.y).toFixed(B.digits) : t.y))}</b></td></tr>`).join("");
+    }
+    function draw() {
+      table();
+      const cv = $r("#graph"), dpr = window.devicePixelRatio || 1, W = cv.clientWidth || 400, H = 260;
+      cv.width = W * dpr; cv.height = H * dpr; cv.style.height = H + "px";
+      const x = cv.getContext("2d"); x.scale(dpr, dpr); x.clearRect(0, 0, W, H);
+      const pad = { l: 50, r: 14, t: 16, b: 40 }, pw = W - pad.l - pad.r, ph = H - pad.t - pad.b;
+      const X0 = B.x.min || 0, X1 = B.x.max, Y0 = B.y.min || 0, Y1 = B.y.max;
+      const X = v => pad.l + (v - X0) / (X1 - X0) * pw, Y = v => pad.t + ph - (v - Y0) / (Y1 - Y0) * ph;
+      const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+      x.fillStyle = dark ? "#211e2b" : "#fff"; x.fillRect(0, 0, W, H);
+      x.strokeStyle = dark ? "#352f45" : "#e8e2d6"; x.lineWidth = 1; x.fillStyle = dark ? "#aaa5bd" : "#5d6577"; x.font = "11px Nunito, sans-serif"; x.textAlign = "center";
+      for (let v = X0; v <= X1 + 1e-9; v += B.x.tick) { x.beginPath(); x.moveTo(X(v), pad.t); x.lineTo(X(v), pad.t + ph); x.stroke(); x.fillText(+v.toFixed(2), X(v), pad.t + ph + 14); }
+      x.textAlign = "right";
+      for (let v = Y0; v <= Y1 + 1e-9; v += B.y.tick) { x.beginPath(); x.moveTo(pad.l, Y(v)); x.lineTo(pad.l + pw, Y(v)); x.stroke(); x.fillText(+v.toFixed(2), pad.l - 6, Y(v) + 4); }
+      x.strokeStyle = dark ? "#ece9f5" : "#1f2430"; x.lineWidth = 2; x.beginPath(); x.moveTo(pad.l, pad.t); x.lineTo(pad.l, pad.t + ph); x.lineTo(pad.l + pw, pad.t + ph); x.stroke();
+      x.fillStyle = dark ? "#ece9f5" : "#1f2430"; x.font = "bold 12px Nunito, sans-serif"; x.textAlign = "center";
+      x.fillText(B.x.label, pad.l + pw / 2, H - 6);
+      x.save(); x.translate(13, pad.t + ph / 2); x.rotate(-Math.PI / 2); x.fillText(B.y.label, 0, 0); x.restore();
+      const legend = [];
+      if (curve) {
+        S.sim.runs.forEach((r, i) => {
+          const col = COLORS[i % COLORS.length]; legend.push(`<span style="color:${col};font-weight:800">● Run ${i + 1}: ${esc(groupOf(r.c))}</span>`);
+          x.strokeStyle = col; x.lineWidth = 2.5; x.beginPath(); r.pts.forEach(([a, b], j) => j ? x.lineTo(X(a), Y(b)) : x.moveTo(X(a), Y(b))); x.stroke();
+        });
+      } else {
+        const groups = {};
+        S.sim.trials.forEach(t => (groups[groupOf(t.c)] = groups[groupOf(t.c)] || []).push(t));
+        Object.keys(groups).forEach((k, gi) => {
+          const col = COLORS[gi % COLORS.length], pts = groups[k].slice().sort((a, b) => a.c[xId] - b.c[xId]);
+          legend.push(`<span style="color:${col};font-weight:800">● ${esc(k)}</span>`);
+          x.strokeStyle = col; x.lineWidth = 2.5; x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(X(p.c[xId]), Y(p.y)) : x.moveTo(X(p.c[xId]), Y(p.y))); x.stroke();
+          x.fillStyle = col; pts.forEach(p => { x.beginPath(); x.arc(X(p.c[xId]), Y(p.y), 5, 0, 7); x.fill(); });
+        });
+      }
+      $r("#legend").innerHTML = legend.join(" &nbsp; ") || (curve ? "Run the simulation to see your graph." : "Record trials to see your graph.");
+    }
+    $r("#record").onclick = () => {
+      if (curve) { const pts = B.curve({ ...ctrl }); S.sim.runs.push({ c: { ...ctrl }, pts, sum: B.summary(pts, { ...ctrl }).short }); }
+      else S.sim.trials.push({ c: { ...ctrl }, y: current });
+      save(); draw(); check(); refresh();
+    };
+    $r("#clearData").onclick = () => { if (confirm("Clear all your data?")) { S.sim.trials = []; S.sim.runs = []; save(); draw(); check(); } };
+    window.addEventListener("resize", draw);
+    root.querySelectorAll(".stem").forEach(b => b.onclick = () => {
+      const inp = root.querySelector('[data-save="i-q3"]'); inp.value = b.textContent + " "; inp.focus();
+      inp.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+    function check() {
+      const i = S.inputs, need = B.need || { distinct: 5, groups: 1 };
+      let dataOk;
+      if (curve) dataOk = new Set(S.sim.runs.map(r => JSON.stringify(r.c))).size >= (need.runs || 2);
+      else {
+        const g = {}; S.sim.trials.forEach(t => (g[groupOf(t.c)] = g[groupOf(t.c)] || new Set()).add(t.c[xId]));
+        dataOk = Object.values(g).filter(set => set.size >= need.distinct).length >= (need.groups || 1);
+      }
+      const r = {
+        pred: !!i["i-pred"] && /\bif\b/i.test(i["i-hyp"] || "") && /\bthen\b/i.test(i["i-hyp"] || ""),
+        data: dataOk,
+        ana: !!i["i-supported"] && words(i["i-analysis"] || "") >= (A.minWords || 25) && A.must.test(i["i-analysis"] || ""),
+        q3: words(i["i-q3"] || "") >= 6 && /\?\s*$/.test(i["i-q3"] || "")
+      };
+      root.querySelectorAll("#iChecks li").forEach(li => li.classList.toggle("ok", r[li.dataset.k]));
+      if (Object.values(r).every(Boolean)) complete("I", "Inquiry complete!");
+    }
+    root.addEventListener("input", check);
+    refresh(); setTimeout(() => { draw(); check(); }, 0);
+    new IntersectionObserver(() => draw()).observe($r("#graph"));
+  }
 
   /* =====================================================================
      C: COLLABORATION
