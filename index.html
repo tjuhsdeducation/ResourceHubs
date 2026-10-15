@@ -13,7 +13,7 @@
   --bg:#f6f7f9; --surface:#ffffff; --fg:#1f2430; --muted:#5d6577; --line:#dfe3ea; --hover:#eef1f6;
   --accent:#2f5bd3; --chip:#e9eefb;
   --paper:#ffffff; --ink:#1b1b1b; --rule:#9aa0aa;
-  --c-avid:#5b5fe0; --c-new:#14a37f; --c-study:#ee7d1c; --c-tech:#1f95e0; --c-college:#e0408a; --c-lessons:#8a54e0; --c-wicor:#f25c54; --k-handout:#3d6fb6; --k-lesson:#8a54e0; --k-graded:#e0503a; --k-link:#0f8a78;
+  --c-avid:#5b5fe0; --c-new:#14a37f; --c-study:#ee7d1c; --c-tech:#1f95e0; --c-college:#e0408a; --c-lessons:#8a54e0; --c-wicor:#f25c54; --c-service:#0f9d8a; --k-handout:#3d6fb6; --k-lesson:#8a54e0; --k-graded:#e0503a; --k-link:#0f8a78;
   --ok:#2e7d32; --bad:#c62828;
   --tilebase:#ffffff; --mix:20%; --sticker:#ffffff; --hero:#fff7ec;
   --display:"Fredoka", "Trebuchet MS", system-ui, sans-serif;
@@ -236,6 +236,68 @@ h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
 .d5ans,.tfout{margin:4px 0 0;font-weight:700;color:var(--fg)}
 .daily.present{position:fixed;inset:0;z-index:100;margin:0;border-radius:0;overflow:auto;font-size:1.25rem;padding:32px 40px}
 .daily.present .daily-head h2{font-size:2.2rem}.daily.present .d5card p{font-size:1.2rem}
+.wyr-day .wyr-side[disabled]{cursor:default;opacity:.9}
+.wyr-day .wyr-side.picked{outline:5px solid #ffd166;outline-offset:2px}
+.wyr-day .wyr-side em{font-size:1.8rem;font-style:normal;font-weight:900;background:rgba(255,255,255,.25)}
+.wyr-note{text-align:center;font-weight:700;color:var(--muted);margin:10px 0 0}
+.wyr-ref{border:0;background:none;color:var(--accent);font:800 .9rem var(--body);cursor:pointer}
+.wyr-talk{text-align:center;margin:10px 0 0;font-weight:600}
+.ff{position:relative;background:linear-gradient(135deg,#e9eefb,#fdece8);border-radius:16px;padding:16px;color:#1f2430}
+.ff h3{margin:0 0 6px}.ff p{margin:0 0 12px;font-weight:600}.ff small{display:block;margin-top:10px;color:#5d6577}
+.ff .dbtn{display:inline-block;text-decoration:none;background:#5b5fe0}
+.ffbadge{position:absolute;top:12px;right:12px;background:#5b5fe0;color:#fff;border-radius:999px;padding:2px 10px;font:800 .75rem var(--body)}
+.d5backup{margin-top:12px}.d5backup summary{cursor:pointer;font-weight:800;color:var(--muted);padding:6px 0}
+.annbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 6px;position:sticky;top:62px;z-index:4;background:var(--paper);padding:6px 0}
+.annlbl{font-weight:800;color:#5d6577;margin-right:2px}
+.anntool{border:2px solid #d7dbe4;background:#fff;color:#1f2430;border-radius:10px;padding:5px 10px;font:800 .82rem var(--body);cursor:pointer}
+.anntool.on{background:#1f2430;color:#fff;border-color:#1f2430}
+.anncount{margin-left:auto;font-weight:800;color:var(--c)}
+.anntip{margin:0 0 10px;font-size:.88rem;color:#5d6577}
+.dsrc-body .aw{cursor:text;border-radius:3px;user-select:none;-webkit-user-select:none}
+.dsrc-body .aw:hover{background:#f1eadb}
+.dsrc-body .aw.ah{background:#fff176}
+.dsrc-body .aw.au{text-decoration:underline 3px #8a54e0;text-underline-offset:4px}
+.dsrc-body .aw.ac{box-shadow:0 0 0 2px #e0408a;border-radius:999px}
+.annnote{display:inline-flex;align-items:center;gap:4px;background:#ffe9a8;border-radius:8px;padding:0 6px;margin:0 4px;font-size:.85rem;font-weight:700}
+.annnote input{border:0;background:transparent;font:700 .85rem var(--body);width:180px;max-width:50vw;outline:none;color:#1f2430}
+.annnote button{border:0;background:none;cursor:pointer}
+.tool h3{margin:16px 0 8px}.tool .muted,.muted{color:var(--muted)}
+.okc{color:var(--ok);font-weight:800}.needc{color:#c2410c;font-weight:800}
+.agt td small{display:block;color:var(--muted);font-size:.8rem}.agt select,.gpagrid input,.gpagrid select{font:700 1rem var(--body);padding:6px 8px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--fg)}
+.agsum{padding:10px 14px;border-radius:12px;background:color-mix(in srgb,var(--c) 10%,var(--surface))}
+.gpagrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.gpagrid label,.tool label.full{display:grid;gap:4px;font-weight:800;font-size:.9rem;margin-bottom:8px}
+.gpagrid textarea,.tool label.full textarea,.gpagrid input{width:100%;font:600 .95rem var(--body);padding:8px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--fg)}
+.gpaout{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:14px 0}
+.gpaout div{background:var(--bg);border-radius:14px;padding:10px 12px}.gpaout span{display:block;font-size:.8rem;font-weight:800;color:var(--muted)}.gpaout b{font:700 1.6rem var(--display)}
+.whobtns{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media (max-width:640px){.whobtns{grid-template-columns:1fr}}
+.whob{text-align:left;border:3px solid var(--line);background:var(--surface);color:var(--fg);border-radius:16px;padding:12px;cursor:pointer;font:inherit}
+.whob b{display:block;font-size:1.05rem}.whob small{color:var(--muted);font-weight:600}.whob.on{border-color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--surface))}
+.cl{list-style:none;padding:0;display:grid;gap:6px}.cl label{display:flex;gap:8px;font-weight:700}
+.meter{height:10px;background:var(--line);border-radius:999px;overflow:hidden}.meter div{height:100%;background:var(--c)}
+.aid{padding-left:20px;display:grid;gap:4px}
+.campus-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.campus{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:var(--fg);background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:10px 12px;transition:transform .15s,border-color .15s}
+.campus:hover{transform:translateY(-3px);border-color:var(--c)}.campus .sys{font:800 .7rem var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--c)}
+.campus.UC .sys{color:#1f6fd1}.campus.CSU .sys{color:#c2185b}.campus.CC .sys{color:#0f9d8a}.campus small{color:var(--muted)}.campus .go{font-size:.8rem;font-weight:800;color:var(--c);margin-top:4px}
+.essay .es-step{background:var(--bg);border-radius:16px;padding:12px 14px;margin-bottom:12px}.essay h3{margin:0 0 8px}
+.es-prompts{display:flex;flex-wrap:wrap;gap:6px}.es-p{border:2px solid var(--line);background:var(--surface);color:var(--fg);border-radius:12px;padding:6px 10px;cursor:pointer;font:700 .85rem var(--body)}
+.es-p.on{border-color:var(--c);background:var(--c);color:#fff}
+.es-quote{margin-top:10px;background:var(--surface);border-left:5px solid var(--c);border-radius:10px;padding:10px 12px}.es-quote p{margin:0 0 4px;font-weight:700}
+.es-note{margin:8px 0 0;color:var(--muted);font-weight:600}
+.es-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}.es-grid label{display:grid;gap:4px;font-weight:800;font-size:.88rem}
+.essay textarea,#es-d{width:100%;font:600 1rem/1.5 var(--body);padding:10px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--fg)}
+.essay select{font:700 .85rem var(--body);margin-left:8px;border-radius:8px;padding:3px 6px}
+.es-bar{margin-top:6px;font-weight:800}.es-wc.over{color:var(--bad)}
+.sch-add{display:grid;grid-template-columns:2fr 1fr 1fr 2fr auto;gap:6px;margin-bottom:10px}@media (max-width:760px){.sch-add{grid-template-columns:1fr 1fr}}
+.sch-add input{font:600 .95rem var(--body);padding:8px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--fg)}
+.sch .x{border:0;background:none;cursor:pointer;color:var(--bad);font-weight:900}
+.svc-note{background:#fff6dc;color:#6b4e00;border:1px solid #f1d98a;border-radius:12px;padding:10px 14px;margin-bottom:12px;font-weight:600}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.svc{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:4px}
+.svc h4{margin:0;font-size:1.05rem}.svc small{color:var(--muted);font-weight:700}.svc p{margin:2px 0;font-size:.9rem}.svc .btn{margin-top:auto;align-self:flex-start;text-decoration:none}
+.idea-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.idea{background:var(--bg);border-radius:14px;padding:10px 12px;display:grid;gap:4px}.idea label{display:flex;gap:6px;font-weight:600;font-size:.9rem}
 .k-print{--k:var(--c)}.k-page{--k:#8a54e0}
 .rcard.printable{cursor:default}
 .rcard .pmeta{display:flex;gap:6px;flex-wrap:wrap}
@@ -582,10 +644,57 @@ const SECTIONS = [
      {k:'note', add:true, label:'Coming soon', title:'Resources coming soon', desc:'This space is being built. Check back soon!'}
    ]}
   ]},
- {id:'college', name:'College & Career', color:'var(--c-college)', blurb:'California college pathways, financial aid, and career exploration resources to share with students and families.',
+ {id:'college', name:'College & Career', color:'var(--c-college)', blurb:'Explore UC and CSU, track A–G, write your Personal Insight Questions, find scholarships, and get FAFSA and California Dream Act help.',
   topics:[
-   {name:'Coming Soon', items:[
-     {k:'note', add:true, label:'Coming soon', title:'Resources coming soon', desc:'This space is being built. Check back soon!'}
+   {name:'UC & CSU: Explore & Compare', items:[
+     {k:'lesson', id:'campusexp', feature:true, title:'UC & CSU Campus Explorer', desc:'All 9 UCs, 22 CSUs, and local community colleges, with links to tours, plus a campus research card', meta:'15 min'},
+     {k:'handout', id:'ucvscsu', title:'UC vs. CSU at a Glance', desc:'Requirements, GPA, essays, and deadlines side by side'},
+     {k:'link', url:'https://admission.universityofcalifornia.edu', title:'UC Admissions (official)', desc:'Apply to UC, requirements, and campus info'},
+     {k:'link', url:'https://www.calstate.edu/apply', title:'Cal State Apply (official)', desc:'Apply to any CSU campus'},
+     {k:'link', url:'https://www.californiacolleges.edu', title:'CaliforniaColleges.edu', desc:'Compare colleges and majors, and track A–G with a free student account'}
+   ]},
+   {name:'A–G & GPA', items:[
+     {k:'lesson', id:'agtracker', feature:true, title:'A–G Tracker & GPA Estimator', desc:'Check your A–G progress and estimate your UC/CSU GPA', meta:'10 min'},
+     {k:'link', url:'https://admission.universityofcalifornia.edu/admission-requirements/freshman-requirements/subject-requirement-a-g.html', title:'UC A–G Subject Requirements', desc:'The official list of the 7 subject areas'},
+     {k:'link', url:'https://admission.universityofcalifornia.edu/admission-requirements/first-year-requirements/gpa-requirement.html', title:'How UC Calculates GPA', desc:'Which grades count and how honors points work'}
+   ]},
+   {name:'Application Essays', items:[
+     {k:'lesson', id:'ucpiq', feature:true, title:'UC Personal Insight Questions Workshop', desc:'Choose a prompt, brainstorm, outline, and draft with a live 350-word counter, then send your draft to your teacher', meta:'30+ min'},
+     {k:'lesson', id:'scholessay', title:'Scholarship Essay Workshop', desc:'Plan and draft common scholarship essays with word limits'},
+     {k:'link', url:'https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-freshman/personal-insight-questions.html', title:'UC Personal Insight Questions (official)', desc:'The 8 questions and UC’s tips'}
+   ]},
+   {name:'FAFSA, CA Dream Act & Cal Grant', items:[
+     {k:'lesson', id:'fafsaguide', feature:true, title:'FAFSA & California Dream Act Guide', desc:'Find the right form, follow a step-by-step checklist, and learn the Cal Grant deadline (March 2, 2027)', meta:'15 min'},
+     {k:'link', url:'https://studentaid.gov', title:'StudentAid.gov (FAFSA)', desc:'File the FAFSA and create your account'},
+     {k:'link', url:'https://dream.csac.ca.gov', title:'California Dream Act Application', desc:'For undocumented and AB 540-eligible students'},
+     {k:'link', url:'https://www.csac.ca.gov', title:'California Student Aid Commission (CSAC)', desc:'Cal Grant, Middle Class Scholarship, and WebGrants'},
+     {k:'link', url:'https://www.cash4college.csac.ca.gov', title:'Cash for College workshops', desc:'Free help filling out the FAFSA or CADAA'},
+     {k:'link', url:'https://www.cos.edu/en-us/admissions/financial-aid/sequoias-promise-program', title:'Sequoias Promise (College of the Sequoias)', desc:'Enrollment fees covered for eligible full-time students in their first two years'}
+   ]},
+   {name:'Scholarships', items:[
+     {k:'lesson', id:'scholtrack', feature:true, title:'Scholarship Tracker', desc:'Track scholarships, amounts, deadlines, and status in one place', meta:'Ongoing'},
+     {k:'link', url:'https://bigfuture.collegeboard.org', title:'BigFuture', desc:'College search, majors, and scholarships'}
+   ]},
+   {name:'Campus Tours', items:[
+     {k:'link', url:'https://admissions.ucmerced.edu/tours', title:'UC Merced Tours', desc:'The closest UC to Tulare County: in-person and virtual options'},
+     {k:'link', url:'https://studentaffairs.fresnostate.edu/recruitment/contact/index.html', title:'Fresno State Recruitment', desc:'Ask about campus tours and visits'},
+     {k:'link', url:'https://www.csub.edu', title:'CSU Bakersfield', desc:'Find tour and visit information on the campus site'},
+     {k:'link', url:'https://www.cos.edu', title:'College of the Sequoias', desc:'Your local community college in Visalia, Tulare, and Hanford'}
+   ]},
+   {name:'Timeline', items:[
+     {k:'handout', id:'collegetimeline', title:'4-Year College Timeline', desc:'What to do in 9th–12th grade, with key fall 2027 dates'}
+   ]}
+  ]},
+ {id:'service', name:'Community Service', color:'var(--c-service)', blurb:'AVID students serve their community all four years. Find Tulare County programs, plan your service, and log your hours for your teacher.',
+  topics:[
+   {name:'Tulare County Programs', items:[
+     {k:'lesson', id:'svcorgs', feature:true, title:'Tulare County Service Programs', desc:'Teen-friendly programs with ages, contacts, and how to join (FoodLink, libraries, Sequoia Riverlands Trust, VolunTEENS, and more)', meta:'Browse'}
+   ]},
+   {name:'Ideas & 4-Year Plan', items:[
+     {k:'lesson', id:'svcplan', feature:true, title:'Service Ideas & 4-Year Plan', desc:'Pick ideas that fit your interests and set hour goals for every grade', meta:'10 min'}
+   ]},
+   {name:'Log My Hours', items:[
+     {k:'lesson', id:'svclog', feature:true, title:'Log My Service Hours', desc:'Submit your hours, supervisor, and a reflection straight to your teacher', meta:'5 min'}
    ]}
   ]},
  {id:'lessons', name:'Interactive Lessons', color:'var(--c-lessons)', blurb:'Full WICOR lessons with virtual labs and live graphs. Share the link with students, or project a station for the whole class.',
@@ -1730,6 +1839,7 @@ const D5_REFLECT=[
  'What is one thing you want your future self to remember about this year?','How do you know when you really understand something?','What is a small win you had this week?',
  'Describe a point of confusion you had recently and how you worked through it.','What is something you are looking forward to this month?','How has your thinking changed about a topic this year?'];
 function dayIndex(d=new Date()){return Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(2024,0,1))/864e5)}
+const FIRST_FIVE_URL='https://www.edtomorrow.com/todaysfirstfive/';  /* ✏️ EdTomorrow's "today" page; click 6–12 Secondary */
 function dailyHeader(){
   const n=dayIndex(), pick=(arr,k)=>arr[((n*k)%arr.length+arr.length)%arr.length];
   const r=pick(D5_RIDDLE,1), m=pick(D5_MATH,7), w=pick(D5_WORD,11), tf=pick(D5_TF,5), q=pick(D5_REFLECT,13);
@@ -1737,29 +1847,62 @@ function dailyHeader(){
   return `<section class="daily" id="daily"><div class="daily-head"><div><span class="dkick">Question of the Day · ${esc(today)}</span><h2>☀️ Start Here: Today’s Community Builder</h2></div>
      <button class="dbtn ghost" id="dpresent">📽️ Present</button></div>
    <div class="daily-grid"><div class="wyr-host" id="wyrHost"></div>
-    <div class="d5"><h3>📅 Daily 5 <small>New questions every day</small></h3>
+    <div class="d5">
+     <div class="ff"><span class="ffbadge">6–12</span><h3>📅 Today’s First Five</h3><p>Five fresh questions for secondary students from <b>EdTomorrow</b>, new every school day.</p>
+      <a class="dbtn" href="${FIRST_FIVE_URL}" target="_blank" rel="noopener">Open today’s First Five ↗</a><small>Opens EdTomorrow in a new tab. Choose <b>6–12 Secondary Edition</b>, then project it for your class.</small></div>
+     <details class="d5backup"><summary>No internet or need a backup? Use our Daily 5</summary>
      <div class="d5card" style="--k:#8a54e0"><span class="d5n">1</span><div><b>🧠 Brain Teaser</b><p>${esc(r[0])}</p><button class="d5rev" data-a="${esc(r[1])}">Reveal answer</button></div></div>
      <div class="d5card" style="--k:#2b7de9"><span class="d5n">2</span><div><b>🔢 Math Warm-Up</b><p>${esc(m[0])}</p><button class="d5rev" data-a="${esc(m[1])}">Reveal answer</button></div></div>
      <div class="d5card" style="--k:#0e9f6e"><span class="d5n">3</span><div><b>📖 Word of the Day: <i>${esc(w[0])}</i></b> <small>(${esc(w[1])})</small><p>What do you think it means? Use it in a sentence about school.</p><button class="d5rev" data-a="${esc(w[0])}: ${esc(w[2])}">Reveal meaning</button></div></div>
      <div class="d5card" style="--k:#e08a00"><span class="d5n">4</span><div><b>✅ True or False?</b><p>${esc(tf[0])}</p><span class="tfbtns"><button class="d5tf" data-v="1">True</button><button class="d5tf" data-v="0">False</button></span><p class="tfout" data-ans="${tf[1]?1:0}" data-why="${esc(tf[2])}"></p></div></div>
      <div class="d5card" style="--k:#e8368f"><span class="d5n">5</span><div><b>💬 Quickwrite</b><p>${esc(q)}</p><small>Write for 2 minutes, then share with an elbow partner.</small></div></div>
+     </details>
     </div></div></section>`;
+}
+/* Would You Rather: one question per day, vote once, then see the class percentages */
+function wyrDaily(host){
+  const d=new Date(), key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const n=dayIndex(), [x,y]=TOT[((n%TOT.length)+TOT.length)%TOT.length], [ca,cb]=TOT_COLORS[n%TOT_COLORS.length];
+  let mine=null, a=0, b=0; try{const v=JSON.parse(localStorage.getItem('wyr-'+key)||'null'); if(v){mine=v.c;a=v.a;b=v.b}}catch(e){}
+  const draw=(msg)=>{
+    const tot=a+b, pa=tot?Math.round(a/tot*100):0, pb=tot?100-pa:0;
+    host.innerHTML=`<div class="wyr wyr-day"><div class="wyr-title">Would you rather…</div>
+     <div class="wyr-row">
+      <button class="wyr-side ${mine==='A'?'picked':''}" data-c="A" style="--s:${ca}" ${mine?'disabled':''}><span>${esc(x)}</span>${mine?`<em>${pa}%</em>`:''}</button>
+      <div class="wyr-or">OR</div>
+      <button class="wyr-side ${mine==='B'?'picked':''}" data-c="B" style="--s:${cb}" ${mine?'disabled':''}><span>${esc(y)}</span>${mine?`<em>${pb}%</em>`:''}</button></div>
+     ${mine?`<div class="wyr-bar"><i style="width:${pa}%;background:${ca}"></i><i style="width:${pb}%;background:${cb}"></i></div>
+       <p class="wyr-note">✅ You voted! ${tot} ${tot===1?'vote':'votes'} so far. ${HUB_URL?'<button class="wyr-ref">↻ Update results</button>':'<br><small>Preview mode: only this device’s vote is counted until the Google Sheet is connected.</small>'}</p>`
+      :`<p class="wyr-note">Tap your choice. You get one vote per day, and then you’ll see how everyone voted.</p>`}
+     ${msg?`<p class="wyr-note">${msg}</p>`:''}<p class="wyr-talk"><b>Talk it out:</b> Turn to your elbow partner and explain your pick in 30 seconds.</p></div>`;
+    host.querySelectorAll('.wyr-side:not([disabled])').forEach(btn=>btn.onclick=()=>vote(btn.dataset.c));
+    const rf=host.querySelector('.wyr-ref'); if(rf) rf.onclick=refresh;
+  };
+  const store=()=>{try{localStorage.setItem('wyr-'+key,JSON.stringify({c:mine,a,b}))}catch(e){}};
+  async function vote(c){
+    mine=c; if(!HUB_URL){ if(c==='A')a++; else b++; store(); draw(); return; }
+    draw('Counting your vote…');
+    try{const r=await (await fetch(HUB_URL,{method:'POST',body:JSON.stringify({action:'vote',choice:c,date:key,question:x+' / '+y})})).json(); if(!r.ok)throw 0; a=r.a;b=r.b; store(); draw();}
+    catch(e){ if(c==='A')a++; else b++; store(); draw('⚠️ Could not reach the class results right now.'); }
+  }
+  async function refresh(){ if(!HUB_URL)return; try{const r=await (await fetch(HUB_URL+'?'+new URLSearchParams({action:'votes',date:key}))).json(); if(r.ok){a=r.a;b=r.b;store();draw()}}catch(e){} }
+  draw(); if(mine) refresh();
 }
 function wireDaily(){
   const host=document.getElementById('wyrHost'); if(!host) return;
-  try{L.qotd.run(host)}catch(e){host.innerHTML='<p class="empty">Would You Rather is unavailable.</p>'}
+  wyrDaily(host);
   app.querySelectorAll('.d5rev').forEach(b=>b.onclick=()=>{b.outerHTML=`<p class="d5ans">💡 ${b.dataset.a}</p>`});
   app.querySelectorAll('.d5tf').forEach(b=>b.onclick=()=>{const out=b.closest('.d5card').querySelector('.tfout');const right=b.dataset.v===out.dataset.ans;
     b.closest('.tfbtns').querySelectorAll('.d5tf').forEach(x=>x.classList.toggle('on',x===b));out.innerHTML=`${right?'🎉 Correct!':'🤔 Not quite.'} ${out.dataset.why}`});
   const d=document.getElementById('daily'), pb=document.getElementById('dpresent');
   pb.onclick=()=>{const on=d.classList.toggle('present');pb.textContent=on?'✖ Exit present':'📽️ Present';document.body.style.overflow=on?'hidden':''};
-  document.addEventListener('keydown',function esc_(e){if(e.key==='Escape'&&d.classList.contains('present')){pb.click()}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&d.classList.contains('present'))pb.click()});
 }
 
 /* =====================================================================
    FOLDER BUTTONS for every space (AVID, Interactive Lessons, etc.)
    ===================================================================== */
-const FOLDER_ICON=[[/community/i,'🤝'],[/start here/i,'🚀'],[/binder/i,'🗂️'],[/focused|note-taking/i,'📝'],[/tutorial/i,'❓'],[/confusion/i,'🤔'],[/graphic/i,'🧩'],[/goal|contract/i,'🎯'],[/^tutors$/i,'🧑‍🏫'],[/field trip/i,'🚌'],[/site team|certif/i,'🏅'],[/collaboration/i,'💬'],[/science/i,'🔬'],[/math/i,'📐'],[/english/i,'📚'],[/history/i,'🏛️'],[/coming soon/i,'🚧']];
+const FOLDER_ICON=[[/uc & csu/i,'🎓'],[/a–g/i,'📋'],[/essay/i,'✍️'],[/fafsa/i,'💰'],[/scholarship/i,'🏆'],[/tour/i,'🏛️'],[/timeline/i,'📅'],[/tulare county programs/i,'📍'],[/ideas/i,'💡'],[/log my hours/i,'⏱️'],[/community/i,'🤝'],[/start here/i,'🚀'],[/binder/i,'🗂️'],[/focused|note-taking/i,'📝'],[/tutorial/i,'❓'],[/confusion/i,'🤔'],[/graphic/i,'🧩'],[/goal|contract/i,'🎯'],[/^tutors$/i,'🧑‍🏫'],[/field trip/i,'🚌'],[/site team|certif/i,'🏅'],[/collaboration/i,'💬'],[/science/i,'🔬'],[/math/i,'📐'],[/english/i,'📚'],[/history/i,'🏛️'],[/coming soon/i,'🚧']];
 const FOLDER_COLORS=['#5b5fe0','#14a37f','#ee7d1c','#1f95e0','#e0408a','#8a54e0','#f25c54','#0e9f6e','#e08a00','#2b7de9','#c2185b','#00897b'];
 const ficon=n=>(FOLDER_ICON.find(([r])=>r.test(n))||[0,'📁'])[1];
 const spaceChips=s=>`<nav class="switch" aria-label="Spaces"><a class="back" href="#home">← All spaces</a>${SECTIONS.map(x=>`<a class="swchip ${x===s?'on':''}" style="--c:${x.color}" href="#${x.id}">${x.name}</a>`).join('')}</nav>`;
@@ -1937,6 +2080,47 @@ function discussHome(s){
    <div class="how"><div><b>1</b> Sign in with your name, ID, period &amp; teacher</div><div><b>2</b> Write a main post (${DISCUSSIONS[0].minWords}+ words) with evidence and a question</div><div><b>3</b> Unlock classmates’ posts and reply to 2 of them (30+ words each)</div></div>
    <div class="dgrid">${DISCUSSIONS.map(d=>`<a class="dcard" href="#avid/discuss/${d.id}" style="--c:${TAG_COLOR[d.tag]||'#5b5fe0'}"><span class="dic">${d.icon}</span><span class="dtag">${esc(d.tag)}</span><h3>${esc(d.title)}</h3><p>${esc(d.prompt.slice(0,130))}…</p><span class="go">Join the discussion →</span></a>`).join('')}</div><div style="height:48px"></div></div>`;
 }
+
+/* ---------- ✍️ Annotate the discussion source (free practice, nothing is right or wrong) ---------- */
+function annotateSource(box,key){
+  const body=box.querySelector('.dsrc-body'); if(!body) return {count:()=>0};
+  let st={m:{},n:{}}; try{st=JSON.parse(localStorage.getItem(key)||'null')||st}catch(e){}
+  const save=()=>{try{localStorage.setItem(key,JSON.stringify(st))}catch(e){}; paintCount()};
+  /* wrap every word (not inside charts) in a clickable span */
+  let i=0; const walker=document.createTreeWalker(body,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement.closest('svg')||!n.textContent.trim()?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+  const nodes=[]; while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(t=>{const frag=document.createDocumentFragment();t.textContent.split(/(\s+)/).forEach(w=>{if(!w)return;if(/^\s+$/.test(w)){frag.appendChild(document.createTextNode(w));return}
+    const sp=document.createElement('span');sp.className='aw';sp.dataset.i=i++;sp.textContent=w;frag.appendChild(sp)});t.replaceWith(frag)});
+  const bar=document.createElement('div'); bar.className='annbar';
+  bar.innerHTML=`<span class="annlbl">✍️ Annotate:</span>${[['h','🟨 Highlight'],['u','⎁ Underline'],['c','⭕ Circle'],['n','💬 Note'],['e','🧽 Erase']].map(([k,l],j)=>`<button class="anntool ${j===0?'on':''}" data-t="${k}">${l}</button>`).join('')}<button class="anntool" data-clear>↺ Clear all</button><span class="anncount"></span>`;
+  body.before(bar);
+  const tip=document.createElement('p'); tip.className='anntip'; tip.innerHTML='Practice your reading skills: <b>highlight</b> evidence, <b>underline</b> the main idea, <b>circle</b> key words, and add <b>notes</b> with your questions or reactions. Click a word or drag across several.'; bar.after(tip);
+  let tool='h', drag=false;
+  const W=idx=>body.querySelector(`.aw[data-i="${idx}"]`);
+  function paint(){body.querySelectorAll('.aw').forEach(w=>{const m=st.m[w.dataset.i]||{};w.classList.toggle('ah',!!m.h);w.classList.toggle('au',!!m.u);w.classList.toggle('ac',!!m.c)});
+    body.querySelectorAll('.annnote').forEach(n=>n.remove());
+    Object.entries(st.n).forEach(([idx,txt])=>addNote(idx,txt,false));paintCount()}
+  function paintCount(){const c=Object.values(st.m).reduce((a,m)=>a+(m.h?1:0)+(m.u?1:0)+(m.c?1:0),0)+Object.values(st.n).filter(t=>t&&t.trim()).length;
+    bar.querySelector('.anncount').textContent=c?`${c} annotation${c===1?'':'s'}`:'';box.dataset.ann=c}
+  function addNote(idx,txt,focus){const w=W(idx);if(!w)return;let n=w.nextElementSibling&&w.nextElementSibling.classList.contains('annnote')?w.nextElementSibling:null;
+    if(!n){n=document.createElement('span');n.className='annnote';n.innerHTML='💬<input placeholder="Your note…"><button title="Delete note">✕</button>';w.after(n);
+      n.querySelector('input').oninput=e=>{st.n[idx]=e.target.value;save()};n.querySelector('button').onclick=()=>{delete st.n[idx];n.remove();save()}}
+    n.querySelector('input').value=txt||'';if(focus)n.querySelector('input').focus()}
+  function apply(w){const idx=w.dataset.i;
+    if(tool==='n'){if(st.n[idx]===undefined)st.n[idx]='';addNote(idx,st.n[idx],true);save();return}
+    if(tool==='e'){delete st.m[idx];delete st.n[idx];paint();save();return}
+    const m=st.m[idx]=st.m[idx]||{}; m[tool]=drag==='on'?true:drag==='off'?false:!m[tool]; if(!m.h&&!m.u&&!m.c)delete st.m[idx];
+    w.classList.toggle('a'+tool,!!(st.m[idx]&&st.m[idx][tool]));save()}
+  bar.addEventListener('click',e=>{const b=e.target.closest('.anntool');if(!b)return;
+    if(b.hasAttribute('data-clear')){if(confirm('Clear all your annotations on this reading?')){st={m:{},n:{}};paint();save()}return}
+    tool=b.dataset.t;bar.querySelectorAll('.anntool[data-t]').forEach(x=>x.classList.toggle('on',x===b))});
+  body.addEventListener('pointerdown',e=>{const w=e.target.closest('.aw');if(!w||e.target.closest('.annnote'))return;e.preventDefault();
+    if(['h','u','c'].includes(tool)){const on=!((st.m[w.dataset.i]||{})[tool]);drag=on?'on':'off';apply(w)}else{drag=false;apply(w)}});
+  body.addEventListener('pointerover',e=>{if(!drag||tool==='c')return;const w=e.target.closest('.aw');if(w)apply(w)});
+  document.addEventListener('pointerup',()=>{drag=false});
+  paint();
+  return {count:()=>+box.dataset.ann||0};
+}
 let boardTimer=null;
 function discussPage(s,id){
   const d=DISCUSSIONS.find(x=>x.id===id); if(!d){discussHome(s);return}
@@ -1948,9 +2132,11 @@ function discussPage(s,id){
    ${HUB_URL?'':`<div class="demo-note">👀 <b>Preview mode:</b> posts are saved only on this computer until your teacher connects the Google Sheet.</div>`}
    ${DSRC[d.id]?`<section class="dsource" id="dsource"><div class="dsrc-head"><span class="dtag">📖 Read first · ${esc(DSRC[d.id].type)}</span><h2>${esc(DSRC[d.id].title)}</h2></div><div class="dsrc-body">${DSRC[d.id].html}</div><p class="dcite">${esc(DSRC[d.id].cite)}</p></section>`:''}
    <div id="dz"></div><div style="height:48px"></div></div>`;
-  studentGate(app.querySelector('#dz'),d.title,{eq:d.eq,lt:d.lt},st=>board(app.querySelector('#dz'),d,st));
+  const srcBox=app.querySelector('#dsource'); let ann={count:()=>0};
+  if(srcBox) ann=annotateSource(srcBox,'ann-'+d.id);
+  studentGate(app.querySelector('#dz'),d.title,{eq:d.eq,lt:d.lt},st=>board(app.querySelector('#dz'),d,st,ann));
 }
-function board(el,d,st){
+function board(el,d,st,ann){
   let posts=[],view='class',openReply=null,busy=false,loadErr='';
   const SRC=DSRC[d.id], KEYS=SRC?SRC.keys:null; let readOK=!SRC; try{readOK=readOK||localStorage.getItem('read-'+d.id+'-'+st.id)==='1'}catch(e){}
   const draft={main:'',reply:{}};
@@ -1977,7 +2163,7 @@ function board(el,d,st){
     el.innerHTML=`${targetStrip({eq:d.eq,lt:d.lt},st)}
      ${loadErr?`<div class="demo-note">⚠️ ${loadErr}</div>`:''}
      ${m?`<div class="dscore"><div><b>Your score so far: ${sc.total} / 10</b><br><small>Main post ${sc.mp}/6 · Replies ${sc.rp}/4 (${sc.n} posted${sc.n<2?`, ${2-sc.n} more to go`:' ✓'})</small></div><button class="dbtn ghost" id="drefresh">↻ Refresh</button></div>`:
-     !readOK?`<div class="dcompose readgate"><h3>📖 Step 1: Read the source above</h3><p>Read the source carefully. Look for a detail, number, or quote you can use as evidence in your post.</p><button class="dbtn" id="didread">✅ I read the source. Let me post.</button></div>`:
+     !readOK?`<div class="dcompose readgate"><h3>📖 Step 1: Read the source above</h3><p>Read the source carefully and <b>annotate it</b>: highlight evidence, underline the main idea, circle key words, and add a note. Look for a detail, number, or quote you can use in your post.</p><button class="dbtn" id="didread">✅ I read the source. Let me post.</button></div>`:
      `<div class="dcompose"><h3>✍️ Your main post</h3><p class="hint" style="margin:0 0 8px;color:var(--muted);font-weight:700">Make a claim, support it with evidence from the source, and end with a question for your classmates.</p><div class="dframes">${d.frames.map(f=>`<button class="dframe" data-frame="${esc(f)}">${esc(f)}</button>`).join('')}</div>
       <textarea id="mtext" rows="8" placeholder="Share your thinking. Use evidence and end with a question for your classmates.">${esc(draft.main)}</textarea>
       <ul class="dchecks" id="mchk"></ul>
@@ -1998,7 +2184,7 @@ function board(el,d,st){
     const mt=el.querySelector('#mtext'); if(mt){mt.oninput=()=>{draft.main=mt.value;checks()};checks()}
     el.querySelectorAll('.dframe').forEach(b=>b.onclick=()=>{const ta=el.querySelector(openReply?'#rtext':'#mtext')||el.querySelector('#mtext');if(!ta)return;ta.value=(ta.value?ta.value.trim()+' ':'')+b.dataset.frame+' ';ta.focus();ta.dispatchEvent(new Event('input'))});
     const ms=el.querySelector('#msend'); if(ms) ms.onclick=async()=>{busy=true;checks();el.querySelector('#mmsg').textContent='Posting…';
-      try{const r=await hubSend({action:'post',student:st,prompt:d.id,promptTitle:d.title,minWords:d.minWords,sourceKeys:KEYS||[],text:draft.main});if(!r.ok)throw new Error(r.error);draft.main='';await load();}
+      try{const r=await hubSend({action:'post',student:st,prompt:d.id,promptTitle:d.title,minWords:d.minWords,sourceKeys:KEYS||[],annotations:ann?ann.count():0,text:draft.main});if(!r.ok)throw new Error(r.error);draft.main='';await load();}
       catch(e){busy=false;checks();el.querySelector('#mmsg').textContent='⚠️ '+(e.message||'Could not post. Try again.')}busy=false};
     el.querySelectorAll('[data-reply]').forEach(b=>b.onclick=()=>{openReply=openReply===b.dataset.reply?null:b.dataset.reply;draw();const t=el.querySelector('#rtext');if(t)t.focus()});
     const rt=el.querySelector('#rtext'); if(rt) rt.oninput=()=>{draft.reply[openReply]=rt.value;el.querySelector('#rwc').textContent=`${dWords(rt.value)} / 30 words`};
@@ -2011,6 +2197,281 @@ function board(el,d,st){
   clearInterval(boardTimer); boardTimer=setInterval(()=>{if(!openReply&&!busy&&document.activeElement?.id!=='mtext'&&mineMain())load()},45000);
   el.innerHTML='<p class="empty">Loading the discussion…</p>'; load();
 }
+
+
+/* =====================================================================
+   🎓 COLLEGE & CAREER + 🤝 COMMUNITY SERVICE tools
+   Facts checked against official UC, CSU, CSAC, StudentAid.gov, and
+   program websites in October 2026. ✏️ Update dates each school year.
+   ===================================================================== */
+const COLLEGE_FACTS={
+  ucFiling:'October 1 – November 30 (you can start the UC application as early as August 1)',
+  csuFiling:'October 1 – November 30, 2026 for fall 2027 (Cal State Apply)',
+  calGrant:'March 2, 2027 (priority deadline for 2027–28 Cal Grants)',
+  fafsaYear:'2027–28', taxYear:'2025'
+};
+ART.service=`<svg viewBox="0 0 120 120"><path d="M60 98C34 80 18 64 18 46c0-12 9-20 20-20 9 0 16 5 22 13 6-8 13-13 22-13 11 0 20 8 20 20 0 18-16 34-42 52z" fill="#2ec4b6" ${S}/><path d="M30 92c6-10 18-14 30-10 12-4 24 0 30 10" fill="#ffd8b5" ${S}/><path d="M44 52h32M60 36v32" stroke="#fff" stroke-width="8" stroke-linecap="round"/></svg>`;
+
+/* ---------- reusable essay workshop (UC PIQs and scholarship essays) ---------- */
+const PIQS=[
+ ['Leadership','“Describe an example of your leadership experience in which you have positively influenced others…”','Think beyond titles: helping a team, a family role, a club, a job, or a project you organized.'],
+ ['Creativity','“Every person has a creative side… Describe how you express your creative side.”','Art, music, cooking, coding, problem solving, design, writing, building things.'],
+ ['Talent or skill','“What would you say is your greatest talent or skill? How have you developed and demonstrated that talent over time?”','Show growth over time: practice, setbacks, and how you use the skill now.'],
+ ['Educational opportunity or barrier','“Describe how you have taken advantage of a significant educational opportunity…” or worked to overcome an educational barrier.','AVID, honors/AP, a summer program, tutoring, translating for family, limited resources.'],
+ ['Significant challenge','“Describe the most significant challenge you have faced and the steps you have taken to overcome this challenge.”','Focus on the steps YOU took and what you learned, not only on the hardship.'],
+ ['Inspiring academic subject','“Think about an academic subject that inspires you. Describe how you have furthered this interest…”','Show what you did beyond class: projects, reading, clubs, jobs, questions you chased.'],
+ ['Making your school or community better','“What have you done to make your school or your community a better place?”','Community service fits here: what you did, why it mattered, and the impact.'],
+ ['What makes you a strong candidate','“Beyond what has already been shared in your application, what do you believe makes you a strong candidate for admissions…?”','Something important about you that your application doesn’t show yet.']];
+function essayWorkshop(el,cfg){
+  const key='essay-'+cfg.id; let st={p:0,b:['','',''],o:['','','',''],d:'',lim:cfg.limit||350};
+  try{st=Object.assign(st,JSON.parse(localStorage.getItem(key)||'{}'))}catch(e){}
+  const save=()=>{try{localStorage.setItem(key,JSON.stringify(st))}catch(e){}};
+  const prompts=cfg.prompts;
+  const draw=()=>{
+    const pr=prompts[st.p], w=dWords(st.d), lim=st.lim;
+    const chk=[[w>=Math.round(lim*0.7)&&w<=lim,`Length: ${w} / ${lim} words (aim for ${Math.round(lim*0.7)}–${lim})`],[/\b(I|my|me)\b/.test(st.d),'Written in first person (I, my, me)'],
+      [/\d|for example|for instance|one day|when I/i.test(st.d),'Includes a specific example or moment'],[/learned|realized|grew|taught me|now I|because of this|changed/i.test(st.d),'Reflects on what you learned or how you grew'],
+      [/future|college|goal|plan|major|career|will /i.test(st.d),'Connects to your future or goals']];
+    el.innerHTML=`<div class="essay">
+     <div class="es-step"><h3>1 · Choose a ${cfg.kind}</h3><div class="es-prompts">${prompts.map((p,i)=>`<button class="es-p ${i===st.p?'on':''}" data-p="${i}"><b>${cfg.numbered?'#'+(i+1)+' ':''}${esc(p[0])}</b></button>`).join('')}</div>
+      <div class="es-quote"><p>${esc(pr[1])}</p><small>💡 ${esc(pr[2])}</small></div>${cfg.note?`<p class="es-note">${cfg.note}</p>`:''}</div>
+     <div class="es-step"><h3>2 · Brainstorm</h3><div class="es-grid">${['What specific moments or examples come to mind?','What did YOU do? (actions, choices, steps)','What did you learn, and how did you grow?'].map((q,i)=>`<label>${q}<textarea rows="3" data-b="${i}">${esc(st.b[i])}</textarea></label>`).join('')}</div></div>
+     <div class="es-step"><h3>3 · Outline</h3><div class="es-grid">${['Hook: a moment that pulls the reader in','Context: what was happening','Action: what you did','Reflection: what changed in you'].map((q,i)=>`<label>${q}<textarea rows="2" data-o="${i}">${esc(st.o[i])}</textarea></label>`).join('')}</div></div>
+     <div class="es-step"><h3>4 · Draft ${cfg.limits?`<select id="es-lim">${cfg.limits.map(l=>`<option ${l==lim?'selected':''} value="${l}">${l}-word limit</option>`).join('')}</select>`:''}</h3>
+      <textarea id="es-d" rows="12" placeholder="Start with your hook…">${esc(st.d)}</textarea>
+      <div class="es-bar"><span class="es-wc ${w>lim?'over':''}">${w} / ${lim} words${w>lim?' (over the limit!)':''}</span></div>
+      <ul class="dchecks">${chk.map(([ok,l])=>`<li class="${ok?'ok':''}">${l}</li>`).join('')}</ul>
+      <div class="btnrow"><button class="btn" id="es-copy">📋 Copy draft</button><button class="btn" id="es-send">📤 Send draft to my teacher</button><button class="btn" id="es-print">🖨️ Print</button><span id="es-msg" style="color:var(--muted);font-weight:700"></span></div></div></div>`;
+    el.querySelectorAll('.es-p').forEach(b=>b.onclick=()=>{st.p=+b.dataset.p;save();draw()});
+    el.querySelectorAll('[data-b]').forEach(t=>t.oninput=()=>{st.b[t.dataset.b]=t.value;save()});
+    el.querySelectorAll('[data-o]').forEach(t=>t.oninput=()=>{st.o[t.dataset.o]=t.value;save()});
+    const d=el.querySelector('#es-d'); d.oninput=()=>{st.d=d.value;save();const w=dWords(d.value);const wc=el.querySelector('.es-wc');wc.textContent=`${w} / ${st.lim} words${w>st.lim?' (over the limit!)':''}`;wc.classList.toggle('over',w>st.lim)};
+    d.onblur=draw;
+    const ls=el.querySelector('#es-lim'); if(ls) ls.onchange=()=>{st.lim=+ls.value;save();draw()};
+    el.querySelector('#es-copy').onclick=async()=>{try{await navigator.clipboard.writeText(st.d);el.querySelector('#es-msg').textContent='✅ Copied!'}catch(e){el.querySelector('#es-msg').textContent='Select the text and copy it.'}};
+    el.querySelector('#es-print').onclick=()=>{const w=window.open('','_blank');if(!w)return;w.document.write(`<title>${esc(cfg.kind)} draft</title><body style="font:16px/1.6 Georgia,serif;max-width:720px;margin:40px auto"><h2>${esc(pr[0])}</h2><p><i>${esc(pr[1])}</i></p><p>${esc(st.d).replace(/\n/g,'<br>')}</p><p><small>${dWords(st.d)} words · ${esc(CUR?CUR.name:'')}</small></p></body>`);w.document.close();w.print()};
+    el.querySelector('#es-send').onclick=async()=>{const m=el.querySelector('#es-msg');if(!CUR){m.textContent='Sign in first.';return}m.textContent='Sending…';
+      const met=chk.filter(c=>c[0]).length;
+      try{const r=await hubSend({action:'lesson',student:CUR,lesson:`${cfg.kind}: ${pr[0]}`,stationsDone:met,answers:`Prompt: ${pr[0]} | Words: ${dWords(st.d)} | DRAFT: ${st.d}`});
+        if(!r.ok)throw new Error(r.error);m.textContent=r.demo?'👀 Preview mode: saved on this computer only.':'✅ Sent to '+CUR.teacher+'!'}catch(e){m.textContent='⚠️ '+(e.message||'Could not send.')}};
+  };
+  draw();
+}
+
+/* ---------- A–G tracker + GPA estimator ---------- */
+const AG=[['A','History / Social Science',2,2,'World history and U.S. history (or U.S. history + civics)'],['B','English',4,4,'College-prep English'],['C','Mathematics',3,3,'Including geometry; a 4th year is strongly recommended'],
+ ['D','Science',2,2,'Two of biology, chemistry, or physics; a 3rd year is recommended'],['E','Language other than English',2,2,'Two years of the same language; a 3rd is recommended'],['F','Visual & Performing Arts',1,1,'One yearlong arts course'],['G','College-prep elective',1,1,'One additional A–G course']];
+function agTracker(el){
+  const key='ag-tracker'; let st={y:{},g:{A:0,B:0,C:0,D:0,h10:0,h11:0}}; try{st=Object.assign(st,JSON.parse(localStorage.getItem(key)||'{}'))}catch(e){}
+  const save=()=>{try{localStorage.setItem(key,JSON.stringify(st))}catch(e){}};
+  const draw=()=>{
+    const rows=AG.map(([L,n,uc,csu,d])=>{const v=+st.y[L]||0;return `<tr><td><b>${L}</b> ${n}<small>${d}</small></td><td>${uc} yr${uc>1?'s':''}</td><td><select data-y="${L}">${[0,1,2,3,4].map(x=>`<option ${x===v?'selected':''}>${x}</option>`).join('')}</select></td><td class="${v>=uc?'okc':'needc'}">${v>=uc?'✅ Met':`Need ${uc-v} more`}</td></tr>`}).join('');
+    const met=AG.every(([L,,uc])=>(+st.y[L]||0)>=uc);
+    const g=st.g, n=(+g.A)+(+g.B)+(+g.C)+(+g.D), pts=4*g.A+3*g.B+2*g.C+1*g.D;
+    const hon=Math.min(4,+g.h10||0)+Math.min(8-Math.min(4,+g.h10||0),+g.h11||0);
+    const un=n?pts/n:0, wt=n?(pts+hon)/n:0;
+    el.innerHTML=`<div class="tool"><h3>📋 Part 1: Am I on track with A–G?</h3><p class="muted">Enter how many years you have completed (or will complete) in each subject with a grade of C or better.</p>
+     <table class="dtab agt"><tr><th>Subject</th><th>Required</th><th>My years</th><th>Status</th></tr>${rows}</table>
+     <p class="agsum ${met?'okc':'needc'}">${met?'🎉 You meet the A–G subject requirements for UC and CSU!':'Keep going: talk with your counselor about how to complete the subjects marked “Need.”'}</p>
+     <h3 style="margin-top:22px">🧮 Part 2: Estimate my A–G GPA (UC/CSU style)</h3>
+     <p class="muted">Count your <b>semester</b> grades in A–G courses from <b>10th and 11th grade</b> (summer after 9th through summer after 11th). Pluses and minuses don’t count.</p>
+     <div class="gpagrid">${[['A','A grades'],['B','B grades'],['C','C grades'],['D','D grades'],['h10','Honors/AP/IB semesters in 10th (A, B, or C)'],['h11','Honors/AP/IB semesters in 11th (A, B, or C)']].map(([k,l])=>`<label>${l}<input type="number" min="0" max="40" data-g="${k}" value="${+g[k]||0}"></label>`).join('')}</div>
+     <div class="gpaout"><div><span>Unweighted</span><b>${un.toFixed(2)}</b></div><div><span>Weighted (capped)</span><b>${wt.toFixed(2)}</b></div>
+      <div><span>UC minimum (CA resident)</span><b class="${wt>=3?'okc':'needc'}">3.00 ${n?(wt>=3?'✅':'⚠️'):''}</b></div><div><span>CSU minimum (CA resident)</span><b class="${wt>=2.5?'okc':'needc'}">2.50 ${n?(wt>=2.5?'✅':'⚠️'):''}</b></div></div>
+     <p class="muted"><small>Honors points: up to 8 semesters total, no more than 4 from 10th grade. This is an <b>estimate</b>. Your counselor can confirm which courses count. Minimum GPAs make you eligible; many campuses admit students with higher GPAs.</small></p></div>`;
+    el.querySelectorAll('[data-y]').forEach(s=>s.onchange=()=>{st.y[s.dataset.y]=+s.value;save();draw()});
+    el.querySelectorAll('[data-g]').forEach(i=>i.onchange=()=>{st.g[i.dataset.g]=Math.max(0,+i.value||0);save();draw()});
+  };
+  draw();
+}
+
+/* ---------- FAFSA / CADAA guide ---------- */
+function fafsaGuide(el){
+  const key='fafsa-guide'; let st={who:'',c:{}}; try{st=Object.assign(st,JSON.parse(localStorage.getItem(key)||'{}'))}catch(e){}
+  const save=()=>{try{localStorage.setItem(key,JSON.stringify(st))}catch(e){}};
+  const lists={fafsa:[['acct','Student creates a StudentAid.gov account'],['parent','Each parent/contributor creates a StudentAid.gov account (they’ll be invited to their section)'],['tax',`Gather ${COLLEGE_FACTS.taxYear} tax information (the ${COLLEGE_FACTS.fafsaYear} FAFSA uses taxes from two years earlier)`],['ssn','Have your Social Security number and your parents’ information ready'],['schools','List every college you might attend (UC, CSU, and community colleges): it’s free to list many'],['submit','Submit the FAFSA and save your confirmation'],['gpa','Check with your counselor that your GPA will be sent to CSAC for Cal Grant'],['wg','Create a WebGrants account (CSAC) to track your Cal Grant'],['sar','Review your FAFSA Submission Summary for mistakes']],
+    cadaa:[['acct','Create a California Dream Act Application account at dream.csac.ca.gov'],['ab540','Talk to your counselor about the AB 540 affidavit (nonresident tuition exemption)'],['tax',`Gather ${COLLEGE_FACTS.taxYear} tax or income information for you and your parents`],['schools','List every California college you might attend'],['submit','Submit the CADAA and save your confirmation'],['gpa','Check with your counselor that your GPA will be sent to CSAC for Cal Grant'],['wg','Create a WebGrants account (CSAC) to track your Cal Grant'],['review','Review your application for mistakes']]};
+  const draw=()=>{
+    const L=lists[st.who]||[], done=L.filter(([k])=>st.c[k]).length;
+    el.innerHTML=`<div class="tool">
+     <h3>💰 Step 1: Which application is right for me?</h3>
+     <div class="whobtns"><button class="whob ${st.who==='fafsa'?'on':''}" data-w="fafsa"><b>FAFSA</b><small>U.S. citizens and eligible noncitizens (for example, permanent residents)</small></button>
+      <button class="whob ${st.who==='cadaa'?'on':''}" data-w="cadaa"><b>California Dream Act Application (CADAA)</b><small>Undocumented students, students with DACA, and others who qualify for AB 540</small></button></div>
+     <p class="muted"><small>Not sure? Ask your counselor privately. File <b>only one</b> of these, never both.</small></p>
+     ${st.who?`<h3>✅ Step 2: My checklist (${done}/${L.length})</h3><div class="meter"><div style="width:${done/L.length*100}%"></div></div>
+      <ul class="cl">${L.map(([k,l])=>`<li><label><input type="checkbox" data-c="${k}" ${st.c[k]?'checked':''}> ${l}</label></li>`).join('')}</ul>`:''}
+     <h3>📅 Key dates</h3><table class="dtab"><tr><td>${COLLEGE_FACTS.fafsaYear} FAFSA</td><td>Open now (it opened early, in late September 2026)</td></tr><tr><td>California Dream Act Application</td><td>Open now (opens October 1)</td></tr>
+      <tr><td><b>Cal Grant priority deadline</b></td><td><b>${COLLEGE_FACTS.calGrant}</b>: submit your FAFSA or CADAA AND have your GPA sent to CSAC</td></tr><tr><td>Community college students</td><td>A later Cal Grant deadline in September. Ask your counselor or check CSAC.</td></tr></table>
+     <h3>🏦 Kinds of aid</h3><ul class="aid"><li><b>Grants</b> (free money): Federal Pell Grant, Cal Grant, Middle Class Scholarship (UC/CSU)</li><li><b>Community college:</b> the California College Promise Grant waives enrollment fees for eligible students; College of the Sequoias also offers the <b>Sequoias Promise</b> for full-time students in their first two years</li><li><b>Work-study:</b> part-time jobs to help pay for college</li><li><b>Loans:</b> must be paid back. Understand them before you borrow</li><li><b>Scholarships:</b> see the Scholarships folder</li></ul>
+     <h3>🙋 Free help</h3><p>Ask your counselor, attend a free <b>Cash for College</b> workshop (find one at cash4college.csac.ca.gov), or call the College of the Sequoias Financial Aid Office.</p></div>`;
+    el.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{st.who=b.dataset.w;save();draw()});
+    el.querySelectorAll('[data-c]').forEach(c=>c.onchange=()=>{st.c[c.dataset.c]=c.checked;save();draw()});
+  };
+  draw();
+}
+
+/* ---------- UC & CSU campus explorer + research card ---------- */
+const CAMPUSES=[
+ ['UC','UC Berkeley','Berkeley','Bay Area','https://www.berkeley.edu'],['UC','UC Davis','Davis','Sacramento area','https://www.ucdavis.edu'],['UC','UC Irvine','Irvine','Southern California','https://uci.edu'],
+ ['UC','UCLA','Los Angeles','Southern California','https://www.ucla.edu'],['UC','UC Merced','Merced','Central Valley','https://admissions.ucmerced.edu/tours'],['UC','UC Riverside','Riverside','Southern California','https://www.ucr.edu'],
+ ['UC','UC San Diego','La Jolla','Southern California','https://ucsd.edu'],['UC','UC Santa Barbara','Santa Barbara','Central Coast','https://www.ucsb.edu'],['UC','UC Santa Cruz','Santa Cruz','Central Coast','https://www.ucsc.edu'],
+ ['CSU','CSU Bakersfield','Bakersfield','Central Valley','https://www.csub.edu'],['CSU','CSU Channel Islands','Camarillo','Southern California','https://www.csuci.edu'],['CSU','Chico State','Chico','Northern California','https://www.csuchico.edu'],
+ ['CSU','CSU Dominguez Hills','Carson','Southern California','https://www.csudh.edu'],['CSU','Cal State East Bay','Hayward','Bay Area','https://www.csueastbay.edu'],['CSU','Fresno State','Fresno','Central Valley','https://www.fresnostate.edu'],
+ ['CSU','Cal State Fullerton','Fullerton','Southern California','https://www.fullerton.edu'],['CSU','Cal Poly Humboldt','Arcata','Northern California','https://www.humboldt.edu'],['CSU','Cal State Long Beach','Long Beach','Southern California','https://www.csulb.edu'],
+ ['CSU','Cal State LA','Los Angeles','Southern California','https://www.calstatela.edu'],['CSU','CSU Monterey Bay','Seaside','Central Coast','https://csumb.edu'],['CSU','CSU Northridge','Northridge','Southern California','https://www.csun.edu'],
+ ['CSU','Cal Poly Pomona','Pomona','Southern California','https://www.cpp.edu'],['CSU','Sacramento State','Sacramento','Sacramento area','https://www.csus.edu'],['CSU','CSU San Bernardino','San Bernardino','Southern California','https://www.csusb.edu'],
+ ['CSU','San Diego State','San Diego','Southern California','https://www.sdsu.edu'],['CSU','San Francisco State','San Francisco','Bay Area','https://www.sfsu.edu'],['CSU','San José State','San José','Bay Area','https://www.sjsu.edu'],
+ ['CSU','Cal Poly San Luis Obispo','San Luis Obispo (and the Maritime Academy in Vallejo)','Central Coast','https://www.calpoly.edu'],['CSU','CSU San Marcos','San Marcos','Southern California','https://www.csusm.edu'],['CSU','Sonoma State','Rohnert Park','Bay Area','https://www.sonoma.edu'],
+ ['CSU','Stanislaus State','Turlock','Central Valley','https://www.csustan.edu'],
+ ['CC','College of the Sequoias','Visalia, Tulare & Hanford','Tulare County','https://www.cos.edu'],['CC','Porterville College','Porterville','Tulare County','https://www.portervillecollege.edu']];
+function campusExplorer(el){
+  let f='all'; const key='campus-card'; let card={}; try{card=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}
+  const save=()=>{try{localStorage.setItem(key,JSON.stringify(card))}catch(e){}};
+  const draw=()=>{
+    const list=CAMPUSES.filter(c=>f==='all'||c[0]===f||(f==='near'&&(c[3]==='Central Valley'||c[3]==='Tulare County')));
+    el.innerHTML=`<div class="tool"><div class="filters" style="margin:0 0 12px">${[['all','All'],['near','📍 Close to home'],['UC','UC (9)'],['CSU','CSU (22)'],['CC','Local community colleges']].map(([k,l])=>`<button class="fchip ${f===k?'on':''}" data-f="${k}">${l}</button>`).join('')}</div>
+     <div class="campus-grid">${list.map(c=>`<a class="campus ${c[0]}" href="${c[4]}" target="_blank" rel="noopener"><span class="sys">${c[0]==='CC'?'Community College':c[0]}</span><b>${esc(c[1])}</b><small>${esc(c[2])} · ${esc(c[3])}</small><span class="go">Explore & find the campus tour ↗</span></a>`).join('')}</div>
+     <p class="muted"><small>Most campuses offer free in-person tours and virtual tours on their admissions website. Search the campus site for “tour” or “visit.” CaliforniaColleges.edu also lets you compare campuses and majors.</small></p>
+     <h3>🔎 My Campus Research Card</h3><div class="gpagrid card">${[['campus','Campus I researched'],['why','Why I’m interested'],['majors','2 majors that interest me there'],['fact','One surprising fact'],['tour','I took a tour (virtual or in person): what stood out?'],['next','My next step']].map(([k,l])=>`<label>${l}<textarea rows="2" data-k="${k}">${esc(card[k]||'')}</textarea></label>`).join('')}</div>
+     <div class="btnrow"><button class="btn" id="cc-send">📤 Send my research card to my teacher</button><span id="cc-msg" style="color:var(--muted);font-weight:700"></span></div></div>`;
+    el.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{f=b.dataset.f;draw()});
+    el.querySelectorAll('[data-k]').forEach(t=>t.oninput=()=>{card[t.dataset.k]=t.value;save()});
+    el.querySelector('#cc-send').onclick=async()=>{const m=el.querySelector('#cc-msg');const filled=Object.values(card).filter(v=>v&&v.trim()).length;
+      if(filled<4){m.textContent='Fill in at least 4 boxes first.';return}m.textContent='Sending…';
+      try{const r=await hubSend({action:'lesson',student:CUR,lesson:'Campus Research Card: '+(card.campus||''),stationsDone:Math.min(5,filled),answers:Object.entries(card).map(([k,v])=>k+': '+v).join(' | ')});if(!r.ok)throw new Error(r.error);m.textContent=r.demo?'👀 Preview mode: saved on this computer only.':'✅ Sent!'}catch(e){m.textContent='⚠️ '+(e.message||'Could not send.')}};
+  };
+  draw();
+}
+
+/* ---------- Scholarship tracker ---------- */
+function scholarshipTracker(el){
+  const key='schol-tracker'; let rows=[]; try{rows=JSON.parse(localStorage.getItem(key)||'[]')}catch(e){}
+  const save=()=>{try{localStorage.setItem(key,JSON.stringify(rows))}catch(e){}};
+  const draw=()=>{
+    const sorted=rows.map((r,i)=>({...r,i})).sort((a,b)=>(a.due||'9999').localeCompare(b.due||'9999'));
+    const total=rows.filter(r=>r.status==='Won').reduce((a,r)=>a+(+r.amt||0),0);
+    el.innerHTML=`<div class="tool"><h3>🏆 My Scholarship Tracker</h3><p class="muted">Add every scholarship you find. Sort by deadline, and never miss one.</p>
+     <div class="sch-add"><input id="s-n" placeholder="Scholarship name"><input id="s-a" type="number" min="0" placeholder="Amount $"><input id="s-d" type="date"><input id="s-r" placeholder="Requirements (essay, letters, GPA…)"><button class="btn" id="s-add">+ Add</button></div>
+     <table class="dtab sch"><tr><th>Scholarship</th><th>Amount</th><th>Deadline</th><th>Requirements</th><th>Status</th><th></th></tr>
+     ${sorted.map(r=>`<tr><td>${esc(r.n)}</td><td>${r.amt?'$'+(+r.amt).toLocaleString():''}</td><td>${esc(r.due||'')}</td><td>${esc(r.req||'')}</td><td><select data-s="${r.i}">${['Researching','Working on it','Submitted','Won','Not selected'].map(x=>`<option ${x===r.status?'selected':''}>${x}</option>`).join('')}</select></td><td><button class="x" data-del="${r.i}">✕</button></td></tr>`).join('')||'<tr><td colspan="6" class="muted">No scholarships yet. Add your first one above!</td></tr>'}</table>
+     ${total?`<p class="agsum okc">🎉 Scholarships won: $${total.toLocaleString()}</p>`:''}
+     <h3>🔍 Where to look</h3><ul class="aid"><li>Your school’s counseling or college & career center (local scholarships often have fewer applicants!)</li><li>Cash for College scholarship finder (CSAC)</li><li>BigFuture scholarship search (College Board)</li><li>Local businesses, churches, clubs, and service organizations in Tulare County</li><li>Each college’s financial aid office</li></ul>
+     <p class="muted"><small>⚠️ Never pay to apply for a scholarship. Real scholarships are free to apply for.</small></p></div>`;
+    el.querySelector('#s-add').onclick=()=>{const n=el.querySelector('#s-n').value.trim();if(!n)return;rows.push({n,amt:el.querySelector('#s-a').value,due:el.querySelector('#s-d').value,req:el.querySelector('#s-r').value,status:'Researching'});save();draw()};
+    el.querySelectorAll('[data-s]').forEach(s=>s.onchange=()=>{rows[s.dataset.s].status=s.value;save();draw()});
+    el.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{rows.splice(+b.dataset.del,1);save();draw()});
+  };
+  draw();
+}
+
+/* ---------- Community service: Tulare County programs ---------- */
+const SERVICE_ORGS=[
+ {name:'FoodLink for Tulare County',city:'Exeter (serves all of Tulare County)',ages:'Food repack & sorting: ages 14+. Under 14 can help at distributions/garden with an adult.',what:'Pack food boxes, help at food distributions, harvest backyard fruit, work in the Deep Roots Garden, or apply for an internship.',how:'Create a volunteer profile on the FoodLink website, then sign up for a shift.',contact:'559-592-0117 · 611 2nd St., Exeter',url:'https://foodlinktc.org/volunteer/'},
+ {name:'Tulare County Library',city:'Branches across the county',ages:'Ages 14+. Under 18 needs a parent signature.',what:'Summer Reading Program helper, programming volunteer, or the Teen Advisory Group (earns service hours).',how:'Fill out the volunteer application and turn it in at your local branch.',contact:'Your local branch library',url:'https://tularecountylibrary.org/volunteer-opportunities'},
+ {name:'Sequoia Riverlands Trust',city:'Visalia (Kaweah Oaks & Dry Creek preserves)',ages:'All ages welcome; classes and youth groups too.',what:'Native plant nursery days, habitat restoration, trail work, trash clean-ups, helping at nature hikes and events.',how:'Register for a volunteer day on their website or use the contact form.',contact:'559-738-0211 · 427 S. Garden St., Visalia',url:'https://sequoiariverlands.org/volunteer'},
+ {name:'Sequoia Environmental Youth Leaders (SRT)',city:'Porterville & Lindsay',ages:'High school and college students in Porterville and Lindsay Unified.',what:'A 10-month program: train in outdoor education and lead field trips for elementary students.',how:'Contact Sequoia Riverlands Trust for application details.',contact:'559-738-0211',url:'https://sequoiariverlands.org/youth-advisory-council'},
+ {name:'City of Tulare VolunTEENS',city:'Tulare',ages:'Currently enrolled high school students.',what:'Volunteer across Tulare Parks & Recreation programs and build job skills. Recognition at 50+ hours per school year.',how:'Pick up an application at the Parks & Recreation office, 830 S. Blackstone St. (year-round).',contact:'559-684-4310',url:'https://www.tulare.ca.gov/government/departments/community-services/parks-recreation/teen-programs/volunteens'},
+ {name:'City of Visalia volunteer programs',city:'Visalia',ages:'Police Safety Cadets: ages 14 (finished 8th grade) to 21. Other roles: check with the department.',what:'Police Safety Cadets, youth sports coaching, after-school program support, special events.',how:'Fill out the interest form for the program on the City of Visalia volunteer page.',contact:'City of Visalia volunteer page',url:'https://www.visalia.gov/992/Volunteer'},
+ {name:'Assisteens® (Assistance League of Visalia)',city:'Visalia',ages:'Grades 9–12.',what:'Teens plan and run service projects (mentoring, supporting foster youth, gardens, animal shelters). 40 service hours per year.',how:'Online application signed by a parent; $45 annual dues.',contact:'Assistance League of Visalia',url:'https://www.assistanceleague.org/visalia/assisteens/'},
+ {name:'Sequoia & Kings Canyon National Parks',city:'Sequoia & Kings Canyon',ages:'Groups (a group leader must attend); projects matched to age and ability.',what:'Group service projects (usually May–October): trail work, restoration, park clean-up.',how:'A teacher or club advisor arranges a group project with the parks.',contact:'559-565-4287',url:'https://www.nps.gov/seki/getinvolved/supportyourpark/group-vip.htm'},
+ {name:'American Red Cross Clubs',city:'Your high school campus',ages:'Ages 13+.',what:'Join or start a Red Cross Club: blood drive help, disaster preparedness, and fundraising.',how:'Complete the Red Cross volunteer application and ask an advisor to help start a club.',contact:'American Red Cross, Central California Region',url:'https://www.redcross.org/local/california/central-california/volunteer/youth-volunteers.html'},
+ {name:'United Way of Tulare County',city:'Tulare',ages:'Ask about age limits for each event.',what:'Event volunteers (like the World Ag Expo) and the Harvesting Hope fruit harvest with FoodLink.',how:'Use the “Questions about Volunteering” form on their website.',contact:'559-685-1766 · 1601 E. Prosperity Ave., Tulare',url:'https://www.unitedwaytc.org/volunteer'},
+ {name:'Habitat for Humanity of Tulare/Kings Counties',city:'Visalia',ages:'Call to ask about youth age rules.',what:'Help build and repair homes for local families.',how:'Contact the office to ask about youth opportunities.',contact:'559-734-4040 · info@hfhtkc.org',url:'https://www.hfhtkc.org/what-we-do/'}];
+function serviceOrgs(el){
+  el.innerHTML=`<div class="tool"><div class="svc-note">⚠️ <b>Before you volunteer:</b> programs, ages, and schedules change. Call or check the website first, get a parent/guardian’s permission, and ask a supervisor to sign or verify your hours. Information checked October 2026.</div>
+   <div class="svc-grid">${SERVICE_ORGS.map(o=>`<div class="svc"><h4>${esc(o.name)}</h4><small>📍 ${esc(o.city)}</small><p><b>Ages:</b> ${esc(o.ages)}</p><p><b>What you’d do:</b> ${esc(o.what)}</p><p><b>How to join:</b> ${esc(o.how)}</p><p><b>Contact:</b> ${esc(o.contact)}</p><a class="btn" href="${o.url}" target="_blank" rel="noopener">Visit website ↗</a></div>`).join('')}</div></div>`;
+}
+/* ---------- Community service: ideas + 4-year plan ---------- */
+const SVC_IDEAS={'🐾 Animals':['Help at an animal shelter (many require 16 or 18; ask)','Collect blankets and pet food for a shelter','Make pet adoption posters or social media for a rescue'],
+ '🌱 Environment':['Join a Sequoia Riverlands Trust restoration day','Organize a campus or park clean-up','Start a school garden or recycling program'],
+ '📚 Education':['Tutor younger students or peers (AVID tutoring!)','Read to kids at a library summer program','Run a school supply drive'],
+ '🍎 Hunger & community':['Sort food at FoodLink','Harvest backyard fruit with Harvesting Hope','Organize a canned food drive'],
+ '❤️ Health & safety':['Join a Red Cross Club and help with a blood drive','Make kindness cards for a senior center','Share health or safety info at a school event'],
+ '🏫 Your school':['Help at freshman orientation or open house','Mentor a new AVID student','Help run a club fundraiser for a local cause']};
+function servicePlanner(el){
+  const key='svc-plan'; let st={goal:{9:10,10:15,11:20,12:20},pick:[]}; try{st=Object.assign(st,JSON.parse(localStorage.getItem(key)||'{}'))}catch(e){}
+  const save=()=>{try{localStorage.setItem(key,JSON.stringify(st))}catch(e){}};
+  const draw=()=>{const tot=Object.values(st.goal).reduce((a,b)=>a+(+b||0),0);
+    el.innerHTML=`<div class="tool"><h3>💡 Find ideas that fit you</h3><p class="muted">Tap the ideas you’d like to try. They’ll be added to your plan.</p>
+     <div class="idea-grid">${Object.entries(SVC_IDEAS).map(([cat,list])=>`<div class="idea"><b>${cat}</b>${list.map(x=>`<label><input type="checkbox" data-i="${esc(x)}" ${st.pick.includes(x)?'checked':''}> ${esc(x)}</label>`).join('')}</div>`).join('')}</div>
+     <h3>🗓️ My 4-year service plan</h3><div class="gpagrid">${[9,10,11,12].map(g=>`<label>Grade ${g} goal (hours)<input type="number" min="0" max="500" data-g="${g}" value="${st.goal[g]}"></label>`).join('')}</div>
+     <p class="agsum okc">🎯 4-year goal: ${tot} hours</p>
+     ${st.pick.length?`<h3>✅ Ideas I want to try</h3><ul class="aid">${st.pick.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
+     <h3>✍️ Using service in college applications</h3><ul class="aid"><li>Log your hours, dates, supervisor, and what you did as you go. It’s hard to remember later!</li><li>Colleges care more about <b>commitment and impact</b> than a huge number of hours.</li><li>On the UC application, service can go in the activities section and can inspire PIQ #7 (“What have you done to make your school or your community a better place?”).</li></ul></div>`;
+    el.querySelectorAll('[data-i]').forEach(c=>c.onchange=()=>{const v=c.dataset.i;st.pick=c.checked?[...new Set([...st.pick,v])]:st.pick.filter(x=>x!==v);save();draw()});
+    el.querySelectorAll('[data-g]').forEach(i=>i.onchange=()=>{st.goal[i.dataset.g]=Math.max(0,+i.value||0);save();draw()});
+  };
+  draw();
+}
+/* ---------- Community service: log hours (sends to the Google Sheet) ---------- */
+function serviceLog(el){
+  const key='svc-log-'+(CUR?CUR.id:''); let log=[]; try{log=JSON.parse(localStorage.getItem(key)||'[]')}catch(e){}
+  const save=()=>{try{localStorage.setItem(key,JSON.stringify(log))}catch(e){}};
+  const draw=(msg='')=>{const tot=log.reduce((a,r)=>a+(+r.hours||0),0);
+    el.innerHTML=`<div class="tool"><h3>⏱️ Log my service hours</h3>${HUB_URL?'':'<div class="svc-note">👀 Preview mode: hours are saved on this computer only until your teacher connects the Google Sheet.</div>'}
+     <div class="gpagrid">
+      <label>Organization<input id="v-org" list="v-orgs" placeholder="Where did you serve?"><datalist id="v-orgs">${SERVICE_ORGS.map(o=>`<option>${esc(o.name)}</option>`).join('')}</datalist></label>
+      <label>Date<input id="v-date" type="date"></label><label>Hours<input id="v-hrs" type="number" min="0.5" max="24" step="0.5"></label>
+      <label>Supervisor name<input id="v-sup"></label><label>Supervisor phone or email<input id="v-con"></label></div>
+     <label class="full">What did you do?<textarea id="v-what" rows="2"></textarea></label>
+     <label class="full">Reflection: Who did your service help, and what did you learn? (25+ words)<textarea id="v-ref" rows="3"></textarea></label>
+     <div class="btnrow"><button class="btn" id="v-send">📤 Submit hours to ${esc(CUR?CUR.teacher:'my teacher')}</button><span id="v-msg" style="font-weight:700;color:var(--muted)">${msg}</span></div>
+     <h3>📒 My log on this device · <span class="okc">${tot} hours</span></h3>
+     <table class="dtab"><tr><th>Date</th><th>Organization</th><th>Hours</th><th>Status</th></tr>${log.map(r=>`<tr><td>${esc(r.date)}</td><td>${esc(r.org)}</td><td>${r.hours}</td><td>${r.sent?'✅ Sent':'Saved'}</td></tr>`).join('')||'<tr><td colspan="4" class="muted">No hours logged yet.</td></tr>'}</table></div>`;
+    el.querySelector('#v-send').onclick=async()=>{const g=id=>el.querySelector(id).value.trim(), m=el.querySelector('#v-msg');
+      const r={org:g('#v-org'),date:g('#v-date'),hours:+g('#v-hrs'),supervisor:g('#v-sup'),contact:g('#v-con'),what:g('#v-what'),reflection:g('#v-ref')};
+      if(!r.org||!r.date||!r.hours||!r.supervisor||!r.what){m.textContent='Fill in organization, date, hours, supervisor, and what you did.';return}
+      if(r.hours>24){m.textContent='Log 24 hours or less per entry.';return}
+      if(dWords(r.reflection)<25){m.textContent=`Your reflection needs 25+ words (${dWords(r.reflection)} so far).`;return}
+      m.textContent='Sending…';
+      try{const res=await hubSend({action:'service',student:CUR,...r});if(!res.ok)throw new Error(res.error);log.unshift({...r,sent:!res.demo});save();draw(res.demo?'👀 Saved on this computer (preview mode).':'✅ Submitted! Your teacher can see your hours.')}
+      catch(e){m.textContent='⚠️ '+(e.message||'Could not send. Try again.')}};
+  };
+  draw();
+}
+Object.assign(L,{
+  ucpiq:{title:'UC Personal Insight Questions Workshop',run(el){essayWorkshop(el,{id:'ucpiq',kind:'UC Personal Insight Question',prompts:PIQS,numbered:true,limit:350,note:'Answer <b>4 of the 8</b> questions, up to <b>350 words</b> each. All questions are equal: choose the ones that let you share the most about yourself.'})}},
+  scholessay:{title:'Scholarship Essay Workshop',run(el){essayWorkshop(el,{id:'schol',kind:'Scholarship essay',limits:[250,500,650],limit:500,prompts:[
+    ['Your goals','“Describe your educational and career goals and how this scholarship will help you reach them.”','Be specific: what major, what career, and why it matters to you and your community.'],
+    ['Overcoming a challenge','“Tell us about a challenge you have faced and how you overcame it.”','Focus on your actions and growth.'],
+    ['Community service','“Describe your involvement in your community and the impact it has had.”','Use your service log: name the organization, your role, and the impact.'],
+    ['Why you deserve it','“Why should you receive this scholarship?”','Show, don’t just tell: give examples of your effort and character.'],
+    ['Someone who influenced you','“Describe a person who has influenced your life and goals.”','Spend most of the essay on what YOU learned and did because of them.']],note:'Always use the exact prompt and word limit from the scholarship you are applying to.'})}},
+  agtracker:{title:'A–G Tracker & GPA Estimator',run(el){agTracker(el)}},
+  fafsaguide:{title:'FAFSA & California Dream Act Guide',run(el){fafsaGuide(el)}},
+  campusexp:{title:'UC & CSU Campus Explorer',run(el){campusExplorer(el)}},
+  scholtrack:{title:'Scholarship Tracker',run(el){scholarshipTracker(el)}},
+  svcorgs:{title:'Tulare County Service Programs',run(el){serviceOrgs(el)}},
+  svcplan:{title:'Service Ideas & 4-Year Plan',run(el){servicePlanner(el)}},
+  svclog:{title:'Log My Service Hours',run(el){serviceLog(el)}}
+});
+Object.assign(ACT_INFO,{
+  ucpiq:{eq:'How can I share who I am in a way that helps admissions readers know me?',lt:['I can choose UC Personal Insight Questions that fit my experiences.','I can brainstorm, outline, and draft a 350-word response with a specific example and reflection.']},
+  scholessay:{eq:'How can my writing help me earn money for college?',lt:['I can plan a scholarship essay that answers the prompt.','I can draft an essay with specific examples within a word limit.']},
+  agtracker:{eq:'Am I on track to be eligible for UC and CSU?',lt:['I can check my progress on the A–G subject requirements.','I can estimate my A–G GPA and compare it to UC and CSU minimums.']},
+  fafsaguide:{eq:'How can my family and I pay for college?',lt:['I can identify whether I should file the FAFSA or the California Dream Act Application.','I can make a checklist and know the Cal Grant deadline.']},
+  campusexp:{eq:'Which colleges could be a good fit for me?',lt:['I can explore UC, CSU, and local community college campuses.','I can research one campus and record what I learned.']},
+  scholtrack:{eq:'How can I stay organized while applying for scholarships?',lt:['I can track scholarships, deadlines, and requirements in one place.']},
+  svcorgs:{eq:'How can I serve my community in Tulare County?',lt:['I can find a local service opportunity that fits my age and interests.']},
+  svcplan:{eq:'How will service shape my four years in AVID?',lt:['I can choose service ideas that match my interests.','I can set service-hour goals for each year of high school.']},
+  svclog:{eq:'How does serving others help me grow?',lt:['I can accurately log my service hours with a supervisor.','I can reflect on the impact of my service.']}
+});
+H.collegetimeline={title:'4-Year College Timeline for AVID Students',html:`<h2>4-Year College Timeline</h2><small>For AVID students planning for UC, CSU, and community college. Dates are for the fall 2027 application cycle.</small>
+ <h4>9th grade</h4><ul><li>Make a 4-year A–G plan with your counselor.</li><li>Every grade counts toward your future: build strong study habits and use tutorials.</li><li>Join a club, sport, or activity, and start community service. Log your hours!</li></ul>
+ <h4>10th grade</h4><ul><li><b>10th and 11th grade A–G grades count in your UC/CSU GPA.</b></li><li>Explore careers and majors; take a virtual campus tour.</li><li>Keep building service and leadership.</li></ul>
+ <h4>11th grade</h4><ul><li>Take challenging A–G courses (honors, AP, dual enrollment if available).</li><li>Visit campuses (in person or virtually) and research majors.</li><li>Start brainstorming your UC Personal Insight Questions in spring.</li><li>Keep a list of activities, awards, and service hours.</li></ul>
+ <h4>12th grade</h4><ul><li><b>August 1:</b> you can start the UC application.</li><li><b>Fall:</b> the ${COLLEGE_FACTS.fafsaYear} FAFSA and California Dream Act Application are open. Complete them early!</li><li><b>October 1 – November 30:</b> UC and CSU application filing period.</li><li><b>${COLLEGE_FACTS.calGrant}</b>.</li><li><b>Spring:</b> compare financial aid offers and ask questions.</li><li><b>By May 1 (most campuses):</b> accept your offer of admission (Statement of Intent to Register). Check each campus’s deadline.</li></ul>`};
+H.ucvscsu={title:'UC vs. CSU at a Glance',html:`<h2>UC vs. CSU at a Glance</h2><small>California residents, first-year applicants, fall 2027.</small>
+ <table class="dtab"><tr><th></th><th>University of California (UC)</th><th>California State University (CSU)</th></tr>
+ <tr><td><b>Campuses</b></td><td>9 undergraduate campuses</td><td>22 universities</td></tr>
+ <tr><td><b>Known for</b></td><td>Research universities</td><td>Hands-on, career-focused learning</td></tr>
+ <tr><td><b>A–G courses</b></td><td>15 A–G courses, grade of C or better</td><td>15 A–G courses, grade of C- or better</td></tr>
+ <tr><td><b>Minimum GPA</b></td><td>3.0 (A–G, 10th–11th grade)</td><td>2.5 (A–G)</td></tr>
+ <tr><td><b>SAT/ACT</b></td><td>Not used</td><td>Not required or used</td></tr>
+ <tr><td><b>Essays</b></td><td>4 of 8 Personal Insight Questions, 350 words max each</td><td>Generally no personal essay; check your campus and major</td></tr>
+ <tr><td><b>Apply</b></td><td>UC application · ${COLLEGE_FACTS.ucFiling}</td><td>Cal State Apply · ${COLLEGE_FACTS.csuFiling}</td></tr>
+ <tr><td><b>Close to Tulare County</b></td><td>UC Merced</td><td>Fresno State, CSU Bakersfield</td></tr></table>
+ <p><small>Minimums make you eligible; many campuses and majors admit students with higher GPAs. Confirm details with your counselor and the official UC and CSU websites.</small></p>`};
 
 /* ---------- RENDERING ---------- */
 const app=document.getElementById('app'), modal=document.getElementById('modal'), crumb=document.getElementById('crumb'), qInput=document.getElementById('q');

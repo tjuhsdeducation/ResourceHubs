@@ -4,7 +4,9 @@
    This script turns a Google Sheet into the "backend" for the hub:
      • Discussion Board posts and replies (with automatic grading)
      • Practice activity scores
-     • Full WICOR lesson turn-ins
+     • Full WICOR lesson turn-ins and college essay drafts
+     • Community service hours (with reflections)
+     • Daily "Would You Rather" votes (combined for everyone)
    Each teacher gets their own tab. Download any time as Excel:
    File → Download → Microsoft Excel (.xlsx).
 
@@ -27,17 +29,21 @@ const POSTS = 'Discussion Posts';
 const GRADES = 'Discussion Grades';
 const SCORES = 'Activity Scores';
 const LESSONS = 'Lesson Turn-Ins';
+const SERVICE = 'Service Hours';
+const VOTES = 'WYR Votes';
 
 const HEAD = {};
-HEAD[POSTS] = ['Timestamp', 'Post ID', 'Prompt ID', 'Prompt', 'Type', 'Reply To Post ID', 'Reply To', 'Teacher', 'Period', 'Student Name', 'Student ID', 'Display Name', 'Text', 'Word Count', 'Auto Points', 'Hide (type X)'];
+HEAD[POSTS] = ['Timestamp', 'Post ID', 'Prompt ID', 'Prompt', 'Type', 'Reply To Post ID', 'Reply To', 'Teacher', 'Period', 'Student Name', 'Student ID', 'Display Name', 'Text', 'Word Count', 'Auto Points', 'Hide (type X)', 'Annotations Made'];
 HEAD[GRADES] = ['Teacher', 'Period', 'Student Name', 'Student ID', 'Prompt ID', 'Prompt', 'Main Post Words', 'Main Post Points (/6)', 'Replies', 'Reply Points (/4)', 'Auto Total (/10)', 'Teacher Score', 'Last Activity'];
 HEAD[SCORES] = ['Timestamp', 'Teacher', 'Period', 'Student Name', 'Student ID', 'Activity', 'Score', 'Percent', 'Responses'];
 HEAD[LESSONS] = ['Timestamp', 'Teacher', 'Period', 'Student Name', 'Student ID', 'Lesson', 'Stations Done', 'Completion (/10)', 'Answers'];
+HEAD[SERVICE] = ['Timestamp', 'Teacher', 'Period', 'Student Name', 'Student ID', 'Organization', 'Date of Service', 'Hours', 'Supervisor', 'Supervisor Contact', 'What I Did', 'Reflection', 'Verified (type ✓)'];
+HEAD[VOTES] = ['Timestamp', 'Date', 'Choice', 'Question'];
 
 /* ---------- one-time setup: creates every tab, header row, and teacher tab ---------- */
 function setup() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  [POSTS, GRADES, SCORES, LESSONS].forEach(name => {
+  [POSTS, GRADES, SCORES, LESSONS, SERVICE, VOTES].forEach(name => {
     let sh = ss.getSheetByName(name) || ss.insertSheet(name);
     sh.getRange(1, 1, 1, HEAD[name].length).setValues([HEAD[name]]).setFontWeight('bold').setBackground('#e9eefb');
     sh.setFrozenRows(1);
@@ -53,6 +59,8 @@ function setup() {
     sh.getRange('O2').setFormula("=IFERROR(FILTER('" + SCORES + "'!A1:I, ('" + SCORES + "'!B1:B=" + q + ")+(ROW('" + SCORES + "'!B1:B)=1)), \"No activity scores yet\")");
     sh.getRange('Y1').setValue('FULL LESSON TURN-INS').setFontWeight('bold');
     sh.getRange('Y2').setFormula("=IFERROR(FILTER('" + LESSONS + "'!A1:I, ('" + LESSONS + "'!B1:B=" + q + ")+(ROW('" + LESSONS + "'!B1:B)=1)), \"No lesson turn-ins yet\")");
+    sh.getRange('AI1').setValue('COMMUNITY SERVICE HOURS').setFontWeight('bold');
+    sh.getRange('AI2').setFormula("=IFERROR(FILTER('" + SERVICE + "'!A1:M, ('" + SERVICE + "'!B1:B=" + q + ")+(ROW('" + SERVICE + "'!B1:B)=1)), \"No service hours yet\")");
     sh.setFrozenRows(2);
   });
   const extra = ss.getSheetByName('Sheet1');
@@ -104,6 +112,10 @@ function doGet(e) {
   try {
     const p = e.parameter || {};
     if (p.action === 'ping') return json({ ok: true });
+    if (p.action === 'votes') {
+      const rows = sheet(VOTES).getDataRange().getValues().slice(1).filter(r => String(r[1]) === String(p.date));
+      return json({ ok: true, a: rows.filter(r => r[2] === 'A').length, b: rows.filter(r => r[2] === 'B').length });
+    }
     if (p.action !== 'list') return json({ ok: false, error: 'Unknown request' });
     const rows = sheet(POSTS).getDataRange().getValues().slice(1);
     const posts = rows.filter(r => r[2] === p.prompt && String(r[15]).toUpperCase() !== 'X').map(r => ({
@@ -120,11 +132,23 @@ function doPost(e) {
   try {
     lock.waitLock(15000);
     const d = JSON.parse(e.postData.contents);
+    if (d.action === 'vote') {                        // anonymous: one vote per device per day (checked on the website)
+      const choice = d.choice === 'B' ? 'B' : 'A', date = clean(d.date, 12);
+      sheet(VOTES).appendRow([new Date(), date, choice, clean(d.question, 200)]);
+      const rows = sheet(VOTES).getDataRange().getValues().slice(1).filter(r => String(r[1]) === date);
+      return json({ ok: true, a: rows.filter(r => r[2] === 'A').length, b: rows.filter(r => r[2] === 'B').length });
+    }
     const s = student(d);
     const now = new Date();
     if (d.action === 'post') return json(savePost(d, s, now));
     if (d.action === 'score') {
       sheet(SCORES).appendRow([now, s.teacher, s.period, s.name, asText(s.id), clean(d.activity, 200), clean(d.score, 40), clean(d.percent, 10), clean(d.responses, 1500)]);
+      return json({ ok: true });
+    }
+    if (d.action === 'service') {
+      const hrs = Math.max(0, Math.min(24, Number(d.hours) || 0));
+      if (!hrs) throw new Error('Enter the number of hours (up to 24 per entry).');
+      sheet(SERVICE).appendRow([now, s.teacher, s.period, s.name, asText(s.id), clean(d.org, 120), clean(d.date, 20), hrs, clean(d.supervisor, 80), clean(d.contact, 80), clean(d.what, 600), clean(d.reflection, 1500), '']);
       return json({ ok: true });
     }
     if (d.action === 'lesson') {
@@ -159,7 +183,7 @@ function savePost(d, s, now) {
   const keys = Array.isArray(d.sourceKeys) ? d.sourceKeys.slice(0, 40).map(k => String(k).slice(0, 40)) : [];
   const pts = isReply ? replyPoints(text) : mainPostPoints(text, minWords, keys);
   sh.appendRow([now, id, clean(d.prompt, 60), clean(d.promptTitle, 200), isReply ? 'Reply' : 'Main post', isReply ? clean(d.parent, 20) : '', replyToName,
-                s.teacher, s.period, s.name, asText(s.id), displayName(s.name), text, countWords(text), pts, '']);
+                s.teacher, s.period, s.name, asText(s.id), displayName(s.name), text, countWords(text), pts, '', Math.max(0, Math.min(999, Number(d.annotations) || 0))]);
   const grade = updateGrade(clean(d.prompt, 60), clean(d.promptTitle, 200), s, now);
   return { ok: true, post: { id: id, parent: isReply ? d.parent : '', type: isReply ? 'Reply' : 'Main post', name: displayName(s.name), teacher: s.teacher, period: s.period, text: text, words: countWords(text), time: now.toISOString(), mine: true }, grade: grade };
 }
