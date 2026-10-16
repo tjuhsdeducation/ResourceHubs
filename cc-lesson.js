@@ -11,6 +11,7 @@
   const L = window.CC; if (!L) return;
   const CFG = window.HUB_CONFIG || {}, SCHOOLS = CFG.schools || {}, PERIODS = CFG.periods || ["1", "2", "3", "4", "5", "6", "7", "8"];
   const HUB_URL = (CFG.scriptUrl || "").trim();
+  let TEACH = false; try { TEACH = localStorage.getItem("hubMode") === "teacher"; } catch (e) {}
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const strip = s => String(s ?? "").replace(/<[^>]+>/g, "");
@@ -46,8 +47,8 @@
       <label>School<select id="g-sch"><option value="">Choose…</option>${Object.keys(SCHOOLS).map(s => `<option>${esc(s)}</option>`).join("")}</select></label>
       <div class="g-row"><label>Period<select id="g-per"><option value="">Choose…</option>${PERIODS.map(p => `<option>${p}</option>`).join("")}</select></label><label>Teacher<select id="g-t">${tOpts("", "")}</select></label></div>
       <button class="g-start" type="submit" disabled>Start ▶</button><p class="g-msg" aria-live="polite">Fill in every box to start.</p>
-      <button type="button" class="linkbtn" id="g-prev">Teacher? Preview the lesson (nothing is sent)</button></form>
-      ${L.teacher ? `<details class="tnotes"><summary>🍎 Teacher notes: pacing, movement, and materials</summary>${L.teacher}</details>` : ""}</div>`;
+      ${TEACH ? `<button type="button" class="linkbtn" id="g-prev">🍎 Teacher preview of the lesson (nothing is sent)</button>` : ""}</form>
+      ${TEACH && L.teacher ? `<details class="tnotes" open><summary>🍎 Teacher notes: pacing, movement, and materials</summary>${L.teacher}</details>` : ""}</div>`;
     const f = $(".g-form"), q = x => f.querySelector(x);
     q("#g-sch").onchange = () => { q("#g-t").innerHTML = tOpts(q("#g-sch").value, ""); };
     if (prev) { q("#g-first").value = prev.first; q("#g-last").value = prev.last; q("#g-id").value = prev.id; q("#g-sch").value = prev.school; q("#g-t").innerHTML = tOpts(prev.school, prev.teacher); q("#g-per").value = prev.period; }
@@ -57,7 +58,7 @@
       q(".g-msg").textContent = g ? "Looks good! Press Start." : !hasL(d.first) ? "Type your first name." : !hasL(d.last) ? "Type your last name." : !okId(d.id) ? "Type your student ID (numbers only)." : !d.school ? "Choose your school." : !d.period ? "Choose your period." : !d.teacher ? "Choose your teacher." : ""; };
     f.oninput = upd; f.onchange = upd; upd();
     f.onsubmit = e => { e.preventDefault(); const d = read(); if (!ok(d)) return; LS.set("wicorStudent", d); run(d, false); };
-    q("#g-prev").onclick = () => run({ first: "Teacher", last: "Preview", name: "Teacher Preview", id: "preview", school: "", period: "", teacher: "" }, true);
+    if (q("#g-prev")) q("#g-prev").onclick = () => run({ first: "Teacher", last: "Preview", name: "Teacher Preview", id: "preview", school: "", period: "", teacher: "" }, true);
   }
 
   /* ---------------- block types ---------------- */
@@ -116,7 +117,7 @@
   BT.move = {
     html(b, st) {
       const ic = { corners: "🏃 Four Corners", line: "📏 Human Line-Up", standsit: "🙋 Stand Up / Sit Down", walk: "🚶 Gallery Walk", circle: "🔄 Inside-Outside Circle" }[b.mode] || "🏃 Move";
-      return `<div class="move"><div class="mvhead"><span class="mvtag">${ic}</span><span class="mu">${b.time || ""}</span><button class="btn ghost" data-proj>📢 Project for the class</button></div>
+      return `<div class="move"><div class="mvhead"><span class="mvtag">${ic}</span><span class="mu">${b.time || ""}</span>${TEACH ? `<button class="btn ghost" data-proj>📢 Project for the class</button>` : ""}</div>
         <p class="mvp"><b>${b.prompt}</b></p>${b.how ? `<p class="mu">${b.how}</p>` : ""}
         ${b.options ? `<div class="mvopts">${b.options.map((o, i) => `<button class="mvo${st.c === i ? " on" : ""}" data-o="${i}" style="--oc:${["#2b7de9", "#e8368f", "#0e9f6e", "#e08a00", "#8a54e0"][i % 5]}">${o}</button>`).join("")}</div><p class="mu small">${b.mode === "line" ? "Where did you stand?" : "Where did you go?"} Tap your choice.</p>` : ""}
         <label class="note">${b.reflect || "Why did you choose that? What did you hear from a classmate?"}<textarea rows="3" data-r placeholder="I chose … because … A classmate said …">${esc(st.r || "")}</textarea></label></div>`;
@@ -124,7 +125,7 @@
     wire(root, b, st, save, redraw) {
       $$(".mvo", root).forEach(o => o.onclick = () => { st.c = +o.dataset.o; save(); redraw(); });
       const t = $("textarea[data-r]", root); if (t) t.oninput = () => { st.r = t.value; save(); };
-      $("[data-proj]", root).onclick = () => project(b);
+      const pj = $("[data-proj]", root); if (pj) pj.onclick = () => project(b);
     },
     score: (b, st) => ({ max: 2, pts: (b.options ? (st.c != null ? 1 : 0) : (words(st.r) >= 4 ? 1 : 0)) + (words(st.r) >= (b.min || 12) ? 1 : 0), label: "movement" }),
     text: (b, st) => `${b.options && st.c != null ? strip(b.options[st.c]) + " — " : ""}${st.r || ""}`

@@ -40,6 +40,9 @@ header.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px;paddin
 .spacer{flex:1}
 .search{display:flex;align-items:center;gap:8px;background:var(--hover);border-radius:24px;padding:6px 14px;min-width:0;max-width:300px;flex:1}
 .search input{border:0;background:transparent;outline:none;width:100%;font:inherit;color:var(--fg)}
+.modebtn{border:2px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:6px 14px;font:800 .85rem var(--body,inherit);cursor:pointer;white-space:nowrap}
+.modebtn small{font-weight:700;color:var(--muted)}.modebtn.on{background:color-mix(in srgb,var(--c-college,#e8368f) 14%,var(--surface));border-color:color-mix(in srgb,var(--c-college,#e8368f) 45%,var(--line))}
+@media (max-width:640px){.modebtn small{display:none}}
 h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
 /* Home */
 .hello{padding-block:28px 8px}
@@ -516,6 +519,7 @@ a.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
     <span class="crumb" id="crumb"></span>
     <span class="spacer"></span>
     <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 9.5 16a6.5 6.5 0 0 0 4.2-1.6l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg><input id="q" type="search" placeholder="Search resources" aria-label="Search resources"></label>
+    <button class="modebtn" id="modeBtn" type="button"></button>
   </div>
 </header>
 <main id="app"></main>
@@ -844,6 +848,21 @@ const SECTIONS = [
    ]}
   ]}
 ];
+
+/* ---------- STUDENT VIEW and TEACHER VIEW ----------
+   Everyone starts in the STUDENT view. Teachers tap "Teacher login" (top right) and type the passcode
+   to see everything. The view is remembered on that computer until they switch back.
+   ✏️ Change the passcode on the next line. To hide anything else from students, add  teacher:true
+   to a section, topic, or item above (for example {k:'link', teacher:true, ...}). */
+const TEACHER_PASSCODE=(window.HUB_CONFIG&&window.HUB_CONFIG.teacherPasscode)||'avid2026';
+let IS_TEACHER=false; try{IS_TEACHER=localStorage.getItem('hubMode')==='teacher'}catch(e){}
+const TEACHER_ONLY={sections:['new','study','tech'],topics:['Teacher Setup','Tutors','Field Trips','Site Team & Certification'],items:['sheetsetup','seminar']};
+const isTeacherItem=it=>it.teacher||(it.k==='print'&&it.aud==='teacher')||(it.id&&TEACHER_ONLY.items.includes(it.id))||(it.k==='note'&&it.add);
+if(!IS_TEACHER){
+  for(let i=SECTIONS.length-1;i>=0;i--){const s=SECTIONS[i];
+    if(s.teacher||TEACHER_ONLY.sections.includes(s.id)){SECTIONS.splice(i,1);continue}
+    s.topics=s.topics.filter(t=>!t.teacher&&!TEACHER_ONLY.topics.includes(t.name)).map(t=>Object.assign({},t,{items:t.items.filter(it=>!isTeacherItem(it))})).filter(t=>t.items.length);}
+}
 
 /* ---------- HANDOUTS ---------- */
 const nameRow = (extra='') => `<div class="row"><div class="fill">Name</div><div class="fill" style="max-width:120px">Period</div><div class="fill" style="max-width:160px">Date</div>${extra}</div>`;
@@ -2129,7 +2148,7 @@ function discussHome(s){
   crumb.innerHTML=`<span>›</span><a href="#avid">AVID</a><span>›</span><b>Discussion Board</b>`;
   app.innerHTML=`<div class="wrap" style="--c:#e0408a">${folderChips(s,'discuss')}
    <div class="banner"><h1>💬 Discussion Board</h1><p>College-style discussions. Sign in, share your thinking in a main post, then reply to at least two classmates. Your posts are saved and scored for your teacher.</p><span class="art"><span class="bigemoji">💬</span></span></div>
-   ${HUB_URL?'':`<div class="demo-note">👀 <b>Preview mode:</b> posts are saved only on this computer because this website isn’t connected to the Google Sheet yet. <i>Teachers:</i> paste the Web app address into <b>hub-config.js</b> on GitHub (WICOR → Teacher Setup, step 4).</div>`}
+   ${HUB_URL?'':`<div class="demo-note">👀 <b>Preview mode:</b> posts are saved only on this computer because this website isn’t connected to the Google Sheet yet.${IS_TEACHER?' <i>Teachers:</i> paste the Web app address into <b>hub-config.js</b> on GitHub (WICOR → Teacher Setup, step 4).':''}</div>`}
    <div class="how"><div><b>1</b> Sign in with your name, ID, period &amp; teacher</div><div><b>2</b> Write a main post (${DISCUSSIONS[0].minWords}+ words) with evidence and a question</div><div><b>3</b> Unlock classmates’ posts and reply to 2 of them (30+ words each)</div></div>
    <div class="dgrid">${DISCUSSIONS.map(d=>`<a class="dcard" href="#avid/discuss/${d.id}" style="--c:${TAG_COLOR[d.tag]||'#5b5fe0'}"><span class="dic">${d.icon}</span><span class="dtag">${esc(d.tag)}</span><h3>${esc(d.title)}</h3><p>${esc(d.prompt.slice(0,130))}…</p><span class="go">Join the discussion →</span></a>`).join('')}</div><div style="height:48px"></div></div>`;
 }
@@ -2528,6 +2547,16 @@ H.ucvscsu={title:'UC vs. CSU at a Glance',html:`<h2>UC vs. CSU at a Glance</h2><
 
 /* ---------- RENDERING ---------- */
 const app=document.getElementById('app'), modal=document.getElementById('modal'), crumb=document.getElementById('crumb'), qInput=document.getElementById('q');
+(function(){const b=document.getElementById('modeBtn'), brand=document.querySelector('.brand span:last-child');
+  if(!IS_TEACHER&&brand)brand.textContent='AVID Student Hub';
+  b.innerHTML=IS_TEACHER?'🍎 Teacher view <small>· switch to student view</small>':'🔒 Teacher login';
+  b.classList.toggle('on',IS_TEACHER);
+  b.onclick=()=>{
+    if(IS_TEACHER){try{localStorage.setItem('hubMode','student')}catch(e){} location.hash='home'; location.reload(); return}
+    const p=prompt('Teacher passcode:'); if(p==null)return;
+    if(p.trim().toLowerCase()===String(TEACHER_PASSCODE).toLowerCase()){try{localStorage.setItem('hubMode','teacher')}catch(e){} location.reload()}
+    else alert('That passcode didn’t work. Ask your AVID coordinator for the teacher passcode.');
+  };})();
 const deco=(id,cls='deco')=>`<svg class="${cls}" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">${I[id]}</svg>`;
 const kindIcon={handout:I.doc,link:I.link,lesson:I.play,note:I.plus,nav:I.play,print:I.doc,page:I.play};
 const kindLabel={handout:'Handout',link:'Link',lesson:'Interactive',note:'',nav:'Open section'};
@@ -2557,7 +2586,7 @@ function home(filter=''){
     app.innerHTML=`<div class="wrap"><div class="hello"><h1>Results for “${filter.replace(/</g,'&lt;')}”</h1></div>${hits.length?`<div class="cards" style="padding-bottom:48px">${hits.map(([s,it])=>`<div style="--c:${s.color};display:contents">${itemHTML({...it,feature:false},s.name)}</div>`).join('')}</div>`:'<p class="empty">No resources match. Try “binder”, “TRF”, or “photosynthesis”.</p>'}</div>`;
     return;
   }
-  app.innerHTML=`<div class="wrap"><div class="hero">${CONFETTI}<h1>Welcome, <span>teachers!</span></h1><p>Pick a space to find handouts, tools, and lessons for your classroom.</p></div>
+  app.innerHTML=`<div class="wrap"><div class="hero">${CONFETTI}${IS_TEACHER?'<h1>Welcome, <span>teachers!</span></h1><p>Pick a space to find handouts, tools, and lessons for your classroom. You are in the 🍎 teacher view.</p>':'<h1>Welcome, <span>AVID students!</span></h1><p>Pick a space to practice WICOR, find lessons, and plan for college and career.</p>'}</div>
   <div class="tiles">${SECTIONS.map(s=>`<a class="tile" href="#${s.id}" style="--c:${s.color}"><span class="stk">${ART[s.id]}</span><h2>${s.name}</h2></a>`).join('')}</div></div>`;
 }
 let spy=null;

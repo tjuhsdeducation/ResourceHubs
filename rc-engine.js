@@ -95,6 +95,7 @@ window.RCG = (function () {
   const LS = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
   const hash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return String(h); };
   const LETTER = i => String.fromCharCode(65 + i);
+  const isTeacher = () => { try { return localStorage.getItem("hubMode") === "teacher"; } catch (e) { return false; } };
   const SUBJ = { "US History": ["#d0453a", "🇺🇸"], "World History": ["#e08a00", "🌍"], "Chemistry": ["#8a54e0", "⚗️"], "Biology": ["#1aa36f", "🧬"], "Algebra 1": ["#2b7de9", "📈"], "ELA": ["#e8368f", "📚"], "Math": ["#5b5fe0", "➗"], "Science (CAST)": ["#1aa36f", "🔬"], "Algebra 2": ["#5b5fe0", "📉"] };
   const TYPE = { mc: "Multiple choice", multi: "Multiple select", ebsr: "Two-part", inline: "Drop-down", grid: "Table match", num: "Short answer (number)", order: "Put in order", hot: "Hot text", write: "Brief write" };
   const SAY = [];
@@ -148,7 +149,7 @@ window.RCG = (function () {
         <div class="g-row"><label>Period<select id="g-per"><option value="">Choose…</option>${PERIODS.map(p => `<option>${p}</option>`).join("")}</select></label>
         <label>Teacher<select id="g-t">${tOpts("", "")}</select></label></div>
         <button class="g-start" type="submit" disabled>Start ▶</button><p class="g-msg" aria-live="polite">Fill in every box to start.</p>
-        <button type="button" class="linkbtn" id="g-preview">Teacher? Preview without signing in (nothing is sent)</button>
+        ${isTeacher() ? `<button type="button" class="linkbtn" id="g-preview">🍎 Teacher preview without signing in (nothing is sent)</button>` : ""}
       </form></div></div>`;
     const f = $(".g-form"), q = x => f.querySelector(x);
     q("#g-sch").addEventListener("change", () => { q("#g-t").innerHTML = tOpts(q("#g-sch").value, ""); });
@@ -161,7 +162,7 @@ window.RCG = (function () {
       q(".g-msg").textContent = good ? "Looks good! Press Start." : !hasL(d.first) ? "Type your first name." : !hasL(d.last) ? "Type your last name." : !okId(d.id) ? "Type your student ID (numbers only)." : !d.school ? "Choose your school." : !d.period ? "Choose your period." : !d.teacher ? "Choose your teacher." : "Fill in every box to start."; };
     f.addEventListener("input", upd); f.addEventListener("change", upd); upd();
     f.onsubmit = e => { e.preventDefault(); const d = read(); if (!ok(d)) return; LS.set("wicorStudent", d); run(A, d, false); };
-    q("#g-preview").onclick = () => run(A, { first: "Teacher", last: "Preview", name: "Teacher Preview", id: "preview", school: "", period: "", teacher: "" }, true);
+    if (q("#g-preview")) q("#g-preview").onclick = () => run(A, { first: "Teacher", last: "Preview", name: "Teacher Preview", id: "preview", school: "", period: "", teacher: "" }, true);
     setTimeout(() => q(prev ? ".g-start" : "#g-first").focus(), 50);
   }
 
