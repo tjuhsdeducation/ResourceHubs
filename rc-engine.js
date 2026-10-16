@@ -1,6 +1,6 @@
 /* =====================================================================
    READING CHECK ENGINE (no need to edit)
-   Split screen like Illuminate: the reading (text, image, table, graph)
+   Split screen like a state test: the reading (text, image, table, graph)
    is on the left with annotation tools, the graded questions are on the
    right. Scores go to the teacher's Google Sheet (same as the rest of
    the hub) as "Reading Check · <title>".
@@ -95,8 +95,9 @@ window.RCG = (function () {
   const LS = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
   const hash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return String(h); };
   const LETTER = i => String.fromCharCode(65 + i);
-  const SUBJ = { "US History": ["#d0453a", "🇺🇸"], "World History": ["#e08a00", "🌍"], "Chemistry": ["#8a54e0", "⚗️"], "Biology": ["#1aa36f", "🧬"], "Algebra 1": ["#2b7de9", "📈"], "Algebra 2": ["#5b5fe0", "📉"] };
-  const TYPE = { mc: "Multiple choice", multi: "Multiple select", ebsr: "Two-part", inline: "Drop-down", grid: "Table match", num: "Short answer (number)", order: "Put in order" };
+  const SUBJ = { "US History": ["#d0453a", "🇺🇸"], "World History": ["#e08a00", "🌍"], "Chemistry": ["#8a54e0", "⚗️"], "Biology": ["#1aa36f", "🧬"], "Algebra 1": ["#2b7de9", "📈"], "ELA": ["#e8368f", "📚"], "Math": ["#5b5fe0", "➗"], "Science (CAST)": ["#1aa36f", "🔬"], "Algebra 2": ["#5b5fe0", "📉"] };
+  const TYPE = { mc: "Multiple choice", multi: "Multiple select", ebsr: "Two-part", inline: "Drop-down", grid: "Table match", num: "Short answer (number)", order: "Put in order", hot: "Hot text", write: "Brief write" };
+  const SAY = [];
 
   window.addEventListener("DOMContentLoaded", start);
 
@@ -107,7 +108,9 @@ window.RCG = (function () {
     A.id = id;
     const [color, emoji] = SUBJ[A.subject] || ["#5b5fe0", "📖"];
     document.documentElement.style.setProperty("--lc", color);
-    document.title = `${A.title} | Reading Check`;
+    A.kind = A.kind || "Reading Check";
+    document.title = `${A.title} | ${A.kind}`;
+    const bt = $(".brand span:last-child"); if (bt && A.kind !== "Reading Check") { bt.textContent = A.kind; $(".brand .mark").textContent = "📝"; }
     $("#crumb").innerHTML = `<span>›</span><a href="index.html#lessons">Interactive Lessons</a><span>›</span><b>${esc(A.subject)}</b>`;
     gate(A, emoji);
   }
@@ -117,9 +120,9 @@ window.RCG = (function () {
     document.body.classList.remove("locked");
     const groups = {};
     Object.entries(RC).forEach(([id, a]) => (groups[a.subject] = groups[a.subject] || []).push([id, a]));
-    $("#app").innerHTML = `<div class="wrap"><div class="rc-hero"><h1>📖 Reading Checks</h1><p>About 10 minutes each. Read and annotate on the left, answer on the right, just like Illuminate.</p></div>
+    $("#app").innerHTML = `<div class="wrap"><div class="rc-hero">${/caaspp/.test(location.pathname) ? "<h1>📝 CAASPP Practice</h1><p>Smarter Balanced–style ELA and math sets plus CAST science, grades 9–12. Read on the left, answer on the right, with scores and feedback.</p>" : "<h1>📖 10-Minute Reading Checks</h1><p>About 10 minutes each. Read and annotate on the left, answer on the right, just like on a state test.</p>"}</div>
       ${Object.entries(groups).map(([s, list]) => `<h2 class="rc-gh">${(SUBJ[s] || [])[1] || "📖"} ${esc(s)}</h2><div class="rc-cards">${list.map(([id, a]) =>
-        `<a class="rc-card" style="--lc:${(SUBJ[s] || ["#5b5fe0"])[0]}" href="reading-check.html?id=${encodeURIComponent(id)}"><b>${esc(a.title)}</b><span>${esc(a.blurb || a.eq || "")}</span><small>${a.qs.length} questions · ~${a.mins || 10} min</small></a>`).join("")}</div>`).join("")}</div>`;
+        `<a class="rc-card" style="--lc:${(SUBJ[s] || ["#5b5fe0"])[0]}" href="${location.pathname.split("/").pop() || "reading-check.html"}?id=${encodeURIComponent(id)}"><b>${esc(a.title)}</b><span>${esc(a.blurb || a.eq || "")}</span><small>${a.qs.length} questions · ~${a.mins || 10} min</small></a>`).join("")}</div>`).join("")}</div>`;
   }
 
   /* ---------- sign-in ---------- */
@@ -129,13 +132,15 @@ window.RCG = (function () {
     if (prev && !(prev.first && prev.last && prev.school && (SCHOOLS[prev.school] || []).includes(prev.teacher))) prev = null;
     const pts = A.qs.reduce((t, q) => t + maxOf(q), 0);
     $("#app").innerHTML = `<div class="wrap"><div class="rc-gate">
-      <div class="rc-intro"><span class="kick">${emoji} ${esc(A.subject)} · Reading Check</span><h1>${esc(A.title)}</h1>
+      <div class="rc-intro"><span class="kick">${emoji} ${esc(A.subject)} · ${esc(A.kind)}</span><h1>${esc(A.title)}</h1>
         ${A.eq ? `<div class="eqbox"><span class="lbl">Essential Question</span><p>${esc(A.eq)}</p></div>` : ""}
         ${A.target ? `<div class="ltbox"><span class="lbl">Learning Target</span><p>${esc(A.target)}</p></div>` : ""}
         <ul class="how"><li><b>⏱ About ${A.mins || 10} minutes</b> · ${A.qs.length} questions · ${pts} points</li>
         <li><b>Left side:</b> read and annotate. Highlight, underline, and add notes. Annotations are <i>not graded</i>, they are there to help you think.</li>
         <li><b>Right side:</b> answer the questions. These <b>are graded</b> and sent to your teacher when you submit.</li>
-        <li>Use <b>🚩 Flag</b> to mark questions to come back to, like on Illuminate.</li></ul></div>
+        ${A.qs.some(q => q.t === "write") ? `<li><b>✍️ Brief writes</b> are scored with a rubric checklist (0–2 points). You will see what you earned and a sample answer. Your teacher may adjust the score.</li>` : ""}
+        ${A.sources.some(x => x.blocks.some(b => b.listen)) ? `<li><b>🎧 Listening:</b> press ▶ Play to hear the passage (use headphones). You may replay it.</li>` : ""}
+        <li>Use <b>🚩 Flag</b> to mark questions to come back to, like on the real test.</li></ul></div>
       <form class="g-form" autocomplete="off" novalidate><h3>✋ Sign in to start</h3>
         <div class="g-row"><label>First name<input id="g-first" placeholder="First name"></label><label>Last name<input id="g-last" placeholder="Last name"></label></div>
         <label>Student ID<input id="g-id" inputmode="numeric" placeholder="Your student ID number"></label>
@@ -163,11 +168,26 @@ window.RCG = (function () {
   /* ---------- scoring ---------- */
   function maxOf(q) {
     if (q.pts) return q.pts;
+    if (q.t === "hot") return q.a.length > 1 ? 2 : 1;
+    if (q.t === "write") return 2;
     return q.t === "multi" ? 2 : q.t === "ebsr" ? 2 : q.t === "inline" ? q.blanks.length : q.t === "grid" ? q.rows.length : q.t === "order" ? 2 : 1;
   }
   const same = (a, b) => a.length === b.length && [...a].sort().join() === [...b].sort().join();
   const symDiff = (a, b) => a.filter(x => !b.includes(x)).length + b.filter(x => !a.includes(x)).length;
-  function numVal(s) { const m = String(s ?? "").replace(/,/g, "").match(/-?\d*\.?\d+(e-?\d+)?/i); return m ? parseFloat(m[0]) : NaN; }
+  function numVal(s) { const t = String(s ?? "").replace(/,/g, "").replace(/−/g, "-"); const fr = t.match(/(-?)\s*(\d+)\s+(\d+)\s*\/\s*(\d+)|(-?\d+)\s*\/\s*(\d+)/);
+    if (fr) { if (fr[2]) return (fr[1] ? -1 : 1) * (+fr[2] + fr[3] / fr[4]); return fr[5] / fr[6]; }
+    const m = t.match(/-?\d*\.?\d+(e-?\d+)?/i); return m ? parseFloat(m[0]) : NaN; }
+  const wcount = t => (String(t || "").trim().match(/[A-Za-z0-9'’-]+/g) || []).length;
+  /* brief write: rubric checklist → 0, 1, or 2 points */
+  function writeEval(q, text) {
+    const w = wcount(text), res = [];
+    if (q.min) res.push({ label: `At least ${q.min} words (you wrote ${w})`, ok: w >= q.min });
+    (q.checks || []).forEach(c => { const re = new RegExp(c.re.source, c.re.flags.includes("g") ? c.re.flags : c.re.flags + "g");
+      const hits = new Set((String(text || "").match(re) || []).map(x => x.toLowerCase().trim())); res.push({ label: c.label, ok: c.not ? hits.size === 0 : hits.size >= (c.min || 1) }); });
+    const max = maxOf(q), passed = res.filter(r => r.ok).length;
+    const score = w < 5 ? 0 : passed === res.length ? max : passed >= Math.ceil(res.length / 2) ? Math.max(0, max - 1) : 0;
+    return { score, res, w };
+  }
   function scoreOf(q, a) {
     const max = maxOf(q);
     if (a == null) return 0;
@@ -178,6 +198,8 @@ window.RCG = (function () {
       case "inline": return q.blanks.reduce((t, bl, i) => t + (a[i] === bl.a ? 1 : 0), 0);
       case "grid": return q.rows.reduce((t, r, i) => t + (a[i] === r[1] ? 1 : 0), 0);
       case "num": { const v = numVal(a), tol = q.tol ?? Math.max(Math.abs(q.a) * 0.01, 0.01); return Math.abs(v - q.a) <= tol + 1e-9 ? max : 0; }
+      case "hot": { const d = symDiff(a, q.a); return d === 0 ? max : (max >= 2 && d === 1 ? max - 1 : 0); }
+      case "write": return writeEval(q, a).score;
       case "order": { if (!a.moved) return 0; const right = a.v.filter((x, i) => x === i).length; return right === a.v.length ? max : right >= Math.ceil(a.v.length / 2) ? Math.floor(max / 2) : 0; }
     }
     return 0;
@@ -192,6 +214,8 @@ window.RCG = (function () {
       case "grid": return q.rows.every((_, i) => a[i] != null);
       case "num": return String(a).trim() !== "";
       case "order": return !!a.moved;
+      case "hot": return a.length > 0;
+      case "write": return wcount(a) > 0;
     }
     return false;
   }
@@ -205,6 +229,8 @@ window.RCG = (function () {
       case "grid": return a.map((x, i) => strip(q.cols[x])).join(", ");
       case "num": return String(a).trim();
       case "order": return a.v.map(x => x + 1).join("-");
+      case "hot": return [...a].sort((x, y) => x - y).map(j => `“${strip(q.text[j]).slice(0, 60)}”`).join(" + ");
+      case "write": return `“${String(a).replace(/\s+/g, " ").trim()}”`;
     }
     return "";
   }
@@ -275,6 +301,21 @@ window.RCG = (function () {
     /* ===== annotations ===== */
     let tool = "hl", color = "y", fs = LS.get("rcFont", 100);
     const lscroll = $("#lscroll"); lscroll.style.setProperty("--rcfs", fs + "%");
+    /* listening passages: the browser reads the text aloud */
+    lscroll.addEventListener("click", e => {
+      const b = e.target.closest("[data-sp]"); if (!b || b.tagName === "SELECT") return;
+      const box = b.closest(".listen"), st = box.querySelector(".lstat"), synth = window.speechSynthesis;
+      if (!synth) { st.textContent = "This browser can’t read aloud. Open the transcript below."; box.nextElementSibling.open = true; return; }
+      const act = b.dataset.sp;
+      if (act === "pause") { if (synth.speaking && !synth.paused) { synth.pause(); st.textContent = "Paused."; } else if (synth.paused) { synth.resume(); st.textContent = "Playing…"; } return; }
+      if (act === "play" && synth.paused) { synth.resume(); st.textContent = "Playing…"; return; }
+      synth.cancel();
+      const rate = +box.querySelector("select").value, parts = SAY[+box.dataset.say].match(/[^.!?]+[.!?]+["”’]?\s*/g) || [SAY[+box.dataset.say]];
+      const vs = synth.getVoices().filter(v => /^en(-|_)US/i.test(v.lang)); const voice = vs.find(v => /natural|google|samantha|aria|jenny/i.test(v.name)) || vs[0];
+      parts.forEach((t, i) => { const u = new SpeechSynthesisUtterance(t.trim()); u.rate = rate; if (voice) u.voice = voice; if (i === parts.length - 1) u.onend = () => { st.textContent = "Finished. Press ▶ Play to hear it again."; }; synth.speak(u); });
+      st.textContent = "Playing…";
+    });
+    window.addEventListener("beforeunload", () => window.speechSynthesis && speechSynthesis.cancel());
     const setTool = (t, c) => { tool = t; if (c) color = c; $$(".rc-tools [data-tool]").forEach(b => b.classList.toggle("on", b.dataset.tool === tool && (tool !== "hl" || b.dataset.c === color)));
       $("#hint").textContent = tool === "hl" ? "Select words to highlight them." : tool === "ul" ? "Select words to underline them." : tool === "note" ? "Select words, or click on a picture, table, or graph, to add a note." : "Click any highlight, underline, or note to erase it."; lscroll.dataset.tool = tool; };
     setTool("hl", "y");
@@ -380,7 +421,12 @@ window.RCG = (function () {
           return `<select class="ib ${cls}" data-b="${bi}" ${done ? "disabled" : ""} aria-label="Blank ${bi + 1}"><option value="">Choose…</option>${bl.opts.map((o, j) => `<option value="${j}" ${v === j ? "selected" : ""}>${strip(o)}</option>`).join("")}</select>${done && v !== bl.a ? `<span class="fix">✓ ${strip(bl.opts[bl.a])}</span>` : ""}`; })}</div>`; }
         if (q.t === "grid") h += `<div class="gridwrap"><table class="qgrid"><thead><tr><th></th>${q.cols.map(c => `<th>${c}</th>`).join("")}</tr></thead><tbody>${q.rows.map((r, ri) => `<tr><th scope="row">${r[0]}</th>${q.cols.map((c, ci) => { const on = a && a[ri] === ci; const cls = done ? (ci === r[1] ? "ok" : on ? "bad" : "") : "";
           return `<td class="${cls}"><label><input type="radio" name="g${k}r${ri}" data-r="${ri}" data-c="${ci}" ${on ? "checked" : ""} ${done ? "disabled" : ""} aria-label="${strip(r[0])}: ${strip(c)}"><span></span></label></td>`; }).join("")}</tr>`).join("")}</tbody></table></div>`;
-        if (q.t === "num") { const ok = done && scoreOf(q, a) === m; h += `<div class="numrow"><input class="numin ${done ? (ok ? "ok" : "bad") : ""}" id="numin" inputmode="decimal" placeholder="Type a number" value="${esc(a ?? "")}" ${done ? "disabled" : ""}>${q.unit ? `<span class="unit">${q.unit}</span>` : ""}${done && !ok ? `<span class="fix">✓ ${q.a}${q.unit ? " " + q.unit : ""}</span>` : ""}</div>`; }
+        if (q.t === "num") { const ok = done && scoreOf(q, a) === m; h += `<div class="numrow">${q.pre ? `<span class="unit">${q.pre}</span>` : ""}<input class="numin ${done ? (ok ? "ok" : "bad") : ""}" id="numin" inputmode="decimal" placeholder="Type a number" value="${esc(a ?? "")}" aria-label="Your answer" ${done ? "disabled" : ""}>${q.unit ? `<span class="unit">${q.unit}</span>` : ""}${done && !ok ? `<span class="fix">✓ ${q.a}${q.unit ? " " + q.unit : ""}</span>` : ""}</div>`; }
+        if (q.t === "hot") { const need = q.need || (q.a.length > 1 ? q.a.length : 1); h += `<div class="sel-note">Click to select <b>${need}</b> ${need > 1 ? "parts" : "part"}. Click again to unselect.</div><div class="hot">${q.text.map((t, j) => {
+            const on = Array.isArray(a) && a.includes(j); let c = "hs"; if (on) c += " sel"; if (done) { if (q.a.includes(j)) c += " right"; else if (on) c += " wrong"; }
+            return `<button class="${c}" data-hj="${j}" ${done ? "disabled" : ""} aria-pressed="${on}">${t}</button>`; }).join(" ")}</div>`; }
+        if (q.t === "write") { h += `<textarea class="wrin" id="wrin" rows="8" ${done ? "readonly" : ""} placeholder="Type your answer here.">${esc(a || "")}</textarea><div class="wc" id="wc">${wcount(a)} words${q.min ? ` · aim for at least ${q.min}` : ""}</div>`;
+          if (done) { const ev = writeEval(q, a); h += `<div class="rubric"><b>Rubric checklist</b><ul>${ev.res.map(r => `<li class="${r.ok ? "ok" : "bad"}">${r.ok ? "✓" : "✗"} ${r.label}</li>`).join("")}</ul>${q.rubric ? `<p class="mu">${q.rubric}</p>` : ""}${q.model ? `<details open><summary>Sample 2-point answer</summary><p>${q.model}</p></details>` : ""}<p class="mu">This score is automatic. Your teacher may read your answer and adjust it.</p></div>`; } }
         if (q.t === "order") { h += `<ol class="olist">${a.v.map((si, pos) => `<li class="${done ? (si === pos ? "ok" : "bad") : ""}"><span>${q.items[si]}</span>${done ? "" : `<span class="mv"><button data-p="${pos}" data-d="-1" ${pos === 0 ? "disabled" : ""} aria-label="Move up">↑</button><button data-p="${pos}" data-d="1" ${pos === a.v.length - 1 ? "disabled" : ""} aria-label="Move down">↓</button></span>`}</li>`).join("")}</ol>`;
           if (done) h += `<div class="fix block">Correct order: ${q.items.map((x, i) => `${i + 1}) ${strip(x)}`).join("  ")}</div>`; }
       }
@@ -398,6 +444,9 @@ window.RCG = (function () {
       $$("select.ib", qbox).forEach(s => s.onchange = () => { const arr = Array.isArray(S.ans[k]) ? [...S.ans[k]] : []; arr[+s.dataset.b] = s.value === "" ? null : +s.value; S.ans[k] = arr; save(); drawNav(); });
       $$(".qgrid input", qbox).forEach(r => r.onchange = () => { const arr = Array.isArray(S.ans[k]) ? [...S.ans[k]] : []; arr[+r.dataset.r] = +r.dataset.c; S.ans[k] = arr; save(); drawNav(); });
       const ni = $("#numin", qbox); if (ni) ni.oninput = () => { S.ans[k] = ni.value; save(); drawNav(); };
+      const wi = $("#wrin", qbox); if (wi) wi.oninput = () => { S.ans[k] = wi.value; $("#wc", qbox).textContent = `${wcount(wi.value)} words${q.min ? ` · aim for at least ${q.min}` : ""}`; save(); drawNav(); };
+      $$(".hs", qbox).forEach(b => b.onclick = () => { if (S.done) return; const j = +b.dataset.hj, need = q.need || (q.a.length > 1 ? q.a.length : 1); let cur = Array.isArray(S.ans[k]) ? [...S.ans[k]] : [];
+        const i = cur.indexOf(j); if (i >= 0) cur.splice(i, 1); else { if (cur.length >= need) cur.shift(); cur.push(j); } S.ans[k] = cur; save(); drawNav(); drawQ(); });
       $$(".mv button", qbox).forEach(b => b.onclick = () => { const o = S.ans[k].v, p = +b.dataset.p, t = p + +b.dataset.d; [o[p], o[t]] = [o[t], o[p]]; S.ans[k].moved = true; save(); drawNav(); drawQ(); });
       $$(".refbtn", qbox).forEach(b => b.onclick = () => { const i = +b.dataset.ref - 1; const tb = $$(".rc-stabs button")[i]; if (tb) tb.click(); $$(".rc-mtabs button")[0].click(); });
       /* footer */
@@ -445,7 +494,7 @@ window.RCG = (function () {
       if (preview) { msg("👀 Teacher preview: nothing was sent."); return; }
       const d = S.done, an = annSummary();
       const responses = A.qs.map((q, k) => `Q${k + 1}: ${answerText(q, S.ans[k])}`).join(" | ") + ` || Annotations (not graded): ${an.hl} highlights, ${an.ul} underlines, ${an.notes.length} notes` + (an.notes.length ? ": " + an.notes.map(n => `“${n}”`).join(" ") : "") + ` || Time: ${d.mins} min · Attempt ${S.att}`;
-      const body = { action: "score", student: who, activity: `Reading Check · ${A.subject}: ${A.title}`, score: `${d.score}/${d.total}`, scoreNum: d.score, total: d.total, percent: Math.round(d.score / d.total * 100) + "%",
+      const body = { action: "score", student: who, activity: `${A.kind} · ${A.subject}: ${A.title}`, score: `${d.score}/${d.total}`, scoreNum: d.score, total: d.total, percent: Math.round(d.score / d.total * 100) + "%",
         qlabels: A.qs.map((q, k) => `Q${k + 1} ${TYPE[q.t]}`), qpoints: d.pts, qmax: A.qs.map(maxOf), responses: responses.slice(0, 2500) };
       msg("Sending your score to " + esc(who.teacher) + "…");
       try {
@@ -491,6 +540,12 @@ window.RCG = (function () {
       if (b.vocab) return `<div class="vocab"><b class="rc-noann">Key words</b><dl>${b.vocab.map(v => `<div><dt>${v[0]}</dt><dd>${v[1]}</dd></div>`).join("")}</dl></div>`;
       if (b.box) return `<div class="callout">${b.box}</div>`;
       if (b.src) return `<p class="srcline">${b.src}</p>`;
+      if (b.listen) { const i = SAY.push(b.listen.map(strip).join(" ")) - 1;
+        return `<div class="listen rc-noann" data-say="${i}"><div class="lhead">🎧 <b>${b.title || "Listen to the passage"}</b></div>
+          <div class="lbtns"><button type="button" class="pill-btn dark" data-sp="play">▶ Play</button><button type="button" class="pill-btn" data-sp="pause">⏸ Pause</button><button type="button" class="pill-btn" data-sp="stop">⏮ Start over</button>
+          <label class="lrate">Speed <select data-sp="rate"><option value="0.8">Slower</option><option value="0.95" selected>Normal</option><option value="1.1">Faster</option></select></label></div>
+          <p class="lstat" aria-live="polite">Use headphones. You may listen more than once.</p></div>
+          <details class="transcript"><summary>Show the transcript (try listening first)</summary>${b.listen.map(t => `<p>${t}</p>`).join("")}</details>`; }
       if (b.html) return b.html;
       return "";
     }).join("");

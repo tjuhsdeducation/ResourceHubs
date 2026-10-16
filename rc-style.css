@@ -250,3 +250,30 @@ select.ib.ok,.numin.ok{border-color:var(--ok)}select.ib.bad,.numin.bad{border-co
   .who{width:100%}
 }
 @media print{header.top,.rc-toolbar,.rc-qnav,.rc-qfoot,.rc-mtabs,.rc-divider{display:none!important}.rc-split{display:block;height:auto}.rc-scroll,.rc-qbox{overflow:visible}}
+
+/* CAASPP item types: hot text, brief write, listening */
+.hot{line-height:1.9;border:2px solid var(--line);border-radius:14px;padding:12px 14px;font-family:Georgia,serif}
+.hs{display:inline;border:0;background:none;padding:2px 3px;margin:0;border-radius:6px;cursor:pointer;font:inherit;text-align:left;line-height:1.9;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hs:hover:not(:disabled){background:color-mix(in srgb,var(--lc) 12%,var(--surface))}
+.hs.sel{background:color-mix(in srgb,var(--lc) 26%,var(--surface));outline:2px solid var(--lc)}
+.hs.right{background:color-mix(in srgb,var(--ok) 24%,var(--surface))}
+.hs.wrong{background:color-mix(in srgb,var(--bad) 22%,var(--surface));text-decoration:line-through}
+.hs:disabled{cursor:default;color:inherit}
+.wrin{width:100%;font:600 1rem/1.55 var(--body);padding:12px;border-radius:14px;border:2px solid var(--lc);background:var(--surface);color:var(--fg);resize:vertical}
+.wc{font-size:.85rem;font-weight:800;color:var(--muted);margin-top:4px}
+.rubric{margin-top:12px;border:2px dashed var(--line);border-radius:14px;padding:10px 14px}
+.rubric ul{margin:6px 0;padding-left:4px;list-style:none}.rubric li{margin:3px 0;font-weight:700}
+.rubric li.ok{color:var(--ok)}.rubric li.bad{color:var(--bad)}
+.rubric details{margin:8px 0;background:var(--soft);border-radius:10px;padding:8px 12px}.rubric summary{font-weight:800;cursor:pointer}
+.listen{border:3px solid color-mix(in srgb,var(--lc) 45%,var(--line));background:color-mix(in srgb,var(--lc) 10%,var(--surface));border-radius:18px;padding:14px 16px;margin:0 0 14px}
+.lhead{font-size:1.1em;margin-bottom:8px}
+.lbtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.lrate{font-weight:800;font-size:.88rem;display:flex;gap:6px;align-items:center}
+.lrate select{font:700 .9rem var(--body);padding:5px 8px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--fg)}
+.lstat{margin:8px 0 0;font-weight:700;color:var(--muted);font-size:.9rem}
+.transcript{border:1px solid var(--line);border-radius:14px;padding:8px 14px;margin-bottom:14px}
+.transcript summary{font-weight:800;cursor:pointer;color:var(--muted)}
+.transcript p{margin:.6em 0}
+.draft{font-family:Georgia,serif}.draft .sn{font:800 .72em var(--body);color:var(--muted);background:var(--soft);border-radius:5px;padding:0 .35em;margin-right:3px;user-select:none}
+.eqn{font:700 1.15rem Georgia,serif;background:var(--soft);border-radius:12px;padding:10px 14px;margin:8px 0;display:inline-block}
+.stem blockquote{margin:8px 0;padding:8px 12px;border-left:4px solid var(--lc);background:var(--soft);border-radius:0 10px 10px 0;font-family:Georgia,serif;font-weight:600}
