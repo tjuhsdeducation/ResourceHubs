@@ -567,6 +567,7 @@ const SECTIONS = [
      {k:'note', title:'Add your site AVID coordinator', desc:'Name, room, and best way to reach them', add:true}
    ]},
    {name:'Binder & Organization', items:[
+     {k:'page', feature:true, label:'Lesson · Graded', subj:'AVID', url:'binder-lesson.html', title:'Everything Has a Place: Organize Your Binder', desc:'Sort papers behind the right tabs, set up a class section, build a weekly clean-out routine, and do a binder buddy check', meta:'7 stations · 50 min'},
      {k:'print', url:'https://drive.google.com/file/d/1dkMBwJ2tEH0zmXMPr75IK5wLbSzRmXxp/view?usp=sharing', aud:'both', title:'Binder Check Checklist', desc:'What every binder check looks for'},
      {k:'print', url:'https://docs.google.com/document/d/12QbCwmoGMfEwauX-42mVwua-uh8YWbitlc1d6PoZFq0/edit?usp=sharing', aud:'both', title:'Binder Check Form 26-27', desc:'This year’s binder check form'},
      {k:'print', url:'https://docs.google.com/document/d/1zZM-9gFaBwRObCs2ZDG5I5RZS44BySU2lJwYni7bFJs/edit?usp=sharing', aud:'both', title:'Binder Dividers', desc:'Print on cardstock'},
@@ -582,7 +583,17 @@ const SECTIONS = [
      {k:'print', url:'https://docs.google.com/presentation/d/1l3ZXqdFHakKsEvQmifktkdaEei0KH3K5JkUCko0fz-s/edit?usp=sharing', aud:'teacher', title:'Focused Notes Slides (Langlie’s)', desc:'Ms. Langlie’s version of the deck'},
      {k:'handout', id:'fnt', title:'Focused Note-Taking: The 5 Phases', desc:'Teacher/student reference for taking, processing, connecting, summarizing, applying'},
      {k:'handout', id:'notes', title:'Focused Notes Template', desc:'Two-column notes page with essential question and summary box'},
+     {k:'page', feature:true, label:'Lesson · Graded', subj:'AVID', url:'notes-studio.html', title:'Note-Taking Studio: Take It, Process It, Revisit It', desc:'The forgetting curve, 7 note formats with examples, annotate and process notes, a college-style lecture, quiz corrections, and a spaced study plan', meta:'7 stations · 55–60 min'},
      {k:'lesson', id:'cornell', title:'Focused Notes Practice', desc:'Students take digital two-column notes and check off each phase'}
+   ]},
+   {name:'Grade It Like a Teacher', sub:'Students score “submitted” focused notes, TRFs, and binder checks from grades 9–12 with the real rubric, then compare with the teacher’s scores and comments.', items:[
+     {k:'page', label:'Graded', subj:'AVID', url:'grade-notes.html', title:'Grade It: Focused Notes', desc:'Four sets of notes: 9th Biology, 10th Geometry, 11th U.S. History, 12th English', meta:'30–40 min'},
+     {k:'page', label:'Graded', subj:'AVID', url:'grade-trf.html', title:'Grade It: TRFs', desc:'Three TRFs: 9th Algebra 1, 10th Chemistry, 12th Economics; then fix a vague point of confusion', meta:'25–35 min'},
+     {k:'page', label:'Graded', subj:'AVID', url:'grade-binder.html', title:'Grade It: Binder Checks', desc:'Three binder checks (grades 9, 11, 12), then score your own binder', meta:'25–30 min'}
+   ]},
+   {name:'Digital Organization & Google Skills', sub:'Your Google Drive is your digital binder. Practice Docs, Slides, and importing on realistic practice screens, then do it for real.', items:[
+     {k:'page', feature:true, label:'Lesson · Graded', subj:'AVID', url:'drive-lesson.html', title:'Digital Binder: Organize Your Google Drive', desc:'Folders by class, color-coding, a file-naming rule, a Drive cleanup simulator, and organizing your real Drive', meta:'7 stations · 45–50 min'},
+     {k:'page', feature:true, label:'Lesson · Graded', subj:'AVID', url:'digital-literacy.html', title:'Digital Literacy: Google Docs, Slides & Importing', desc:'Find-the-button practice in Docs, Slides, and Drive; importing files, images, and videos; responsible use; then make and share a real Doc and Slides deck', meta:'6 stations · 55–60 min'}
    ]},
    {name:'Tutorials & Inquiry', items:[
      {k:'print', url:'https://drive.google.com/file/d/1Aqe4LiQPpwCPDEQluxlXIugKv1ldUpDn/view?usp=sharing', aud:'both', title:'TRF Form 26-27', desc:'This year’s Tutorial Request Form'},
@@ -681,6 +692,7 @@ const SECTIONS = [
      {k:'link', url:'https://www.cos.edu/en-us/admissions/financial-aid/sequoias-promise-program', title:'Sequoias Promise (College of the Sequoias)', desc:'Enrollment fees covered for eligible full-time students in their first two years'}
    ]},
    {name:'Scholarships', items:[
+     {k:'page', feature:true, label:'Workshop · Graded', subj:'AVID', url:'scholarships.html', title:'Scholarship Finder & Essay Coach', desc:'Local Tulare County, California, and national scholarships you can save to your tracker, plus a step-by-step essay coach', meta:'2 class periods'},
      {k:'lesson', id:'scholtrack', feature:true, title:'Scholarship Tracker', desc:'Track scholarships, amounts, deadlines, and status in one place', meta:'Ongoing'},
      {k:'link', url:'https://bigfuture.collegeboard.org', title:'BigFuture', desc:'College search, majors, and scholarships'}
    ]},
@@ -1974,7 +1986,7 @@ function wireDaily(){
 /* =====================================================================
    FOLDER BUTTONS for every space (AVID, Interactive Lessons, etc.)
    ===================================================================== */
-const FOLDER_ICON=[[/reading check/i,'📖'],[/career wicor/i,'🧭'],[/caaspp/i,'📝'],[/uc & csu/i,'🎓'],[/a–g/i,'📋'],[/essay/i,'✍️'],[/fafsa/i,'💰'],[/scholarship/i,'🏆'],[/tour/i,'🏛️'],[/timeline/i,'📅'],[/tulare county programs/i,'📍'],[/ideas/i,'💡'],[/log my hours/i,'⏱️'],[/community/i,'🤝'],[/start here/i,'🚀'],[/binder/i,'🗂️'],[/focused|note-taking/i,'📝'],[/tutorial/i,'❓'],[/confusion/i,'🤔'],[/graphic/i,'🧩'],[/goal|contract/i,'🎯'],[/^tutors$/i,'🧑‍🏫'],[/field trip/i,'🚌'],[/site team|certif/i,'🏅'],[/collaboration/i,'💬'],[/science/i,'🔬'],[/math/i,'📐'],[/english/i,'📚'],[/history/i,'🏛️'],[/coming soon/i,'🚧']];
+const FOLDER_ICON=[[/reading check/i,'📖'],[/grade it/i,'🧑‍🏫'],[/digital/i,'💻'],[/career wicor/i,'🧭'],[/caaspp/i,'📝'],[/uc & csu/i,'🎓'],[/a–g/i,'📋'],[/essay/i,'✍️'],[/fafsa/i,'💰'],[/scholarship/i,'🏆'],[/tour/i,'🏛️'],[/timeline/i,'📅'],[/tulare county programs/i,'📍'],[/ideas/i,'💡'],[/log my hours/i,'⏱️'],[/community/i,'🤝'],[/start here/i,'🚀'],[/binder/i,'🗂️'],[/focused|note-taking/i,'📝'],[/tutorial/i,'❓'],[/confusion/i,'🤔'],[/graphic/i,'🧩'],[/goal|contract/i,'🎯'],[/^tutors$/i,'🧑‍🏫'],[/field trip/i,'🚌'],[/site team|certif/i,'🏅'],[/collaboration/i,'💬'],[/science/i,'🔬'],[/math/i,'📐'],[/english/i,'📚'],[/history/i,'🏛️'],[/coming soon/i,'🚧']];
 const FOLDER_COLORS=['#5b5fe0','#14a37f','#ee7d1c','#1f95e0','#e0408a','#8a54e0','#f25c54','#0e9f6e','#e08a00','#2b7de9','#c2185b','#00897b'];
 const ficon=n=>(FOLDER_ICON.find(([r])=>r.test(n))||[0,'📁'])[1];
 const spaceChips=s=>`<nav class="switch" aria-label="Spaces"><a class="back" href="#home">← All spaces</a>${SECTIONS.map(x=>`<a class="swchip ${x===s?'on':''}" style="--c:${x.color}" href="#${x.id}">${x.name}</a>`).join('')}</nav>`;

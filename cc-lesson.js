@@ -20,12 +20,13 @@
   const LS = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
   const WC = { W: ["Writing", "#2b7de9"], I: ["Inquiry", "#8a54e0"], C: ["Collaboration", "#f05a28"], O: ["Organization", "#0e9f6e"], R: ["Reading", "#e08a00"] };
   document.documentElement.style.setProperty("--lc", L.color || "#e8368f");
-  document.title = `${L.title} | College & Career`;
+  const BR = Object.assign({ name: "College & Career", home: "college", mark: "🎓" }, L.brand || {});
+  document.title = `${L.title} | ${BR.name}`;
 
   /* ---------------- page shell ---------------- */
   document.body.innerHTML = `
-  <header class="top"><div class="bar"><a class="brand" href="index.html#college"><span class="mark">🎓</span><span>College &amp; Career</span></a>
-    <span class="crumb"><span>›</span><a href="index.html#college">College &amp; Career</a><span>›</span><b>${esc(L.short || L.title)}</b></span><span class="spacer"></span>
+  <header class="top"><div class="bar"><a class="brand" href="index.html#${BR.home}"><span class="mark">${BR.mark}</span><span>${esc(BR.name)}</span></a>
+    <span class="crumb"><span>›</span><a href="index.html#${BR.home}">${esc(BR.name)}</a><span>›</span><b>${esc(L.short || L.title)}</b></span><span class="spacer"></span>
     <span class="who" id="who"></span></div></header>
   <main class="wrap" id="main"></main>
   <div class="proj" id="proj" hidden></div>`;
@@ -34,7 +35,7 @@
   /* ---------------- sign in ---------------- */
   const tOpts = (school, sel) => `<option value="">${school ? "Choose…" : "Choose a school first"}</option>` + (SCHOOLS[school] || []).map(t => `<option ${sel === t ? "selected" : ""}>${esc(t)}</option>`).join("");
   function banner() {
-    return `<section class="banner"><span class="kick">${L.emoji || "🎓"} College &amp; Career · WICOR Lesson · ${esc(L.time || "")}</span><h1>${esc(L.title)}</h1><p>${L.intro || ""}</p>
+    return `<section class="banner"><span class="kick">${L.emoji || "🎓"} ${esc(BR.name)} · ${esc(L.kind || "WICOR Lesson")} · ${esc(L.time || "")}</span><h1>${esc(L.title)}</h1><p>${L.intro || ""}</p>
       <div class="eqlt"><div class="eq"><span class="lbl">Essential Question</span><p>${esc(L.eq)}</p></div>
       <div class="lt"><span class="lbl">Learning Targets</span><ul>${Object.entries(L.targets || {}).map(([k, v]) => `<li><b style="color:${WC[k][1]}">${k}</b> ${esc(v)}</li>`).join("")}</ul></div></div></section>`;
   }
@@ -100,9 +101,9 @@
     html(b, st) {
       const pl = st.p || {}, done = !!st.checked, sel = st.sel;
       const tile = (t, i) => { const ok = done ? (pl[i] === t[1] ? " right" : " wrong") : ""; return `<button class="tile${sel === i ? " on" : ""}${ok}" data-t="${i}" ${done ? "disabled" : ""}>${t[0]}</button>`; };
-      return `<div class="sort">${b.title ? `<h4>${b.title}</h4>` : ""}<p class="hint">Tap a card, then tap the box where it belongs. Tap a placed card to move it again.</p>
+      return `<div class="sort ${b.look || ""}">${b.title ? `<h4>${b.title}</h4>` : ""}<p class="hint">Tap a card, then tap the box where it belongs. Tap a placed card to move it again.</p>
         <div class="pool">${b.tiles.map((t, i) => pl[i] == null ? tile(t, i) : "").join("") || '<span class="mu">All cards placed!</span>'}</div>
-        <div class="zones" style="--n:${b.zones.length}">${b.zones.map((z, zi) => `<div class="zone" data-z="${zi}"><div class="zh">${z}</div>${b.tiles.map((t, i) => pl[i] === zi ? tile(t, i) : "").join("")}</div>`).join("")}</div>
+        <div class="zones" style="--n:${b.zones.length}">${b.zones.map((z, zi) => `<div class="zone" data-z="${zi}" style="${b.colors ? `--zc:${b.colors[zi]}` : ""}"><div class="zh">${z}</div>${b.tiles.map((t, i) => pl[i] === zi ? tile(t, i) : "").join("")}</div>`).join("")}</div>
         ${done ? `<p class="score">Correct: <b>${b.tiles.filter((t, i) => pl[i] === t[1]).length} / ${b.tiles.length}</b>${b.why ? ` · ${b.why}` : ""}</p>` : `<div class="btnrow"><button class="btn" data-check>Check my sort</button><span class="msg"></span></div>`}</div>`;
     },
     wire(root, b, st, save, redraw) {
@@ -311,6 +312,8 @@
     text: (b, st) => { const v = st.v || {}; return `Partner ${v.name || ""}: ${v.got || ""} → ${v.change || ""}`; }
   };
 
+  /* extra block types (cc-blocks2.js) plug in here */
+  if (window.CC_EXT) window.CC_EXT(BT, { $, $$, esc, strip, words, money, LS, evalWrite, project: b => project(b) });
   function barChart(o) {
     const w = 560, h = o.h || 300, P = { l: 170, r: 70, t: 30, b: 20 }, n = o.rows.length, bh = (h - P.t - P.b) / n, mx = o.max;
     return `<svg class="cchart" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(o.alt || o.title)}"><text x="${w / 2}" y="18" text-anchor="middle" class="ct">${esc(o.title)}</text>
@@ -374,7 +377,7 @@
         const rows = L.stations.map((s, k) => ({ s, sc: stScore(k) }));
         const answers = L.stations.map((s, k) => `${k + 1}. ${s.title}: ` + s.blocks.map((b, j) => BT[b.t].text ? BT[b.t].text(b, S.b[k + "-" + j] || {}, ctx) : "").filter(Boolean).join(" ; ")).join(" || ").slice(0, 4500);
         const body = { action: "lesson", student: who, lesson: `${L.subject}: ${L.title}`, stationsDone: rows.filter(r => r.sc.max && r.sc.pts === r.sc.max).length, answers,
-          qlabels: rows.map((r, k) => `${k + 1} · ${r.s.title} (${r.s.letters.join("")})`), qpoints: rows.map(r => r.sc.pts), qmax: rows.map(r => r.sc.max) };
+          qlabels: rows.map((r, k) => `${k + 1} · ${r.s.title} (${r.s.letters.join("")})`).filter((_, k) => rows[k].sc.max), qpoints: rows.filter(r => r.sc.max).map(r => r.sc.pts), qmax: rows.filter(r => r.sc.max).map(r => r.sc.max) };
         m.textContent = "Turning in…";
         try {
           if (!HUB_URL) { const d = LS.get("hubDemo", {}); (d.lessons = d.lessons || []).push(Object.assign({}, body, { time: new Date().toISOString() })); LS.set("hubDemo", d); m.textContent = "👀 Preview mode: saved on this computer only (the website isn’t connected to the Google Sheet yet)."; return; }
