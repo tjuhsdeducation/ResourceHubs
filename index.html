@@ -697,8 +697,24 @@ const SECTIONS = [
      {k:'lesson', id:'svclog', feature:true, title:'Log My Service Hours', desc:'Submit your hours, supervisor, and a reflection straight to your teacher', meta:'5 min'}
    ]}
   ]},
- {id:'lessons', name:'Interactive Lessons', color:'var(--c-lessons)', blurb:'Full WICOR lessons with virtual labs and live graphs. Share the link with students, or project a station for the whole class.',
+ {id:'lessons', name:'Interactive Lessons', color:'var(--c-lessons)', blurb:'10-minute Reading Checks (Illuminate-style) and full WICOR lessons with virtual labs and live graphs. Share the link with students, or project a station for the whole class.',
   topics:[
+   {name:'Reading Checks (Illuminate Practice)', sub:'About 10 minutes each. The reading (text, cartoon, table, or graph) is on the left with highlight, underline, and note tools (not graded). Questions are on the right and are auto-graded and sent to the teacher’s sheet.', items:[
+     {k:'page', label:'Reading Check · Graded', subj:'History', url:'reading-check.html?id=us-cartoons', title:'US History: Reading Political Cartoons', desc:'Decode symbols, labels, exaggeration, and irony in two cartoons about trusts and empire', meta:'7 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'History', url:'reading-check.html?id=us-ww1', title:'US History: WWI Causes & Effects', desc:'M.A.I.N., a defense-spending graph, and an alliance cartoon', meta:'7 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'History', url:'reading-check.html?id=us-ww2', title:'US History: WWII Causes & Effects', desc:'Unemployment graph, Nazi vote table, and a 1930s timeline', meta:'7 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'History', url:'reading-check.html?id=wh-econ', title:'World History: Economic Systems', desc:'Capitalism, socialism, communism, and mixed economies: text, table, and spectrum', meta:'6 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'History', url:'reading-check.html?id=wh-smith-marx', title:'World History: Adam Smith vs. Karl Marx', desc:'Short primary sources plus British factory reform laws', meta:'6 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Science', url:'reading-check.html?id=chem-stoich', title:'Chemistry: Stoichiometry', desc:'Mole ratios, molar mass, and the mole map with real equations', meta:'7 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Science', url:'reading-check.html?id=chem-periodic', title:'Chemistry: Periodic Trends', desc:'Ionization energy graph and atomic radius tables explained with Coulomb’s law', meta:'7 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Science', url:'reading-check.html?id=bio-symbiosis', title:'Biology: Symbiosis', desc:'Mutualism, commensalism, and parasitism, plus a pollination experiment', meta:'6 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Science', url:'reading-check.html?id=bio-protein', title:'Biology: Protein Synthesis & Mutations', desc:'Transcribe, translate with a codon chart, and classify four mutations', meta:'7 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Science', url:'reading-check.html?id=bio-transport', title:'Biology: Cellular Transport', desc:'Passive vs. active transport and a potato osmosis lab graph', meta:'6 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Science', url:'reading-check.html?id=bio-homeostasis', title:'Biology: Homeostasis', desc:'A blood-sugar feedback loop and a glucose graph', meta:'7 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Math', url:'reading-check.html?id=alg1-linear', title:'Algebra 1: Reading Linear Graphs', desc:'Slope, intercepts, and intersections in savings and distance-time graphs', meta:'8 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Math', url:'reading-check.html?id=alg1-scatter', title:'Algebra 1: Scatter Plots & Trend Lines', desc:'Correlation, predictions, and outliers from study-time data', meta:'6 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Math', url:'reading-check.html?id=alg2-quad-exp', title:'Algebra 2: Quadratic & Exponential Graphs', desc:'Vertex, zeros, domain and range, and half-life decay', meta:'8 questions · 10 min'}
+   ]},
    {name:'Science WICOR Lessons', items:[
      {k:'page', subj:'Science', url:'lesson-photosynthesis.html', title:'Biology: Photosynthesis, The Factory in Every Leaf', desc:'Annotate an article, write a CER, run a virtual plant lab and graph it, debate, and build a graphic organizer', meta:'5 stations · 45 min'},
      {k:'page', subj:'Science', url:'lesson-reaction-rates.html', title:'Chemistry: Collision Course, Why Cold Keeps Food Fresh', desc:'Collision theory article, fizzing-tablet temperature lab with live graph, debate, and a reaction-rate organizer', meta:'5 stations · 45 min'},
@@ -1922,7 +1938,7 @@ function wireDaily(){
 /* =====================================================================
    FOLDER BUTTONS for every space (AVID, Interactive Lessons, etc.)
    ===================================================================== */
-const FOLDER_ICON=[[/uc & csu/i,'🎓'],[/a–g/i,'📋'],[/essay/i,'✍️'],[/fafsa/i,'💰'],[/scholarship/i,'🏆'],[/tour/i,'🏛️'],[/timeline/i,'📅'],[/tulare county programs/i,'📍'],[/ideas/i,'💡'],[/log my hours/i,'⏱️'],[/community/i,'🤝'],[/start here/i,'🚀'],[/binder/i,'🗂️'],[/focused|note-taking/i,'📝'],[/tutorial/i,'❓'],[/confusion/i,'🤔'],[/graphic/i,'🧩'],[/goal|contract/i,'🎯'],[/^tutors$/i,'🧑‍🏫'],[/field trip/i,'🚌'],[/site team|certif/i,'🏅'],[/collaboration/i,'💬'],[/science/i,'🔬'],[/math/i,'📐'],[/english/i,'📚'],[/history/i,'🏛️'],[/coming soon/i,'🚧']];
+const FOLDER_ICON=[[/reading check/i,'📖'],[/uc & csu/i,'🎓'],[/a–g/i,'📋'],[/essay/i,'✍️'],[/fafsa/i,'💰'],[/scholarship/i,'🏆'],[/tour/i,'🏛️'],[/timeline/i,'📅'],[/tulare county programs/i,'📍'],[/ideas/i,'💡'],[/log my hours/i,'⏱️'],[/community/i,'🤝'],[/start here/i,'🚀'],[/binder/i,'🗂️'],[/focused|note-taking/i,'📝'],[/tutorial/i,'❓'],[/confusion/i,'🤔'],[/graphic/i,'🧩'],[/goal|contract/i,'🎯'],[/^tutors$/i,'🧑‍🏫'],[/field trip/i,'🚌'],[/site team|certif/i,'🏅'],[/collaboration/i,'💬'],[/science/i,'🔬'],[/math/i,'📐'],[/english/i,'📚'],[/history/i,'🏛️'],[/coming soon/i,'🚧']];
 const FOLDER_COLORS=['#5b5fe0','#14a37f','#ee7d1c','#1f95e0','#e0408a','#8a54e0','#f25c54','#0e9f6e','#e08a00','#2b7de9','#c2185b','#00897b'];
 const ficon=n=>(FOLDER_ICON.find(([r])=>r.test(n))||[0,'📁'])[1];
 const spaceChips=s=>`<nav class="switch" aria-label="Spaces"><a class="back" href="#home">← All spaces</a>${SECTIONS.map(x=>`<a class="swchip ${x===s?'on':''}" style="--c:${x.color}" href="#${x.id}">${x.name}</a>`).join('')}</nav>`;
