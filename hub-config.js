@@ -10,7 +10,7 @@
       exactly the same as the SCHOOLS list at the top of Code.gs.
    ===================================================================== */
 window.HUB_CONFIG = {
-  scriptUrl: "",
+  scriptUrl: "https://script.google.com/macros/s/AKfycbxzjk_HrkmrFeqT7vnhGkojb4IsEHoTJI0DI0kwaV70J5vg_QQCDlTpL4aqk8GWXnIFjQ/exec",
   schools: {
     "Tulare Union":   ["Amy Mueller", "Stephanie Edwards", "Melany Miller", "Frank Mello", "Shana Duke"],
     "Tulare Western": ["Jillian Salazar", "Prescilla Carranza", "Chaundra Olsen", "Stevie Bray", "Kristen Rickard", "Eduardo Lopez", "Jordan Perry"],
