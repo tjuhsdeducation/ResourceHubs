@@ -40,6 +40,10 @@ header.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px;paddin
 .spacer{flex:1}
 .search{display:flex;align-items:center;gap:8px;background:var(--hover);border-radius:24px;padding:6px 14px;min-width:0;max-width:300px;flex:1}
 .search input{border:0;background:transparent;outline:none;width:100%;font:inherit;color:var(--fg)}
+.gjump{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}.gjump a{text-decoration:none;color:var(--fg);background:var(--surface);border:2px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:800;font-size:.92rem}
+.gjump a:hover{border-color:var(--c)}.gjump small{color:var(--muted);font-weight:700;margin-left:2px}
+.flagic{width:1.35em;height:.72em;vertical-align:-.04em;border-radius:2px;box-shadow:0 0 0 1px #0002;margin-right:2px}
+.gsec{margin-top:22px;scroll-margin-top:84px}.gh{font-size:1.35rem;font-weight:600;display:flex;align-items:baseline;gap:10px;margin:0 0 10px;padding-bottom:6px;border-bottom:3px solid color-mix(in srgb,var(--c) 45%,var(--line))}.gh small{font-size:.85rem;color:var(--muted);font-weight:700}
 .modebtn{border:2px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:6px 14px;font:800 .85rem var(--body,inherit);cursor:pointer;white-space:nowrap}
 .modebtn small{font-weight:700;color:var(--muted)}.modebtn.on{background:color-mix(in srgb,var(--c-college,#e8368f) 14%,var(--surface));border-color:color-mix(in srgb,var(--c-college,#e8368f) 45%,var(--line))}
 @media (max-width:640px){.modebtn small{display:none}}
@@ -523,6 +527,7 @@ a.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
   </div>
 </header>
 <main id="app"></main>
+<footer style="text-align:center;color:var(--muted);font-size:.8rem;padding:18px 0 28px">Site version: Oct 16 · update 7 (subject groups + US flag)</footer>
 <script src="hub-config.js?v=3"></script>
 <div id="modal" class="modal" hidden></div>
 
@@ -721,32 +726,32 @@ const SECTIONS = [
  {id:'lessons', name:'Interactive Lessons', color:'var(--c-lessons)', blurb:'10-Minute Reading Checks, CAASPP practice sets, and full WICOR lessons with virtual labs and live graphs. Share the link with students, or project a station for the whole class.',
   topics:[
    {name:'10-Minute Reading Checks', sub:'About 10 minutes each. The reading (text, cartoon, table, or graph) is on the left with highlight, underline, and note tools (not graded). Questions are on the right and are auto-graded and sent to the teacher’s sheet.', items:[
-     {k:'page', label:'Reading Check · Graded', subj:'History', url:'reading-check.html?id=us-cartoons', title:'US History: Reading Political Cartoons', desc:'Decode symbols, labels, exaggeration, and irony in two cartoons about trusts and empire', meta:'7 questions · 10 min'},
-     {k:'page', label:'Reading Check · Graded', subj:'History', url:'reading-check.html?id=us-ww1', title:'US History: WWI Causes & Effects', desc:'M.A.I.N., a defense-spending graph, and an alliance cartoon', meta:'7 questions · 10 min'},
-     {k:'page', label:'Reading Check · Graded', subj:'History', url:'reading-check.html?id=us-ww2', title:'US History: WWII Causes & Effects', desc:'Unemployment graph, Nazi vote table, and a 1930s timeline', meta:'7 questions · 10 min'},
-     {k:'page', label:'Reading Check · Graded', subj:'History', url:'reading-check.html?id=wh-econ', title:'World History: Economic Systems', desc:'Capitalism, socialism, communism, and mixed economies: text, table, and spectrum', meta:'6 questions · 10 min'},
-     {k:'page', label:'Reading Check · Graded', subj:'History', url:'reading-check.html?id=wh-smith-marx', title:'World History: Adam Smith vs. Karl Marx', desc:'Short primary sources plus British factory reform laws', meta:'6 questions · 10 min'},
-     {k:'page', label:'Reading Check · Graded', subj:'Science', url:'reading-check.html?id=chem-stoich', title:'Chemistry: Stoichiometry', desc:'Mole ratios, molar mass, and the mole map with real equations', meta:'7 questions · 10 min'},
-     {k:'page', label:'Reading Check · Graded', subj:'Science', url:'reading-check.html?id=chem-periodic', title:'Chemistry: Periodic Trends', desc:'Ionization energy graph and atomic radius tables explained with Coulomb’s law', meta:'7 questions · 10 min'},
-     {k:'page', label:'Reading Check · Graded', subj:'Science', url:'reading-check.html?id=bio-symbiosis', title:'Biology: Symbiosis', desc:'Mutualism, commensalism, and parasitism, plus a pollination experiment', meta:'6 questions · 10 min'},
-     {k:'page', label:'Reading Check · Graded', subj:'Science', url:'reading-check.html?id=bio-protein', title:'Biology: Protein Synthesis & Mutations', desc:'Transcribe, translate with a codon chart, and classify four mutations', meta:'7 questions · 10 min'},
-     {k:'page', label:'Reading Check · Graded', subj:'Science', url:'reading-check.html?id=bio-transport', title:'Biology: Cellular Transport', desc:'Passive vs. active transport and a potato osmosis lab graph', meta:'6 questions · 10 min'},
-     {k:'page', label:'Reading Check · Graded', subj:'Science', url:'reading-check.html?id=bio-homeostasis', title:'Biology: Homeostasis', desc:'A blood-sugar feedback loop and a glucose graph', meta:'7 questions · 10 min'},
-     {k:'page', label:'Reading Check · Graded', subj:'Math', url:'reading-check.html?id=alg1-linear', title:'Algebra 1: Reading Linear Graphs', desc:'Slope, intercepts, and intersections in savings and distance-time graphs', meta:'8 questions · 10 min'},
-     {k:'page', label:'Reading Check · Graded', subj:'Math', url:'reading-check.html?id=alg1-scatter', title:'Algebra 1: Scatter Plots & Trend Lines', desc:'Correlation, predictions, and outliers from study-time data', meta:'6 questions · 10 min'},
-     {k:'page', label:'Reading Check · Graded', subj:'Math', url:'reading-check.html?id=alg2-quad-exp', title:'Algebra 2: Quadratic & Exponential Graphs', desc:'Vertex, zeros, domain and range, and half-life decay', meta:'8 questions · 10 min'}
+     {k:'page', label:'Reading Check · Graded', subj:'History', group:'🇺🇸 US History', url:'reading-check.html?id=us-cartoons', title:'US History: Reading Political Cartoons', desc:'Decode symbols, labels, exaggeration, and irony in two cartoons about trusts and empire', meta:'7 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'History', group:'🇺🇸 US History', url:'reading-check.html?id=us-ww1', title:'US History: WWI Causes & Effects', desc:'M.A.I.N., a defense-spending graph, and an alliance cartoon', meta:'7 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'History', group:'🇺🇸 US History', url:'reading-check.html?id=us-ww2', title:'US History: WWII Causes & Effects', desc:'Unemployment graph, Nazi vote table, and a 1930s timeline', meta:'7 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'History', group:'🌍 World History', url:'reading-check.html?id=wh-econ', title:'World History: Economic Systems', desc:'Capitalism, socialism, communism, and mixed economies: text, table, and spectrum', meta:'6 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'History', group:'🌍 World History', url:'reading-check.html?id=wh-smith-marx', title:'World History: Adam Smith vs. Karl Marx', desc:'Short primary sources plus British factory reform laws', meta:'6 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Science', group:'⚗️ Chemistry', url:'reading-check.html?id=chem-stoich', title:'Chemistry: Stoichiometry', desc:'Mole ratios, molar mass, and the mole map with real equations', meta:'7 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Science', group:'⚗️ Chemistry', url:'reading-check.html?id=chem-periodic', title:'Chemistry: Periodic Trends', desc:'Ionization energy graph and atomic radius tables explained with Coulomb’s law', meta:'7 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Science', group:'🧬 Biology', url:'reading-check.html?id=bio-symbiosis', title:'Biology: Symbiosis', desc:'Mutualism, commensalism, and parasitism, plus a pollination experiment', meta:'6 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Science', group:'🧬 Biology', url:'reading-check.html?id=bio-protein', title:'Biology: Protein Synthesis & Mutations', desc:'Transcribe, translate with a codon chart, and classify four mutations', meta:'7 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Science', group:'🧬 Biology', url:'reading-check.html?id=bio-transport', title:'Biology: Cellular Transport', desc:'Passive vs. active transport and a potato osmosis lab graph', meta:'6 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Science', group:'🧬 Biology', url:'reading-check.html?id=bio-homeostasis', title:'Biology: Homeostasis', desc:'A blood-sugar feedback loop and a glucose graph', meta:'7 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Math', group:'📈 Algebra 1', url:'reading-check.html?id=alg1-linear', title:'Algebra 1: Reading Linear Graphs', desc:'Slope, intercepts, and intersections in savings and distance-time graphs', meta:'8 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Math', group:'📈 Algebra 1', url:'reading-check.html?id=alg1-scatter', title:'Algebra 1: Scatter Plots & Trend Lines', desc:'Correlation, predictions, and outliers from study-time data', meta:'6 questions · 10 min'},
+     {k:'page', label:'Reading Check · Graded', subj:'Math', group:'📉 Algebra 2', url:'reading-check.html?id=alg2-quad-exp', title:'Algebra 2: Quadratic & Exponential Graphs', desc:'Vertex, zeros, domain and range, and half-life decay', meta:'8 questions · 10 min'}
    ]},
    {name:'CAASPP Practice (Grades 9–12)', sub:'Smarter Balanced–style ELA and math sets plus CAST science. Same split screen as the Reading Checks, with hot text, two-part questions, listening, and brief writes scored by a rubric checklist. Every set is graded and sent to the teacher’s sheet with feedback for students.', items:[
-     {k:'page', label:'CAASPP · Graded', subj:'English', url:'caaspp.html?id=ela-literary', title:'ELA: Claim 1 Reading: Literary Text', desc:'A short story with theme, word meaning, character, hot text, a two-part question, and a brief write.', meta:'8 questions · 20 min'},
-     {k:'page', label:'CAASPP · Graded', subj:'English', url:'caaspp.html?id=ela-informational', title:'ELA: Claim 1 Reading: Informational Text', desc:'An article about teen sleep and school start times with central idea, structure, a chart, hot text, and a brief write.', meta:'8 questions · 20 min'},
-     {k:'page', label:'CAASPP · Graded', subj:'English', url:'caaspp.html?id=ela-revise', title:'ELA: Claim 2 Writing: Revise and Edit', desc:'Improve a student’s argument draft: transitions, irrelevant sentences, grammar, punctuation, formal style, and a conclusion.', meta:'8 questions · 15 min'},
-     {k:'page', label:'CAASPP · Graded', subj:'English', url:'caaspp.html?id=ela-research', title:'ELA: Claim 4 Research: Evaluating Sources', desc:'Judge credibility, match information to sources, separate fact from opinion, and explain which source is most useful.', meta:'7 questions · 15 min'},
-     {k:'page', label:'CAASPP · Graded', subj:'English', url:'caaspp.html?id=ela-listening', title:'ELA: Claim 3 Listening: A Talk About Urban Heat', desc:'Listen to a short presentation (read aloud by the computer), then answer questions about main idea, details, and reasoning.', meta:'7 questions · 15 min'},
-     {k:'page', label:'CAASPP · Graded', subj:'Math', url:'caaspp.html?id=math-concepts', title:'Math: Claim 1: Concepts and Procedures', desc:'Equations, exponents, equivalent expressions, functions, systems, quadratics, and exponential growth.', meta:'11 questions · 25 min'},
-     {k:'page', label:'CAASPP · Graded', subj:'Math', url:'caaspp.html?id=math-modeling', title:'Math: Claims 2 & 4: Problem Solving and Modeling', desc:'Plan a T-shirt fundraiser: compare vendors, find break-even points, and write an inequality.', meta:'8 questions · 25 min'},
-     {k:'page', label:'CAASPP · Graded', subj:'Math', url:'caaspp.html?id=math-reasoning', title:'Math: Claim 3: Communicating Reasoning', desc:'Find errors in student work, test claims with counterexamples, and explain your reasoning in writing.', meta:'7 questions · 20 min'},
-     {k:'page', label:'CAASPP · Graded', subj:'Science', url:'caaspp.html?id=cast-coral', title:'Science (CAST): CAST: Why Are Coral Reefs Turning White?', desc:'A phenomenon-based science set: read about coral bleaching, analyze temperature and bleaching data, and write a CER.', meta:'9 questions · 20 min'},
-     {k:'link', url:'https://www.caaspp-elpac.org/', title:'Official CAASPP Practice & Training Tests', desc:'The state’s own practice and training tests (opens the CAASPP & ELPAC site)'}
+     {k:'page', label:'CAASPP · Graded', subj:'English', group:'📚 English Language Arts', url:'caaspp.html?id=ela-literary', title:'ELA: Claim 1 Reading: Literary Text', desc:'A short story with theme, word meaning, character, hot text, a two-part question, and a brief write.', meta:'8 questions · 20 min'},
+     {k:'page', label:'CAASPP · Graded', subj:'English', group:'📚 English Language Arts', url:'caaspp.html?id=ela-informational', title:'ELA: Claim 1 Reading: Informational Text', desc:'An article about teen sleep and school start times with central idea, structure, a chart, hot text, and a brief write.', meta:'8 questions · 20 min'},
+     {k:'page', label:'CAASPP · Graded', subj:'English', group:'📚 English Language Arts', url:'caaspp.html?id=ela-revise', title:'ELA: Claim 2 Writing: Revise and Edit', desc:'Improve a student’s argument draft: transitions, irrelevant sentences, grammar, punctuation, formal style, and a conclusion.', meta:'8 questions · 15 min'},
+     {k:'page', label:'CAASPP · Graded', subj:'English', group:'📚 English Language Arts', url:'caaspp.html?id=ela-research', title:'ELA: Claim 4 Research: Evaluating Sources', desc:'Judge credibility, match information to sources, separate fact from opinion, and explain which source is most useful.', meta:'7 questions · 15 min'},
+     {k:'page', label:'CAASPP · Graded', subj:'English', group:'📚 English Language Arts', url:'caaspp.html?id=ela-listening', title:'ELA: Claim 3 Listening: A Talk About Urban Heat', desc:'Listen to a short presentation (read aloud by the computer), then answer questions about main idea, details, and reasoning.', meta:'7 questions · 15 min'},
+     {k:'page', label:'CAASPP · Graded', subj:'Math', group:'➗ Math', url:'caaspp.html?id=math-concepts', title:'Math: Claim 1: Concepts and Procedures', desc:'Equations, exponents, equivalent expressions, functions, systems, quadratics, and exponential growth.', meta:'11 questions · 25 min'},
+     {k:'page', label:'CAASPP · Graded', subj:'Math', group:'➗ Math', url:'caaspp.html?id=math-modeling', title:'Math: Claims 2 & 4: Problem Solving and Modeling', desc:'Plan a T-shirt fundraiser: compare vendors, find break-even points, and write an inequality.', meta:'8 questions · 25 min'},
+     {k:'page', label:'CAASPP · Graded', subj:'Math', group:'➗ Math', url:'caaspp.html?id=math-reasoning', title:'Math: Claim 3: Communicating Reasoning', desc:'Find errors in student work, test claims with counterexamples, and explain your reasoning in writing.', meta:'7 questions · 20 min'},
+     {k:'page', label:'CAASPP · Graded', subj:'Science', group:'🔬 Science (CAST)', url:'caaspp.html?id=cast-coral', title:'Science (CAST): CAST: Why Are Coral Reefs Turning White?', desc:'A phenomenon-based science set: read about coral bleaching, analyze temperature and bleaching data, and write a CER.', meta:'9 questions · 20 min'},
+     {k:'link', group:'🏛️ Official State Practice', url:'https://www.caaspp-elpac.org/', title:'Official CAASPP Practice & Training Tests', desc:'The state’s own practice and training tests (opens the CAASPP & ELPAC site)'}
    ]},
    {name:'Science WICOR Lessons', items:[
      {k:'page', subj:'Science', url:'lesson-photosynthesis.html', title:'Biology: Photosynthesis, The Factory in Every Leaf', desc:'Annotate an article, write a CER, run a virtual plant lab and graph it, debate, and build a graphic organizer', meta:'5 stations · 45 min'},
@@ -2003,6 +2008,16 @@ function spaceHome(s){
   if(s.id==='avid') wireDaily();
 }
 function folderChips(s,key){return `<nav class="switch" aria-label="Folders"><a class="back" href="#${s.id}">← ${s.name}</a>${s.id==='avid'?`<a class="swchip ${key==='discuss'?'on':''}" style="--c:#e0408a" href="#avid/discuss">💬 Discussion Board</a>`:''}${s.topics.map((t,i)=>`<a class="swchip ${key===i?'on':''}" style="--c:${FOLDER_COLORS[i%FOLDER_COLORS.length]}" href="#${s.id}/${i}">${ficon(t.name)} ${esc(t.name)}</a>`).join('')}</nav>`}
+/* Folders whose items have a "group" are shown in labeled sections (for example by subject) */
+function folderBody(t){
+  if(!t.items.some(it=>it.group)) return `<div class="cards folder-cards">${t.items.map(it=>itemHTML(it)).join('')}</div>`;
+  const groups=[]; t.items.forEach(it=>{const g=it.group||'More'; let x=groups.find(y=>y[0]===g); if(!x){x=[g,[]];groups.push(x)} x[1].push(it)});
+  const gid=g=>'g-'+g.replace(/[^a-z0-9]+/gi,'-').toLowerCase();
+  const gl=g=>g.replace('🇺🇸',`<svg class="flagic" viewBox="0 0 19 10" aria-hidden="true"><rect width="19" height="10" fill="#b22234"/><g fill="#fff">${[1,3,5,7,9].map(y=>`<rect y="${y*10/13}" width="19" height="${10/13}"/>`).join('')}</g><rect width="7.6" height="${70/13}" fill="#3c3b6e"/><g fill="#fff">${[[1.2,1],[3.8,1],[6.4,1],[2.5,2.3],[5.1,2.3],[1.2,3.6],[3.8,3.6],[6.4,3.6],[2.5,4.9],[5.1,4.9]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r=".38"/>`).join('')}</g></svg>`); /* draw the US flag (Windows shows the flag emoji as letters) */
+  return `<nav class="gjump" aria-label="Jump to a subject">${groups.map(([g,its])=>`<a href="#" data-g="${gid(g)}">${gl(g)} <small>${its.length}</small></a>`).join('')}</nav>
+   ${groups.map(([g,its])=>`<section class="gsec" id="${gid(g)}"><h2 class="gh">${gl(g)} <small>${its.length} ${its.length===1?'activity':'activities'}</small></h2><div class="cards folder-cards">${its.map(it=>itemHTML(it.group&&/^[^:]{2,22}:\s/.test(it.title)?{...it,title:it.title.replace(/^[^:]{2,22}:\s*/,'')}:it)).join('')}</div></section>`).join('')}`;
+}
+document.addEventListener('click',e=>{const a=e.target.closest('.gjump a');if(!a)return;e.preventDefault();const el=document.getElementById(a.dataset.g);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})});
 function spaceFolder(s,i){
   const t=s.topics[i]; if(!t){spaceHome(s);return}
   const col=FOLDER_COLORS[i%FOLDER_COLORS.length], hasAud=t.items.some(it=>it.k==='print');
@@ -2010,7 +2025,7 @@ function spaceFolder(s,i){
   app.innerHTML=`<div class="wrap" style="--c:${col}">${folderChips(s,i)}
    <div class="banner"><h1>${ficon(t.name)} ${esc(t.name)}</h1><p>${esc(t.sub||s.blurb)}</p><div class="stats"><span>${t.items.filter(x=>x.k!=='note').length} resources</span></div><span class="art">${ART[s.id]}</span></div>
    ${hasAud?`<div class="filters" role="group" aria-label="Filter by audience" style="margin-top:16px"><span class="flbl">For</span><button class="fchip au on" data-au="all">Everyone</button><button class="fchip au" data-au="student">🎒 Students</button><button class="fchip au" data-au="teacher">👩‍🏫 Teachers</button></div>`:''}
-   <div class="cards folder-cards">${t.items.map(it=>itemHTML(it)).join('')}</div><div style="height:48px"></div></div>`;
+   ${folderBody(t)}<div style="height:48px"></div></div>`;
   app.querySelectorAll('.fchip.au').forEach(b=>b.onclick=()=>{app.querySelectorAll('.fchip.au').forEach(x=>x.classList.toggle('on',x===b));const f=b.dataset.au;
     app.querySelectorAll('.folder-cards .rcard').forEach(c=>{c.hidden=!(f==='all'||!c.dataset.aud||c.dataset.aud===f||c.dataset.aud==='both')})});
 }
