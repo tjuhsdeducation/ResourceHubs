@@ -277,3 +277,87 @@ select.ib.ok,.numin.ok{border-color:var(--ok)}select.ib.bad,.numin.bad{border-co
 .draft{font-family:Georgia,serif}.draft .sn{font:800 .72em var(--body);color:var(--muted);background:var(--soft);border-radius:5px;padding:0 .35em;margin-right:3px;user-select:none}
 .eqn{font:700 1.15rem Georgia,serif;background:var(--soft);border-radius:12px;padding:10px 14px;margin:8px 0;display:inline-block}
 .stem blockquote{margin:8px 0;padding:8px 12px;border-left:4px solid var(--lc);background:var(--soft);border-radius:0 10px 10px 0;font-family:Georgia,serif;font-weight:600}
+
+/* ===== 🔬 simulations (rc-sims.js) ===== */
+.rc-sim{margin:1.2em 0;font-size:15px;line-height:1.45}
+.sim{border:2px solid color-mix(in srgb,var(--lc) 45%,var(--line));border-radius:18px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.simhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 14px;background:color-mix(in srgb,var(--lc) 14%,var(--surface));font-family:var(--display);font-size:1.05rem}
+.simhead .simic{font-size:1.2rem}.simtag{margin-left:auto;font:800 .72rem var(--body);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);background:var(--surface);border-radius:999px;padding:3px 10px}
+.simbody{padding:12px 14px}.simtip{margin:0;padding:8px 14px 12px;color:var(--muted);font-size:.9rem}
+.simrow{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:14px;align-items:start}
+@media (max-width:1100px){.simrow{grid-template-columns:1fr}}
+.simcol{display:grid;gap:10px}.simrow2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.simsvg{width:100%;height:auto;display:block;background:var(--soft);border-radius:12px}.simsvg.sq{max-width:420px;margin:auto}
+.simcv{width:100%;height:auto;display:block;background:var(--soft);border-radius:12px;touch-action:none}
+.simctl{display:grid;gap:10px;align-content:start}
+.simgrp{border:2px solid var(--line);border-radius:14px;padding:8px 12px;display:grid;gap:6px}
+.simgrp.k1{border-color:color-mix(in srgb,var(--c1) 50%,var(--line))}.simgrp.k2{border-color:color-mix(in srgb,var(--c2) 50%,var(--line))}
+.simsl{display:grid;gap:2px;font-weight:700;font-size:.9rem}.simsl input{width:100%;accent-color:var(--lc)}.simsl b{color:var(--lc)}
+.simeq{font:700 1.05rem var(--display)}
+.simout{display:grid;gap:4px;font-size:.92rem}.simout .mu,.sim .mu{color:var(--muted)}.sim .small{font-size:.8rem}
+.simbig{font-weight:700;padding:8px 10px;border-radius:10px;background:color-mix(in srgb,var(--lc) 10%,var(--surface))}
+.simbig.win{background:color-mix(in srgb,var(--ok) 16%,var(--surface))}
+.badge{display:inline-block;background:var(--ok);color:#fff;border-radius:999px;padding:1px 9px;font-size:.78rem}
+.simbtns{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.simbtns .pill-btn.on{background:var(--fg);color:var(--surface)}
+.simstep{display:inline-flex;align-items:center;gap:8px;font-weight:700}.simstep>span{min-width:84px}.simstep b{min-width:24px;text-align:center;font-size:1.1rem}
+.simstep .pill-btn{padding:2px 12px}
+.simsel{display:flex;gap:8px;align-items:center;font-weight:700}.simsel select{font:inherit;padding:4px 8px;border-radius:8px;border:2px solid var(--line);background:var(--surface);color:var(--fg)}
+.simtbl{border-collapse:collapse;font-size:.88rem;width:100%}.simtbl th,.simtbl td{border:1px solid var(--line);padding:3px 8px;text-align:left}.simtbl th{background:var(--soft)}
+/* svg parts */
+.sim .sg{stroke:var(--line);stroke-width:1}.sim .sg.ax{stroke:var(--muted);stroke-width:1.6}
+.sim .st{font:12px var(--body);fill:var(--muted)}.sim .st.b{fill:var(--fg);font-weight:700}.sim .st.big{font-size:14px;font-weight:800;fill:var(--fg)}.sim .st.mu{fill:var(--muted)}
+.sim .sl1{stroke:var(--c1);stroke-width:3;fill:none}.sim .sl2{stroke:var(--c2);stroke-width:3;fill:none}
+.sim .pt1{fill:var(--c1)}.sim .pt2{fill:var(--c2)}.sim .hit{fill:var(--c3);stroke:var(--surface);stroke-width:2}
+.sim .walker{fill:var(--c4);stroke:var(--surface);stroke-width:2}.sim .trail{fill:var(--c3);opacity:.6}
+.sim .rise,.sim .run{stroke:var(--c3);stroke-width:2.5;stroke-dasharray:5 4}.sim .axs{stroke:var(--muted);stroke-dasharray:6 5}
+.sim .sqa{fill:color-mix(in srgb,var(--c1) 12%,transparent);stroke:var(--c1);stroke-width:2}.sim .sqb{fill:color-mix(in srgb,var(--c2) 12%,transparent);stroke:var(--c2);stroke-width:2}.sim .sqc{fill:color-mix(in srgb,var(--c4) 12%,transparent);stroke:var(--c4);stroke-width:2}
+.sim .wat{fill:color-mix(in srgb,var(--c1) 55%,transparent)}.sim .tri{fill:var(--surface);stroke:var(--fg);stroke-width:2.5}.sim .ra{fill:none;stroke:var(--fg);stroke-width:1.5}
+.sim .pre{fill:color-mix(in srgb,var(--muted) 15%,transparent);stroke:var(--muted);stroke-width:2;stroke-dasharray:6 4}.sim .img{fill:color-mix(in srgb,var(--c2) 25%,transparent);stroke:var(--c2);stroke-width:2.5}
+.sim .orb{fill:none;stroke:var(--line);stroke-width:2}.sim .ele{fill:var(--c1)}.sim .pro{fill:var(--c2)}.sim .neu{fill:var(--muted)}
+.pcell{display:inline-grid;justify-items:center;border:3px solid var(--fg);border-radius:10px;padding:6px 18px;min-width:110px;background:var(--surface)}.pcell b{font:700 2rem var(--display)}.pcell small{color:var(--muted)}.pcell.empty{opacity:.6}
+.simstep.k1 span{color:var(--c1)}.simstep.k2 span{color:var(--c2)}.simstep.k3 span{color:var(--muted)}
+.gauge{font-size:1rem}.gauge b{font:700 1.8rem var(--display);color:var(--lc)}
+/* balance */
+.eqrow{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px;font:700 1.15rem var(--display)}.eqrow .arrow,.eqrow .plus{align-self:center;font-size:1.4rem}
+.mol{display:grid;justify-items:center;gap:4px;border:2px solid var(--line);border-radius:12px;padding:6px 8px;min-width:96px}.fml{font-size:1.2rem}
+.dots{display:flex;flex-wrap:wrap;gap:4px;max-width:150px;justify-content:center}.mdot{display:inline-flex;gap:1px;padding:2px;border-radius:8px;background:var(--soft);animation:simpop .3s}
+.mdot i,.key{display:inline-block;width:9px;height:9px;border-radius:50%}.bar{display:inline-block;height:9px;border-radius:5px;background:var(--lc);vertical-align:middle;transition:width .4s;max-width:70px}
+/* punnett */
+.punnett{border-collapse:separate;border-spacing:6px;margin:auto;font:700 1.4rem var(--display)}.punnett th{width:70px;height:40px}.punnett th.gam{color:var(--lc)}
+.punnett td{width:100px;height:84px;border-radius:14px;text-align:center;background:var(--soft);border:2px solid var(--line)}.punnett td small{display:block;font:600 .72rem var(--body);color:var(--muted)}
+.punnett td.dom{background:color-mix(in srgb,var(--c3) 22%,var(--surface))}.punnett td.rec{background:color-mix(in srgb,var(--c1) 18%,var(--surface))}.punnett td.mid{background:color-mix(in srgb,var(--c2) 18%,var(--surface))}
+.punnett td.pop{animation:simpop .5s both}
+.kids{display:flex;flex-wrap:wrap;gap:3px;margin-top:8px}.kid{width:12px;height:12px;border-radius:50%;animation:simpop .25s}.kid.dom{background:var(--c3)}.kid.rec{background:var(--c1)}.kid.mid{background:var(--c2)}
+.ktally{margin-top:6px;font-size:.9rem}.ktally .dom b{color:var(--c3)}.ktally .rec b{color:var(--c1)}.ktally .mid b{color:var(--c2)}
+@keyframes simpop{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+/* timeline */
+.sim .tl{stroke:var(--fg);stroke-width:3}.sim .tev{cursor:pointer}.sim .tev circle{fill:var(--surface);stroke:var(--muted);stroke-width:3;transition:r .3s}.sim .tev .stem{stroke:var(--line);stroke-width:2}
+.sim .tev.on circle{fill:var(--lc);stroke:var(--lc)}.sim .tev.cur circle{r:11}.sim .tev.k1.on circle{fill:var(--c1);stroke:var(--c1)}.sim .tev.k2.on circle{fill:var(--c2);stroke:var(--c2)}.sim .tev.k3.on circle{fill:var(--c3);stroke:var(--c3)}.sim .tev.k4.on circle{fill:var(--c4);stroke:var(--c4)}
+.sim .nowl{stroke:var(--c3);stroke-width:2;stroke-dasharray:4 4}.simsvg.wide{max-width:none}
+.tlkey{display:flex;flex-wrap:wrap;gap:12px;font-size:.85rem;font-weight:700}.tlkey i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:4px}
+.tlkey .k1 i{background:var(--c1)}.tlkey .k2 i{background:var(--c2)}.tlkey .k3 i{background:var(--c3)}.tlkey .k4 i{background:var(--c4)}
+.tcard{min-height:40px}.tc{border-left:5px solid var(--lc);background:var(--soft);border-radius:10px;padding:8px 12px;animation:simpop .35s}.tc p{margin:.3em 0}.tc .ty{display:block;font-weight:800;color:var(--lc);font-size:.85rem}
+.tc.k1{border-color:var(--c1)}.tc.k2{border-color:var(--c2)}.tc.k3{border-color:var(--c3)}.tc.k4{border-color:var(--c4)}
+/* data race */
+.dryear{font:700 2.2rem var(--display);color:var(--lc)}.drbars{display:grid;gap:8px}.drrow{display:grid;grid-template-columns:minmax(90px,30%) 1fr 70px;gap:8px;align-items:center;font-size:.9rem;font-weight:700}
+.drtrack{background:var(--soft);border-radius:8px;height:22px;overflow:hidden}.drbar{display:block;height:100%;border-radius:8px}.drbar.k1{background:var(--c1)}.drbar.k2{background:var(--c2)}.drbar.k3{background:var(--c3)}.drbar.k4{background:var(--c4)}
+.drslide{width:100%;accent-color:var(--lc)}
+/* branches */
+.sim .br{cursor:pointer}.sim .br rect{fill:var(--surface);stroke:var(--line);stroke-width:3;transition:.2s}.sim .br.on rect{stroke:var(--lc);fill:color-mix(in srgb,var(--lc) 14%,var(--surface))}
+.sim .chk{stroke:var(--lc);stroke-width:5;stroke-dasharray:10 7;animation:simdash 1s linear infinite}.sim .ahd{fill:var(--lc)}
+@keyframes simdash{to{stroke-dashoffset:-34}}
+.bquiz .pill-btn.ok{background:var(--ok);color:#fff}.bquiz .pill-btn.no{opacity:.5}
+/* plot mountain */
+.sim .mtn{fill:none;stroke:var(--fg);stroke-width:4;stroke-linejoin:round}.sim .mtnfill{fill:color-mix(in srgb,var(--lc) 10%,transparent)}
+.sim .stg{cursor:pointer}.sim .stg circle{fill:var(--surface);stroke:var(--lc);stroke-width:3}.sim .stg.on circle{fill:var(--lc)}.sim .stg:hover circle{fill:color-mix(in srgb,var(--lc) 30%,var(--surface))}
+.sim .hiker{fill:var(--c3);stroke:var(--surface);stroke-width:3}
+.pcards{display:flex;flex-wrap:wrap;gap:6px}.pcard{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:6px 10px;cursor:pointer;text-align:left;font-size:.88rem}
+.pcard.sel{border-color:var(--lc);box-shadow:0 0 0 3px color-mix(in srgb,var(--lc) 30%,transparent)}.pcard.done{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 10%,var(--surface));cursor:default}
+.shake{animation:simshake .4s}@keyframes simshake{25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
+/* classify */
+.ccard{min-height:70px}.cq{border:2px dashed var(--lc);border-radius:14px;padding:10px 14px;background:var(--soft)}.cq p{margin:.2em 0;font-weight:700}.cq.in{animation:simin .35s}
+@keyframes simin{from{transform:translateY(-12px);opacity:0}to{transform:none;opacity:1}}
+.cbins{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}.cbin{border:3px solid var(--line);border-radius:14px;background:var(--surface);padding:8px;cursor:pointer;display:grid;gap:2px;justify-items:center;text-align:center}
+.cbin small{color:var(--muted);font-size:.78rem}.cbin .cnt{font:700 1.2rem var(--display)}.cbin.k1{border-color:var(--c1)}.cbin.k2{border-color:var(--c2)}.cbin.k3{border-color:var(--c3)}.cbin.k4{border-color:var(--c4)}
+.cbin.flash{animation:simpop .4s;background:color-mix(in srgb,var(--ok) 15%,var(--surface))}
+.simsvg.trisvg{max-width:330px;margin:auto}.sim .tri3{fill:color-mix(in srgb,var(--lc) 10%,transparent);stroke:var(--lc);stroke-width:3}.sim .tdot{fill:var(--c3);stroke:var(--surface);stroke-width:3}

@@ -96,7 +96,9 @@ window.RCG = (function () {
   const hash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return String(h); };
   const LETTER = i => String.fromCharCode(65 + i);
   const isTeacher = () => { try { return localStorage.getItem("hubMode") === "teacher"; } catch (e) { return false; } };
-  const SUBJ = { "US History": ["#d0453a", "🇺🇸"], "World History": ["#e08a00", "🌍"], "Chemistry": ["#8a54e0", "⚗️"], "Biology": ["#1aa36f", "🧬"], "Algebra 1": ["#2b7de9", "📈"], "ELA": ["#e8368f", "📚"], "Math": ["#5b5fe0", "➗"], "Science (CAST)": ["#1aa36f", "🔬"], "Algebra 2": ["#5b5fe0", "📉"] };
+  const SUBJ = { "US History": ["#d0453a", "🇺🇸"], "World History": ["#e08a00", "🌍"], "Chemistry": ["#8a54e0", "⚗️"], "Biology": ["#1aa36f", "🧬"], "Algebra 1": ["#2b7de9", "📈"], "ELA": ["#e8368f", "📚"], "Math": ["#5b5fe0", "➗"], "Science (CAST)": ["#1aa36f", "🔬"], "Algebra 2": ["#5b5fe0", "📉"], "Geometry": ["#0e9aa7", "📐"], "English 1": ["#e8368f", "📚"], "English 2": ["#c2297a", "📖"] };
+  const subj = s => SUBJ[s] || [[/chem/i, "#8a54e0", "⚗️"], [/bio/i, "#1aa36f", "🧬"], [/us history|apush|u\.s\.|gov/i, "#d0453a", "🇺🇸"], [/world/i, "#e08a00", "🌍"], [/geometry/i, "#0e9aa7", "📐"], [/calc|stat|algebra|math|precalc/i, "#2b7de9", "📈"], [/lit|lang|english|ela/i, "#e8368f", "📚"], [/psych/i, "#7a5af8", "🧠"], [/physics/i, "#2b7de9", "🧲"], [/environ/i, "#1aa36f", "🌱"]].filter(r => r[0].test(s)).map(r => [r[1], r[2]])[0] || ["#5b5fe0", "📖"];
+  const SIMS = [];
   const TYPE = { mc: "Multiple choice", multi: "Multiple select", ebsr: "Two-part", inline: "Drop-down", grid: "Table match", num: "Short answer (number)", order: "Put in order", hot: "Hot text", write: "Brief write" };
   const SAY = [];
 
@@ -107,11 +109,11 @@ window.RCG = (function () {
     const A = id && RC[id];
     if (!A) return listAll();
     A.id = id;
-    const [color, emoji] = SUBJ[A.subject] || ["#5b5fe0", "📖"];
+    const [color, emoji] = A.color ? [A.color, A.emoji || "📖"] : subj(A.subject);
     document.documentElement.style.setProperty("--lc", color);
-    A.kind = A.kind || "Reading Check";
+    A.kind = A.kind || window.RC_KIND || "Reading Check";
     document.title = `${A.title} | ${A.kind}`;
-    const bt = $(".brand span:last-child"); if (bt && A.kind !== "Reading Check") { bt.textContent = A.kind; $(".brand .mark").textContent = "📝"; }
+    const bt = $(".brand span:last-child"); if (bt && A.kind !== "Reading Check") { bt.textContent = A.kind; $(".brand .mark").textContent = { "Study Guide": "📘", "Honors & AP": "🎓" }[A.kind] || "📝"; }
     $("#crumb").innerHTML = `<span>›</span><a href="index.html#lessons">Interactive Lessons</a><span>›</span><b>${esc(A.subject)}</b>`;
     gate(A, emoji);
   }
@@ -121,9 +123,10 @@ window.RCG = (function () {
     document.body.classList.remove("locked");
     const groups = {};
     Object.entries(RC).forEach(([id, a]) => (groups[a.subject] = groups[a.subject] || []).push([id, a]));
-    $("#app").innerHTML = `<div class="wrap"><div class="rc-hero">${/caaspp/.test(location.pathname) ? "<h1>📝 CAASPP Practice</h1><p>Smarter Balanced–style ELA and math sets plus CAST science, grades 9–12. Read on the left, answer on the right, with scores and feedback.</p>" : "<h1>📖 10-Minute Reading Checks</h1><p>About 10 minutes each. Read and annotate on the left, answer on the right, just like on a state test.</p>"}</div>
-      ${Object.entries(groups).map(([s, list]) => `<h2 class="rc-gh">${(SUBJ[s] || [])[1] || "📖"} ${esc(s)}</h2><div class="rc-cards">${list.map(([id, a]) =>
-        `<a class="rc-card" style="--lc:${(SUBJ[s] || ["#5b5fe0"])[0]}" href="${location.pathname.split("/").pop() || "reading-check.html"}?id=${encodeURIComponent(id)}"><b>${esc(a.title)}</b><span>${esc(a.blurb || a.eq || "")}</span><small>${a.qs.length} questions · ~${a.mins || 10} min</small></a>`).join("")}</div>`).join("")}</div>`;
+    const pg = location.pathname.split("/").pop() || "reading-check.html";
+    $("#app").innerHTML = `<div class="wrap"><div class="rc-hero">${/study-guide/.test(pg) ? "<h1>📘 Unit Study Guides</h1><p>Review a whole unit: read and annotate on the left, try the simulation, and answer the questions on the right.</p>" : /honors/.test(pg) ? "<h1>🎓 Honors & AP Check-Ins</h1><p>15-minute check-ins and AP-style practice quizzes with stimulus sources, scored with feedback.</p>" : /caaspp/.test(pg) ? "<h1>📝 CAASPP Practice</h1><p>Smarter Balanced–style ELA and math sets plus CAST science, grades 9–12. Read on the left, answer on the right, with scores and feedback.</p>" : "<h1>📖 10-Minute Reading Checks</h1><p>About 10 minutes each. Read and annotate on the left, answer on the right, just like on a state test.</p>"}</div>
+      ${Object.entries(groups).map(([s, list]) => `<h2 class="rc-gh">${subj(s)[1]} ${esc(s)}</h2><div class="rc-cards">${list.map(([id, a]) =>
+        `<a class="rc-card" style="--lc:${subj(s)[0]}" href="${pg}?id=${encodeURIComponent(id)}"><b>${esc(a.title)}</b><span>${esc(a.blurb || a.eq || "")}</span><small>${a.qs.length} questions · ~${a.mins || 10} min</small></a>`).join("")}</div>`).join("")}</div>`;
   }
 
   /* ---------- sign-in ---------- */
@@ -140,6 +143,7 @@ window.RCG = (function () {
         <li><b>Left side:</b> read and annotate. Highlight, underline, and add notes. Annotations are <i>not graded</i>, they are there to help you think.</li>
         <li><b>Right side:</b> answer the questions. These <b>are graded</b> and sent to your teacher when you submit.</li>
         ${A.qs.some(q => q.t === "write") ? `<li><b>✍️ Brief writes</b> are scored with a rubric checklist (0–2 points). You will see what you earned and a sample answer. Your teacher may adjust the score.</li>` : ""}
+        ${A.sources.some(x => x.blocks.some(b => b.sim)) ? `<li><b>🔬 Simulations:</b> play with the simulation in the reading. It is <i>not graded</i>, but it will help you answer the questions.</li>` : ""}
         ${A.sources.some(x => x.blocks.some(b => b.listen)) ? `<li><b>🎧 Listening:</b> press ▶ Play to hear the passage (use headphones). You may replay it.</li>` : ""}
         <li>Use <b>🚩 Flag</b> to mark questions to come back to, like on the real test.</li></ul></div>
       <form class="g-form" autocomplete="off" novalidate><h3>✋ Sign in to start</h3>
@@ -287,6 +291,10 @@ window.RCG = (function () {
     </div>
     <div class="notepop" id="notepop" hidden><textarea rows="3" placeholder="Type your note…"></textarea><div class="row"><button class="pill-btn dark" data-np="save">Save note</button><button class="pill-btn" data-np="del">Delete</button><button class="pill-btn" data-np="close">Close</button></div></div>`;
 
+    /* --- simulations (rebuilt every time; never saved with annotations) --- */
+    const initSims = () => $$(".rc-sim", $("#lscroll")).forEach(el => { const b = SIMS[+el.dataset.sim]; el.innerHTML = ""; try { if (window.RCSIM && RCSIM[b.sim]) RCSIM[b.sim](el, b); else el.innerHTML = `<p class="mu">Simulation “${esc(b.sim)}” is missing (upload rc-sims.js).</p>`; } catch (e) { el.innerHTML = `<p class="mu">Simulation error: ${esc(e.message)}</p>`; } });
+    initSims();
+
     /* --- mobile tabs --- */
     $$(".rc-mtabs button").forEach(b => b.onclick = () => { $$(".rc-mtabs button").forEach(x => x.classList.toggle("on", x === b)); $("#split").dataset.pane = b.dataset.pane; window.scrollTo({ top: 0 }); });
     $("#split").dataset.pane = "left";
@@ -321,7 +329,7 @@ window.RCG = (function () {
       $("#hint").textContent = tool === "hl" ? "Select words to highlight them." : tool === "ul" ? "Select words to underline them." : tool === "note" ? "Select words, or click on a picture, table, or graph, to add a note." : "Click any highlight, underline, or note to erase it."; lscroll.dataset.tool = tool; };
     setTool("hl", "y");
     $$(".rc-tools [data-tool]").forEach(b => b.onclick = () => setTool(b.dataset.tool, b.dataset.c));
-    const saveAnn = () => { $$(".rc-src").forEach(el => { const i = +el.dataset.i; S.ann[i] = { v: hash(srcHTML[i]), html: el.innerHTML }; }); save(); };
+    const saveAnn = () => { $$(".rc-src").forEach(el => { const i = +el.dataset.i, c = el.cloneNode(true); $$(".rc-sim", c).forEach(x => x.innerHTML = ""); S.ann[i] = { v: hash(srcHTML[i]), html: c.innerHTML }; }); save(); };
     let gid = Date.now() % 100000;
     function wrapRange(range, cls) {
       const g = "g" + (++gid), root = range.commonAncestorContainer.nodeType === 3 ? range.commonAncestorContainer.parentNode : range.commonAncestorContainer;
@@ -356,7 +364,7 @@ window.RCG = (function () {
     document.addEventListener("mouseup", annotateSel); document.addEventListener("touchend", () => setTimeout(annotateSel, 30));
     function annotateSel(ev) {
       if (S.lockAnn || !["hl", "ul", "note"].includes(tool)) return;
-      if (ev && ev.target && ev.target.closest && ev.target.closest(".notepop,.rc-tools")) return;
+      if (ev && ev.target && ev.target.closest && ev.target.closest(".notepop,.rc-tools,.rc-sim")) return;
       const sel = window.getSelection(); if (!sel || sel.isCollapsed || !sel.rangeCount) return;
       const range = sel.getRangeAt(0), src = (range.commonAncestorContainer.nodeType === 3 ? range.commonAncestorContainer.parentNode : range.commonAncestorContainer).closest(".rc-src");
       if (!src || !lscroll.contains(src)) return;
@@ -381,7 +389,7 @@ window.RCG = (function () {
     $$(".rc-tools [data-act]").forEach(b => b.onclick = () => {
       const a = b.dataset.act;
       if (a === "bigger" || a === "smaller") { fs = Math.max(85, Math.min(150, fs + (a === "bigger" ? 10 : -10))); lscroll.style.setProperty("--rcfs", fs + "%"); LS.set("rcFont", fs); }
-      if (a === "clear" && confirm("Erase all of your highlights, underlines, and notes?")) { $$(".rc-src").forEach(el => { el.innerHTML = srcHTML[+el.dataset.i]; }); saveAnn(); }
+      if (a === "clear" && confirm("Erase all of your highlights, underlines, and notes?")) { $$(".rc-src").forEach(el => { el.innerHTML = srcHTML[+el.dataset.i]; }); initSims(); saveAnn(); }
       if (a === "reader") { const r = $("#reader"); r.hidden = !r.hidden; b.classList.toggle("on", !r.hidden); }
     });
     lscroll.addEventListener("pointermove", e => { const r = $("#reader"); if (r.hidden) return; const box = lscroll.getBoundingClientRect(); r.style.top = (e.clientY - box.top + lscroll.scrollTop - 22) + "px"; });
@@ -532,6 +540,7 @@ window.RCG = (function () {
   function renderSource(s) {
     let pn = 0;
     return (s.title ? `<h2 class="stitle">${s.title}</h2>` : "") + s.blocks.map(b => {
+      if (b.sim) { const i = SIMS.push(b) - 1; return `<div class="rc-sim rc-noann" data-sim="${i}"></div>`; }
       if (b.h) return `<h3>${b.h}</h3>`;
       if (b.p) return `<p class="${b.n === false ? "" : s.numbered ? "num" : ""}">${s.numbered && b.n !== false ? `<span class="pn rc-noann" aria-hidden="true">${++pn}</span>` : ""}${b.p}</p>`;
       if (b.quote) return `<blockquote>${b.quote}${b.by ? `<cite class="rc-noann">— ${b.by}</cite>` : ""}</blockquote>`;
