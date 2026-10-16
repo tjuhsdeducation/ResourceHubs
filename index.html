@@ -646,6 +646,11 @@ const SECTIONS = [
   ]},
  {id:'college', name:'College & Career', color:'var(--c-college)', blurb:'Explore UC and CSU, track A–G, write your Personal Insight Questions, find scholarships, and get FAFSA and California Dream Act help.',
   topics:[
+   {name:'College & Career WICOR Lessons (45–60 min)', sub:'Three full, graded lessons with movement (Four Corners, line-ups, speed advising, interview carousel), a virtual campus tour and real UC Merced tour video, a schedule builder, a career explorer with real salaries, a budget, and a practice job application.', items:[
+     {k:'page', label:'WICOR Lesson · Graded', subj:'AVID', url:'cc-lesson-explore.html', title:'Lesson 1: Explore California’s Colleges', desc:'Four Corners, CCC vs. CSU vs. UC, a virtual campus tour, college success skills, and a college comparison chart', meta:'6 stations · 55–60 min'},
+     {k:'page', label:'WICOR Lesson · Graded', subj:'AVID', url:'cc-lesson-major.html', title:'Lesson 2: Major Moves', desc:'Interest survey, how majors and units work, pick a major, build a first-year schedule, balance a week, and speed advising', meta:'7 stations · 60 min'},
+     {k:'page', label:'WICOR Lesson · Graded', subj:'AVID', url:'cc-lesson-careers.html', title:'Lesson 3: Degree to Paycheck', desc:'Salary line-up, education-pays data, 45-career explorer, a monthly budget, a job posting, a practice application, and an interview carousel', meta:'7 stations · 55–60 min'}
+   ]},
    {name:'UC & CSU: Explore & Compare', items:[
      {k:'lesson', id:'campusexp', feature:true, title:'UC & CSU Campus Explorer', desc:'All 9 UCs, 22 CSUs, and local community colleges, with links to tours, plus a campus research card', meta:'15 min'},
      {k:'handout', id:'ucvscsu', title:'UC vs. CSU at a Glance', desc:'Requirements, GPA, essays, and deadlines side by side'},
@@ -1950,7 +1955,7 @@ function wireDaily(){
 /* =====================================================================
    FOLDER BUTTONS for every space (AVID, Interactive Lessons, etc.)
    ===================================================================== */
-const FOLDER_ICON=[[/reading check/i,'📖'],[/caaspp/i,'📝'],[/uc & csu/i,'🎓'],[/a–g/i,'📋'],[/essay/i,'✍️'],[/fafsa/i,'💰'],[/scholarship/i,'🏆'],[/tour/i,'🏛️'],[/timeline/i,'📅'],[/tulare county programs/i,'📍'],[/ideas/i,'💡'],[/log my hours/i,'⏱️'],[/community/i,'🤝'],[/start here/i,'🚀'],[/binder/i,'🗂️'],[/focused|note-taking/i,'📝'],[/tutorial/i,'❓'],[/confusion/i,'🤔'],[/graphic/i,'🧩'],[/goal|contract/i,'🎯'],[/^tutors$/i,'🧑‍🏫'],[/field trip/i,'🚌'],[/site team|certif/i,'🏅'],[/collaboration/i,'💬'],[/science/i,'🔬'],[/math/i,'📐'],[/english/i,'📚'],[/history/i,'🏛️'],[/coming soon/i,'🚧']];
+const FOLDER_ICON=[[/reading check/i,'📖'],[/career wicor/i,'🧭'],[/caaspp/i,'📝'],[/uc & csu/i,'🎓'],[/a–g/i,'📋'],[/essay/i,'✍️'],[/fafsa/i,'💰'],[/scholarship/i,'🏆'],[/tour/i,'🏛️'],[/timeline/i,'📅'],[/tulare county programs/i,'📍'],[/ideas/i,'💡'],[/log my hours/i,'⏱️'],[/community/i,'🤝'],[/start here/i,'🚀'],[/binder/i,'🗂️'],[/focused|note-taking/i,'📝'],[/tutorial/i,'❓'],[/confusion/i,'🤔'],[/graphic/i,'🧩'],[/goal|contract/i,'🎯'],[/^tutors$/i,'🧑‍🏫'],[/field trip/i,'🚌'],[/site team|certif/i,'🏅'],[/collaboration/i,'💬'],[/science/i,'🔬'],[/math/i,'📐'],[/english/i,'📚'],[/history/i,'🏛️'],[/coming soon/i,'🚧']];
 const FOLDER_COLORS=['#5b5fe0','#14a37f','#ee7d1c','#1f95e0','#e0408a','#8a54e0','#f25c54','#0e9f6e','#e08a00','#2b7de9','#c2185b','#00897b'];
 const ficon=n=>(FOLDER_ICON.find(([r])=>r.test(n))||[0,'📁'])[1];
 const spaceChips=s=>`<nav class="switch" aria-label="Spaces"><a class="back" href="#home">← All spaces</a>${SECTIONS.map(x=>`<a class="swchip ${x===s?'on':''}" style="--c:${x.color}" href="#${x.id}">${x.name}</a>`).join('')}</nav>`;
@@ -2124,7 +2129,7 @@ function discussHome(s){
   crumb.innerHTML=`<span>›</span><a href="#avid">AVID</a><span>›</span><b>Discussion Board</b>`;
   app.innerHTML=`<div class="wrap" style="--c:#e0408a">${folderChips(s,'discuss')}
    <div class="banner"><h1>💬 Discussion Board</h1><p>College-style discussions. Sign in, share your thinking in a main post, then reply to at least two classmates. Your posts are saved and scored for your teacher.</p><span class="art"><span class="bigemoji">💬</span></span></div>
-   ${HUB_URL?'':`<div class="demo-note">👀 <b>Preview mode:</b> posts are saved only on this computer until your teacher connects the Google Sheet (see WICOR → Teacher Setup).</div>`}
+   ${HUB_URL?'':`<div class="demo-note">👀 <b>Preview mode:</b> posts are saved only on this computer because this website isn’t connected to the Google Sheet yet. <i>Teachers:</i> paste the Web app address into <b>hub-config.js</b> on GitHub (WICOR → Teacher Setup, step 4).</div>`}
    <div class="how"><div><b>1</b> Sign in with your name, ID, period &amp; teacher</div><div><b>2</b> Write a main post (${DISCUSSIONS[0].minWords}+ words) with evidence and a question</div><div><b>3</b> Unlock classmates’ posts and reply to 2 of them (30+ words each)</div></div>
    <div class="dgrid">${DISCUSSIONS.map(d=>`<a class="dcard" href="#avid/discuss/${d.id}" style="--c:${TAG_COLOR[d.tag]||'#5b5fe0'}"><span class="dic">${d.icon}</span><span class="dtag">${esc(d.tag)}</span><h3>${esc(d.title)}</h3><p>${esc(d.prompt.slice(0,130))}…</p><span class="go">Join the discussion →</span></a>`).join('')}</div><div style="height:48px"></div></div>`;
 }
@@ -2177,7 +2182,7 @@ function discussPage(s,id){
   app.innerHTML=`<div class="wrap" style="--c:${col}"><nav class="switch"><a class="back" href="#avid/discuss">← All discussions</a></nav>
    <div class="dhero"><span class="dtag">${d.icon} ${esc(d.tag)}</span><h1>${esc(d.title)}</h1><p class="dprompt">${esc(d.prompt)}</p>
     <details class="rubric"><summary>📋 How this is graded (10 points)</summary><table><tr><td>Main post: ${d.minWords}+ words</td><td>4 pts</td></tr><tr><td>Main post uses evidence from the source (a detail, number, or quote)</td><td>1 pt</td></tr><tr><td>Main post asks classmates a question</td><td>1 pt</td></tr><tr><td>Reply #1: 30+ words</td><td>2 pts</td></tr><tr><td>Reply #2: 30+ words</td><td>2 pts</td></tr></table><small>Your teacher may adjust your score after reading your posts.</small></details></div>
-   ${HUB_URL?'':`<div class="demo-note">👀 <b>Preview mode:</b> posts are saved only on this computer until your teacher connects the Google Sheet.</div>`}
+   ${HUB_URL?'':`<div class="demo-note">👀 <b>Preview mode:</b> posts are saved only on this computer because this website isn’t connected to the Google Sheet yet.</div>`}
    ${DSRC[d.id]?`<section class="dsource" id="dsource"><div class="dsrc-head"><span class="dtag">📖 Read first · ${esc(DSRC[d.id].type)}</span><h2>${esc(DSRC[d.id].title)}</h2></div><div class="dsrc-body">${DSRC[d.id].html}</div><p class="dcite">${esc(DSRC[d.id].cite)}</p></section>`:''}
    <div id="dz"></div><div style="height:48px"></div></div>`;
   const srcBox=app.querySelector('#dsource'); let ann={count:()=>0};
