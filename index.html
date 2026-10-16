@@ -519,7 +519,7 @@ a.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
   </div>
 </header>
 <main id="app"></main>
-<script src="hub-config.js"></script>
+<script src="hub-config.js?v=3"></script>
 <div id="modal" class="modal" hidden></div>
 
 <script>
@@ -1320,15 +1320,18 @@ function runChallenge(el,ch){
     if(chk)chk.onclick=()=>{
       const un=ch.items.findIndex((it,k)=>(it.t==='mc'&&st[k].v==null)||(it.t==='match'&&Object.keys(st[k].pick).length<it.rows.length));
       if(un>=0){el.querySelector('#chkmsg').textContent='Answer every question first.';return}
-      let score=0;const fb=[];const lines=[];
+      let score=0;const fb=[];const lines=[];const qd=[];let qn=0;
+      const TL={mark:'Marking',mc:'Multiple choice',match:'Sort',order:'Order',write:'Written'};
       ch.items.forEach((it,k)=>{let s=0;
         if(it.t==='mark'){const r=scoreMark(it,st[k]);s=r.score;fb[k]=r.fb;lines.push(`Marking: ${s}/${pts(it)}`)}
         if(it.t==='mc'){s=st[k].v===it.a?1:0;fb[k]=`<div class="feedback"><b>${s?'Correct!':'Not quite.'}</b> ${esc(it.why)}</div>`;lines.push(`Q${k}: ${s?'correct':'missed'}`)}
         if(it.t==='match'){it.rows.forEach((r,ri)=>{if(st[k].pick[ri]===r[1])s++});lines.push(`Sort: ${s}/${it.rows.length}`)}
         if(it.t==='order'){st[k].order.forEach((si,pos)=>{if(si===pos)s++});fb[k]=`<div class="feedback">${s===it.steps.length?'<b>Perfect order!</b>':`<b>${s} of ${it.steps.length} in the right spot.</b> Correct order: ${it.steps.map((x,i)=>`${i+1}) ${esc(x)}`).join(' ')}`}</div>`;lines.push(`Order: ${s}/${it.steps.length}`)}
         if(it.t==='write'){const w=words(st[k].v||'');s=w>=it.min?2:w>0?1:0;fb[k]=`<div class="feedback">${s===2?'<b>Complete.</b> Your teacher will read this.':`<b>${s} of 2 points.</b> Aim for at least ${it.min} words.`}</div>`;lines.push(`Written: ${(st[k].v||'').trim()}`)}
+        if(it.t!=='passage'){qn++;qd.push(['Q'+qn+' '+(TL[it.t]||''),s,pts(it)])}
         score+=s});
-      checked={score,fb,lines};draw();
+      checked={score,fb,lines,qd,sent:false};draw();
+      if(HUB_URL&&CUR)sendNow();
       el.closest('.modal')?.scrollTo({top:el.closest('.modal').scrollHeight,behavior:'smooth'});
     };
     const ag=el.querySelector('#again');if(ag)ag.onclick=()=>{checked=null;ch.items.forEach((it,k)=>{if(it.t==='mark')st[k]=mkNew(it);if(it.t==='mc')st[k].v=null;if(it.t==='match')st[k].pick={};if(it.t==='order')st[k].order=shuffle(it.steps.map((_,i)=>i))});draw()};
@@ -1336,18 +1339,26 @@ function runChallenge(el,ch){
   };
   const sv={name:CUR?CUR.name:'',period:CUR?CUR.period:'',teacher:CUR?CUR.teacher:''};
   function submitPanel(){
-    if(HUB_URL&&CUR) return `<div class="submit"><h3>Send my score to my teacher</h3><p style="margin:4px 0 10px">👤 ${esc(CUR.name)} · ID ${esc(CUR.id)} · Period ${esc(CUR.period)} · ${esc(CUR.teacher)}</p><div class="btnrow"><button class="btn" id="sbsend">📤 Send to ${esc(CUR.teacher)}</button><span id="sbmsg" style="color:var(--muted)"></span></div></div>`;
+    if(HUB_URL&&CUR) return `<div class="submit"><h3>Send my score to my teacher</h3><p style="margin:4px 0 10px">👤 ${esc(CUR.name)} · ID ${esc(CUR.id)} · ${esc(CUR.school)} · Period ${esc(CUR.period)} · ${esc(CUR.teacher)}</p><p style="margin:0 0 10px;color:var(--muted);font-size:.9rem">Your score is sent automatically when you check your work. Use the button only if it says it didn’t send.</p><div class="btnrow"><button class="btn" id="sbsend">📤 Send to ${esc(CUR.teacher)}</button><span id="sbmsg" style="color:var(--muted)"></span></div></div>`;
     const tsel=SUBMIT.teachers.length?`<select id="sbt"><option value="">Choose your teacher</option>${SUBMIT.teachers.map(t=>`<option ${sv.teacher===t?'selected':''}>${esc(t)}</option>`).join('')}</select>`:`<input class="txt" id="sbt" placeholder="Teacher’s name" value="${esc(sv.teacher)}">`;
     return `<div class="submit"><h3>Send my score to my teacher</h3><div class="sgrid"><div><span class="lab">Your name</span><input class="txt" id="sbn" value="${esc(sv.name)}" placeholder="First and last name"></div><div><span class="lab">Period</span><select id="sbp"><option value="">Period</option>${[1,2,3,4,5,6,7,8].map(p=>`<option ${sv.period==p?'selected':''}>${p}</option>`).join('')}</select></div><div><span class="lab">Teacher</span>${tsel}</div></div>
     <div class="btnrow">${SUBMIT.formUrl?`<a class="btn" id="sblink" target="_blank" rel="noopener" aria-disabled="true">Open the form to submit</a>`:`<button class="btn" id="sbcopy">Copy my results</button>`}<span id="sbmsg" style="color:var(--muted)"></span></div>
     <p style="color:var(--muted);font-size:.88rem;margin:8px 0 0">${SUBMIT.formUrl?'Your answers are filled in for you. Press Submit on the Google Form that opens.':'Paste your results where your teacher tells you to (for example, a Google Classroom assignment).'}</p></div>`;
   }
+  async function sendNow(){
+    const c=checked,m=()=>el.querySelector('#sbmsg'),b=()=>el.querySelector('#sbsend');
+    if(b())b().disabled=true; if(m())m().textContent='Sending your score to '+CUR.teacher+'…';
+    try{const r=await hubSend({action:'score',student:CUR,activity:`${ch.strat} · ${ch.title}`,score:`${c.score}/${total}`,scoreNum:c.score,total,percent:Math.round(c.score/total*100)+'%',
+        qlabels:c.qd.map(x=>x[0]),qpoints:c.qd.map(x=>x[1]),qmax:c.qd.map(x=>x[2]),responses:c.lines.join(' | ').slice(0,1500)});
+      if(!r.ok)throw new Error(r.error);c.sent=true;
+      if(m())m().textContent=r.demo?'👀 Preview mode: saved on this computer only.':'✅ Sent automatically! Your teacher can see your score.';
+      if(b()){b().disabled=false;b().textContent='📤 Send again (backup)'}}
+    catch(e){if(b())b().disabled=false;if(m())m().textContent='⚠️ '+(e.message||'Could not send. Press the button to try again.')}
+  }
   function wireSubmit(){
     const sb=el.querySelector('#sbsend');
-    if(sb){sb.onclick=async()=>{sb.disabled=true;el.querySelector('#sbmsg').textContent='Sending…';
-      try{const r=await hubSend({action:'score',student:CUR,activity:`${ch.strat} · ${ch.title}`,score:`${checked.score}/${total}`,percent:Math.round(checked.score/total*100)+'%',responses:checked.lines.join(' | ').slice(0,1500)});
-        if(!r.ok)throw new Error(r.error);el.querySelector('#sbmsg').textContent='✅ Sent! Your teacher can see your score.';sb.textContent='✅ Sent';}
-      catch(e){sb.disabled=false;el.querySelector('#sbmsg').textContent='⚠️ '+(e.message||'Could not send. Try again.')}};return}
+    if(sb){if(checked.sent){sb.textContent='📤 Send again (backup)';el.querySelector('#sbmsg').textContent='✅ Sent automatically!'}
+      sb.onclick=()=>sendNow();return}
     const get=()=>{sv.name=el.querySelector('#sbn').value.trim();sv.period=el.querySelector('#sbp').value;sv.teacher=el.querySelector('#sbt').value.trim()};
     const payload=()=>({name:sv.name+(CUR&&CUR.id?` (ID ${CUR.id})`:''),period:sv.period,teacher:sv.teacher,activity:`${ch.strat} · ${ch.title}`,score:`${checked.score}/${total} (${Math.round(checked.score/total*100)}%)`,responses:checked.lines.join(' | ').slice(0,1500)});
     const upd=()=>{get();const ok=sv.name&&sv.teacher&&sv.period!=='';const a=el.querySelector('#sblink');
@@ -1361,12 +1372,13 @@ function runChallenge(el,ch){
 }
 Object.entries(CH).forEach(([id,ch])=>{L[id]={title:`${ch.strat} Challenge: ${ch.title}`,run(el){runChallenge(el,ch)}}});
 
-H.sheetsetup={title:'Connect the Hub to a Google Sheet', html:`<h2>Connect the Hub to a Google Sheet</h2><small>One Google Sheet collects every discussion post (auto-graded), practice score, and lesson turn-in, with a tab for each teacher. About 10 minutes, done once. Download it as Excel anytime: File → Download → Microsoft Excel.</small>
- <h4>1 · Make the Sheet</h4><ol><li>Go to <b>sheets.google.com</b> and create a blank sheet named <b>AVID Hub Responses</b>.</li><li>Click <b>Extensions → Apps Script</b>.</li></ol>
- <h4>2 · Add the script</h4><ol><li>Delete the sample code. Open <b>Code.gs</b> from the hub’s GitHub files, copy everything, and paste it in. Click 💾 <b>Save</b>.</li><li>In the toolbar, pick the function <b>setup</b> and click ▶ <b>Run</b>. Approve the permissions (it only uses this Sheet).</li><li>Back in the Sheet you will see tabs: Discussion Posts, Discussion Grades, Activity Scores, Lesson Turn-Ins, and a <b>Teacher:</b> tab for each teacher.</li></ol>
- <h4>3 · Publish it</h4><ol><li>Click <b>Deploy → New deployment</b> → ⚙ <b>Web app</b>.</li><li>Execute as: <b>Me</b>. Who has access: <b>Anyone</b>. Click <b>Deploy</b> and copy the <b>Web app URL</b>.</li></ol>
- <h4>4 · Connect the website</h4><ol><li>On GitHub, open <b>hub-config.js</b> → ✏️ edit.</li><li>Paste the URL between the quotes: <span class="box" style="font-family:ui-monospace,Menlo,monospace;font-size:.85rem">scriptUrl: "https://script.google.com/macros/s/…/exec",</span></li><li>Commit. In 1–2 minutes, discussion posts and scores go straight to the Sheet.</li></ol>
- <h4>Good to know</h4><ul><li><b>Grades:</b> each discussion is out of 10 (main post 6, two replies 4). Type in the <b>Teacher Score</b> column to change a grade. It is never overwritten.</li><li><b>Hide a post:</b> type <b>X</b> in the post’s <b>Hide</b> column on the Discussion Posts tab.</li><li><b>Privacy:</b> classmates see only first name + last initial. Student IDs stay in the Sheet.</li><li><b>Changed the script?</b> Use Deploy → Manage deployments → ✏️ → New version so the same URL keeps working.</li></ul>`};
+H.sheetsetup={title:'Connect the Hub to Google Sheets', html:`<h2>Connect the Hub to Google Sheets (auto-graded)</h2><small>Every graded activity goes to one <b>master sheet</b> and to each teacher’s own <b>“Formative Scores”</b> sheet, with one tab per activity, sorted by period and last name, plus a ⬇ Download for Aeries link. Done once, about 10 minutes.</small>
+ <h4>1 · Open the master sheet</h4><ol><li>In Google Drive, open the folder <b>Teacher Resource Hub Scores</b> and open <b>Teacher Resource Hub – Master Scores</b>.</li><li>Click <b>Extensions → Apps Script</b>.</li></ol>
+ <h4>2 · Add the script</h4><ol><li>Delete the sample code. Paste everything from <b>Code.gs</b>. Click 💾 <b>Save</b>.</li><li>In the function dropdown pick <b>setup</b> → ▶ <b>Run</b> → approve the permissions.</li><li>Then pick <b>createAllTeacherSheets</b> → ▶ <b>Run</b>. Each teacher gets a sheet in their school’s folder, shared with their school email.</li></ol>
+ <h4>3 · Publish it</h4><ol><li><b>Deploy → New deployment</b> → ⚙ <b>Web app</b>. Execute as: <b>Me</b>. Who has access: <b>Anyone</b>. <b>Deploy</b> and copy the <b>Web app URL</b>.</li><li>Changing Code.gs later? Use <b>Deploy → Manage deployments → ✏️ → New version</b> so the URL stays the same.</li></ol>
+ <h4>4 · Connect the website</h4><ol><li>On GitHub, open <b>hub-config.js</b> → ✏️ edit.</li><li>Paste the URL between the quotes: <span class="box" style="font-family:ui-monospace,Menlo,monospace;font-size:.85rem">scriptUrl: "https://script.google.com/macros/s/…/exec",</span></li><li>Commit. In 1–2 minutes, scores go straight to the sheets.</li></ol>
+ <h4>What is graded</h4><ul><li><b>WICOR lessons</b>: 2 points per station (10 total), sent when the student presses Turn in.</li><li><b>Practice challenges</b>: auto-scored and sent automatically when the student checks their work.</li><li><b>Discussion Board</b>: main post 6 + two replies 4 = 10. Type in the <b>Teacher Score</b> column on Discussion Grades to change a grade.</li><li><b>Service hours</b> show on each teacher’s <b>Service Hours</b> tab.</li></ul>
+ <h4>Good to know</h4><ul><li><b>Adding a teacher:</b> add the name to <b>SCHOOLS</b> (and the email to <b>TEACHER_EMAILS</b>) in Code.gs <i>and</i> to <b>schools</b> in hub-config.js, using exactly the same spelling.</li><li><b>Hide a post:</b> type <b>X</b> in the post’s <b>Hide</b> column on the Discussion Posts tab.</li><li><b>Privacy:</b> classmates see only first name + last initial. Student IDs stay in the sheets.</li></ul>`};
 
 /* ---------- WICOR EXPLORER ---------- */
 const WX={
@@ -1687,11 +1699,15 @@ const ACT_INFO={
 /* ---------- STUDENT SIGN-IN (required before each student activity) ----------
    ✏️ To change the teacher list or periods, edit TEACHERS and PERIODS. */
 const HUBCFG=window.HUB_CONFIG||{};
-const TEACHERS=HUBCFG.teachers||['Langlie','Maness','Salazar','Mueller'];
+const SCHOOLS=HUBCFG.schools||{};
+const TEACHERS=HUBCFG.teachers||Object.values(SCHOOLS).flat();
 const PERIODS=HUBCFG.periods||['1','2','3','4','5','6','7','8'];
 const HUB_URL=(HUBCFG.scriptUrl||'').trim();
 const NO_SIGNIN=new Set(['qotd','seminar']); /* teacher-led projector tools skip sign-in */
 let CUR=null; try{CUR=JSON.parse(localStorage.getItem('wicorStudent')||'null')}catch(e){CUR=null}
+/* old sign-ins (before schools were added) must sign in again */
+if(CUR&&!(CUR.first&&CUR.last&&CUR.school&&(SCHOOLS[CUR.school]||[]).includes(CUR.teacher)))CUR=null;
+const tOpts=(school,sel)=>`<option value="">${school?'Choose…':'Choose a school first'}</option>`+(SCHOOLS[school]||[]).map(t=>`<option ${sel===t?'selected':''}>${esc(t)}</option>`).join('');
 function infoHTML(info){ if(!info) return '';
   return `<div class="g-eq"><span class="g-lbl">Essential Question</span><p>${esc(info.eq)}</p></div>
   <div class="g-lt"><span class="g-lbl">Learning Target${info.lt.length>1?'s':''}</span><ul>${info.lt.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`;}
@@ -1699,19 +1715,23 @@ function studentGate(el,title,info,onStart){
   const v=CUR||{};
   el.innerHTML=`<div class="gate"><div class="g-left"><span class="g-kick">Before you start</span><h2>${esc(title)}</h2>${infoHTML(info)}</div>
    <form class="g-form" autocomplete="off" novalidate><h3>Sign in to begin</h3>
-    <label>Full name<input id="g-name" placeholder="First and last name" value="${esc(v.name||'')}"></label>
+    <div class="g-row"><label>First name<input id="g-first" placeholder="First name" value="${esc(v.first||'')}"></label>
+    <label>Last name<input id="g-last" placeholder="Last name" value="${esc(v.last||'')}"></label></div>
     <label>Student ID<input id="g-id" inputmode="numeric" placeholder="Your student ID number" value="${esc(v.id||'')}"></label>
+    <label>School<select id="g-sch"><option value="">Choose…</option>${Object.keys(SCHOOLS).map(s=>`<option ${v.school===s?'selected':''}>${esc(s)}</option>`).join('')}</select></label>
     <div class="g-row"><label>Period<select id="g-per"><option value="">Choose…</option>${PERIODS.map(p=>`<option ${String(v.period)===p?'selected':''}>${p}</option>`).join('')}</select></label>
-    <label>Teacher<select id="g-t"><option value="">Choose…</option>${TEACHERS.map(t=>`<option ${v.teacher===t?'selected':''}>${t}</option>`).join('')}</select></label></div>
-    <button class="g-start" type="submit" disabled>Start ▶</button><p class="g-msg" aria-live="polite">Fill in all four boxes to start.</p></form></div>`;
+    <label>Teacher<select id="g-t">${tOpts(v.school,v.teacher)}</select></label></div>
+    <button class="g-start" type="submit" disabled>Start ▶</button><p class="g-msg" aria-live="polite">Fill in every box to start.</p></form></div>`;
   const f=el.querySelector('.g-form'), q=x=>f.querySelector(x);
-  const read=()=>({name:q('#g-name').value.trim(),id:q('#g-id').value.trim(),period:q('#g-per').value,teacher:q('#g-t').value});
-  const ok=d=>/[A-Za-z].*[A-Za-z]/.test(d.name)&&/^[A-Za-z0-9-]{3,12}$/.test(d.id)&&d.period&&d.teacher;
+  q('#g-sch').addEventListener('change',()=>{q('#g-t').innerHTML=tOpts(q('#g-sch').value,'')});
+  const read=()=>{const first=q('#g-first').value.trim(),last=q('#g-last').value.trim();return {first,last,name:(first+' '+last).trim(),id:q('#g-id').value.trim(),school:q('#g-sch').value,period:q('#g-per').value,teacher:q('#g-t').value}};
+  const okId=x=>/^[A-Za-z0-9-]{3,12}$/.test(x);
+  const ok=d=>/[A-Za-z]/.test(d.first)&&/[A-Za-z]/.test(d.last)&&okId(d.id)&&d.school&&d.period&&d.teacher;
   const upd=()=>{const d=read(),good=ok(d);q('.g-start').disabled=!good;
-    q('.g-msg').textContent=good?'Looks good! Press Start.':!d.name?'Type your full name.':!/^[A-Za-z0-9-]{3,12}$/.test(d.id)?'Type your student ID (numbers only).':!d.period?'Choose your period.':!d.teacher?'Choose your teacher.':'Fill in all four boxes to start.'};
+    q('.g-msg').textContent=good?'Looks good! Press Start.':!/[A-Za-z]/.test(d.first)?'Type your first name.':!/[A-Za-z]/.test(d.last)?'Type your last name.':!okId(d.id)?'Type your student ID (numbers only).':!d.school?'Choose your school.':!d.period?'Choose your period.':!d.teacher?'Choose your teacher.':'Fill in every box to start.'};
   f.addEventListener('input',upd); f.addEventListener('change',upd); upd();
   f.onsubmit=e=>{e.preventDefault();const d=read();if(!ok(d))return;CUR=d;try{localStorage.setItem('wicorStudent',JSON.stringify(d))}catch(err){} onStart(d)};
-  setTimeout(()=>q(v.name?'.g-start':'#g-name').focus(),50);
+  setTimeout(()=>q(v.first?'.g-start':'#g-first').focus(),50);
 }
 function targetStrip(info,d){return `<div class="tstrip">${info?`<div><b>🎯 Essential Question:</b> ${esc(info.eq)}</div><div><b>Learning target:</b> ${info.lt.map(esc).join(' · ')}</div>`:''}<div class="who">👤 ${esc(d.name)} · ID ${esc(d.id)} · Period ${esc(d.period)} · ${esc(d.teacher)}</div></div>`}
 

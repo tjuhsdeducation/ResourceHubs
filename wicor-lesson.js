@@ -14,7 +14,9 @@
   };
   /* ✏️ Teacher and period choices for the sign-in screen */
   const CFG = window.HUB_CONFIG || {};
-  const TEACHERS = CFG.teachers || ["Langlie", "Maness", "Salazar", "Mueller"];
+  const SCHOOLS = CFG.schools || {};
+  const TEACHERS = CFG.teachers || Object.values(SCHOOLS).flat();
+  const tOpts = (school, sel) => `<option value="">${school ? "Choose…" : "Choose a school first"}</option>` + (SCHOOLS[school] || []).map(t => `<option ${sel === t ? "selected" : ""}>${esc(t)}</option>`).join("");
   const PERIODS = CFG.periods || ["1", "2", "3", "4", "5", "6", "7", "8"];
   const HUB_URL = (CFG.scriptUrl || "").trim();
   const $ = (s, r = document) => r.querySelector(s);
@@ -58,11 +60,13 @@
       </section>
       <section class="lgate" id="lgate">
         <form class="g-form" autocomplete="off" novalidate><h3>✋ Sign in to start this lesson</h3>
-          <label>Full name<input id="g-name" placeholder="First and last name"></label>
+          <div class="g-row"><label>First name<input id="g-first" placeholder="First name"></label>
+          <label>Last name<input id="g-last" placeholder="Last name"></label></div>
           <label>Student ID<input id="g-id" inputmode="numeric" placeholder="Your student ID number"></label>
+          <label>School<select id="g-sch"><option value="">Choose…</option>${Object.keys(SCHOOLS).map(s => `<option>${esc(s)}</option>`).join("")}</select></label>
           <div class="g-row"><label>Period<select id="g-per"><option value="">Choose…</option>${PERIODS.map(p => `<option>${p}</option>`).join("")}</select></label>
-          <label>Teacher<select id="g-t"><option value="">Choose…</option>${TEACHERS.map(t => `<option>${t}</option>`).join("")}</select></label></div>
-          <button class="g-start" type="submit" disabled>Start ▶</button><p class="g-msg" aria-live="polite">Fill in all four boxes to start.</p>
+          <label>Teacher<select id="g-t">${tOpts("", "")}</select></label></div>
+          <button class="g-start" type="submit" disabled>Start ▶</button><p class="g-msg" aria-live="polite">Fill in every box to start.</p>
         </form>
       </section>
       <nav class="map" id="map" aria-label="WICOR stations"></nav>
@@ -653,7 +657,8 @@
       "i-pred": "I: Prediction", "i-hyp": "I: Hypothesis", "i-supported": "I: Supported?", "i-analysis": "I: Analysis", "i-q3": "I: Level 3 question",
       "c-stance1": "C: First stance", "c-reason": "C: Reason", "c-partner": "C: Partner", "c-respond": "C: Response", "c-stance2": "C: Final stance", "c-reflect": "C: Reflection", "o-sum": "O: Summary" };
     const answers = Object.keys(lab).filter(k => I[k]).map(k => `${lab[k]}: ${String(I[k]).replace(/\s+/g, " ").trim()}`).join("  |  ");
-    const body = { action: "lesson", student: S.student, lesson: `${L.subject}: ${L.title}`, stationsDone: done, answers };
+    const body = { action: "lesson", student: S.student, lesson: `${L.subject}: ${L.title}`, stationsDone: done, answers,
+      qlabels: ORDER.map(k => `${k} · ${META[k].name} station`), qpoints: ORDER.map(k => S.done[k] ? 2 : 0), qmax: ORDER.map(() => 2) };
     btn.disabled = true; say("Turning in…");
     try {
       if (!HUB_URL) {
@@ -677,20 +682,23 @@
     S.student = d; save();
     try { localStorage.setItem("wicorStudent", JSON.stringify(d)); } catch (e) {}
     document.body.classList.remove("locked");
-    $("#whoChip").innerHTML = `👤 <b>${esc(d.name)}</b> · ID ${esc(d.id)} · Period ${esc(d.period)} · ${esc(d.teacher)} · ${new Date().toLocaleDateString()} <button class="pill-btn" id="switchUser" style="padding:4px 10px;font-size:.8rem">Not you?</button>`;
+    $("#whoChip").innerHTML = `👤 <b>${esc(d.name)}</b> · ID ${esc(d.id)} · ${esc(d.school || "")} · Period ${esc(d.period)} · ${esc(d.teacher)} · ${new Date().toLocaleDateString()} <button class="pill-btn" id="switchUser" style="padding:4px 10px;font-size:.8rem">Not you?</button>`;
     $("#switchUser").onclick = () => { document.body.classList.add("locked"); $("#lgate").scrollIntoView({ behavior: "smooth" }); };
     show(ORDER.includes(hashSt) ? hashSt : (S.current && ORDER.includes(S.current) ? S.current : ORDER[0]), false);
   }
   (function gate() {
     document.body.classList.add("locked");
     let prev = S.student; if (!prev) { try { prev = JSON.parse(localStorage.getItem("wicorStudent") || "null"); } catch (e) {} }
+    if (prev && !(prev.first && prev.last && prev.school && (SCHOOLS[prev.school] || []).includes(prev.teacher))) { prev = null; S.student = null; }   // old sign-in: sign in again
     const f = $("#lgate form"), q = x => f.querySelector(x);
-    if (prev) { q("#g-name").value = prev.name || ""; q("#g-id").value = prev.id || ""; q("#g-per").value = prev.period || ""; q("#g-t").value = prev.teacher || ""; }
-    const read = () => ({ name: q("#g-name").value.trim(), id: q("#g-id").value.trim(), period: q("#g-per").value, teacher: q("#g-t").value });
-    const okId = v => /^[A-Za-z0-9-]{3,12}$/.test(v);
-    const ok = d => /[A-Za-z].*[A-Za-z]/.test(d.name) && okId(d.id) && d.period && d.teacher;
+    q("#g-sch").addEventListener("change", () => { q("#g-t").innerHTML = tOpts(q("#g-sch").value, ""); });
+    if (prev) { q("#g-first").value = prev.first; q("#g-last").value = prev.last; q("#g-id").value = prev.id || ""; q("#g-sch").value = prev.school; q("#g-t").innerHTML = tOpts(prev.school, prev.teacher); q("#g-per").value = prev.period || ""; }
+    const read = () => { const first = q("#g-first").value.trim(), last = q("#g-last").value.trim();
+      return { first, last, name: (first + " " + last).trim(), id: q("#g-id").value.trim(), school: q("#g-sch").value, period: q("#g-per").value, teacher: q("#g-t").value }; };
+    const okId = v => /^[A-Za-z0-9-]{3,12}$/.test(v), hasL = v => /[A-Za-z]/.test(v);
+    const ok = d => hasL(d.first) && hasL(d.last) && okId(d.id) && d.school && d.period && d.teacher;
     const upd = () => { const d = read(), good = ok(d); q(".g-start").disabled = !good;
-      q(".g-msg").textContent = good ? "Looks good! Press Start." : !d.name ? "Type your full name." : !okId(d.id) ? "Type your student ID (numbers only)." : !d.period ? "Choose your period." : !d.teacher ? "Choose your teacher." : "Fill in all four boxes to start."; };
+      q(".g-msg").textContent = good ? "Looks good! Press Start." : !hasL(d.first) ? "Type your first name." : !hasL(d.last) ? "Type your last name." : !okId(d.id) ? "Type your student ID (numbers only)." : !d.school ? "Choose your school." : !d.period ? "Choose your period." : !d.teacher ? "Choose your teacher." : "Fill in every box to start."; };
     f.addEventListener("input", upd); f.addEventListener("change", upd); upd();
     f.onsubmit = e => { e.preventDefault(); const d = read(); if (ok(d)) begin(d); };
   })();
