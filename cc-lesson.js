@@ -313,7 +313,9 @@
   };
 
   /* extra block types (cc-blocks2.js) plug in here */
-  if (window.CC_EXT) window.CC_EXT(BT, { $, $$, esc, strip, words, money, LS, evalWrite, project: b => project(b) });
+  const HELP = { $, $$, esc, strip, words, money, LS, evalWrite, project: b => project(b) };
+  if (window.CC_EXT) window.CC_EXT(BT, HELP);
+  (window.CC_EXTS || []).forEach(f => f(BT, HELP));   /* more block files push their installer into window.CC_EXTS */
   function barChart(o) {
     const w = 560, h = o.h || 300, P = { l: 170, r: 70, t: 30, b: 20 }, n = o.rows.length, bh = (h - P.t - P.b) / n, mx = o.max;
     return `<svg class="cchart" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(o.alt || o.title)}"><text x="${w / 2}" y="18" text-anchor="middle" class="ct">${esc(o.title)}</text>

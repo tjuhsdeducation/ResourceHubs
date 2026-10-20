@@ -527,7 +527,7 @@ a.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
   </div>
 </header>
 <main id="app"></main>
-<footer style="text-align:center;color:var(--muted);font-size:.8rem;padding:18px 0 28px">Site version: Oct 16 · update 8 (Honors & AP + Study Guides)</footer>
+<footer style="text-align:center;color:var(--muted);font-size:.8rem;padding:18px 0 28px">Site version: Oct 20 · update 9 (organizers, vocab, Costa, resumes, discussions)</footer>
 <script src="hub-config.js?v=3"></script>
 <div id="modal" class="modal" hidden></div>
 
@@ -618,9 +618,37 @@ const SECTIONS = [
      {k:'handout', id:'pocframes', title:'Strong POC Frames & Checklist', desc:'Sentence frames by subject, a checklist, and before/after examples'},
      {k:'lesson', id:'i4', title:'Practice: Strong or Vague?', desc:'Students sort real POCs and rewrite a vague one'}
    ]},
+   {name:'Costa’s Levels of Questioning', sub:'Move from Level 1 (gathering) to Level 3 (applying) questions. Use the term bank, build questions with a live level checker, and practice asking and answering questions about real readings.', items:[
+     {k:'page', feature:true, label:'Lesson · Graded', subj:'AVID', url:'costas-lab.html', title:'Costa’s Question Lab: Ask Higher-Level Questions', desc:'The three-story house term bank, a sorting game, a question builder with a level detector, read-ask-answer practice, and answer-first challenges', meta:'6 stations · 40 min'},
+     {k:'handout', id:'costa', title:'Costa’s Levels of Thinking & Questioning', desc:'Question stems for Levels 1, 2, and 3'},
+     {k:'lesson', id:'costasort', title:'Sort the Question', desc:'Students sort questions into Costa’s three levels and get instant feedback'},
+     {k:'page', label:'Printable', url:'organizers.html#cornell', title:'Cornell Notes & Question Generator', desc:'Write Level 1, 2, and 3 questions in the left column as you study', go:'Open & print →'}
+   ]},
    {name:'Graphic Organizers', items:[
-     {k:'print', url:'https://docs.google.com/presentation/d/1xQoh20QALtYrz5cGlk9ypN5cTTOI6hl9K21-h6tkgMw/edit?usp=sharing', aud:'both', title:'Graphic Organizers', desc:'A full set of organizers to print'},
-     {k:'print', url:'https://docs.google.com/presentation/d/1wD4HNJSi3oadfh2T6bLwSZzG-OvIhI8d4apTmWmhQsw/edit?usp=sharing', aud:'both', title:'Graphic Organizers (Large)', desc:'Same organizers, bigger print', isNew:true},
+     {k:'page', feature:true, label:'Printable Library', group:'⭐ Start Here', url:'organizers.html', title:'Printable Graphic Organizer Library', desc:'21 organizers for every class. Filter by subject, open any one full size, and print it on one clean page (or print a whole set).', go:'Open the library →'},
+     {k:'page', label:'Printable', group:'🧩 Any Subject', url:'organizers.html#frayer', title:'Frayer Model', desc:'Define a vocabulary word with examples, non-examples, and a picture', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'🧩 Any Subject', url:'organizers.html#venn', title:'Venn Diagram', desc:'Compare and contrast two ideas, people, or events', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'🏛️ History', url:'organizers.html#cause', title:'Cause and Effect Chain', desc:'Trace how one event leads to the next', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'🔬 Science', url:'organizers.html#cer', title:'CER: Claim, Evidence, Reasoning', desc:'Answer a question with a claim, data, and science reasoning', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'📚 English', url:'organizers.html#argument', title:'Argument Planner', desc:'Plan a claim, 3 reasons with evidence, a counterclaim, and a rebuttal', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'🧩 Any Subject', url:'organizers.html#web', title:'Concept Map', desc:'Connect a big idea to its parts with linking words', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'🧩 Any Subject', url:'organizers.html#flow', title:'Sequence Flowchart', desc:'Put steps or events in order', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'🏛️ History', url:'organizers.html#timeline', title:'Timeline', desc:'Place events in time and note why they matter', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'🧩 Any Subject', url:'organizers.html#kwl', title:'KWL Chart', desc:'What I Know, Want to know, and Learned', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'🧩 Any Subject', url:'organizers.html#problem', title:'Problem and Solution', desc:'Explain a problem, its causes, and possible solutions', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'📚 English', url:'organizers.html#plot', title:'Story Map: Plot Mountain', desc:'Map exposition, rising action, climax, falling action, and resolution', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'📚 English', url:'organizers.html#mainidea', title:'Main Idea and Details', desc:'Find the central idea and the details that support it', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'🧩 Any Subject', url:'organizers.html#tchart', title:'T-Chart: Pros and Cons', desc:'Weigh two sides before you decide', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'📐 Math', url:'organizers.html#math4', title:'Math 4-Square Problem Solving', desc:'Understand, Plan, Solve, Check', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'📐 Math', url:'organizers.html#mistake', title:'Math Error Analysis', desc:'Find the mistake, fix it, and explain it', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'🔬 Science', url:'organizers.html#lab', title:'Lab Report Planner', desc:'Question, hypothesis, variables, data table, and conclusion', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'🏛️ History', url:'organizers.html#source', title:'Primary Source Analysis', desc:'Sourcing, context, close reading, and corroboration', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'📚 English', url:'organizers.html#soapstone', title:'SOAPSTone', desc:'Speaker, Occasion, Audience, Purpose, Subject, Tone', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'📚 English', url:'organizers.html#onepager', title:'One-Pager Planner', desc:'Plan a one-pager with quotes, images, and big ideas', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'📚 English', url:'organizers.html#swbst', title:'Summary Frame (SWBST)', desc:'Somebody, Wanted, But, So, Then', go:'Open & print →'},
+     {k:'page', label:'Printable', group:'🧩 Any Subject', url:'organizers.html#cornell', title:'Cornell Notes & Question Generator', desc:'Notes, questions, and a summary on one page', go:'Open & print →'},
+     {k:'print', group:'📂 Google Slides Sets', url:'https://docs.google.com/presentation/d/1xQoh20QALtYrz5cGlk9ypN5cTTOI6hl9K21-h6tkgMw/edit?usp=sharing', aud:'both', title:'Graphic Organizers', desc:'A full set of organizers to print'},
+     {k:'print', group:'📂 Google Slides Sets', url:'https://docs.google.com/presentation/d/1wD4HNJSi3oadfh2T6bLwSZzG-OvIhI8d4apTmWmhQsw/edit?usp=sharing', aud:'both', title:'Graphic Organizers (Large)', desc:'Same organizers, bigger print', isNew:true},
    ]},
    {name:'Goals & Contracts', items:[
      {k:'print', url:'https://drive.google.com/file/d/1cyOxDNf7V5i2txJdIuBq41EENpybn8LG/view?usp=sharing', aud:'student', title:'Goal Setting Example', desc:'A completed goal to model from'},
@@ -634,6 +662,7 @@ const SECTIONS = [
      {k:'print', url:'https://docs.google.com/spreadsheets/d/1GEX0qttdnUDV8IlADrrlEwFv14jS-JtG0iEVf26H0jk/edit?usp=sharing', aud:'teacher', title:'AVID Tutor Schedule 26-27', desc:'Who’s tutoring which period'},
    ]},
    {name:'Field Trips', items:[
+     {k:'page', feature:true, label:'For teachers', url:'fundraising.html', title:'Field Trip Fundraising Toolkit', desc:'18 easy, high-profit fundraisers with how-tos, a trip cost estimator, profit calculator, 8-week checklist, California rules, grant ideas, and copy-ready letters (English and Spanish)', go:'Open the toolkit →'},
      {k:'print', url:'https://drive.google.com/file/d/1I4lJDbfwJIEgAeN6Ht15cWOSrdFdhTnr/view?usp=sharing', aud:'teacher', title:'Field Trip Form', desc:'District field trip request form'},
      {k:'print', url:'https://docs.google.com/document/d/1UQjk9hjBUxSCcg-zlZKkZ-9jHw34wP5WYKp2eAMtkyA/edit?usp=sharing', aud:'teacher', title:'Maria Bueno Email Regarding Trips', desc:'Guidance on planning AVID trips'},
      {k:'print', url:'https://docs.google.com/document/d/1d7P06NajluH8yoijR5kUHl3otRa2jBbrNJfEd_fiyqQ/edit?usp=sharing', aud:'teacher', title:'Sample #1 Field Trip Agenda', desc:'Example agenda'},
@@ -666,6 +695,11 @@ const SECTIONS = [
   ]},
  {id:'college', name:'College & Career', color:'var(--c-college)', blurb:'Explore UC and CSU, track A–G, write your Personal Insight Questions, find scholarships, and get FAFSA and California Dream Act help.',
   topics:[
+   {name:'Resumes & Job Interviews', sub:'Build a resume (even with no job experience yet), learn how California work permits work, and practice interviewing with the STAR method.', items:[
+     {k:'page', feature:true, label:'Lesson · Graded', subj:'College & Career', url:'job-ready.html', title:'Get Hired: Resumes, Applications & Interviews', desc:'What employers look for, strong resume bullets, work permits and hour limits, STAR answers, a timed mock interview, and a thank-you email', meta:'6 stations · 50 min'},
+     {k:'page', label:'Tool', url:'resume-builder.html', title:'Resume Builder', desc:'Fill in the form and watch your resume appear. Bullet helper, action verbs, 3 templates, and Print / Save as PDF', go:'Build my resume →'},
+     {k:'page', label:'Printable', url:'interview-guide.html', title:'Interview & Job Search Guide', desc:'15 common interview questions with tips, what to wear and bring, a day-of checklist, and a thank-you email template', go:'Open & print →'}
+   ]},
    {name:'College & Career WICOR Lessons (45–60 min)', sub:'Three full, graded lessons with movement (Four Corners, line-ups, speed advising, interview carousel), a virtual campus tour and real UC Merced tour video, a schedule builder, a career explorer with real salaries, a budget, and a practice job application.', items:[
      {k:'page', label:'WICOR Lesson · Graded', subj:'AVID', url:'cc-lesson-explore.html', title:'Lesson 1: Explore California’s Colleges', desc:'Four Corners, CCC vs. CSU vs. UC, a virtual campus tour, college success skills, and a college comparison chart', meta:'6 stations · 55–60 min'},
      {k:'page', label:'WICOR Lesson · Graded', subj:'AVID', url:'cc-lesson-major.html', title:'Lesson 2: Major Moves', desc:'Interest survey, how majors and units work, pick a major, build a first-year schedule, balance a week, and speed advising', meta:'7 stations · 60 min'},
@@ -752,6 +786,20 @@ const SECTIONS = [
      {k:'page', label:'CAASPP · Graded', subj:'Math', group:'➗ Math', url:'caaspp.html?id=math-reasoning', title:'Math: Claim 3: Communicating Reasoning', desc:'Find errors in student work, test claims with counterexamples, and explain your reasoning in writing.', meta:'7 questions · 20 min'},
      {k:'page', label:'CAASPP · Graded', subj:'Science', group:'🔬 Science (CAST)', url:'caaspp.html?id=cast-coral', title:'Science (CAST): CAST: Why Are Coral Reefs Turning White?', desc:'A phenomenon-based science set: read about coral bleaching, analyze temperature and bleaching data, and write a CER.', meta:'9 questions · 20 min'},
      {k:'link', group:'🏛️ Official State Practice', url:'https://www.caaspp-elpac.org/', title:'Official CAASPP Practice & Training Tests', desc:'The state’s own practice and training tests (opens the CAASPP & ELPAC site)'}
+   ]},
+   {name:'Vocabulary Practice', sub:'Key test words and content words for every class. Each deck has flashcards, a timed matching game, spelling practice, a graded quiz, and a “use it” writing task. Scores go to the teacher’s sheet.', items:[
+     {k:'page', label:'Vocabulary · Graded', subj:'AVID', group:'📝 Test Vocabulary', url:'vocab.html?deck=test-directions', title:'📝 Test Vocabulary: Words in the Directions', desc:'The words that tell you what to do on ELA and history tests, like analyze, infer, and cite.', meta:'25 words · 5 stations'},
+     {k:'page', label:'Vocabulary · Graded', subj:'AVID', group:'📝 Test Vocabulary', url:'vocab.html?deck=test-math', title:'➗ Test Vocabulary: Math Directions', desc:'The words in math test directions, like simplify, evaluate, and justify, so you know exactly what to do.', meta:'20 words · 5 stations'},
+     {k:'page', label:'Vocabulary · Graded', subj:'AVID', group:'📚 Content Vocabulary', url:'vocab.html?deck=alg1', title:'📈 Algebra 1', desc:'Variables, slope, functions, and the other key words of Algebra 1.', meta:'20 words · 5 stations'},
+     {k:'page', label:'Vocabulary · Graded', subj:'AVID', group:'📚 Content Vocabulary', url:'vocab.html?deck=geo', title:'📐 Geometry', desc:'Lines, angles, transformations, triangles, and circles.', meta:'20 words · 5 stations'},
+     {k:'page', label:'Vocabulary · Graded', subj:'AVID', group:'📚 Content Vocabulary', url:'vocab.html?deck=bio', title:'🧬 Biology', desc:'Cells, DNA, genetics, evolution, and ecosystems.', meta:'20 words · 5 stations'},
+     {k:'page', label:'Vocabulary · Graded', subj:'AVID', group:'📚 Content Vocabulary', url:'vocab.html?deck=chem', title:'⚗️ Chemistry', desc:'Atoms, the periodic table, reactions, acids, and bases.', meta:'22 words · 5 stations'},
+     {k:'page', label:'Vocabulary · Graded', subj:'AVID', group:'📚 Content Vocabulary', url:'vocab.html?deck=wh', title:'🌍 World History', desc:'Empires, revolutions, big ideas, and how to read historical sources.', meta:'20 words · 5 stations'},
+     {k:'page', label:'Vocabulary · Graded', subj:'AVID', group:'📚 Content Vocabulary', url:'vocab.html?deck=ush', title:'🇺🇸 US History', desc:'The Constitution, Reconstruction, civil rights, the Great Depression, and California’s story.', meta:'20 words · 5 stations'},
+     {k:'page', label:'Vocabulary · Graded', subj:'AVID', group:'📚 Content Vocabulary', url:'vocab.html?deck=govecon', title:'🏛️ Government & Economics', desc:'How the U.S. government works, plus the big ideas of economics and money.', meta:'20 words · 5 stations'},
+     {k:'page', label:'Vocabulary · Graded', subj:'AVID', group:'📚 Content Vocabulary', url:'vocab.html?deck=ela', title:'📚 Literary & Rhetorical Terms', desc:'The terms English teachers use for stories, poems, speeches, and arguments.', meta:'20 words · 5 stations'},
+     {k:'page', label:'Vocabulary · Graded', subj:'AVID', group:'🎓 AVID & College', url:'vocab.html?deck=college', title:'🎓 College Words', desc:'GPA, A–G, FAFSA, financial aid, and the words you need to plan for college.', meta:'20 words · 5 stations'},
+     {k:'page', label:'Vocabulary · Graded', subj:'AVID', group:'🎓 AVID & College', url:'vocab.html?deck=avid', title:'🧠 AVID Words', desc:'WICOR, focused notes, TRFs, tutorials, and the other words of the AVID classroom.', meta:'18 words · 5 stations'}
    ]},
    {name:'Honors & AP Check-Ins', sub:'15-minute Honors check-ins and AP-style practice quizzes built on real stimulus sources: primary sources, data tables, graphs, and experiments. Same split screen as the Reading Checks, auto-graded with feedback, and sent to the teacher’s sheet.', items:[
      {k:'page', label:'Honors English 1 · Check-In', subj:'English', group:'⭐ Honors Check-Ins', url:'honors-ap.html?id=hon-eng1-lit', title:'Imagery, Irony, and Theme in “The Story of an Hour”', desc:'Analyze tone, imagery, characterization, irony, and theme in Kate Chopin’s 1894 short story.', meta:'9 questions · 15 min'},
@@ -2029,7 +2077,7 @@ function wireDaily(){
 /* =====================================================================
    FOLDER BUTTONS for every space (AVID, Interactive Lessons, etc.)
    ===================================================================== */
-const FOLDER_ICON=[[/reading check/i,'📖'],[/honors/i,'🎓'],[/study guide/i,'📘'],[/grade it/i,'🧑‍🏫'],[/digital/i,'💻'],[/career wicor/i,'🧭'],[/caaspp/i,'📝'],[/uc & csu/i,'🎓'],[/a–g/i,'📋'],[/essay/i,'✍️'],[/fafsa/i,'💰'],[/scholarship/i,'🏆'],[/tour/i,'🏛️'],[/timeline/i,'📅'],[/tulare county programs/i,'📍'],[/ideas/i,'💡'],[/log my hours/i,'⏱️'],[/community/i,'🤝'],[/start here/i,'🚀'],[/binder/i,'🗂️'],[/focused|note-taking/i,'📝'],[/tutorial/i,'❓'],[/confusion/i,'🤔'],[/graphic/i,'🧩'],[/goal|contract/i,'🎯'],[/^tutors$/i,'🧑‍🏫'],[/field trip/i,'🚌'],[/site team|certif/i,'🏅'],[/collaboration/i,'💬'],[/science/i,'🔬'],[/math/i,'📐'],[/english/i,'📚'],[/history/i,'🏛️'],[/coming soon/i,'🚧']];
+const FOLDER_ICON=[[/reading check/i,'📖'],[/costa/i,'🧠'],[/vocab/i,'🔤'],[/resume|interview/i,'💼'],[/fundrais/i,'💵'],[/honors/i,'🎓'],[/study guide/i,'📘'],[/grade it/i,'🧑‍🏫'],[/digital/i,'💻'],[/career wicor/i,'🧭'],[/caaspp/i,'📝'],[/uc & csu/i,'🎓'],[/a–g/i,'📋'],[/essay/i,'✍️'],[/fafsa/i,'💰'],[/scholarship/i,'🏆'],[/tour/i,'🏛️'],[/timeline/i,'📅'],[/tulare county programs/i,'📍'],[/ideas/i,'💡'],[/log my hours/i,'⏱️'],[/community/i,'🤝'],[/start here/i,'🚀'],[/binder/i,'🗂️'],[/focused|note-taking/i,'📝'],[/tutorial/i,'❓'],[/confusion/i,'🤔'],[/graphic/i,'🧩'],[/goal|contract/i,'🎯'],[/^tutors$/i,'🧑‍🏫'],[/field trip/i,'🚌'],[/site team|certif/i,'🏅'],[/collaboration/i,'💬'],[/science/i,'🔬'],[/math/i,'📐'],[/english/i,'📚'],[/history/i,'🏛️'],[/coming soon/i,'🚧']];
 const FOLDER_COLORS=['#5b5fe0','#14a37f','#ee7d1c','#1f95e0','#e0408a','#8a54e0','#f25c54','#0e9f6e','#e08a00','#2b7de9','#c2185b','#00897b'];
 const ficon=n=>(FOLDER_ICON.find(([r])=>r.test(n))||[0,'📁'])[1];
 const spaceChips=s=>`<nav class="switch" aria-label="Spaces"><a class="back" href="#home">← All spaces</a>${SECTIONS.map(x=>`<a class="swchip ${x===s?'on':''}" style="--c:${x.color}" href="#${x.id}">${x.name}</a>`).join('')}</nav>`;
@@ -2109,6 +2157,51 @@ const DISCUSSIONS=[
   lt:['I can compare at least two paths after high school.','I can explain which path fits my goals and why.'],
   prompt:'After high school, some people go to a four-year university, while others choose community college, a trade or technical program, the military, or start working. Is a four-year degree the best path for everyone? Compare at least two paths and explain which fits your own goals and why.',
   frames:['I think the best path depends on…','One path is…, which is good for…','For my goals, I plan to… because…','I had not thought about ___ until you said…','What made you choose…?']},
+{id:'ai-schoolwork', tag:'English', icon:'🤖', title:'AI Chatbots and Schoolwork: Help or Cheating?', minWords:75,
+  eq:'When does a tool support our thinking, and when does it replace it?',
+  lt:['I can take a position on AI use in school and support it with evidence from the source.','I can respond to a classmate’s line between “help” and “cheating” with my own reasoning.'],
+  prompt:'Read the source first. More teens are using AI chatbots like ChatGPT for schoolwork. Should students use them, and if so, how? Explain where YOU draw the line between getting help and cheating. Cite at least one fact from the source (for example, the Pew Research Center data) and give a specific example of an acceptable use and an unacceptable use.',
+  frames:['According to the Pew Research Center, …','I think using AI is acceptable when… because…','It becomes cheating when…, because the student skips…','Some people argue… but I believe…','I agree with ___ about…, but where would you draw the line on…?']},
+ {id:'social-media-16', tag:'History', icon:'📱', title:'Should Social Media Have a Minimum Age of 16?', minWords:75,
+  eq:'How should governments balance protecting young people with protecting their freedoms?',
+  lt:['I can evaluate a law using evidence and arguments from both sides.','I can respectfully challenge or build on a classmate’s position.'],
+  prompt:'Read the source first. Australia now bans accounts for kids under 16 on major social media platforms. Should the United States, or California, pass a similar law? Take a position, cite at least one fact from the source, and respond to one argument from the other side.',
+  frames:['In December 2025, Australia…','My position is… because…','The strongest argument on the other side is…, but…','A law like this would affect teens like me by…','I see your point, ___, but how would that be enforced if…?']},
+ {id:'vote-at-16', tag:'History', icon:'🗳️', title:'Should 16-Year-Olds Vote in Local Elections?', minWords:75,
+  eq:'Who should have a voice in a democracy, and how has that changed over time?',
+  lt:['I can connect a current debate to the history of voting rights in the U.S.','I can use evidence from the source to support or challenge a classmate’s claim.'],
+  prompt:'Read the source first. Some cities already let 16- and 17-year-olds vote in local elections. Should Tulare, or your own city, do the same for city council or school board elections? Use at least one example from the source and connect your argument to the 26th Amendment.',
+  frames:['In 1971, the 26th Amendment…','One place that already allows this is…','I think 16-year-olds should / should not vote locally because…','Someone who disagrees might say…, but…','Your argument made me think about… Do you think…?']},
+ {id:'crispr-ethics', tag:'Science', icon:'🧬', title:'Gene Editing: Where Should We Draw the Line?', minWords:75,
+  eq:'How should society decide what new medical technology should be used for, and who gets it?',
+  lt:['I can explain in simple terms how CRISPR gene editing works.','I can take an ethical position on gene editing and support it with evidence.'],
+  prompt:'Read the source first. CRISPR gene editing can now treat sickle cell disease, but it is very expensive and raises big questions. Should gene editing be used only to treat disease, or are there other uses that are acceptable? Who should be able to get it? Explain how CRISPR works in your own words and cite at least one fact from the source.',
+  frames:['CRISPR works by…','In December 2023, the FDA…','I think gene editing should be used for… but not for… because…','The cost of more than $2 million means…','I agree with ___ about…, but what about people who…?']},
+ {id:'valley-water', tag:'Science', icon:'💧', title:'Water in the Valley: Who Gets It?', minWords:75,
+  eq:'How should a community share a limited natural resource?',
+  lt:['I can explain a local water problem using evidence from the source.','I can propose a balanced solution and respond to a classmate’s idea.'],
+  prompt:'Read the source first. Here in the San Joaquin Valley, farms, towns, and the environment all depend on the same water. How should the Valley balance these needs, especially during droughts? Cite at least one fact from the source (subsidence, SGMA, or Tulare Lake) and suggest one specific idea.',
+  frames:['According to the source, subsidence happens when…','SGMA, passed in 2014, …','I think the most important need is… because…','One idea to balance these needs is…','Your idea about ___ could work, but what would happen to…?']},
+ {id:'money-class', tag:'Math', icon:'💵', title:'Should Personal Finance Be Required?', minWords:75,
+  eq:'How does understanding the math of money help people make better decisions?',
+  lt:['I can use a compound interest or credit card example to support an argument.','I can explain which money skill matters most and why.'],
+  prompt:'Read the source first. California will soon require a one-semester personal finance class to graduate. Is this a good requirement? Use at least one number from the savings or credit card example to support your answer, and name the money topic YOU think matters most for teens (budgeting, credit, saving, taxes, paying for college…).',
+  frames:['Starting with the class of 2030–31, California…','The example shows that… because…','The money topic that matters most to me is… because…','Without this class, a student might…','I had not thought about ___ until you said… How would you…?']},
+ {id:'retakes', tag:'AVID', icon:'🔁', title:'Retakes and Late Work: Fair or Not?', minWords:75,
+  eq:'What grading policies best help students learn, and what habits do they build?',
+  lt:['I can weigh two sides of a school policy and take a clear position.','I can respond to a classmate with a reason, not just an opinion.'],
+  prompt:'Read the two viewpoints first. Should students be allowed to retake tests and turn in late work for full or partial credit? Take a position, refer to at least one argument from Viewpoint A or Viewpoint B, and suggest a policy you think would be fair (for example, rules or limits on retakes).',
+  frames:['Viewpoint A / B argues that…','I agree / disagree with this because…','A fair policy would be… because…','This would help students build the habit of…','I see why you think that, ___, but what about students who…?']},
+ {id:'heat-sports', tag:'Science', icon:'🌡️', title:'Extreme Heat and Student Athletes', minWords:75,
+  eq:'How can science help keep people safe in extreme conditions?',
+  lt:['I can explain how heat affects the body and how heat risk is measured.','I can propose a policy that balances safety and practice time.'],
+  prompt:'Read the source first. Valley summers and early fall can be dangerously hot for athletes, band members, and anyone practicing outside. How should schools balance safety with practice time? Explain the science of heat illness using the source (hydration, heat index, or WBGT) and suggest at least one specific rule or change.',
+  frames:['According to the source, heat illness happens when…','WBGT is better than air temperature alone because…','One rule I would suggest is… because…','A coach or athlete might argue…, but…','I like your idea about ___. How would it work on a day when…?']},
+ {id:'history-lens', tag:'History', icon:'🔍', title:'Whose Story Gets Told?', minWords:75,
+  eq:'Why does perspective matter when we study history?',
+  lt:['I can compare two perspectives on the same historical event.','I can explain how a source’s point of view shapes the story it tells.'],
+  prompt:'Read both perspectives on the California Gold Rush first. How are they different? Whose story does each one tell, and whose story is left out? Quote or cite at least one detail from each perspective, and explain why historians need more than one point of view to understand an event.',
+  frames:['Perspective A focuses on…','Perspective B shows that…','The voices left out of Perspective A are…','Historians need more than one perspective because…','I noticed ___ too, but did you think about…?']},
  {id:'open-topic', tag:'Teacher’s Choice', icon:'📰', title:'Teacher’s Choice: Current Events', minWords:75,
   eq:'How can I respond thoughtfully to what is happening in the world?',
   lt:['I can summarize a topic and take a clear position on it.','I can build on or respectfully challenge a classmate’s thinking.'],
@@ -2174,7 +2267,77 @@ const DSRC={
   html:`<p>Your teacher will share today’s article, video, or source in class. Before you post, read it like a professional fact-checker using <b>SIFT</b>:</p>
    <ol><li><b>S</b>top: notice your first reaction before you share or decide.</li><li><b>I</b>nvestigate the source: who made it, and why?</li><li><b>F</b>ind better coverage: what do other trusted sources say?</li><li><b>T</b>race claims, quotes, and numbers back to where they came from.</li></ol>
    <p>In your post, name the source and use at least one specific detail from it.</p>`,
-  cite:'SIFT method: Mike Caulfield, Washington State University, “SIFT (The Four Moves).”'}
+  cite:'SIFT method: Mike Caulfield, Washington State University, “SIFT (The Four Moves).”'},
+'ai-schoolwork':{type:'Chart + two viewpoints',title:'Teens, ChatGPT, and Schoolwork',keys:['26%','26 percent','13%','13 percent','pew','double','research new topics','writing essays','study aid'],
+  html:`${barChart('U.S. teens (13–17) who have used ChatGPT for schoolwork',[['2023',13],['2024 (published 2025)',26]],'%',100,'#e8368f')}
+   <p style="margin-top:10px">In a survey published in <b>January 2025</b>, the <b>Pew Research Center</b> found that <b>26%</b> of U.S. teens ages 13 to 17 said they had used ChatGPT for schoolwork. That is <b>double</b> the 13% who said so in 2023. Most teens said it is acceptable to use ChatGPT to <b>research new topics</b>, but far fewer said it is acceptable to use it for <b>writing essays</b>.</p>
+   <table class="dtab"><tr><th>Viewpoint A: A study aid</th><th>Viewpoint B: Skipping the thinking</th></tr>
+   <tr><td>AI can explain a confusing idea in a new way, quiz you before a test, or help you brainstorm, like a tutor available any time. Used this way, it can help students who do not have someone at home to ask.</td>
+   <td>Writing and problem solving are how your brain learns. If a chatbot writes the essay or solves the problem, you get the grade but skip the learning. AI can also give answers that sound confident but are wrong.</td></tr></table>`,
+  cite:'Source: Pew Research Center, survey of U.S. teens ages 13–17 on ChatGPT and schoolwork (January 2025). Viewpoints summarized for AVID discussion.'},
+ 'social-media-16':{type:'Article + two viewpoints',title:'Too Young for Social Media?',keys:['australia','under 16','under-16','december 10','2025','surgeon general','2023','advisory','mental health','enforce'],
+  html:`<p>On <b>December 10, 2025</b>, a law in <b>Australia</b> took effect that bans children <b>under 16</b> from having accounts on major social media platforms. The platforms, not parents or kids, are responsible for keeping under-16 users off.</p>
+   <p>In the United States, the <b>U.S. Surgeon General</b> released an <b>advisory in 2023</b> that raised concerns about social media and youth <b>mental health</b>, and called for more research and stronger protections for young users. No national age ban like Australia’s exists in the U.S.</p>
+   <table class="dtab"><tr><th>Viewpoint A: Protect teens</th><th>Viewpoint B: Keep the connection</th></tr>
+   <tr><td>Teens’ brains are still developing, and apps are designed to keep people scrolling. A clear age rule takes pressure off kids and parents because “everyone else is on it” is no longer true.</td>
+   <td>Social media helps teens stay connected to friends, family, and communities, including teens who feel alone at school. It is also a place for free expression. Bans may be hard to <b>enforce</b>, since users can lie about their age, and checking IDs raises privacy concerns.</td></tr></table>`,
+  cite:'Sources: Australia’s social media minimum age law (in effect December 10, 2025); U.S. Surgeon General’s Advisory on Social Media and Youth Mental Health (2023). Viewpoints summarized for AVID discussion.'},
+ 'vote-at-16':{type:'Timeline + data table',title:'Lowering the Voting Age: Then and Now',keys:['26th','twenty-sixth','1971','old enough to fight','takoma park','2013','berkeley','oakland','austria','2007','school board'],
+  html:`<table class="dtab"><tr><th>Year</th><th>What happened</th></tr>
+   <tr><td><b>1971</b></td><td>The <b>26th Amendment</b> lowers the U.S. voting age from 21 to <b>18</b>. During the Vietnam War, supporters argued that if 18-year-olds were <b>“old enough to fight,”</b> they were <b>“old enough to vote.”</b></td></tr>
+   <tr><td><b>2007</b></td><td><b>Austria</b> lowers its national voting age to <b>16</b>.</td></tr>
+   <tr><td><b>2013</b></td><td><b>Takoma Park, Maryland</b>, becomes the first U.S. city to let 16-year-olds vote in local elections.</td></tr>
+   <tr><td>Recent years</td><td>In California, voters in <b>Berkeley</b> and <b>Oakland</b> approve letting 16- and 17-year-olds vote for <b>school board</b>.</td></tr></table>
+   <p style="margin-top:10px"><b>Supporters</b> say local decisions, like school budgets, parks, and curfews, affect teens directly. They also argue that people who vote in their first eligible election are more likely to keep voting, and 16-year-olds are usually still living at home and in school, which makes voting easier to start.</p>
+   <p><b>Opponents</b> say most 16-year-olds are not legally adults, may not follow local issues closely, and could be influenced by parents or teachers. They argue 18 is a clear line that matches other adult rights and responsibilities.</p>`,
+  cite:'Sources: U.S. Constitution, 26th Amendment (1971); City of Takoma Park, MD (2013); Berkeley and Oakland ballot measures on youth voting for school board; Austria electoral reform (2007). Arguments summarized for AVID discussion.'},
+ 'crispr-ethics':{type:'Article',title:'CRISPR: Cutting and Fixing DNA',keys:['crispr','cas9','casgevy','sickle cell','fda','december 2023','2023','$2 million','2 million','embryo','scissors'],
+  html:`<p>Every cell in your body carries <b>DNA</b>, the instructions for building and running you. <b>CRISPR</b> is a gene-editing tool scientists adapted from bacteria. A guide molecule leads a protein called <b>Cas9</b> to an exact spot in the DNA, and Cas9 <b>“cuts”</b> the DNA there, like molecular <b>scissors</b>. The cell then repairs the cut, and scientists can use that repair to turn a gene off or change it.</p>
+   <p>In <b>December 2023</b>, the U.S. <b>FDA</b> approved <b>Casgevy</b>, the first CRISPR-based therapy, to treat <b>sickle cell disease</b>. Sickle cell is an inherited disease in which red blood cells become stiff and curved, causing severe pain and organ damage. The treatment edits a patient’s own blood stem cells, which are then returned to the body.</p>
+   <p>The treatment costs <b>more than $2 million</b> per patient, and it requires a long hospital stay. That raises questions about who can get it.</p>
+   <p>There is a bigger ethical line, too. Editing a patient’s blood cells affects only that person. Editing an <b>embryo</b> would change genes that could be passed on to future generations. In 2018, a scientist in China announced he had edited embryos that became twin babies, and scientists around the world condemned it.</p>`,
+  cite:'Sources: U.S. Food and Drug Administration approval of Casgevy (December 2023); general CRISPR-Cas9 science. Summary written for AVID discussion.'},
+ 'valley-water':{type:'Article + timeline',title:'The Valley’s Water Puzzle',keys:['subsidence','sinking','sink','groundwater','pump','sgma','2014','sustainable groundwater','tulare lake','2023','snowmelt'],
+  html:`<p>The San Joaquin Valley is one of the most productive farming regions in the world, and much of its water comes from underground <b>aquifers</b>. When wells <b>pump</b> out <b>groundwater</b> faster than rain and rivers can refill it, layers of clay underground get squeezed, and the ground above can sink. This is called <b>land subsidence</b>. In parts of the Valley, subsidence has damaged canals, roads, and wells. When shallow wells run dry, some families in small rural towns have lost their drinking water.</p>
+   <table class="dtab"><tr><th>Year</th><th>Event</th></tr>
+   <tr><td>Late 1800s–1900s</td><td><b>Tulare Lake</b>, once a huge freshwater lake, is drained and its rivers are diverted for farming.</td></tr>
+   <tr><td><b>2014</b></td><td>California passes the <b>Sustainable Groundwater Management Act (SGMA)</b>. Local agencies must make plans to bring groundwater pumping into balance over time.</td></tr>
+   <tr><td><b>2023</b></td><td>After heavy storms and the melting of a huge snowpack, <b>Tulare Lake reappears</b>, flooding farmland and threatening nearby communities.</td></tr></table>
+   <p style="margin-top:10px">The Valley faces a puzzle: <b>farms</b> provide jobs and food, <b>towns</b> need safe drinking water, and the <b>environment</b> (rivers, wetlands, and wildlife) needs water too. In dry years, there is not enough for everyone.</p>`,
+  cite:'Sources: California Sustainable Groundwater Management Act (2014); U.S. Geological Survey and California Department of Water Resources information on San Joaquin Valley subsidence; news coverage of Tulare Lake’s return (2023). Summary written for AVID discussion.'},
+ 'money-class':{type:'Chart + worked example',title:'The Math Behind Money Class',keys:['ab 2927','2927','2030','one-semester','$1,629','1,629','1629','$2,653','2,653','$4,322','4,322','24%','26 months','$290','290','compound','interest'],
+  html:`<p>In 2024, California signed <b>AB 2927</b>, which makes a <b>one-semester personal finance course</b> a graduation requirement, starting with students graduating in the <b>2030–31</b> school year. Here are two examples of the math these classes teach.</p>
+   ${barChart('$1,000 saved once, earning 5% a year (compounded yearly)',[['Start',1000],['After 10 years',1629],['After 20 years',2653],['After 30 years',4322]],'$',4800,'#2b7de9')}
+   <p style="margin-top:8px"><b>Compound interest working FOR you:</b> each year you earn 5% on your money <i>plus</i> on the interest you already earned. The formula is 1,000 × 1.05<sup>years</sup>. Your money more than quadruples in 30 years without adding another dollar.</p>
+   <p><b>Compound interest working AGAINST you:</b> suppose you owe <b>$1,000</b> on a credit card with a <b>24%</b> yearly rate (2% per month) and pay <b>$50 a month</b>.</p>
+   <table class="dtab"><tr><th>Credit card example</th><th>Result</th></tr>
+   <tr><td>Time to pay it off</td><td>About <b>26 months</b></td></tr>
+   <tr><td>Total paid</td><td>About <b>$1,290</b></td></tr>
+   <tr><td>Interest paid</td><td>About <b>$290</b></td></tr></table>`,
+  cite:'Sources: California Assembly Bill 2927 (2024). Calculations: savings = $1,000 × 1.05^n, rounded to the nearest dollar; credit card = $1,000 at 2% monthly interest with $50 monthly payments, rounded.'},
+ 'retakes':{type:'Two viewpoints',title:'Second Chances in the Gradebook',keys:['viewpoint a','viewpoint b','mastery','mistake','deadline','real world','procrastinat','workload','second chance'],
+  html:`<p>Many schools are debating grading policies. Some teachers allow students to <b>retake tests</b> and turn in <b>late work</b>; others do not, or set limits. Read both viewpoints before you decide.</p>
+   <table class="dtab"><tr><th>Viewpoint A: Allow retakes and late work</th><th>Viewpoint B: Keep firm deadlines</th></tr>
+   <tr><td>A grade should show what you <b>learned</b>, not how fast you learned it. If a student studies their <b>mistakes</b> and then shows <b>mastery</b> on a retake, the higher score is more accurate. Students also have real lives: jobs, family responsibilities, illness, and sports. A second chance can keep a student from giving up after one bad day.</td>
+   <td>In the <b>real world</b>, jobs, college applications, and bills have <b>deadlines</b>. If there is always a second chance, some students stop preparing the first time, which encourages <b>procrastination</b>. Retakes also add to teachers’ <b>workload</b>, since they must write and grade extra tests, which can mean less time for feedback and planning.</td></tr></table>
+   <p style="margin-top:10px">Some schools try a middle path, such as allowing a retake only after the student completes test corrections or attends a tutorial, or giving partial credit for late work. In AVID, think about which policy best builds the habits you will need in college.</p>`,
+  cite:'Arguments summarized for AVID discussion from common positions in the debate over standards-based grading and late-work policies.'},
+ 'heat-sports':{type:'Article + table',title:'Playing It Safe in the Heat',keys:['heat exhaustion','heat stroke','hydrat','heat index','wbgt','wet-bulb','wet bulb','humidity','cif','interscholastic','sweat','acclimat'],
+  html:`<p>Your body cools itself mainly by <b>sweating</b>: as sweat evaporates, it carries heat away. When it is very hot and humid, sweat evaporates slowly, and an athlete working hard can heat up faster than the body can cool down. That leads to <b>heat illness</b>.</p>
+   <table class="dtab"><tr><th>Condition</th><th>Warning signs</th></tr>
+   <tr><td><b>Heat exhaustion</b></td><td>Heavy sweating, dizziness, headache, nausea, weakness, cramps</td></tr>
+   <tr><td><b>Heat stroke</b> (a medical emergency)</td><td>Very high body temperature, confusion, fainting; needs rapid cooling and 911</td></tr></table>
+   <p style="margin-top:10px"><b>Hydration</b> matters: athletes should drink water before, during, and after practice, not just when they feel thirsty. Bodies also need time to <b>acclimatize</b>, or adjust, to heat over several days.</p>
+   <p>Air temperature alone does not show the full danger. The <b>heat index</b> combines temperature and <b>humidity</b> to show how hot it feels. The <b>Wet-Bulb Globe Temperature (WBGT)</b> goes further: it also accounts for sun and wind, so many athletic programs use it to decide when to add water breaks, remove equipment, move practice to a cooler time, or cancel.</p>
+   <p>The <b>California Interscholastic Federation (CIF)</b> has heat-illness guidelines for school sports, and California has adopted heat-safety rules for student athletes.</p>`,
+  cite:'Sources: general heat illness and hydration guidance from public health agencies; California Interscholastic Federation (CIF) heat-illness guidelines. Summary written for AVID discussion.'},
+ 'history-lens':{type:'Two perspectives',title:'The Gold Rush: Two Stories',keys:['perspective a','perspective b','polk','1848','extraordinary character','native','californio','chinese','foreign miners','gold rush','left out'],
+  html:`<p>In January <b>1848</b>, gold was discovered at Sutter’s Mill in California. Within a few years, hundreds of thousands of people rushed in. Two perspectives on the same event tell very different stories.</p>
+   <table class="dtab"><tr><th>Perspective A: The President’s report (primary source)</th><th>Perspective B: Historian summary</th></tr>
+   <tr><td>In December 1848, President <b>James K. Polk</b> told Congress: <i>“The accounts of the abundance of gold in that territory are of such an extraordinary character as would scarcely command belief were they not corroborated by the authentic reports of officers in the public service.”</i><br><br>Newspapers spread the news, and “Forty-Niners” arrived from across the U.S. and the world hoping to get rich. California became a state in 1850.</td>
+   <td><i>(Written for this lesson, based on what historians widely agree on.)</i> For <b>Native Californians</b>, the Gold Rush was a disaster. Miners took over their lands, food sources, and rivers, and many Native people were killed by violence, disease, and starvation. <b>Californios</b>, Mexican Californians who had lived there for generations, often lost their land. <b>Chinese</b> and Latin American miners faced discrimination, including California’s <b>Foreign Miners’ Tax</b> of 1850.</td></tr></table>
+   <p style="margin-top:10px">Perspective A comes from a powerful leader writing at the time. Perspective B pulls together the experiences of people whose voices were often <b>left out</b> of official reports.</p>`,
+  cite:'Sources: President James K. Polk, Annual Message to Congress (December 5, 1848), public domain; historian summary written for AVID discussion based on standard California history references.'}
 };
 
 const TAG_COLOR={'AVID':'#5b5fe0','English':'#e8368f','Science':'#1aa36f','History':'#e08a00','Math':'#2b7de9','College & Career':'#e0408a','Teacher’s Choice':'#8a54e0'};
@@ -2633,7 +2796,7 @@ const kindOf=it=>it.k==='lesson'&&CH[it.id]?'graded':it.k;
 function itemHTML(it,from){
   const kind=kindOf(it);
   const ch=it.k==='lesson'&&CH[it.id], meta=it.meta||(ch?`${ch.hands?'Hands-on · ':''}${ch.subj||''}`:'');
-  const go=it.k==='link'?'Visit site ↗':it.k==='note'?'':it.k==='nav'?'Go there →':it.k==='page'?`${meta?meta+' · ':''}Start lesson →`:(meta?`${meta} · Open →`:'Open →');
+  const go=it.go?it.go:it.k==='link'?'Visit site ↗':it.k==='note'?'':it.k==='nav'?'Go there →':it.k==='page'?`${meta?meta+' · ':''}Start lesson →`:(meta?`${meta} · Open →`:'Open →');
   const inner=`<span class="top"><span class="ico">${kindIcon[it.k]}</span><span class="kpill k-${kind}">${it.label||KIND[kind]}</span></span><span class="t">${it.title}</span><span class="d">${it.desc}</span>${it.k==='print'?`<span class="pmeta">${it.aud?`<span class="aud a-${it.aud}">${AUD[it.aud]}</span>`:''}${it.isNew?'<span class="aud a-new">New</span>':''}</span>`:''}${from?`<span class="from">${from}</span>`:''}${it.k==='print'?`<span class="go pbtns"><a href="${it.url}" target="_blank" rel="noopener">Open ↗</a><a class="pr" href="${printURL(it.url)}" target="_blank" rel="noopener" title="Download a PDF to print">🖨️ Print</a></span>`:go?`<span class="go">${go}</span>`:''}`;
   const cls=`rcard${it.add?' add':''}${it.feature?' feature':''}`;
   if(it.k==='print') return `<div class="${cls} printable" data-kind="${kind}" data-aud="${it.aud||'both'}">${inner}</div>`;

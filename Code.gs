@@ -14,7 +14,7 @@
           Average % of points, and ⬇ Download for Aeries for each period
         • Service Hours (that teacher's students)
 
-   GRADED: the 11 full WICOR lessons (2 pts per station), the 8 Discussion Board
+   GRADED: the 11 full WICOR lessons (2 pts per station), the 17 Discussion Board
    prompts (main post /6 + replies /4), every WICOR Challenge, and the college
    essay / campus tools. (Practice activities and projector tools aren't graded.)
 
@@ -90,6 +90,20 @@ const ACTIVITIES = [
   ["College & Career Lessons", "College & Career lesson", "College & Career: California, Here I Come: Exploring Our Colleges"],
   ["College & Career Lessons", "College & Career lesson", "College & Career: Major Moves: Pick a Major and Plan Your Classes"],
   ["College & Career Lessons", "College & Career lesson", "College & Career: Degree to Paycheck: Careers, Salaries, and Applications"],
+  ["AVID Lessons", "Questioning lesson", "AVID: Costa’s Question Lab: Ask Higher-Level Questions"],
+  ["College & Career Lessons", "College & Career lesson", "College & Career: Get Hired: Resumes, Applications & Interviews"],
+  ["Vocabulary Practice", "Vocabulary deck", "Vocabulary: Test Vocabulary: Words in the Directions"],
+  ["Vocabulary Practice", "Vocabulary deck", "Vocabulary: Test Vocabulary: Math Directions"],
+  ["Vocabulary Practice", "Vocabulary deck", "Vocabulary: Algebra 1"],
+  ["Vocabulary Practice", "Vocabulary deck", "Vocabulary: Geometry"],
+  ["Vocabulary Practice", "Vocabulary deck", "Vocabulary: Biology"],
+  ["Vocabulary Practice", "Vocabulary deck", "Vocabulary: Chemistry"],
+  ["Vocabulary Practice", "Vocabulary deck", "Vocabulary: World History"],
+  ["Vocabulary Practice", "Vocabulary deck", "Vocabulary: US History"],
+  ["Vocabulary Practice", "Vocabulary deck", "Vocabulary: Government & Economics"],
+  ["Vocabulary Practice", "Vocabulary deck", "Vocabulary: Literary & Rhetorical Terms"],
+  ["Vocabulary Practice", "Vocabulary deck", "Vocabulary: College Words"],
+  ["Vocabulary Practice", "Vocabulary deck", "Vocabulary: AVID Words"],
   ["Reading Checks", "10-Minute Reading Check", "Reading Check · US History: Reading Political Cartoons: Trusts and Empire"],
   ["Reading Checks", "10-Minute Reading Check", "Reading Check · US History: World War I: Causes and Effects"],
   ["Reading Checks", "10-Minute Reading Check", "Reading Check · US History: World War II: Causes and Effects"],
@@ -154,6 +168,15 @@ const ACTIVITIES = [
   ["Discussion Board", "Discussion", "Discussion · Which Invention Changed History the Most?"],
   ["Discussion Board", "Discussion", "Discussion · Where Do You See Math Outside of School?"],
   ["Discussion Board", "Discussion", "Discussion · Is a Four-Year College the Only Path to Success?"],
+["Discussion Board", "Discussion", "Discussion · AI Chatbots and Schoolwork: Help or Cheating?"],
+  ["Discussion Board", "Discussion", "Discussion · Should Social Media Have a Minimum Age of 16?"],
+  ["Discussion Board", "Discussion", "Discussion · Should 16-Year-Olds Vote in Local Elections?"],
+  ["Discussion Board", "Discussion", "Discussion · Gene Editing: Where Should We Draw the Line?"],
+  ["Discussion Board", "Discussion", "Discussion · Water in the Valley: Who Gets It?"],
+  ["Discussion Board", "Discussion", "Discussion · Should Personal Finance Be Required?"],
+  ["Discussion Board", "Discussion", "Discussion · Retakes and Late Work: Fair or Not?"],
+  ["Discussion Board", "Discussion", "Discussion · Extreme Heat and Student Athletes"],
+  ["Discussion Board", "Discussion", "Discussion · Whose Story Gets Told?"],
   ["Discussion Board", "Discussion", "Discussion · Teacher’s Choice: Current Events"],
   ["WICOR Challenges", "Graded challenge", "Reading · Read the Graph: Slope & Intercept"],
   ["WICOR Challenges", "Graded challenge", "Reading · Read the Diagram: Parallel Lines"],
