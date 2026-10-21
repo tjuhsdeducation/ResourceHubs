@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elodea, Snails & Bromothymol Blue | Virtual Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cc-lesson.css?v=2">
+</head>
+<body>
+<script>
+/* =====================================================================
+   🧪 BIOLOGY VIRTUAL LAB: Elodea, Snails & Bromothymol Blue (≈ 40 min)
+   Photosynthesis + cellular respiration. Matches the 01B Photosynthesis
+   and 06B Cellular Respiration notes (equations, organelles, stages).
+   ✏️ To change wording, edit the text between the quotes/backticks.
+   ===================================================================== */
+window.CC = {
+  id: "lab-btb", subject: "Biology", short: "Virtual Lab: Elodea & Snails", color: "#1aa36f", emoji: "🧪", time: "≈ 40 min",
+  kind: "Virtual Lab", brand: { name: "Interactive Lessons", home: "lessons", mark: "🔬" },
+  title: "Elodea, Snails & Bromothymol Blue: Who Uses CO₂?",
+  intro: "Run a virtual version of the classic bromothymol blue lab. Predict, watch 24 hours pass, record your data, figure out which process happened in each tube, and write a CER.",
+  eq: "How do photosynthesis and cellular respiration change the amount of carbon dioxide around plants and animals?",
+  targets: {
+    R: "I can explain how bromothymol blue (BTB) shows a change in carbon dioxide.",
+    I: "I can predict, observe, and record how CO₂ changes in light and dark.",
+    O: "I can sort the inputs and outputs of photosynthesis and cellular respiration.",
+    W: "I can write a CER that uses data from the tubes as evidence.",
+    C: "I can compare my predictions and claim with a partner."
+  },
+  teacher: `<p><b>Pacing (≈ 40 min):</b> Warm-Up 3 · BTB Background 5 · Predict 5 · Run the Lab 10 · Analyze 7 · CER 7 · Closure 5.</p>
+    <p><b>Real lab connection:</b> This matches the classic setup. Bubble a little breath (CO₂) into blue BTB with a straw until it turns green, fill 8 tubes, add Elodea and/or a small snail, stopper them, and place half under a grow light and half in a dark cabinet for 24 hours. (Never let students drink BTB; wear goggles.)</p>
+    <p><b>Expected results:</b> #1 and #5 controls stay green. #2 Elodea in light turns blue (photosynthesis is faster than respiration, so CO₂ drops). #6 Elodea in the dark turns yellow (respiration only). #3 and #7 snails turn yellow (respiration only). #4 Elodea + snail in light stays about green or slightly blue (the plant uses the snail’s CO₂). #8 Elodea + snail in the dark turns the most yellow (both respire).</p>
+    <p><b>Key misconception to address:</b> “Plants do photosynthesis and animals do respiration.” Tube #6 is the evidence that plants also do cellular respiration, all the time, day and night.</p>
+    <p><b>Collaboration:</b> After Station 3, have partners compare predictions for tubes #4 and #6 and defend their choices. After Station 6, partners swap CERs and check for tube numbers as evidence.</p>`,
+  stations: [
+    { letters: ["I"], title: "Warm-Up: What Do You Already Know?", time: "3 min", goal: "Activate what you learned in the photosynthesis and cellular respiration notes.",
+      blocks: [
+        { t: "quiz", label: "warm-up", title: "Quick check", items: [
+          { q: "Which organisms perform <b>cellular respiration</b>?", opts: ["Only animals", "Only plants", "All living things, including plants and animals", "Only bacteria"], a: 2, why: "All living things need ATP, and both plant and animal cells have mitochondria." },
+          { q: "Which organisms can perform <b>photosynthesis</b>?", opts: ["Plants, algae, and some bacteria", "All living things", "Only animals", "Snails and fish"], a: 0, why: "Only organisms with chlorophyll (plants, algae, and some bacteria) can capture sunlight to make glucose." },
+          { q: "Which gas does photosynthesis <b>take in</b> and cellular respiration <b>give off</b>?", opts: ["Oxygen (O₂)", "Carbon dioxide (CO₂)", "Nitrogen (N₂)", "Hydrogen (H₂)"], a: 1, why: "Photosynthesis uses CO₂ as a reactant. Cellular respiration releases CO₂ as a product." }] }
+      ] },
+    { letters: ["R"], title: "Background: The Color-Changing Indicator", time: "5 min", goal: "Learn how bromothymol blue shows carbon dioxide and how the lab is set up.",
+      blocks: [
+        { t: "text", html: `<h3>What is bromothymol blue (BTB)?</h3>
+          <p><b>Bromothymol blue</b> is a chemical <b>indicator</b>: it changes color to show a change in a solution. When <b>carbon dioxide (CO₂)</b> dissolves in water, it forms a weak acid called <b>carbonic acid</b>. The more CO₂ in the water, the more acidic it gets, and the more BTB shifts toward yellow.</p>
+          <div class="callout"><b>🔵 Blue</b> = low CO₂ (CO₂ was removed) &nbsp; → &nbsp; <b>🟢 Green</b> = a medium amount of CO₂ &nbsp; → &nbsp; <b>🟡 Yellow</b> = high CO₂ (CO₂ was added)</div>
+          <h3>The setup</h3>
+          <p>Your teacher bubbled a little breath into blue BTB with a straw until it turned <b>green</b>. Then 8 test tubes were filled with the green BTB, and each tube got a stopper so no gas could get in or out:</p>
+          <ul><li><b>Elodea</b> is an underwater plant with chloroplasts. <b>Snails</b> are animals with mitochondria but no chloroplasts.</li>
+          <li>Tubes <b>#1–4</b> sit under a <b>grow light</b>. Tubes <b>#5–8</b> sit in a <b>dark cabinet</b>. They stay there for <b>24 hours</b>.</li>
+          <li>Tubes <b>#1 and #5</b> have only BTB. They are the <b>controls</b>: they show what happens with no living things.</li></ul>
+          <p class="src">Remember from your notes: photosynthesis (chloroplast) <b>uses</b> CO₂ and needs sunlight. Cellular respiration (mitochondria) <b>releases</b> CO₂ and happens all the time, in the light and in the dark.</p>` },
+        { t: "quiz", label: "background check", items: [
+          { q: "A tube of BTB turns from green to <b>yellow</b>. What happened to the carbon dioxide?", opts: ["It decreased", "It increased", "It stayed the same", "It turned into glucose"], a: 1, why: "Yellow means more CO₂ (more carbonic acid)." },
+          { q: "A tube of BTB turns from green to <b>blue</b>. What happened to the carbon dioxide?", opts: ["It increased", "It stayed the same", "It decreased", "It turned into water"], a: 2, why: "Blue means CO₂ was removed from the water." },
+          { q: "Why do tubes #1 and #5 have no living things?", opts: ["To save money", "They are controls that show BTB alone does not change color", "So the snail has more room", "To test if light kills BTB"], a: 1, why: "Controls let you compare. If they change color too, something besides living things caused it." },
+          { q: "What is the <b>independent variable</b> (what is changed on purpose) for the Elodea tubes #2 and #6?", opts: ["The color of the BTB", "Light vs. dark", "The size of the test tube", "The amount of time"], a: 1, why: "Light is changed on purpose. The BTB color is the dependent variable we measure." }] }
+      ] },
+    { letters: ["I", "C"], title: "Predict Before You Run It", time: "5 min", goal: "Predict the end color of every tube, then explain your thinking.",
+      blocks: [
+        { t: "bblab", mode: "predict", title: "Make your predictions" },
+        { t: "write", label: "hypothesis", title: "My hypothesis", prompt: "Pick <b>tube #2 (Elodea in light)</b> and <b>tube #6 (Elodea in the dark)</b>. Predict what will happen to each, and explain WHY using the words <b>photosynthesis</b>, <b>cellular respiration</b>, and <b>carbon dioxide</b>.", min: 30,
+          frames: ["If Elodea is in the light, then the BTB will turn ___ because…", "If Elodea is in the dark, then…", "This is because photosynthesis / cellular respiration…"], starter: "If Elodea is in the light, then…",
+          checks: [{ label: "Uses an if/then prediction", re: /\bif\b[\s\S]*\bthen\b|\bwill\b/i }, { label: "Mentions photosynthesis", re: /photosynth/i }, { label: "Mentions cellular respiration", re: /respirat/i }, { label: "Mentions carbon dioxide (CO₂)", re: /carbon dioxide|co2|co₂/i }] }
+      ] },
+    { letters: ["I", "O"], title: "Run the Lab & Record Your Data", time: "10 min", goal: "Watch 24 hours pass, then record the end color and CO₂ change for every tube.",
+      blocks: [
+        { t: "text", html: `<div class="callout"><b>Lab steps:</b> 1) Press <b>Start the 24-hour lab</b> and watch. Look for bubbles on the Elodea in the light: those are <b>oxygen</b> bubbles from photosynthesis. 2) When the clock reaches 24 hours, fill in the data table. 3) Press <b>Check my data table</b>.</div>` },
+        { t: "bblab", mode: "run", title: "24 hours later…" },
+        { t: "quiz", label: "observations", items: [
+          { q: "Which tube showed the <b>biggest decrease</b> in CO₂?", opts: ["#3 Snail in light", "#2 Elodea in light", "#6 Elodea in the dark", "#5 BTB only, dark"], a: 1, why: "Tube #2 turned blue. In the light, Elodea photosynthesizes faster than it respires, so it uses up CO₂." },
+          { q: "What were the bubbles on the Elodea in the light?", opts: ["Carbon dioxide from respiration", "Oxygen from photosynthesis", "Water vapor", "Air from the stopper"], a: 1, why: "Oxygen is a product of the light-dependent reactions, where water is split in the thylakoids." }] }
+      ] },
+    { letters: ["I", "O"], title: "Analyze: Which Process Happened?", time: "7 min", goal: "Use the color changes to decide which process (or processes) happened in each tube.",
+      blocks: [
+        { t: "sort", label: "process sort", title: "Sort the tubes", zones: ["🌿 Photosynthesis faster than respiration (CO₂ used up)", "⚡ Cellular respiration only (CO₂ added)", "⚖️ Both processes about balanced", "🚫 No living things (control)"],
+          colors: ["#1aa36f", "#e08a00", "#2b7de9", "#8a54e0"],
+          tiles: [["#1 BTB only, light", 3], ["#2 Elodea, light", 0], ["#3 Snail, light", 1], ["#4 Elodea + snail, light", 2], ["#5 BTB only, dark", 3], ["#6 Elodea, dark", 1], ["#7 Snail, dark", 1], ["#8 Elodea + snail, dark", 1]],
+          why: "In the dark, no photosynthesis can happen, so every living thing only respires. In the light, Elodea photosynthesizes (and still respires). Snails never photosynthesize." },
+        { t: "quiz", label: "analysis", items: [
+          { q: "Tube #6 (Elodea in the dark) turned yellow. What does this prove?", opts: ["Elodea died in the dark", "Plants perform cellular respiration too", "BTB turns yellow in the dark", "Elodea does photosynthesis without light"], a: 1, why: "Control tube #5 stayed green in the dark, so the plant caused the change. With no light, the only process left is cellular respiration, which releases CO₂." },
+          { q: "Why did tube #4 (Elodea + snail in light) stay about green?", opts: ["Nothing happened in the tube", "The snail’s respiration added CO₂ while the Elodea’s photosynthesis used it", "The light broke the BTB", "The snail ate the Elodea"], a: 1, why: "The two processes balanced: CO₂ released by the snail (and plant) was taken in by the Elodea for photosynthesis." },
+          { q: "In which part of the chloroplast does CO₂ actually get turned into glucose?", opts: ["Thylakoid membranes (light-dependent reactions)", "Stroma (light-independent reactions)", "Mitochondria", "Cytoplasm"], a: 1, why: "The light-independent reactions in the stroma use ATP and NADPH to turn CO₂ into glucose." },
+          { q: "In the snail, which stage of cellular respiration releases the CO₂ that turned the BTB yellow?", opts: ["Glycolysis in the cytoplasm", "The Krebs cycle in the mitochondria", "The light-dependent reactions", "Chlorophyll absorbing red light"], a: 1, why: "In the Krebs cycle, glucose is broken down further and carbon dioxide is released." },
+          { q: "Tube #8 (Elodea + snail in the dark) turned the most yellow. Why?", opts: ["Two organisms were respiring and nothing was using the CO₂", "The snail did photosynthesis", "Darkness makes CO₂", "The Elodea made extra oxygen"], a: 0, why: "With no light, there is no photosynthesis. Both organisms keep respiring, so CO₂ builds up fastest." }] }
+      ] },
+    { letters: ["W"], title: "CER: Do Plants Respire?", time: "7 min", goal: "Write a claim, evidence, and reasoning paragraph using your lab data.",
+      blocks: [
+        { t: "text", html: `<div class="callout"><b>Question:</b> Do plants carry out photosynthesis, cellular respiration, or <b>both</b>? <br><b>C</b>laim: answer the question in one sentence. <b>E</b>vidence: use data from <b>at least two tubes</b> (tube numbers + colors). <b>R</b>easoning: explain WHY the colors changed using CO₂, BTB, and the two processes.</div>` },
+        { t: "write", label: "CER", title: "My CER", rows: 9, min: 70, prompt: "Do plants carry out photosynthesis, cellular respiration, or both? Use your lab data.",
+          frames: ["Claim: Plants carry out…", "Evidence: In tube #__, the Elodea in the ___ turned ___. In tube #__…", "Reasoning: This shows that… because BTB turns yellow when… and blue when…"],
+          starter: "Claim: Plants carry out…",
+          checks: [{ label: "Claim says plants do BOTH processes", re: /\bboth\b/i }, { label: "Evidence names at least two tube numbers", re: /#\s?[1-8]\b|tube\s?#?\s?[1-8]\b/i, min: 2 },
+            { label: "Evidence uses observed colors", re: /\b(blue|yellow|green)\b/i, min: 2 }, { label: "Reasoning explains CO₂ / carbon dioxide", re: /carbon dioxide|co2|co₂/i },
+            { label: "Reasoning names both processes", re: /photosynth[\s\S]*respirat|respirat[\s\S]*photosynth/i }, { label: "Reasoning explains light (light vs. dark)", re: /\b(light|dark|sunlight)\b/i }] },
+        { t: "partner", title: "Partner check", how: "Swap CERs with a partner. Does their evidence use tube numbers AND colors? Does their reasoning explain what happened to CO₂?", got: "One thing my partner did well or should add", change: "One thing I will add or fix in my CER" }
+      ] },
+    { letters: ["O", "R"], title: "Closure: Inputs, Outputs & Key Vocab", time: "5 min", goal: "Review the inputs and outputs of both processes and the key vocabulary from your notes.",
+      blocks: [
+        { t: "iogrid", title: "Inputs and outputs", how: "Tap a term, then tap the box where it belongs. Some terms belong in more than one box! To take a term out, tap it inside the box.",
+          terms: ["Sunlight", "Carbon dioxide (CO₂)", "Water (H₂O)", "Glucose (C₆H₁₂O₆)", "Oxygen (O₂)", "ATP"],
+          key: { "ps-in": ["Sunlight", "Carbon dioxide (CO₂)", "Water (H₂O)"], "ps-out": ["Glucose (C₆H₁₂O₆)", "Oxygen (O₂)"], "cr-in": ["Glucose (C₆H₁₂O₆)", "Oxygen (O₂)"], "cr-out": ["Carbon dioxide (CO₂)", "Water (H₂O)", "ATP"] } },
+        { t: "sort", label: "vocab sort", title: "Key vocab: where does it belong?", zones: ["🌿 Photosynthesis", "⚡ Cellular respiration"], colors: ["#1aa36f", "#e08a00"],
+          tiles: [["Chloroplast", 0], ["Chlorophyll", 0], ["Thylakoid membranes", 0], ["Stroma", 0], ["Light-dependent reactions", 0], ["ATP & NADPH carry energy to make glucose", 0], ["Mitochondria", 1], ["Glycolysis (cytoplasm, no O₂ needed)", 1], ["Krebs cycle", 1], ["Electron transport chain (makes the most ATP)", 1], ["Aerobic (needs O₂)", 1], ["Breaks glucose into ATP", 1]],
+          why: "Photosynthesis stores energy in glucose (chloroplast). Cellular respiration releases that energy as ATP (mitochondria)." },
+        { t: "quiz", label: "exit ticket", title: "Exit ticket", items: [
+          { q: "Which equation shows <b>cellular respiration</b>?", opts: ["6CO₂ + 6H₂O + sunlight → C₆H₁₂O₆ + 6O₂", "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP", "C₆H₁₂O₆ → 6O₂ + sunlight", "6O₂ + 6H₂O → 6CO₂ + sunlight"], a: 1, why: "Respiration breaks down glucose with oxygen and releases CO₂, water, and about 32 ATP." },
+          { q: "Why do photosynthesis and cellular respiration form a cycle?", opts: ["They both happen only in animals", "The products of one are the reactants of the other", "They both need sunlight", "They both happen in the chloroplast"], a: 1, why: "Photosynthesis makes glucose and O₂, which respiration uses. Respiration makes CO₂ and H₂O, which photosynthesis uses." }] }
+      ] }
+  ]
+};
+</script>
+<script src="cc-bblab.js?v=1"></script>
+<script src="cc-blocks2.js?v=1"></script>
+<script src="hub-config.js?v=3"></script>
+<script src="cc-lesson.js?v=4"></script>
+</body>
+</html>

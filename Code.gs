@@ -75,6 +75,7 @@ const ACTIVITIES = [
   ["WICOR Lessons", "Full WICOR lesson", "Algebra 1: The Price Is Linear: Choosing a Phone Plan"],
   ["WICOR Lessons", "Full WICOR lesson", "English 1: Silence the Phones? The Case for Phone-Free Classrooms"],
   ["WICOR Lessons", "Full WICOR lesson", "Biology: Photosynthesis: The Factory in Every Leaf"],
+  ["WICOR Lessons", "Virtual lab", "Biology: Elodea, Snails & Bromothymol Blue: Who Uses CO₂?"],
   ["WICOR Lessons", "Full WICOR lesson", "Geometry: Reach for the Sky: The Pythagorean Theorem"],
   ["WICOR Lessons", "Full WICOR lesson", "Algebra 1: Race to School: Reading Linear Graphs"],
   ["WICOR Lessons", "Full WICOR lesson", "Chemistry: Collision Course: Why Cold Keeps Food Fresh"],
