@@ -37,9 +37,9 @@
     .bb-side.light{background:linear-gradient(#fff7cf,#fffbe8);border:2px solid #f0d96a}
     .bb-side.dark{background:linear-gradient(#1d1a2b,#2b2740);border:2px solid #3b3552;color:#e9e4ff}
     .bb-side h5{margin:0 0 4px;font:700 1rem var(--display);text-align:center}
-    .bb-rack{display:flex;justify-content:space-around;align-items:flex-end}
+    .bb-rack{display:flex;justify-content:space-around;align-items:flex-start}
     .bb-tube{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.8rem;font-weight:800;text-align:center;width:24%}
-    .bb-tube svg{width:100%;max-width:74px;height:auto}
+    .bb-tube svg{width:min(84px,100%);height:auto}.bb-tube>span{min-height:2.6em;display:flex;align-items:flex-start;justify-content:center}
     .bb-tube select{font:inherit;font-size:.82rem;padding:3px 4px;border-radius:8px;border:2px solid var(--line);background:#fff;color:#1f2430;max-width:100%}
     .bb-ctrl{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0 4px}
     .bb-clock{font:700 1.2rem var(--display);background:var(--soft);border-radius:999px;padding:6px 14px}
@@ -65,23 +65,42 @@
     document.head.appendChild(css);
   }
 
+  /* clear, outlined Elodea sprig and snail drawn on top of the liquid */
+  function elodea(x, top, bottom, w) { w = w || 9;
+    let g = `<path d="M${x} ${bottom} C ${x - 4} ${bottom - 40}, ${x + 5} ${bottom - 80}, ${x} ${top}" stroke="#14532d" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M${x} ${bottom} C ${x - 4} ${bottom - 40}, ${x + 5} ${bottom - 80}, ${x} ${top}" stroke="#3fb24f" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
+    for (let y = top + 6; y < bottom - 6; y += 13) {
+      [-1, 1].forEach((d, i) => { const lx = x + d * w, ly = y + (i ? 3 : 0), rot = d * (25 + (y % 3) * 5);
+        g += `<ellipse cx="${lx}" cy="${ly}" rx="${w}" ry="3.6" fill="#4cc35c" stroke="#14532d" stroke-width="1.4" transform="rotate(${rot} ${lx} ${ly})"/>`; });
+      g += `<ellipse cx="${x}" cy="${y - 4}" rx="3.2" ry="6.5" fill="#4cc35c" stroke="#14532d" stroke-width="1.3"/>`;
+    }
+    return g;
+  }
+  function snail(x, y) {
+    return `<g transform="translate(${x} ${y}) scale(.88)">
+      <path d="M-2 14 Q14 18 34 14 Q38 13 37 9 Q30 8 26 6 L4 6 Q-4 6 -2 14z" fill="#e7c39a" stroke="#5b3a1e" stroke-width="2"/>
+      <path d="M31 8 L36 -4 M35 8 L42 -2" stroke="#5b3a1e" stroke-width="2.2" stroke-linecap="round"/><circle cx="36" cy="-5" r="2.4" fill="#2b1a0e"/><circle cx="42.5" cy="-3" r="2.4" fill="#2b1a0e"/>
+      <circle cx="15" cy="2" r="12" fill="#d08a3c" stroke="#5b3a1e" stroke-width="2.2"/>
+      <path d="M15 2 m0 -7.5 a7.5 7.5 0 1 1 -7.2 9.2 a5 5 0 1 1 6.6 -5.2 a2.6 2.6 0 1 1 -2.2 3.6" fill="none" stroke="#5b3a1e" stroke-width="1.8" stroke-linecap="round"/></g>`;
+  }
   function tubeSVG(t, v, tt, k) {
-    const liquid = rgb(v), lit = t.light;
+    const liquid = rgb(v), lit = t.light, edge = lit ? "#4a4f5e" : "#d9d2f5";
     let life = "";
     if (t.e) {
-      life += `<path d="M37 150 C 33 125, 41 110, 36 90 M37 150 C 42 128, 33 112, 41 96" stroke="#2f8a3b" stroke-width="3.5" fill="none"/>` +
-        [100, 112, 124, 136].map((y, i) => `<ellipse cx="${i % 2 ? 43 : 31}" cy="${y}" rx="6" ry="2.6" fill="#3fa34d" transform="rotate(${i % 2 ? -30 : 30} ${i % 2 ? 43 : 31} ${y})"/>`).join("");
-      if (lit && tt > 0 && tt < 1) for (let i = 0; i < 4; i++) { const y = 140 - ((k * 40 + i * 25) % 95); life += `<circle cx="${36 + (i % 2 ? 4 : -3)}" cy="${y}" r="2.4" fill="#fff" opacity=".9"/>`; }
+      const ex = t.s ? 50 : 45;
+      life += elodea(ex, 52, 188, t.s ? 7.5 : 9);
+      if (lit && tt > 0 && tt < 1) for (let i = 0; i < 6; i++) { const y = 175 - ((k * 45 + i * 24) % 125); life += `<circle cx="${ex + (i % 2 ? 7 : -6)}" cy="${y}" r="3" fill="#fff" stroke="#9fb7c9" stroke-width="1"/>`; }
     }
-    if (t.s) { const y = 156 - (tt * 30 + (k % 1) * 2); life += `<g transform="translate(${t.e ? 18 : 26} ${Math.min(156, y)})"><ellipse cx="9" cy="6" rx="10" ry="4" fill="#8a6a4a"/><circle cx="11" cy="1" r="6.5" fill="#c79b63" stroke="#7a5534" stroke-width="1.5"/><path d="M11 1 m-3 0 a3 3 0 1 0 3 -3" stroke="#7a5534" stroke-width="1.2" fill="none"/><path d="M0 5 l-3 -4 M2 4 l-1 -5" stroke="#8a6a4a" stroke-width="1.4"/></g>`; }
-    return `<svg viewBox="0 0 74 190" role="img" aria-label="Tube ${t.n}: ${t.who}, ${t.light ? "light" : "dark"}">
-      <rect x="20" y="4" width="34" height="12" rx="3" fill="#9a8f7a"/>
-      <path d="M22 16 V160 a15 15 0 0 0 30 0 V16" fill="${liquid}" fill-opacity=".85" stroke="${lit ? "#5b5f6e" : "#cfc8ea"}" stroke-width="2.5"/>
-      <path d="M22 16 V40 H52 V16" fill="#fff" fill-opacity=".55"/>
+    if (t.s) { const sy = 184 - Math.min(1, tt) * 40; life += snail(26, sy); }
+    return `<svg viewBox="0 0 90 228" role="img" aria-label="Tube ${t.n}: ${t.who}, ${t.light ? "light" : "dark"}">
+      <rect x="22" y="2" width="46" height="16" rx="4" fill="#9a8f7a" stroke="#5d5545" stroke-width="2"/>
+      <path d="M24 18 V188 a21 21 0 0 0 42 0 V18" fill="#fff" fill-opacity=".9" stroke="none"/>
+      <path d="M24 44 V188 a21 21 0 0 0 42 0 V44 Z" fill="${liquid}" fill-opacity=".55"/>
       ${life}
-      <path d="M27 30 V150" stroke="#fff" stroke-opacity=".45" stroke-width="3" stroke-linecap="round"/>
-      <text x="37" y="186" text-anchor="middle" font-size="13" font-weight="800" fill="${lit ? "#1f2430" : "#fff"}">#${t.n}</text></svg>`;
+      <path d="M24 18 V188 a21 21 0 0 0 42 0 V18" fill="none" stroke="${edge}" stroke-width="3"/>
+      <path d="M30 30 V180" stroke="#fff" stroke-opacity=".55" stroke-width="3.5" stroke-linecap="round"/>
+      <text x="45" y="224" text-anchor="middle" font-size="15" font-weight="800" fill="${lit ? "#1f2430" : "#fff"}">#${t.n}</text></svg>`;
   }
+  const whoIcons = t => (t.e ? "🌿" : "") + (t.s ? "🐌" : "") || "🧪";
 
   function predState(ctx) {
     const L = ctx.L, S = ctx.S;
@@ -94,7 +113,7 @@
       const run = b.mode === "run", tt = st.done ? 1 : (st.tt || 0), hours = Math.round(tt * 24);
       const cur = t => run ? t.end * tt : 0;
       const pred = run ? (predState(ctx).p || {}) : (st.p || {});
-      const side = light => `<div class="bb-side ${light ? "light" : "dark"}"><h5>${light ? "☀️ Under the grow light" : "🌑 Inside a dark cabinet"}</h5><div class="bb-rack">${TUBES.filter(t => t.light === light).map(t => `<div class="bb-tube">${tubeSVG(t, cur(t), run ? tt : 0, 0)}<span>${t.who}</span>${run ? "" : `<select data-p="${t.n}" aria-label="Prediction for tube ${t.n}"><option value="">Predict…</option>${COLORS.map(c => `<option ${pred[t.n] === c ? "selected" : ""}>${c}</option>`).join("")}</select>`}</div>`).join("")}</div></div>`;
+      const side = light => `<div class="bb-side ${light ? "light" : "dark"}"><h5>${light ? "☀️ Under the grow light" : "🌑 Inside a dark cabinet"}</h5><div class="bb-rack">${TUBES.filter(t => t.light === light).map(t => `<div class="bb-tube">${tubeSVG(t, cur(t), run ? tt : 0, 0)}<span>${whoIcons(t)} ${t.who}</span>${run ? "" : `<select data-p="${t.n}" aria-label="Prediction for tube ${t.n}"><option value="">Predict…</option>${COLORS.map(c => `<option ${pred[t.n] === c ? "selected" : ""}>${c}</option>`).join("")}</select>`}</div>`).join("")}</div></div>`;
       let h = `<div class="bb"><h4>🧪 ${b.title || "Bromothymol Blue Lab"}</h4>
         <div class="bb-legend"><span>BTB color key:</span><span>Blue = LESS CO₂</span><span class="bb-scale" aria-hidden="true"></span><span>Yellow = MORE CO₂</span></div>
         <p class="mu small">All 8 tubes start <b style="color:${rgb(0)}">GREEN</b> (a little CO₂ was bubbled in) and are sealed with a stopper.</p>
@@ -173,5 +192,120 @@
     },
     score(b, st) { const pl = st.pl || {}; return { max: 4, pts: st.checked ? Object.keys(b.key).filter(id => { const it = pl[id] || [], key = b.key[id]; return it.length === key.length && key.every(x => it.includes(x)); }).length : 0, label: "inputs & outputs" }; },
     text(b, st) { const pl = st.pl || {}; return Object.keys(b.key).map(id => `${id}: ${(pl[id] || []).join("+")}`).join(" | "); }
+  };
+
+  /* ---------- extra EL-friendly styles ---------- */
+  if (!document.getElementById("bb-css2")) {
+    const css = document.createElement("style"); css.id = "bb-css2";
+    css.textContent = `
+    .vb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+    .vb-card{border:3px solid var(--line);border-radius:18px;padding:10px;text-align:center;background:var(--surface);cursor:pointer;font:inherit}
+    .vb-card:hover{border-color:var(--lc)} .vb-ic{font-size:2.2rem;display:block;line-height:1.1}
+    .vb-en{display:block;font:700 1.05rem var(--display)} .vb-es{display:block;color:var(--lc);font-weight:800;font-size:.9rem}
+    .vb-def{display:block;font-size:.82rem;color:var(--muted);margin-top:2px}
+    .fl-item{display:flex;gap:14px;align-items:center;border:2px solid var(--line);border-radius:16px;padding:10px 12px;margin:10px 0;background:var(--surface)}
+    .fl-pic{flex:none;text-align:center;font-size:2rem;min-width:60px} .fl-pic svg{width:46px;height:auto}
+    .fl-txt{font-size:1.08rem;line-height:2.1}
+    .fl-txt select{font:inherit;font-weight:800;padding:2px 6px;border-radius:10px;border:2.5px solid var(--lc);background:color-mix(in srgb,var(--lc) 8%,#fff);color:#1f2430}
+    .fl-txt select.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,#fff)} .fl-txt select.no{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,#fff)}
+    .fl-fix{font-size:.85rem;color:var(--ok);font-weight:800;margin-left:4px}
+    .wbank{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px;padding:8px 10px;border:2px dashed var(--line);border-radius:14px;background:var(--soft)}
+    .wbank b{width:100%;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+    .wchip{border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 11px;font-weight:800;font-size:.92rem;cursor:pointer}
+    .wchip:hover{border-color:var(--lc)}
+    .cer{display:grid;gap:12px}
+    .cer-box{border:3px solid var(--cc);border-radius:18px;padding:12px 14px;background:color-mix(in srgb,var(--cc) 6%,var(--surface))}
+    .cer-box h5{margin:0 0 6px;font:700 1.15rem var(--display);color:var(--cc)}
+    .cer-opts{display:grid;gap:8px}
+    .cer-opt{display:flex;gap:10px;align-items:center;text-align:left;border:2.5px solid var(--line);border-radius:14px;padding:8px 12px;background:var(--surface);font:inherit;font-weight:700;cursor:pointer}
+    .cer-opt.on{border-color:var(--cc);box-shadow:0 0 0 3px color-mix(in srgb,var(--cc) 25%,transparent)}
+    .cer-tubes{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+    .cer-tube{border:2.5px solid var(--line);border-radius:12px;padding:4px 2px;background:var(--surface);cursor:pointer;font:inherit;font-size:.72rem;font-weight:800;text-align:center}
+    .cer-tube svg{width:100%;max-width:44px;height:auto;display:block;margin:0 auto}
+    .cer-tube.on{border-color:var(--cc);box-shadow:0 0 0 3px color-mix(in srgb,var(--cc) 25%,transparent)}
+    .cer-ev{margin:8px 0 0;padding-left:0;list-style:none}
+    .cer-ev li{margin:6px 0;line-height:2}
+    .cer-ta{width:100%;font:inherit;font-size:1.02rem;padding:10px;border:2.5px solid var(--line);border-radius:12px;min-height:110px}
+    .cer-final{background:var(--soft);border-radius:14px;padding:12px 14px;line-height:1.6}
+    .cer-final p{margin:.3em 0}
+    @media (max-width:720px){.cer-tubes{grid-template-columns:repeat(4,1fr)}}`;
+    document.head.appendChild(css);
+  }
+  const say = t => { try { const u = new SpeechSynthesisUtterance(String(t).replace(/<[^>]+>/g, "")); u.rate = .9; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {} };
+  const miniTube = t => tubeSVG(t, t.end, 1, 0);
+  window.BB = { TUBES, rgb, tubeSVG, miniTube };
+
+  /* ---------- visual word bank (tap a card to hear it) ---------- */
+  BT.vbank = {
+    html(b) { return `<div class="bb"><h4>🗂️ ${b.title || "Word bank"}</h4><p class="mu small">${b.how || "Tap a card to hear the word. Spanish cognates are in purple."}</p><div class="vb-grid">${b.words.map((w, i) => `<button class="vb-card" data-vb="${i}"><span class="vb-ic">${w.ic}</span><span class="vb-en">${w.en}</span>${w.es ? `<span class="vb-es">${w.es}</span>` : ""}<span class="vb-def">${w.def || ""}</span></button>`).join("")}</div></div>`; },
+    wire(root, b) { $$("[data-vb]", root).forEach(c => c.onclick = () => { const w = b.words[+c.dataset.vb]; say(`${w.en}. ${w.def || ""}`); }); }
+  };
+
+  /* ---------- sentence frames with drop-down blanks ---------- */
+  BT.fill = {
+    html(b, st) {
+      const a = st.a || {}, chk = !!st.checked; let n = 0;
+      const items = b.items.map((it, k) => `<div class="fl-item">${it.pic ? `<div class="fl-pic">${it.pic === "tube" ? miniTube(TUBES[it.tube - 1]) : it.pic}</div>` : ""}<div class="fl-txt">${it.parts.map(p => {
+        if (typeof p === "string") return p; const id = n++, v = a[id], ok = v != null && +v === p.a;
+        return `<select data-fl="${id}" ${chk ? "disabled" : ""} class="${chk ? (ok ? "ok" : "no") : ""}"><option value="">______</option>${p.o.map((o, j) => `<option value="${j}" ${+v === j && v !== "" && v != null ? "selected" : ""}>${o}</option>`).join("")}</select>${chk && !ok ? `<span class="fl-fix">✓ ${p.o[p.a]}</span>` : ""}`; }).join("")}</div></div>`).join("");
+      return `<div class="bb"><h4>${b.icon || "🧩"} ${b.title}</h4>${b.how ? `<p class="mu">${b.how}</p>` : ""}${b.bank ? `<div class="wbank"><b>Word bank</b>${b.bank.map(w => `<span class="wchip">${w}</span>`).join("")}</div>` : ""}${b.top || ""}${items}
+        ${chk ? `<p class="score">Correct: <b>${BT.fill.count(b, st)} / ${BT.fill.blanks(b)}</b>${b.why ? ` · ${b.why}` : ""}</p>` : `<div class="btnrow"><button class="btn" data-flcheck>Check my sentences</button><span class="msg"></span></div>`}</div>`;
+    },
+    blanks: b => b.items.reduce((t, it) => t + it.parts.filter(p => typeof p !== "string").length, 0),
+    count(b, st) { let n = 0, ok = 0; b.items.forEach(it => it.parts.forEach(p => { if (typeof p === "string") return; const v = (st.a || {})[n++]; if (v !== "" && v != null && +v === p.a) ok++; })); return ok; },
+    wire(root, b, st, save, redraw) {
+      $$("[data-fl]", root).forEach(s => s.onchange = () => { (st.a = st.a || {})[s.dataset.fl] = s.value; save(); });
+      const c = $("[data-flcheck]", root); if (c) c.onclick = () => { const a = st.a || {}; if (Array.from({ length: BT.fill.blanks(b) }, (_, i) => a[i]).some(v => v === "" || v == null)) { $(".msg", root).textContent = "Fill in every blank first."; return; } st.checked = true; save(); redraw(); };
+    },
+    score(b, st) { const tot = BT.fill.blanks(b), max = b.max || Math.min(tot, 4); return { max, pts: st.checked ? Math.round(max * BT.fill.count(b, st) / tot) : 0, label: b.label || "sentence frames" }; },
+    text(b, st) { let n = 0; return b.items.map(it => it.parts.map(p => typeof p === "string" ? p.replace(/<[^>]+>/g, "") : (p.o[(st.a || {})[n++]] || "___")).join("")).join(" ").slice(0, 900); }
+  };
+
+  /* ---------- CER builder: claim cards, tube evidence, reasoning with word bank ---------- */
+  BT.cerbuild = {
+    html(b, st) {
+      const sel = st.tubes || [], ev = st.ev || {}, chk = !!st.checked;
+      const tubeBtns = TUBES.map(t => `<button class="cer-tube ${sel.includes(t.n) ? "on" : ""}" data-ct="${t.n}" aria-pressed="${sel.includes(t.n)}">${miniTube(t)}${whoIcons(t)}<br>${t.light ? "☀️" : "🌑"}</button>`).join("");
+      const evList = sel.map(n => { const t = TUBES[n - 1], v = ev[n] || {};
+        const s1 = `<select data-ev="${n}|c"><option value="">color</option>${COLORS.map(c => `<option value="${c.toLowerCase()}" ${v.c === c.toLowerCase() ? "selected" : ""}>${c.toLowerCase()}</option>`).join("")}</select>`;
+        const s2 = `<select data-ev="${n}|g"><option value="">CO₂</option>${["increased", "decreased", "stayed the same"].map(c => `<option ${v.g === c ? "selected" : ""}>${c}</option>`).join("")}</select>`;
+        return `<li>In <b>tube #${n}</b> (${whoIcons(t)} ${t.who}, ${t.light ? "☀️ light" : "🌑 dark"}), the BTB changed from green to ${s1}, so the CO₂ ${s2}.</li>`; }).join("");
+      const box = (cc, title, inner) => `<div class="cer-box" style="--cc:${cc}"><h5>${title}</h5>${inner}</div>`;
+      let h = `<div class="bb"><h4>✍️ ${b.title}</h4><p class="mu">${b.q}</p><div class="cer">` +
+        box("#2b7de9", "C · Claim: choose your answer", `<div class="cer-opts">${b.claims.map((c, i) => `<button class="cer-opt ${st.claim === i ? "on" : ""}" data-cl="${i}"><span>${c}</span></button>`).join("")}</div>`) +
+        box("#1aa36f", "E · Evidence: tap 2 or more tubes, then finish each sentence", `<div class="cer-tubes">${tubeBtns}</div>${sel.length ? `<ul class="cer-ev">${evList}</ul>` : `<p class="mu small">Tip: compare an Elodea tube in the light with an Elodea tube in the dark.</p>`}`) +
+        box("#e08a00", "R · Reasoning: explain WHY", `<div class="wbank"><b>Word bank (tap to add)</b>${b.words.map(w => `<button class="wchip" data-w="${w}">${w}</button>`).join("")}</div>
+          <div class="wbank"><b>Sentence starters (tap to add)</b>${b.frames.map(f => `<button class="wchip" data-w="${f}">${f}</button>`).join("")}</div>
+          <textarea class="cer-ta" data-rs placeholder="BTB turns yellow when… In the light, … In the dark, …">${esc(st.r || "")}</textarea><div class="mu small"><span data-rc>${(String(st.r || "").match(/\S+/g) || []).length}</span> words · aim for 25+</div>`) + "</div>";
+      if (chk) { const sc = BT.cerbuild.parts(b, st);
+        h += `<ul class="rub">${sc.list.map(r => `<li class="${r[1] ? "ok" : "bad"}">${r[1] ? "✓" : "✗"} ${r[0]}</li>`).join("")}</ul>
+          <div class="cer-final"><b>📄 My CER</b>${BT.cerbuild.paragraph(b, st)}</div><p class="score">CER score: <b>${sc.pts} / 4</b>${sc.pts < 4 ? " · Fix the ✗ parts and check again." : " · Excellent scientist!"}</p>`; }
+      return h + `<div class="btnrow"><button class="btn" data-cercheck>${chk ? "Check again" : "Check my CER"}</button><span class="msg"></span></div></div>`;
+    },
+    paragraph(b, st) {
+      const ev = st.ev || {};
+      const evs = (st.tubes || []).map(n => { const t = TUBES[n - 1], v = ev[n] || {}; return `In tube #${n} (${t.who}, ${t.light ? "light" : "dark"}), the BTB changed from green to ${(v.c || "___").toLowerCase()}, so the CO₂ ${v.g || "___"}.`; }).join(" ");
+      return `<p><b style="color:#2b7de9">Claim:</b> ${st.claim != null ? b.claims[st.claim].replace(/<[^>]+>/g, "") : "___"}</p><p><b style="color:#1aa36f">Evidence:</b> ${evs || "___"}</p><p><b style="color:#e08a00">Reasoning:</b> ${esc(st.r || "___")}</p>`;
+    },
+    parts(b, st) {
+      const ev = st.ev || {}, sel = st.tubes || [], r = String(st.r || "");
+      const evOk = sel.length >= 2 && sel.every(n => { const t = TUBES[n - 1], v = ev[n] || {}; return v.c && t.ans.map(x => x.toLowerCase()).includes(v.c.toLowerCase()) && v.g === { More: "increased", Less: "decreased", Same: "stayed the same" }[t.co2]; });
+      const hasLD = sel.some(n => TUBES[n - 1].e && TUBES[n - 1].light) && sel.some(n => TUBES[n - 1].e && !TUBES[n - 1].light);
+      const words = (r.match(/\S+/g) || []).length;
+      const rOk = /carbon dioxide|co2|co₂/i.test(r) && /photosynth/i.test(r) && /respirat/i.test(r) && words >= 20;
+      const list = [["Claim: plants do BOTH processes", st.claim === b.claimA], ["Evidence: 2+ tubes with correct colors and CO₂ changes", evOk], ["Evidence: compares Elodea in light AND in dark", hasLD], ["Reasoning: 20+ words using CO₂, photosynthesis, and respiration", rOk]];
+      return { list, pts: list.filter(x => x[1]).length };
+    },
+    wire(root, b, st, save, redraw) {
+      $$("[data-cl]", root).forEach(x => x.onclick = () => { st.claim = +x.dataset.cl; save(); redraw(); });
+      $$("[data-ct]", root).forEach(x => x.onclick = () => { const n = +x.dataset.ct; st.tubes = st.tubes || []; const i = st.tubes.indexOf(n); if (i >= 0) st.tubes.splice(i, 1); else st.tubes.push(n); st.tubes.sort((a, c) => a - c); save(); redraw(); });
+      $$("[data-ev]", root).forEach(x => x.onchange = () => { const [n, k] = x.dataset.ev.split("|"); st.ev = st.ev || {}; st.ev[n] = st.ev[n] || {}; st.ev[n][k] = x.value; save(); });
+      const ta = $("[data-rs]", root);
+      ta.oninput = () => { st.r = ta.value; $("[data-rc]", root).textContent = (ta.value.match(/\S+/g) || []).length; save(); };
+      $$("[data-w]", root).forEach(x => x.onclick = () => { const w = x.dataset.w, v = ta.value; ta.value = v + (v && !/\s$/.test(v) ? " " : "") + w + (/[.…]$/.test(w) ? " " : " "); ta.oninput(); ta.focus(); });
+      $("[data-cercheck]", root).onclick = () => { if (st.claim == null || !(st.tubes || []).length) { $(".msg", root).textContent = "Choose a claim and at least 2 tubes first."; return; } st.checked = true; save(); redraw(); };
+    },
+    score(b, st) { return { max: 4, pts: st.checked ? BT.cerbuild.parts(b, st).pts : 0, label: "CER" }; },
+    text(b, st) { return BT.cerbuild.paragraph(b, st).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim(); }
   };
 });
