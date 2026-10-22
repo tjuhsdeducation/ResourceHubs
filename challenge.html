@@ -80,10 +80,10 @@
 </head>
 <body>
 <div id="ch-root"><p style="padding:60px;text-align:center;font-weight:800">Loading…</p></div>
-<script src="ch-math.js?v=1"></script>
-<script src="ch-english.js?v=1"></script>
-<script src="ch-history.js?v=1"></script>
-<script src="ch-science.js?v=1"></script>
+<script src="ch-math.js?v=2"></script>
+<script src="ch-english.js?v=2"></script>
+<script src="ch-history.js?v=2"></script>
+<script src="ch-science.js?v=2"></script>
 <script>
 (function () {
   const ALL = window.CHALLENGES || [];
@@ -116,7 +116,7 @@
         ${ORDER.map(s => { const items = list.filter(c => c.subject === s); if (!items.length) return "";
           return `<section class="chp-sub"><h2>${SUBJ[s].ic} ${s} <small>${[...new Set(items.map(c => c.course))].join(" · ")}</small></h2><div class="chp-grid">${items.map(c => {
             const st = LS.get("ch-" + c.id, {});
-            return `<a class="chp-card" style="--sc:${SUBJ[s].c}" href="challenge.html?id=${c.id}"><div class="chp-meta"><span class="pill">${esc(c.course)}</span><span class="pill">${esc(c.std)}</span><span title="difficulty">${spice(c.spice)}</span>${st.solved ? `<span class="pill done-pill">✅ Solved</span>` : st.work ? `<span class="pill">✏️ Started</span>` : ""}</div><h3>${c.title}</h3><p>${c.teaser}</p></a>`; }).join("")}</div></section>`; }).join("")}
+            return `<a class="chp-card" style="--sc:${SUBJ[s].c}" href="challenge.html?id=${c.id}"><div class="chp-meta"><span class="pill">${esc(c.course)}</span>${c.unit ? `<span class="pill">📚 ${esc(c.unit)}</span>` : ""}<span title="difficulty">${spice(c.spice)}</span>${st.solved ? `<span class="pill done-pill">✅ Solved</span>` : st.work ? `<span class="pill">✏️ Started</span>` : ""}</div><h3>${c.title}</h3><p>${c.teaser}</p></a>`; }).join("")}</div></section>`; }).join("")}
         <p class="mu small" style="margin-top:26px">🍎 Teachers: each challenge shows its standard, three hints, a full solution, and a Level 3 “Go Deeper” question for tutorial discussion. Your work saves on this device only.</p></main>`;
       root.querySelectorAll("[data-g]").forEach(b => b.onclick = () => { grade = +b.dataset.g; LS.set("ch-grade", grade); draw(); });
     };
@@ -140,7 +140,7 @@
       return `<p class="small mu">This one has no single right answer. Check your response against the list:</p>${(c.rubric || []).map((r, k) => `<label class="ch-check"><input type="checkbox" data-rub="${k}" ${st.rub.includes(k) ? "checked" : ""}><span>${r}</span></label>`).join("")}<div class="btnrow" style="margin-top:6px"><button class="btn" id="ch-chk">I checked my work</button></div>`;
     };
     const trfText = () => `TUTORIAL REQUEST · CHALLENGE PROBLEM
-Class: ${c.course} (${c.grade}th grade) · Standard: ${c.std}
+Class: ${c.course} (${c.grade}th grade)${c.unit ? " · Unit: " + c.unit : ""} · Standard: ${c.std}
 Challenge: ${strip(c.title)}
 INITIAL QUESTION: ${strip(c.ask || c.title)}
 WHAT I TRIED: ${st.work.trim() || "(write your attempt in Step 1)"}
@@ -150,7 +150,7 @@ QUESTION FOR MY GROUP TO DEBATE: ${st.f3.trim() || strip(c.deeper)}`;
     root.innerHTML = header(`${c.grade}th · ${c.subject}`) + `<main class="wrap" style="--sc:${S.c}">
       <div class="ch-layout">
         <article class="ch-panel ch-prob">
-          <div class="chp-meta"><span class="pill">${S.ic} ${esc(c.course)}</span><span class="pill">${c.grade}th grade</span><span class="pill">Standard: ${esc(c.std)}</span><span title="difficulty">${spice(c.spice)}</span></div>
+          <div class="chp-meta"><span class="pill">${S.ic} ${esc(c.course)}</span><span class="pill">${c.grade}th grade</span>${c.unit ? `<span class="pill">📚 Unit: ${esc(c.unit)}</span>` : ""}<span class="pill">Standard: ${esc(c.std)}</span><span title="difficulty">${spice(c.spice)}</span></div>
           <h1>${c.title}</h1>
           <div class="body">${c.prompt}</div>
           ${c.why ? `<div class="ch-why"><b>🧠 Why this is a challenge:</b> ${c.why}</div>` : ""}
