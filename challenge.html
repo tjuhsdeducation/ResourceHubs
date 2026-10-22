@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>“I’m Not Confused” Challenge Problems | AVID Student Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cc-lesson.css?v=2">
+<!--
+  CHALLENGE PROBLEMS for students who say “I’m not confused in any of my classes.”
+  The problems live in ch-math.js, ch-english.js, ch-history.js, ch-science.js.
+  ✏️ To change or add a problem, edit those files (instructions at the top of each).
+  This page (no need to edit) shows the picker, or one problem when the link has ?id=, e.g.
+      challenge.html?id=m10-goat
+-->
+<style>
+  :root{--lc:#5b5fe0}
+  .chp-steps{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0;padding:0;list-style:none}
+  .chp-steps li{display:flex;align-items:center;gap:6px;background:var(--surface);border-radius:999px;padding:4px 12px 4px 4px;font-weight:800;font-size:.88rem}
+  .chp-steps i{font-style:normal;color:#fff;font-weight:900;font-size:.75rem;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--lc)}
+  .chp-grades{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 4px}
+  .chp-grades button{font:700 1.05rem var(--display);border:3px solid var(--line);background:var(--surface);color:var(--fg);border-radius:16px;padding:8px 18px;cursor:pointer}
+  .chp-grades button[aria-pressed="true"]{border-color:var(--lc);background:color-mix(in srgb,var(--lc) 14%,var(--surface))}
+  .chp-sub{margin:22px 0 0}
+  .chp-sub h2{font-size:1.35rem;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+  .chp-sub h2 small{font:700 .9rem var(--body);color:var(--muted)}
+  .chp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:8px}
+  .chp-card{display:grid;gap:4px;text-decoration:none;color:var(--fg);background:var(--surface);border:2px solid var(--line);border-left:8px solid var(--sc);border-radius:20px;padding:14px 16px;box-shadow:var(--shadow);transition:transform .15s,border-color .15s}
+  .chp-card:hover,.chp-card:focus-visible{border-color:var(--sc);transform:translateY(-2px)}
+  .chp-card h3{font-size:1.1rem;margin:0}
+  .chp-card p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.4}
+  .chp-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.78rem;font-weight:800}
+  .pill{border-radius:999px;padding:2px 10px;background:color-mix(in srgb,var(--sc,var(--lc)) 14%,var(--surface));color:color-mix(in srgb,var(--sc,var(--lc)) 75%,var(--fg))}
+  .done-pill{background:#e4f6ea;color:#1d7a45}
+  .ch-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;align-items:start;margin-top:16px}
+  .ch-panel{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:16px 18px;box-shadow:var(--shadow)}
+  .ch-prob{border-top:8px solid var(--sc)}
+  .ch-prob h1{font-size:1.6rem;margin:6px 0 8px}
+  .ch-prob .body{font-size:1.02rem;line-height:1.6}
+  .ch-prob .body blockquote{margin:10px 0;padding:10px 14px;border-left:5px solid var(--sc);background:color-mix(in srgb,var(--sc) 7%,var(--surface));border-radius:0 12px 12px 0}
+  .ch-prob .body table{border-collapse:collapse;margin:8px 0;font-size:.92rem}
+  .ch-prob .body th,.ch-prob .body td{border:1px solid var(--line);padding:4px 8px;text-align:center}
+  .ch-prob .body th{background:var(--soft)}
+  .ch-prob .fig{display:flex;justify-content:center;margin:10px 0}
+  .ch-prob .fig svg{max-width:100%;height:auto}
+  .ch-why{margin-top:12px;font-size:.88rem;background:var(--soft);border-radius:14px;padding:8px 12px}
+  .ch-work{display:grid;gap:12px;position:sticky;top:74px;max-height:calc(100vh - 90px);overflow:auto}
+  .ch-step{border:2px solid var(--line);border-radius:18px;padding:12px 14px;background:var(--surface)}
+  .ch-step h3{margin:0 0 6px;font-size:1.08rem;display:flex;align-items:center;gap:8px}
+  .ch-step h3 i{font-style:normal;color:#fff;font-weight:900;font-size:.78rem;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--sc);flex:none}
+  .ch-step textarea,.ch-step input[type=text]{width:100%;min-width:0;font:inherit;font-weight:600;border:2px solid var(--line);border-radius:12px;padding:8px 10px;background:var(--surface);color:var(--fg)}
+  .ch-step textarea{resize:vertical}
+  .ch-ans{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+  .ch-ans input{max-width:180px}
+  .ch-opts{display:grid;gap:6px;margin-top:6px}
+  .ch-opts label{display:flex;gap:8px;align-items:flex-start;border:2px solid var(--line);border-radius:12px;padding:6px 10px;cursor:pointer;font-weight:700;font-size:.93rem}
+  .ch-opts label:has(input:checked){border-color:var(--sc);background:color-mix(in srgb,var(--sc) 9%,var(--surface))}
+  .ch-opts input{margin-top:4px}
+  .ch-fb{font-weight:800;margin:8px 0 0;min-height:1.2em}
+  .ch-fb.ok{color:#1d7a45} .ch-fb.no{color:#b0302a}
+  .ch-hint{border-left:5px solid #e08a00;background:#fff6e8;border-radius:0 12px 12px 0;padding:8px 12px;margin-top:8px;font-size:.95rem}
+  .ch-sol{border:3px solid #1aa36f;border-radius:14px;padding:10px 12px;margin-top:8px;background:#f1fbf5;font-size:.95rem;line-height:1.55}
+  .ch-lock{color:var(--muted);font-weight:700;font-size:.9rem}
+  .ch-deep{border:3px solid #8a54e0;border-radius:14px;padding:10px 12px;background:#f6f0ff;font-weight:700}
+  .ch-check{display:flex;gap:8px;align-items:flex-start;font-weight:700;font-size:.92rem;margin:4px 0}
+  .ch-frames label{display:block;font-weight:800;font-size:.9rem;margin:8px 0 3px}
+  .trf{border:2px dashed var(--sc);border-radius:14px;padding:10px 12px;margin-top:10px;font-size:.92rem;white-space:pre-wrap;line-height:1.5;background:color-mix(in srgb,var(--sc) 5%,var(--surface))}
+  .ch-nav a{text-decoration:none}
+  .ch-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;margin:18px 0 30px}
+  .wc{font-size:.8rem;color:var(--muted);font-weight:800}
+  @media (max-width:900px){.ch-layout{grid-template-columns:1fr}.ch-work{position:static;max-height:none}}
+  @media print{
+    header.top,.ch-nav,.ch-work .ch-step:not(.print-me),.banner,.btnrow,.ch-why{display:none!important}
+    .ch-layout{display:block}.ch-work{position:static;max-height:none;overflow:visible}
+    .ch-panel,.ch-step{box-shadow:none;break-inside:avoid}
+    body{background:#fff}
+  }
+</style>
+</head>
+<body>
+<div id="ch-root"><p style="padding:60px;text-align:center;font-weight:800">Loading…</p></div>
+<script src="ch-math.js?v=1"></script>
+<script src="ch-english.js?v=1"></script>
+<script src="ch-history.js?v=1"></script>
+<script src="ch-science.js?v=1"></script>
+<script>
+(function () {
+  const ALL = window.CHALLENGES || [];
+  const SUBJ = {
+    Math: { ic: "➗", c: "#2b7de9" }, English: { ic: "📖", c: "#d0453a" },
+    History: { ic: "🏛️", c: "#e08a00" }, Science: { ic: "🔬", c: "#1aa36f" } };
+  const ORDER = ["Math", "English", "History", "Science"];
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const words = s => (String(s || "").match(/\S+/g) || []).length;
+  const LS = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+               set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const spice = n => "🌶️".repeat(n || 2);
+  const root = document.getElementById("ch-root");
+  const params = new URLSearchParams(location.search), ID = (params.get("id") || "").trim();
+  const header = crumb => `<header class="top"><div class="bar"><a class="brand" href="index.html"><span class="mark">🚀</span><span>Challenge Problems</span></a>
+      <span class="crumb"><span>›</span><a href="challenge.html">All challenges</a>${crumb ? `<span>›</span><b>${crumb}</b>` : ""}</span><span class="spacer"></span></div></header>`;
+
+  /* ======================= PICKER ======================= */
+  function picker(missing) {
+    let grade = LS.get("ch-grade", 9);
+    const draw = () => {
+      const list = ALL.filter(c => c.grade === grade);
+      root.innerHTML = header("") + `<main class="wrap">
+        <section class="banner"><span class="kick">🚀 Point of Confusion Support · for students who are NOT confused</span>
+          <h1>“I’m not confused in any of my classes.”</h1>
+          <p>Great! Then it’s time to <b>stretch</b>. Every problem here is aligned to a standard from your grade’s classes, but it is built to be <b>hard</b>. Try one before tutorials, then bring your thinking to your group. Even when you solve it, there is always a question worth debating.</p>
+          <ol class="chp-steps"><li><i>1</i>Pick your grade and class</li><li><i>2</i>Try it alone (10–15 min)</li><li><i>3</i>Hints only if stuck</li><li><i>4</i>Check and see the solution</li><li><i>5</i>Build your tutorial question</li></ol>
+          ${missing ? `<p class="callout" role="alert">We could not find a challenge called “${esc(missing)}”. Please choose one below.</p>` : ""}</section>
+        <div class="chp-grades" role="group" aria-label="Choose your grade">${[9, 10, 11, 12].map(g => `<button data-g="${g}" aria-pressed="${g === grade}">${g}th grade</button>`).join("")}</div>
+        ${ORDER.map(s => { const items = list.filter(c => c.subject === s); if (!items.length) return "";
+          return `<section class="chp-sub"><h2>${SUBJ[s].ic} ${s} <small>${[...new Set(items.map(c => c.course))].join(" · ")}</small></h2><div class="chp-grid">${items.map(c => {
+            const st = LS.get("ch-" + c.id, {});
+            return `<a class="chp-card" style="--sc:${SUBJ[s].c}" href="challenge.html?id=${c.id}"><div class="chp-meta"><span class="pill">${esc(c.course)}</span><span class="pill">${esc(c.std)}</span><span title="difficulty">${spice(c.spice)}</span>${st.solved ? `<span class="pill done-pill">✅ Solved</span>` : st.work ? `<span class="pill">✏️ Started</span>` : ""}</div><h3>${c.title}</h3><p>${c.teaser}</p></a>`; }).join("")}</div></section>`; }).join("")}
+        <p class="mu small" style="margin-top:26px">🍎 Teachers: each challenge shows its standard, three hints, a full solution, and a Level 3 “Go Deeper” question for tutorial discussion. Your work saves on this device only.</p></main>`;
+      root.querySelectorAll("[data-g]").forEach(b => b.onclick = () => { grade = +b.dataset.g; LS.set("ch-grade", grade); draw(); });
+    };
+    document.title = "“I’m Not Confused” Challenge Problems | AVID Student Hub";
+    draw();
+  }
+
+  /* ======================= ONE CHALLENGE ======================= */
+  function show(c) {
+    const S = SUBJ[c.subject], key = "ch-" + c.id;
+    const st = Object.assign({ work: "", hints: 0, tries: 0, solved: false, sol: false, pick: null, multi: [], num: "", rub: [], f1: "", f2: "", f3: "" }, LS.get(key, {}));
+    const save = () => LS.set(key, st);
+    document.title = c.title + " | Challenge Problems";
+    const same = ALL.filter(x => x.grade === c.grade), i = same.indexOf(c), nxt = same[(i + 1) % same.length];
+    const a = c.answer || { type: "open" };
+    const canSol = () => st.solved || st.tries >= 2 || words(st.work) >= 25;
+
+    const ansHTML = () => {
+      if (a.type === "num") return `<p class="small mu">${a.prompt || "Enter your final answer"}${a.unit ? ` (in ${a.unit})` : ""}:</p><div class="ch-ans"><input type="text" inputmode="decimal" id="ch-num" value="${esc(st.num)}" aria-label="Your answer"><button class="btn" id="ch-chk">Check</button></div>`;
+      if (a.type === "mc" || a.type === "multi") return `<p class="small mu">${a.prompt || (a.type === "multi" ? "Select ALL that apply." : "Choose the best answer.")}</p><div class="ch-opts">${a.opts.map((o, k) => `<label><input type="${a.type === "mc" ? "radio" : "checkbox"}" name="ch-o" value="${k}" ${a.type === "mc" ? (st.pick === k ? "checked" : "") : (st.multi.includes(k) ? "checked" : "")}><span>${o}</span></label>`).join("")}</div><div class="btnrow" style="margin-top:8px"><button class="btn" id="ch-chk">Check</button></div>`;
+      return `<p class="small mu">This one has no single right answer. Check your response against the list:</p>${(c.rubric || []).map((r, k) => `<label class="ch-check"><input type="checkbox" data-rub="${k}" ${st.rub.includes(k) ? "checked" : ""}><span>${r}</span></label>`).join("")}<div class="btnrow" style="margin-top:6px"><button class="btn" id="ch-chk">I checked my work</button></div>`;
+    };
+    const trfText = () => `TUTORIAL REQUEST · CHALLENGE PROBLEM
+Class: ${c.course} (${c.grade}th grade) · Standard: ${c.std}
+Challenge: ${strip(c.title)}
+INITIAL QUESTION: ${strip(c.ask || c.title)}
+WHAT I TRIED: ${st.work.trim() || "(write your attempt in Step 1)"}
+WHERE MY THINKING WAS CHALLENGED: I was confident about ${st.f1.trim() || "___"}, but I had to stop and think when ${st.f2.trim() || "___"}.
+QUESTION FOR MY GROUP TO DEBATE: ${st.f3.trim() || strip(c.deeper)}`;
+
+    root.innerHTML = header(`${c.grade}th · ${c.subject}`) + `<main class="wrap" style="--sc:${S.c}">
+      <div class="ch-layout">
+        <article class="ch-panel ch-prob">
+          <div class="chp-meta"><span class="pill">${S.ic} ${esc(c.course)}</span><span class="pill">${c.grade}th grade</span><span class="pill">Standard: ${esc(c.std)}</span><span title="difficulty">${spice(c.spice)}</span></div>
+          <h1>${c.title}</h1>
+          <div class="body">${c.prompt}</div>
+          ${c.why ? `<div class="ch-why"><b>🧠 Why this is a challenge:</b> ${c.why}</div>` : ""}
+        </article>
+        <aside class="ch-work">
+          <section class="ch-step"><h3><i>1</i>Try it on your own</h3>
+            <textarea id="ch-work" rows="6" placeholder="Show your thinking: steps, equations, evidence, or notes. Try for 10 minutes before you use a hint.">${esc(st.work)}</textarea>
+            <span class="wc" id="ch-wc">${words(st.work)} words</span>
+            <div id="ch-ans">${ansHTML()}</div><p class="ch-fb ${st.fb ? (st.fbok ? "ok" : "no") : ""}" id="ch-fb" aria-live="polite">${st.fb || ""}</p></section>
+          <section class="ch-step"><h3><i>2</i>Hints (only if you are stuck)</h3>
+            ${c.hints.slice(0, st.hints).map((h, k) => `<div class="ch-hint"><b>Hint ${k + 1}:</b> ${h}</div>`).join("")}
+            ${st.hints < c.hints.length ? `<div class="btnrow" style="margin-top:8px"><button class="btn ghost" id="ch-hint">💡 Show hint ${st.hints + 1} of ${c.hints.length}</button></div>` : `<p class="ch-lock" style="margin-top:6px">All hints shown.</p>`}</section>
+          <section class="ch-step"><h3><i>3</i>Full solution</h3>
+            ${st.sol ? `<div class="ch-sol">${c.solution}</div>` : canSol() ? `<button class="btn ghost" id="ch-sol">👀 Show the full solution</button>` : `<p class="ch-lock">🔒 Unlocks after you write 25+ words in Step 1 or check your answer twice. Struggle is where the learning happens!</p>`}</section>
+          <section class="ch-step"><h3><i>4</i>Go deeper (Level 3)</h3><div class="ch-deep">🔭 ${c.deeper}</div></section>
+          <section class="ch-step print-me"><h3><i>5</i>Bring it to tutorials</h3>
+            <p class="small mu">Even if you solved it, your group can push your thinking further. Finish these frames.</p>
+            <div class="ch-frames"><label for="f1">I was confident about…</label><input type="text" id="f1" value="${esc(st.f1)}" placeholder="the part that made sense to me">
+              <label for="f2">but I had to stop and think when…</label><input type="text" id="f2" value="${esc(st.f2)}" placeholder="the step, word, or idea that slowed me down">
+              <label for="f3">A question I want my group to debate:</label><input type="text" id="f3" value="${esc(st.f3)}" placeholder="use the Go Deeper question or write your own"></div>
+            <div class="trf" id="ch-trf">${esc(trfText())}</div>
+            <div class="btnrow" style="margin-top:8px"><button class="btn" id="ch-copy">📋 Copy for my TRF</button><button class="btn ghost" id="ch-print">🖨️ Print</button><span class="msg" id="ch-cmsg"></span></div></section>
+        </aside>
+      </div>
+      <nav class="ch-nav"><a class="btn ghost" href="challenge.html">← All challenges</a><a class="btn" href="challenge.html?id=${nxt.id}">Next ${c.grade}th grade challenge: ${strip(nxt.title)} →</a></nav></main>`;
+
+    const $ = s => root.querySelector(s);
+    const setFb = (t, ok) => { const fb = $("#ch-fb"); fb.innerHTML = t; fb.className = "ch-fb " + (ok ? "ok" : "no"); };
+    const redraw = () => { save(); show(c); };
+    $("#ch-work").addEventListener("input", e => { st.work = e.target.value; $("#ch-wc").textContent = words(st.work) + " words"; save(); if (!st.sol && !$("#ch-sol") && canSol()) redrawKeep(); updTrf(); });
+    const redrawKeep = () => { const pos = $("#ch-work").selectionStart; redraw(); const t = $("#ch-work"); t.focus(); t.setSelectionRange(pos, pos); };
+    const updTrf = () => { $("#ch-trf").textContent = trfText(); };
+    ["f1", "f2", "f3"].forEach(k => $("#" + k).addEventListener("input", e => { st[k] = e.target.value; save(); updTrf(); }));
+    root.querySelectorAll("[name=ch-o]").forEach(x => x.onchange = () => { if (a.type === "mc") st.pick = +x.value; else st.multi = [...root.querySelectorAll("[name=ch-o]:checked")].map(y => +y.value); save(); });
+    root.querySelectorAll("[data-rub]").forEach(x => x.onchange = () => { st.rub = [...root.querySelectorAll("[data-rub]:checked")].map(y => +y.dataset.rub); save(); });
+    const num = $("#ch-num"); if (num) { num.addEventListener("input", () => { st.num = num.value; save(); }); num.addEventListener("keydown", e => { if (e.key === "Enter") $("#ch-chk").click(); }); }
+    $("#ch-chk").onclick = () => {
+      let ok = false, msg = "";
+      if (a.type === "num") {
+        const v = parseFloat(String(st.num).replace(/[,$%\s]/g, "").replace(/[^\d.\-]/g, ""));
+        if (isNaN(v)) return setFb("Type a number first.", false);
+        ok = Math.abs(v - a.value) <= (a.tol ?? 0.01);
+        msg = ok ? (a.ok || "✅ Correct!") : (a.near && Math.abs(v - a.value) <= a.near ? "So close! Check your rounding." : (a.no || "❌ Not yet. Check your setup, or try a hint."));
+      } else if (a.type === "mc") {
+        if (st.pick == null) return setFb("Choose an answer first.", false);
+        ok = st.pick === a.a; msg = ok ? (a.ok || "✅ Correct!") : ((a.why && a.why[st.pick]) || "❌ Not yet. Reread the problem, or try a hint.");
+      } else if (a.type === "multi") {
+        if (!st.multi.length) return setFb("Select at least one answer.", false);
+        const want = [...a.a].sort().join(), got = [...st.multi].sort().join(); ok = want === got;
+        const right = st.multi.filter(k => a.a.includes(k)).length, wrong = st.multi.length - right;
+        msg = ok ? (a.ok || "✅ You found them all!") : `❌ Not yet: ${right} of ${a.a.length} correct choices selected${wrong ? `, plus ${wrong} that ${wrong > 1 ? "don’t" : "doesn’t"} belong` : ""}.`;
+      } else {
+        ok = st.rub.length === (c.rubric || []).length && words(st.work) >= 25;
+        msg = ok ? "✅ Nice! Your response checks every box. Compare it with the sample solution." : words(st.work) < 25 ? "Write at least 25 words in Step 1 first." : "Keep going: revise until you can check every box.";
+      }
+      st.tries++; if (ok) st.solved = true; save();
+      st.fb = msg; st.fbok = ok; redraw();
+    };
+    const h = $("#ch-hint"); if (h) h.onclick = () => { st.hints++; redraw(); };
+    const so = $("#ch-sol"); if (so) so.onclick = () => { st.sol = true; redraw(); };
+    $("#ch-copy").onclick = async () => { const t = trfText(); try { await navigator.clipboard.writeText(t); $("#ch-cmsg").textContent = "Copied! Paste it into your TRF."; } catch (e) { const r = document.createRange(); r.selectNodeContents($("#ch-trf")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $("#ch-cmsg").textContent = "Press Ctrl+C to copy."; } };
+    $("#ch-print").onclick = () => window.print();
+  }
+  function strip(h) { const d = document.createElement("div"); d.innerHTML = h; return d.textContent; }
+
+  if (ID) { const c = ALL.find(x => x.id === ID); c ? show(c) : picker(ID); } else picker();
+})();
+</script>
+</body>
+</html>
