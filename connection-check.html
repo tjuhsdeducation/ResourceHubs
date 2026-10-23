@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Google Sheet Connection Check | Teacher Resource Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cc-lesson.css?v=2">
+<!--
+  CONNECTION CHECK (no need to edit)
+  Tests whether hub-config.js has a working Google Apps Script Web app URL,
+  and builds a corrected hub-config.js you can paste into GitHub.
+-->
+<style>
+  :root{--lc:#1aa36f}
+  .cx-card{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:16px 18px;box-shadow:var(--shadow);margin-top:16px}
+  .cx-card h2{margin:0 0 8px;font-size:1.3rem}
+  .cx-row{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line)}
+  .cx-row:first-of-type{border-top:0}
+  .cx-ic{font-size:1.3rem;line-height:1.2;flex:none;width:28px;text-align:center}
+  .cx-row > div > b{display:block}
+  .cx-row small{color:var(--muted);font-weight:700}
+  .cx-url{font-family:ui-monospace,Menlo,monospace;font-size:.85rem;word-break:break-all;background:var(--soft);border-radius:8px;padding:2px 6px}
+  .cx-in{width:100%;min-width:0;font:600 .95rem ui-monospace,Menlo,monospace;border:2px solid var(--line);border-radius:12px;padding:10px;background:var(--surface);color:var(--fg)}
+  .cx-out{width:100%;min-width:0;font:.82rem/1.45 ui-monospace,Menlo,monospace;border:2px dashed var(--lc);border-radius:12px;padding:10px;background:var(--surface);color:var(--fg);white-space:pre;overflow:auto;max-height:340px}
+  .cx-steps li{margin:6px 0}
+</style>
+</head>
+<body>
+<header class="top"><div class="bar"><a class="brand" href="index.html"><span class="mark">🔌</span><span>Connection Check</span></a><span class="crumb"><span>›</span><b>Google Sheet</b></span><span class="spacer"></span></div></header>
+<main class="wrap">
+  <section class="banner"><span class="kick">🍎 For teachers</span><h1>Is the hub connected to the Google Sheet?</h1>
+    <p>This page checks the <b>scriptUrl</b> in <b>hub-config.js</b>. If it’s missing or broken, the Discussion Board, lesson turn-ins, and scores stay in <b>preview mode</b> (saved only on each student’s computer). Nothing is sent to students, and nothing is saved by running this check.</p></section>
+
+  <section class="cx-card"><h2>1 · What the website is using right now</h2><div id="cx-results"><p class="mu">Checking…</p></div>
+    <div class="btnrow" style="margin-top:8px"><button class="btn" id="cx-again">↻ Check again</button></div></section>
+
+  <section class="cx-card"><h2>2 · Fix it: build a new hub-config.js</h2>
+    <ol class="cx-steps">
+      <li>Open the master Google Sheet → <b>Extensions → Apps Script</b>.</li>
+      <li>Click <b>Deploy → Manage deployments</b>. Click your <b>Web app</b> deployment and copy the <b>Web app URL</b>. It ends in <span class="cx-url">/exec</span>.<br><small class="mu">No deployment listed? Use <b>Deploy → New deployment → ⚙ Web app</b>, Execute as <b>Me</b>, Who has access <b>Anyone</b>.</small></li>
+      <li>Paste it here:</li></ol>
+    <input class="cx-in" id="cx-paste" placeholder="https://script.google.com/macros/s/AKfy…/exec" autocomplete="off" spellcheck="false">
+    <div class="btnrow" style="margin-top:8px"><button class="btn" id="cx-test">🧪 Test this URL</button><span class="msg" id="cx-tmsg"></span></div>
+    <div id="cx-build" hidden>
+      <p style="margin:14px 0 6px"><b>4.</b> On GitHub, open <b>hub-config.js</b> → ✏️ <b>Edit</b>. Select everything, delete it, and paste this whole box. Then <b>Commit changes</b>. (Your schools and teachers are kept.)</p>
+      <textarea class="cx-out" id="cx-out" rows="16" readonly></textarea>
+      <div class="btnrow" style="margin-top:8px"><button class="btn" id="cx-copy">📋 Copy hub-config.js</button><span class="msg" id="cx-cmsg"></span></div>
+      <p class="mu small">5. Wait 1–2 minutes, refresh this page, and Step 1 should show all green checks.</p>
+    </div></section>
+  <p class="mu small" style="margin:20px 0 40px">💡 Keep this URL safe. When you upload site updates, never replace hub-config.js. The update zips leave it out on purpose.</p>
+</main>
+<script src="hub-config.js?v=4"></script>
+<script>
+(function () {
+  const CFG = window.HUB_CONFIG || {};
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const row = (ic, title, note) => `<div class="cx-row"><span class="cx-ic">${ic}</span><div><b>${title}</b>${note ? `<small>${note}</small>` : ""}</div></div>`;
+
+  function shape(u) {
+    u = (u || "").trim();
+    if (!u) return { ok: false, msg: "The scriptUrl is <b>empty</b>. This is why the site says it isn’t connected. It often happens when hub-config.js gets replaced by a blank copy during an upload." };
+    if (/script\.google\.com\/(home|d)\//.test(u) || /\/edit/.test(u)) return { ok: false, msg: "This looks like the Apps Script <b>editor</b> link, not the Web app URL. Use Deploy → Manage deployments to copy the Web app URL." };
+    if (/\/dev$/.test(u)) return { ok: false, msg: "This is the <b>/dev</b> test URL. It only works for you. Use the URL that ends in <b>/exec</b>." };
+    if (!/^https:\/\/script\.google\.com\/(a\/[^/]+\/)?macros\/s\/[\w-]+\/exec$/.test(u)) return { ok: false, msg: "This doesn’t look like a Web app URL. It should look like <span class='cx-url'>https://script.google.com/macros/s/…/exec</span> with no spaces or extra characters." };
+    return { ok: true };
+  }
+  async function ping(u) {
+    try {
+      const r = await fetch(u.trim() + "?action=ping", { method: "GET" });
+      const t = await r.text();
+      try { const j = JSON.parse(t); return j.ok ? { ok: true } : { ok: false, msg: "The script answered with an error: " + esc(j.error || "unknown") }; }
+      catch (e) { return { ok: false, msg: "The script answered, but not with data. Make sure the deployment is a <b>Web app</b> and that you pasted the newest Code.gs." }; }
+    } catch (e) {
+      return { ok: false, msg: "The script could not be reached. The most common cause: under <b>Who has access</b>, it must say <b>Anyone</b> (not “Anyone with a Google account” or “Only myself”). Fix it in Deploy → Manage deployments → ✏️ → Who has access: Anyone → Deploy." };
+    }
+  }
+  async function check() {
+    const box = $("#cx-results"); box.innerHTML = '<p class="mu">Checking…</p>';
+    if (!window.HUB_CONFIG) { box.innerHTML = row("❌", "hub-config.js did not load.", "Make sure a file named exactly <b>hub-config.js</b> is in the same GitHub folder as index.html, and that it has no typos (a missing quote or comma breaks it)."); return; }
+    const u = (CFG.scriptUrl || "").trim(), s = shape(u);
+    let h = row("✅", "hub-config.js loaded.", "Schools listed: " + esc(Object.keys(CFG.schools || {}).join(", ") || "none"));
+    h += u ? row(s.ok ? "✅" : "❌", "scriptUrl is " + (s.ok ? "filled in" : "not right"), `<span class="cx-url">${esc(u)}</span><br>${s.ok ? "" : s.msg}`) : row("❌", "scriptUrl is empty", s.msg);
+    if (s.ok) { box.innerHTML = h + row("⏳", "Contacting the Google Sheet…", ""); const p = await ping(u);
+      h += row(p.ok ? "✅" : "❌", p.ok ? "The Google Sheet answered. The hub is connected! 🎉" : "The Google Sheet did not answer correctly.", p.ok ? "Discussion posts, scores, and turn-ins will be saved to the sheet. If students still see “Preview mode,” have them refresh (Ctrl + Shift + R)." : p.msg); }
+    box.innerHTML = h;
+    if (u && s.ok) $("#cx-paste").value = u;
+  }
+  function buildConfig(u) {
+    const schools = CFG.schools || {}, periods = CFG.periods || ["1", "2", "3", "4", "5", "6", "7", "8"];
+    const pad = Math.max(0, ...Object.keys(schools).map(k => k.length)) + 3;
+    const lines = Object.entries(schools).map(([k, v]) => `    ${(JSON.stringify(k) + ":").padEnd(pad)} [${v.map(n => JSON.stringify(n)).join(", ")}]`).join(",\n");
+    return `/* =====================================================================
+   ✏️ HUB SETTINGS: schools, teachers, and the Google Sheets web address.
+   scriptUrl: your Apps Script Web app URL (ends in /exec).
+   schools: keep these names exactly the same as SCHOOLS in Code.gs.
+   ⚠️ Never replace this file when uploading site updates.
+   ===================================================================== */
+window.HUB_CONFIG = {
+  scriptUrl: ${JSON.stringify(u.trim())},${CFG.teacherPasscode ? `\n  teacherPasscode: ${JSON.stringify(CFG.teacherPasscode)},` : ""}
+  schools: {
+${lines}
+  },
+  periods: [${periods.map(p => JSON.stringify(String(p))).join(", ")}]
+};
+window.HUB_CONFIG.teachers = Object.values(window.HUB_CONFIG.schools).flat();
+`;
+  }
+  $("#cx-again").onclick = () => location.reload();
+  $("#cx-test").onclick = async () => {
+    const u = $("#cx-paste").value.trim(), m = $("#cx-tmsg"), s = shape(u);
+    if (!s.ok) { m.innerHTML = "❌ " + s.msg; $("#cx-build").hidden = true; return; }
+    m.textContent = "Testing…"; const p = await ping(u);
+    m.innerHTML = p.ok ? "✅ It works! Now copy the new hub-config.js below." : "❌ " + p.msg;
+    $("#cx-out").value = buildConfig(u); $("#cx-build").hidden = false;
+  };
+  $("#cx-copy").onclick = async () => { const t = $("#cx-out"); try { await navigator.clipboard.writeText(t.value); $("#cx-cmsg").textContent = "Copied!"; } catch (e) { t.select(); $("#cx-cmsg").textContent = "Press Ctrl + C to copy."; } };
+  check();
+})();
+</script>
+</body>
+</html>

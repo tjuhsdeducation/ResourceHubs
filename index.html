@@ -527,8 +527,8 @@ a.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
   </div>
 </header>
 <main id="app"></main>
-<footer style="text-align:center;color:var(--muted);font-size:.8rem;padding:18px 0 28px">Site version: Oct 21 · update 16 (64 challenge problems)</footer>
-<script src="hub-config.js?v=3"></script>
+<footer style="text-align:center;color:var(--muted);font-size:.8rem;padding:18px 0 28px">Site version: Oct 21 · update 17 (connection check)</footer>
+<script src="hub-config.js?v=4"></script>
 <div id="modal" class="modal" hidden></div>
 
 <script>
@@ -923,6 +923,7 @@ const SECTIONS = [
      {k:'lesson', id:'wx_R', title:'Before, During, or After?', desc:'Rapid-fire: reading strategies', meta:'Ungraded'}
    ]},
    {name:'Teacher Setup', items:[
+     {k:'page', feature:true, label:'Teacher tool', subj:'AVID', url:'connection-check.html', title:'Google Sheet Connection Check', desc:'Is the Discussion Board saving to the sheet? Test your Web app URL and build a fixed hub-config.js to paste into GitHub', meta:'2 min', go:'Run the check →'},
      {k:'handout', id:'sheetsetup', title:'Connect the Hub to a Google Sheet', desc:'Send discussion posts, scores, and lesson turn-ins to one Google Sheet with a tab for each teacher'}
    ]}
   ]}
@@ -1507,7 +1508,7 @@ H.sheetsetup={title:'Connect the Hub to Google Sheets', html:`<h2>Connect the Hu
  <h4>1 · Open the master sheet</h4><ol><li>In Google Drive, open the folder <b>Teacher Resource Hub Scores</b> and open <b>Teacher Resource Hub – Master Scores</b>.</li><li>Click <b>Extensions → Apps Script</b>.</li></ol>
  <h4>2 · Add the script</h4><ol><li>Delete the sample code. Paste everything from <b>Code.gs</b>. Click 💾 <b>Save</b>.</li><li>In the function dropdown pick <b>setup</b> → ▶ <b>Run</b> → approve the permissions.</li><li>Then pick <b>createAllTeacherSheets</b> → ▶ <b>Run</b>. Each teacher gets a sheet in their school’s folder, shared with their school email.</li></ol>
  <h4>3 · Publish it</h4><ol><li><b>Deploy → New deployment</b> → ⚙ <b>Web app</b>. Execute as: <b>Me</b>. Who has access: <b>Anyone</b>. <b>Deploy</b> and copy the <b>Web app URL</b>.</li><li>Changing Code.gs later? Use <b>Deploy → Manage deployments → ✏️ → New version</b> so the URL stays the same.</li></ol>
- <h4>4 · Connect the website</h4><ol><li>On GitHub, open <b>hub-config.js</b> → ✏️ edit.</li><li>Paste the URL between the quotes: <span class="box" style="font-family:ui-monospace,Menlo,monospace;font-size:.85rem">scriptUrl: "https://script.google.com/macros/s/…/exec",</span></li><li>Commit. In 1–2 minutes, scores go straight to the sheets.</li></ol>
+ <h4>4 · Connect the website</h4><ol><li>On GitHub, open <b>hub-config.js</b> → ✏️ edit.</li><li>Paste the URL between the quotes: <span class="box" style="font-family:ui-monospace,Menlo,monospace;font-size:.85rem">scriptUrl: "https://script.google.com/macros/s/…/exec",</span></li><li>Commit. In 1–2 minutes, scores go straight to the sheets.</li><li>Open the <a href="connection-check.html"><b>Connection Check</b></a> page to confirm it works. It can also build the whole hub-config.js for you.</li></ol>
  <h4>What is graded</h4><ul><li><b>WICOR lessons</b>: 2 points per station (10 total), sent when the student presses Turn in.</li><li><b>Practice challenges</b>: auto-scored and sent automatically when the student checks their work.</li><li><b>Discussion Board</b>: main post 6 + two replies 4 = 10. Type in the <b>Teacher Score</b> column on Discussion Grades to change a grade.</li><li><b>Service hours</b> show on each teacher’s <b>Service Hours</b> tab.</li></ul>
  <h4>Good to know</h4><ul><li><b>Adding a teacher:</b> add the name to <b>SCHOOLS</b> (and the email to <b>TEACHER_EMAILS</b>) in Code.gs <i>and</i> to <b>schools</b> in hub-config.js, using exactly the same spelling.</li><li><b>Hide a post:</b> type <b>X</b> in the post’s <b>Hide</b> column on the Discussion Posts tab.</li><li><b>Privacy:</b> classmates see only first name + last initial. Student IDs stay in the sheets.</li></ul>`};
 
@@ -2352,7 +2353,7 @@ function discussHome(s){
   crumb.innerHTML=`<span>›</span><a href="#avid">AVID</a><span>›</span><b>Discussion Board</b>`;
   app.innerHTML=`<div class="wrap" style="--c:#e0408a">${folderChips(s,'discuss')}
    <div class="banner"><h1>💬 Discussion Board</h1><p>College-style discussions. Sign in, share your thinking in a main post, then reply to at least two classmates. Your posts are saved and scored for your teacher.</p><span class="art"><span class="bigemoji">💬</span></span></div>
-   ${HUB_URL?'':`<div class="demo-note">👀 <b>Preview mode:</b> posts are saved only on this computer because this website isn’t connected to the Google Sheet yet.${IS_TEACHER?' <i>Teachers:</i> paste the Web app address into <b>hub-config.js</b> on GitHub (WICOR → Teacher Setup, step 4).':''}</div>`}
+   ${HUB_URL?'':`<div class="demo-note">👀 <b>Preview mode:</b> posts are saved only on this computer because this website isn’t connected to the Google Sheet yet.${IS_TEACHER?' <i>Teachers:</i> <a href="connection-check.html"><b>run the Connection Check</b></a> to find and fix the problem in a few minutes.':''}</div>`}
    <div class="how"><div><b>1</b> Sign in with your name, ID, period &amp; teacher</div><div><b>2</b> Write a main post (${DISCUSSIONS[0].minWords}+ words) with evidence and a question</div><div><b>3</b> Unlock classmates’ posts and reply to 2 of them (30+ words each)</div></div>
    <div class="dgrid">${DISCUSSIONS.map(d=>`<a class="dcard" href="#avid/discuss/${d.id}" style="--c:${TAG_COLOR[d.tag]||'#5b5fe0'}"><span class="dic">${d.icon}</span><span class="dtag">${esc(d.tag)}</span><h3>${esc(d.title)}</h3><p>${esc(d.prompt.slice(0,130))}…</p><span class="go">Join the discussion →</span></a>`).join('')}</div><div style="height:48px"></div></div>`;
 }
@@ -2405,7 +2406,7 @@ function discussPage(s,id){
   app.innerHTML=`<div class="wrap" style="--c:${col}"><nav class="switch"><a class="back" href="#avid/discuss">← All discussions</a></nav>
    <div class="dhero"><span class="dtag">${d.icon} ${esc(d.tag)}</span><h1>${esc(d.title)}</h1><p class="dprompt">${esc(d.prompt)}</p>
     <details class="rubric"><summary>📋 How this is graded (10 points)</summary><table><tr><td>Main post: ${d.minWords}+ words</td><td>4 pts</td></tr><tr><td>Main post uses evidence from the source (a detail, number, or quote)</td><td>1 pt</td></tr><tr><td>Main post asks classmates a question</td><td>1 pt</td></tr><tr><td>Reply #1: 30+ words</td><td>2 pts</td></tr><tr><td>Reply #2: 30+ words</td><td>2 pts</td></tr></table><small>Your teacher may adjust your score after reading your posts.</small></details></div>
-   ${HUB_URL?'':`<div class="demo-note">👀 <b>Preview mode:</b> posts are saved only on this computer because this website isn’t connected to the Google Sheet yet.</div>`}
+   ${HUB_URL?'':`<div class="demo-note">👀 <b>Preview mode:</b> posts are saved only on this computer because this website isn’t connected to the Google Sheet yet.${IS_TEACHER?' <i>Teachers:</i> <a href="connection-check.html"><b>run the Connection Check</b></a>.':''}</div>`}
    ${DSRC[d.id]?`<section class="dsource" id="dsource"><div class="dsrc-head"><span class="dtag">📖 Read first · ${esc(DSRC[d.id].type)}</span><h2>${esc(DSRC[d.id].title)}</h2></div><div class="dsrc-body">${DSRC[d.id].html}</div><p class="dcite">${esc(DSRC[d.id].cite)}</p></section>`:''}
    <div id="dz"></div><div style="height:48px"></div></div>`;
   const srcBox=app.querySelector('#dsource'); let ann={count:()=>0};
