@@ -110,6 +110,7 @@
 
   BT.bblab = {
     html(b, st, ctx) {
+      if (st.going && !window.__bbRunning) st.going = false; /* a run that was interrupted (page change or reload) must not lock the lab */
       const run = b.mode === "run", tt = st.done ? 1 : (st.tt || 0), hours = Math.round(tt * 24);
       const cur = t => run ? t.end * tt : 0;
       const pred = run ? (predState(ctx).p || {}) : (st.p || {});
@@ -122,7 +123,7 @@
         const n = Object.values(pred).filter(Boolean).length;
         h += `<p class="mu small" style="margin-top:10px">Predictions made: <b>${n} of 8</b>. ${n === 8 ? "✅ All set! Explain your thinking below." : "Use the drop-down under each tube."}</p>`;
       } else {
-        h += `<div class="bb-ctrl"><button class="btn" data-bbrun ${st.done || st.going ? "disabled" : ""}>${st.done ? "✅ 24 hours complete" : "▶ Start the 24-hour lab"}</button><span class="bb-clock">⏱ ${hours} h</span>${st.done ? `<button class="btn ghost" data-bbreset title="Clear the results and run the 24-hour lab again">↺ Reset the lab</button>` : ""}<span class="mu small">${st.done ? "Now record the color of every tube." : "Watch the tubes. Elodea in light gives off tiny bubbles."}</span></div>`;
+        h += `<div class="bb-ctrl"><button class="btn" data-bbrun ${st.done || st.going ? "disabled" : ""}>${st.done ? "✅ 24 hours complete" : "▶ Start the 24-hour lab"}</button><span class="bb-clock">⏱ ${hours} h</span>${st.done && !st.going ? `<button class="btn ghost" data-bbreset title="Clear the results and run the 24-hour lab again">↺ Reset the lab</button>` : ""}<span class="mu small">${st.done ? "Now record the color of every tube." : "Watch the tubes. Elodea in light gives off tiny bubbles."}</span></div>`;
         if (st.done) {
           const rec = st.r || {}, co = st.c || {}, chk = !!st.checked;
           h += `<table class="bb-table"><thead><tr><th>Tube</th><th>Contents</th><th>Light?</th><th>My prediction</th><th>Start</th><th>End color (observed)</th><th>CO₂ compared to start</th></tr></thead><tbody>` +
@@ -132,6 +133,7 @@
                 <td class="${chk ? (ok2 ? "ok" : "no") : ""}"><select data-c="${t.n}" ${chk ? "disabled" : ""}><option value="">Choose…</option>${["More", "Less", "Same"].map(c => `<option ${co[t.n] === c ? "selected" : ""}>${c}</option>`).join("")}</select></td></tr>`; }).join("") + `</tbody></table>`;
           h += chk ? `<p class="score">Data recorded correctly: <b>${BT.bblab.score(b, st).pts} / ${BT.bblab.score(b, st).max}</b>. Green cells match the lab. Look closely at any red cells, then use these results in the next stations.</p>`
             : `<div class="btnrow"><button class="btn" data-bbcheck>Check my data table</button><span class="msg"></span></div>`;
+          h += `<div class="btnrow" style="margin-top:6px"><button class="btn ghost" data-bbreset>↺ Reset the lab and run it again</button><span class="mu small">Clears the tubes and this data table. Your predictions are kept.</span></div>`;
         }
       }
       return h + "</div>";
@@ -142,21 +144,22 @@
       $$("[data-c]", root).forEach(s => s.onchange = () => { (st.c = st.c || {})[s.dataset.c] = s.value; save(); });
       const go = $("[data-bbrun]", root);
       if (go) go.onclick = () => {
-        st.going = true; const t0 = performance.now(), dur = window.BB_FAST ? 300 : 9000;
+        st.going = true; window.__bbRunning = true; const t0 = performance.now(), dur = window.BB_FAST ? 300 : 9000;
         const tubes = $$(".bb-tube svg", root), lightList = TUBES.filter(t => t.light).concat(TUBES.filter(t => !t.light));
         const step = now => {
-          if (!root.isConnected) return;
+          if (!root.isConnected) { window.__bbRunning = false; st.going = false; return; }
           const tt = Math.min(1, (now - t0) / dur), k = (now - t0) / 1000;
           tubes.forEach((svg, i) => { const t = lightList[i]; svg.outerHTML = tubeSVG(t, t.end * tt, tt, k); });
           const c = $(".bb-clock", root); if (c) c.textContent = `⏱ ${Math.round(tt * 24)} h`;
           if (tt < 1) { requestAnimationFrame(step); $$(".bb-tube svg", root).forEach((s, i) => tubes[i] = s); }
-          else { st.done = true; st.going = false; save(); redraw(); }
+          else { st.done = true; st.going = false; window.__bbRunning = false; save(); redraw(); }
         };
         go.disabled = true; requestAnimationFrame(step);
       };
-      const rs = $("[data-bbreset]", root);
-      if (rs) rs.onclick = () => { if (!confirm("Reset the lab? The tubes go back to green and your data table is cleared. Your predictions are kept.")) return;
-        st.done = false; st.going = false; st.tt = 0; st.r = {}; st.c = {}; st.checked = false; save(); redraw(); };
+      $$("[data-bbreset]", root).forEach(rs => rs.onclick = () => {
+        if (!rs.dataset.sure) { rs.dataset.sure = "1"; const t = rs.textContent; rs.textContent = "⚠️ Tap again to reset"; setTimeout(() => { if (rs.isConnected) { delete rs.dataset.sure; rs.textContent = t; } }, 4000); return; }
+        st.done = false; st.going = false; st.tt = 0; st.r = {}; st.c = {}; st.checked = false; save(); redraw();
+        const g = $("[data-bbrun]", root); if (g) g.scrollIntoView({ block: "center", behavior: "smooth" }); });
       const c = $("[data-bbcheck]", root);
       if (c) c.onclick = () => { const r = st.r || {}, co = st.c || {}; if (TUBES.some(t => !r[t.n] || !co[t.n])) { $(".msg", root).textContent = "Fill in every box first."; return; } st.checked = true; save(); redraw(); };
     },

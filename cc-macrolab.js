@@ -152,7 +152,7 @@
         setTimeout(() => { if (!r) return; r.benedict = "done"; const t = TESTS[0]; st.msg = `Heated! Benedict’s ${resultText(sel, t).slice(2)}. ${SAMPLES[sel].has.sugar ? "Simple sugar IS present." : "NO simple sugar."}`; save(); redraw(); }, window.MX_FAST ? 50 : 1800); });
       $$("[data-rec]", root).forEach(x => x.onclick = () => { const [k, tk] = x.dataset.rec.split("|"); st.rec = st.rec || {}; st.rec[k] = st.rec[k] || {}; const v = st.rec[k][tk]; st.rec[k][tk] = v === "+" ? "−" : "+"; save(); redraw(); });
       const rs = $("[data-mxreset]", root);
-      if (rs) rs.onclick = () => { if (!confirm("Reset this lab? All the tubes are emptied and the data table is cleared.")) return;
+      if (rs) rs.onclick = () => { if (!rs.dataset.sure) { rs.dataset.sure = "1"; rs.textContent = "⚠️ Tap again to reset"; setTimeout(() => { if (rs.isConnected) { delete rs.dataset.sure; rs.textContent = "↺ Reset the lab"; } }, 4000); return; }
         st.ran = {}; st.rec = {}; st.checked = false; st.hold = null; st.msg = "Lab reset. Choose a sample and start testing."; save(); redraw(); };
       const fx = $("[data-mxfix]", root); if (fx) fx.onclick = () => { st.checked = false; save(); redraw(); };
       const c = $("[data-mxcheck]", root); if (c) c.onclick = () => { const rec = st.rec || {}; if (b.samples.some(k => TESTS.some(t => !(rec[k] || {})[t.k]))) { $(".msg", root).textContent = "Run every test and record every box first."; return; } st.checked = true; save(); redraw(); };
