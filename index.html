@@ -527,7 +527,7 @@ a.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
   </div>
 </header>
 <main id="app"></main>
-<footer style="text-align:center;color:var(--muted);font-size:.8rem;padding:18px 0 28px">Site version: Oct 21 · update 20 (4 new biology labs + tutor math guide)</footer>
+<footer style="text-align:center;color:var(--muted);font-size:.8rem;padding:18px 0 28px">Site version: Oct 21 · update 21 (new lab warm-ups + tutor button)</footer>
 <script src="hub-config.js?v=4"></script>
 <div id="modal" class="modal" hidden></div>
 
@@ -2809,7 +2809,7 @@ function home(filter=''){
     return;
   }
   app.innerHTML=`<div class="wrap"><div class="hero">${CONFETTI}${IS_TEACHER?'<h1>Welcome, <span>teachers!</span></h1><p>Pick a space to find handouts, tools, and lessons for your classroom. You are in the 🍎 teacher view.</p>':'<h1>Welcome, <span>AVID students!</span></h1><p>Pick a space to practice WICOR, find lessons, and plan for college and career.</p>'}</div>
-  <div class="tiles">${SECTIONS.map(s=>`<a class="tile" href="#${s.id}" style="--c:${s.color}"><span class="stk">${ART[s.id]}</span><h2>${s.name}</h2></a>`).join('')}</div></div>`;
+  <div class="tiles">${SECTIONS.map(s=>`<a class="tile" href="#${s.id}" style="--c:${s.color}"><span class="stk">${ART[s.id]}</span><h2>${s.name}</h2></a>`).join('')}<a class="tile" href="tutor-math.html" style="--c:#0e9aa7"><span class="stk"><span class="bigemoji">🧑‍🏫</span></span><h2>Tutor Math Guide</h2><small style="text-align:center;display:block">🔒 Tutors only · Algebra 1 &amp; Geometry</small></a></div></div>`;
 }
 let spy=null;
 function section(s){

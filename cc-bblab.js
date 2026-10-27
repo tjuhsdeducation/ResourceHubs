@@ -115,7 +115,7 @@
       const cur = t => run ? t.end * tt : 0;
       const pred = run ? (predState(ctx).p || {}) : (st.p || {});
       const side = light => `<div class="bb-side ${light ? "light" : "dark"}"><h5>${light ? "☀️ Under the grow light" : "🌑 Inside a dark cabinet"}</h5><div class="bb-rack">${TUBES.filter(t => t.light === light).map(t => `<div class="bb-tube">${tubeSVG(t, cur(t), run ? tt : 0, 0)}<span>${whoIcons(t)} ${t.who}</span>${run ? "" : `<select data-p="${t.n}" aria-label="Prediction for tube ${t.n}"><option value="">Predict…</option>${COLORS.map(c => `<option ${pred[t.n] === c ? "selected" : ""}>${c}</option>`).join("")}</select>`}</div>`).join("")}</div></div>`;
-      let h = `<div class="bb"><h4>🧪 ${b.title || "Bromothymol Blue Lab"}</h4>
+      let h = `<div class="bb"><h4>${b.title || "Bromothymol Blue Lab"}</h4>
         <div class="bb-legend"><span>BTB color key:</span><span>Blue = LESS CO₂</span><span class="bb-scale" aria-hidden="true"></span><span>Yellow = MORE CO₂</span></div>
         <p class="mu small">All 8 tubes start <b style="color:${rgb(0)}">GREEN</b> (a little CO₂ was bubbled in) and are sealed with a stopper.</p>
         <div class="bb-bench">${side(true)}${side(false)}</div>`;
@@ -181,10 +181,10 @@
       const cells = [["ps-in", "Inputs (reactants)"], ["ps-out", "Outputs (products)"], ["cr-in", "Inputs (reactants)"], ["cr-out", "Outputs (products)"]];
       const cell = ([id, lab]) => { const items = pl[id] || [], key = b.key[id], ok = chk && items.length === key.length && key.every(x => items.includes(x));
         return `<div class="io-cell ${chk ? (ok ? "ok" : "no") : ""}" data-cell="${id}"><b>${lab}</b>${items.map(x => `<span class="io-chip" data-rm="${id}|${x}">${x} ✕</span>`).join("")}${chk && !ok ? `<div class="mu small">Answer: ${key.join(", ")}</div>` : ""}</div>`; };
-      return `<div class="bb"><h4>🔁 ${b.title}</h4><p class="mu">${b.how}</p>
+      return `<div class="bb"><h4>${b.title}</h4><p class="mu">${b.how}</p>
         <div class="io-bank">${b.terms.map(x => `<button class="io-chip ${sel === x ? "on" : ""}" data-term="${x}" ${chk ? "disabled" : ""}>${x}</button>`).join("")}</div>
-        <div class="io-grid"><div class="io-proc"><h5>🌿 Photosynthesis</h5><small>happens in the chloroplast</small><div class="io-cells">${cell(cells[0])}${cell(cells[1])}</div></div>
-        <div class="io-proc"><h5>⚡ Cellular respiration</h5><small>happens in the mitochondria (glycolysis starts in the cytoplasm)</small><div class="io-cells">${cell(cells[2])}${cell(cells[3])}</div></div></div>
+        <div class="io-grid"><div class="io-proc"><h5>Photosynthesis</h5><small>happens in the chloroplast</small><div class="io-cells">${cell(cells[0])}${cell(cells[1])}</div></div>
+        <div class="io-proc"><h5>Cellular respiration</h5><small>happens in the mitochondria (glycolysis starts in the cytoplasm)</small><div class="io-cells">${cell(cells[2])}${cell(cells[3])}</div></div></div>
         ${chk ? `<p class="score">Boxes correct: <b>${BT.iogrid.score(b, st).pts} / 4</b> · Notice that the outputs of one process are the inputs of the other!</p>` : `<div class="btnrow"><button class="btn" data-iocheck>Check my boxes</button><span class="msg"></span></div>`}</div>`;
     },
     wire(root, b, st, save, redraw) {
@@ -242,8 +242,42 @@
   window.BB = { TUBES, rgb, tubeSVG, miniTube };
 
   /* ---------- visual word bank (tap a card to hear it) ---------- */
+  /* ---------- warm-up review: study-guide style reading + vocabulary table (not scored) ----------
+     { t:"warmup", title, read:["paragraph html", ...], vocab:[["term","Spanish cognate","meaning"]], table:{cap, head:[..], rows:[[..]]}, note:"html" } */
+  if (!document.getElementById("wu-css")) {
+    const c = document.createElement("style"); c.id = "wu-css";
+    c.textContent = `.wu{border:2px solid var(--line);border-radius:18px;background:var(--surface);padding:16px 18px;box-shadow:var(--shadow)}
+    .wu-kick{font:800 .74rem var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--lc);margin:0 0 4px}
+    .wu h4{margin:0 0 10px;font-size:1.2rem}
+    .wu-p{display:grid;grid-template-columns:26px 1fr;gap:10px;margin:0 0 10px;line-height:1.6}
+    .wu-p .n{width:24px;height:24px;border-radius:50%;background:color-mix(in srgb,var(--lc) 14%,var(--surface));color:var(--lc);font:800 .8rem var(--body);display:grid;place-items:center;margin-top:3px}
+    .wu-tw{overflow-x:auto;margin:12px 0 4px}
+    .wu table{border-collapse:collapse;width:100%;font-size:.94rem;min-width:420px}
+    .wu th,.wu td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+    .wu th{background:var(--soft);font-weight:800}
+    .wu td.wu-term{font-weight:800}.wu td.wu-es{color:var(--muted);font-style:italic;white-space:nowrap}
+    .wu .wu-say{display:inline-block;width:auto;min-height:0;height:auto;border:1.5px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;font:700 .72rem var(--body);padding:1px 8px;margin-left:6px;cursor:pointer;vertical-align:middle}
+    .wu-cap{font:800 .9rem var(--body);margin:14px 0 6px}
+    .wu-note{margin:12px 0 0;padding:10px 12px;border-left:4px solid var(--lc);background:var(--soft);border-radius:0 10px 10px 0;line-height:1.55}`;
+    document.head.appendChild(c);
+  }
+  BT.warmup = {
+    html(b) {
+      let h = `<div class="wu"><p class="wu-kick">Review before the lab</p>${b.title ? `<h4>${b.title}</h4>` : ""}`;
+      h += (b.read || []).map((p, i) => `<div class="wu-p"><span class="n">${i + 1}</span><div>${p}</div></div>`).join("");
+      if (b.vocab) h += `<p class="wu-cap">Key vocabulary</p><div class="wu-tw"><table><thead><tr><th>Term</th><th>Spanish cognate</th><th>What it means</th></tr></thead><tbody>${b.vocab.map((v, i) => `<tr><td class="wu-term">${v[0]}<button class="wu-say" data-say="${i}" aria-label="Read ${v[0]} aloud">Listen</button></td><td class="wu-es">${v[1] || ""}</td><td>${v[2]}</td></tr>`).join("")}</tbody></table></div>`;
+      if (b.table) h += `<p class="wu-cap">${b.table.cap || ""}</p><div class="wu-tw"><table>${b.table.head ? `<thead><tr>${b.table.head.map(x => `<th>${x}</th>`).join("")}</tr></thead>` : ""}<tbody>${b.table.rows.map(r => `<tr>${r.map((c, j) => j === 0 ? `<td class="wu-term">${c}</td>` : `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+      if (b.note) h += `<div class="wu-note">${b.note}</div>`;
+      return h + "</div>";
+    },
+    wire(root, b) {
+      $$("[data-say]", root).forEach(x => x.onclick = () => { const v = b.vocab[+x.dataset.say], d = document.createElement("div"); d.innerHTML = v[0] + ". " + v[2];
+        try { const u = new SpeechSynthesisUtterance(d.textContent); u.rate = .9; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {} });
+    }
+  };
+
   BT.vbank = {
-    html(b) { return `<div class="bb"><h4>🗂️ ${b.title || "Word bank"}</h4><p class="mu small">${b.how || "Tap a card to hear the word. Spanish cognates are in purple."}</p><div class="vb-grid">${b.words.map((w, i) => `<button class="vb-card" data-vb="${i}"><span class="vb-ic">${w.ic}</span><span class="vb-en">${w.en}</span>${w.es ? `<span class="vb-es">${w.es}</span>` : ""}<span class="vb-def">${w.def || ""}</span></button>`).join("")}</div></div>`; },
+    html(b) { return `<div class="bb"><h4>${b.title || "Word bank"}</h4><p class="mu small">${b.how || "Tap a card to hear the word. Spanish cognates are in purple."}</p><div class="vb-grid">${b.words.map((w, i) => `<button class="vb-card" data-vb="${i}"><span class="vb-ic">${w.ic}</span><span class="vb-en">${w.en}</span>${w.es ? `<span class="vb-es">${w.es}</span>` : ""}<span class="vb-def">${w.def || ""}</span></button>`).join("")}</div></div>`; },
     wire(root, b) { $$("[data-vb]", root).forEach(c => c.onclick = () => { const w = b.words[+c.dataset.vb]; say(`${w.en}. ${w.def || ""}`); }); }
   };
 
@@ -251,7 +285,7 @@
   BT.fill = {
     html(b, st) {
       const a = st.a || {}, chk = !!st.checked; let n = 0;
-      const items = b.items.map((it, k) => `<div class="fl-item">${it.pic ? `<div class="fl-pic">${it.pic === "tube" ? miniTube(TUBES[it.tube - 1]) : it.pic}</div>` : ""}<div class="fl-txt">${it.parts.map(p => {
+      const items = b.items.map((it, k) => `<div class="fl-item">${it.pic && (it.pic === "tube" || /</.test(it.pic)) ? `<div class="fl-pic">${it.pic === "tube" ? miniTube(TUBES[it.tube - 1]) : it.pic}</div>` : ""}<div class="fl-txt">${it.parts.map(p => {
         if (typeof p === "string") return p; const id = n++, v = a[id], ok = v != null && +v === p.a;
         return `<select data-fl="${id}" ${chk ? "disabled" : ""} class="${chk ? (ok ? "ok" : "no") : ""}"><option value="">______</option>${p.o.map((o, j) => `<option value="${j}" ${+v === j && v !== "" && v != null ? "selected" : ""}>${o}</option>`).join("")}</select>${chk && !ok ? `<span class="fl-fix">✓ ${p.o[p.a]}</span>` : ""}`; }).join("")}</div></div>`).join("");
       return `<div class="bb"><h4>${b.icon || "🧩"} ${b.title}</h4>${b.how ? `<p class="mu">${b.how}</p>` : ""}${b.bank ? `<div class="wbank"><b>Word bank</b>${b.bank.map(w => `<span class="wchip">${w}</span>`).join("")}</div>` : ""}${b.top || ""}${items}
@@ -277,7 +311,7 @@
         const s2 = `<select data-ev="${n}|g"><option value="">CO₂</option>${["increased", "decreased", "stayed the same"].map(c => `<option ${v.g === c ? "selected" : ""}>${c}</option>`).join("")}</select>`;
         return `<li>In <b>tube #${n}</b> (${whoIcons(t)} ${t.who}, ${t.light ? "☀️ light" : "🌑 dark"}), the BTB changed from green to ${s1}, so the CO₂ ${s2}.</li>`; }).join("");
       const box = (cc, title, inner) => `<div class="cer-box" style="--cc:${cc}"><h5>${title}</h5>${inner}</div>`;
-      let h = `<div class="bb"><h4>✍️ ${b.title}</h4><p class="mu">${b.q}</p><div class="cer">` +
+      let h = `<div class="bb"><h4>${b.title}</h4><p class="mu">${b.q}</p><div class="cer">` +
         box("#2b7de9", "C · Claim: choose your answer", `<div class="cer-opts">${b.claims.map((c, i) => `<button class="cer-opt ${st.claim === i ? "on" : ""}" data-cl="${i}"><span>${c}</span></button>`).join("")}</div>`) +
         box("#1aa36f", "E · Evidence: tap 2 or more tubes, then finish each sentence", `<div class="cer-tubes">${tubeBtns}</div>${sel.length ? `<ul class="cer-ev">${evList}</ul>` : `<p class="mu small">Tip: compare an Elodea tube in the light with an Elodea tube in the dark.</p>`}`) +
         box("#e08a00", "R · Reasoning: explain WHY", `<div class="wbank"><b>Word bank (tap to add)</b>${b.words.map(w => `<button class="wchip" data-w="${w}">${w}</button>`).join("")}</div>

@@ -148,7 +148,7 @@
   BT.divsim = {
     html(b, st) {
       const mode = b.mode === "meiosis" ? "meiosis" : "mitosis", seq = SEQ[mode], s = Math.min(st.s || 0, seq.length - 1);
-      return `<div class="cd ${window.CD_FAST ? "nofx" : ""}"><h4>🔬 ${b.title || (mode === "mitosis" ? "Mitosis Simulator" : "Meiosis Simulator")}</h4>
+      return `<div class="cd ${window.CD_FAST ? "nofx" : ""}"><h4>${b.title || (mode === "mitosis" ? "Mitosis Simulator" : "Meiosis Simulator")}</h4>
         ${b.how ? `<p class="mu">${b.how}</p>` : ""}
         <div class="cd-steps">${seq.map((x, i) => `<span class="${i === s ? "on" : i < s ? "done" : ""}">${i + 1}. ${x.n.split(":")[0]}</span>`).join("")}</div>
         <div class="cd-top"><div><svg class="cd-svg" viewBox="0 0 560 300" role="img" aria-label="${mode} simulator showing the cell at the current phase"><g class="cd-cells"></g><g class="cd-ctds"></g></svg>
@@ -216,7 +216,7 @@
       const cell = (r, i, key) => { const ans = key === "d" ? r.d : r.d / 2, given = r.give === key;
         if (given) return `<td>${ans}</td>`; const val = v[i + key], ok = +val === ans;
         return `<td class="${chk ? (ok ? "ok" : "no") : ""}"><input data-ct="${i}${key}" inputmode="numeric" value="${esc(val || "")}" ${chk ? "disabled" : ""} aria-label="${r.org} ${key === "d" ? "body cell" : "gamete"}">${chk && !ok ? ` <small>✓ ${ans}</small>` : ""}</td>`; };
-      let h = `<div class="bb"><h4>🔢 ${b.title}</h4><p class="mu">${b.how}</p><table class="ct-tbl"><thead><tr><th>Organism</th><th>Body (somatic) cell<br><small>diploid, 2n</small></th><th>Gamete (sex cell)<br><small>haploid, n</small></th><th>After fertilization<br><small>zygote</small></th></tr></thead><tbody>` +
+      let h = `<div class="bb"><h4>${b.title}</h4><p class="mu">${b.how}</p><table class="ct-tbl"><thead><tr><th>Organism</th><th>Body (somatic) cell<br><small>diploid, 2n</small></th><th>Gamete (sex cell)<br><small>haploid, n</small></th><th>After fertilization<br><small>zygote</small></th></tr></thead><tbody>` +
         b.rows.map((r, i) => `<tr><td>${r.ic} ${r.org}</td>${cell(r, i, "d")}${cell(r, i, "h")}${chk ? `<td>${r.d}</td>` : `<td class="mu">?</td>`}</tr>`).join("") + `</tbody></table>`;
       if (chk) {
         const W = 560, max = Math.max(...b.rows.map(r => r.d)), bw = W / b.rows.length;

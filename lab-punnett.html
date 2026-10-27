@@ -11,22 +11,22 @@
 <body>
 <script>
 /* =====================================================================
-   🧬 BIOLOGY VIRTUAL LAB: Reading the Clues: Heredity & Punnett Squares
+   BIOLOGY VIRTUAL LAB: Reading the Clues: Heredity & Punnett Squares
    (≈ 50 min). Students READ genetics word problems, tap the clues,
    translate words like "heterozygous," "purebred," and "carrier" into
    genotypes, build Punnett squares step by step, and breed virtual
    offspring to compare expected and observed ratios.
    Built for EL students: picture word bank with Spanish cognates and
    read-aloud, word sorts, and drop-down sentence frames.
-   ✏️ To change wording, edit the text between the quotes/backticks.
+   To change wording, edit the text between the quotes/backticks.
    In a passage, [[words]] are clues students must tap and {{words}} are
    extra details that do not help set up the square.
    ===================================================================== */
-const PIC = (ic, label) => `<span style="display:block;font-size:2.1rem;line-height:1.1">${ic}</span>${label}`;
+const PIC = (ic, label) => label;
 const B = (o, a) => ({ o, a });
 window.CC = {
   id: "lab-punnett", subject: "Biology", short: "Virtual Lab: Punnett Squares", color: "#2b9a8a", emoji: "🧬", time: "≈ 50 min",
-  kind: "Virtual Lab", brand: { name: "Interactive Lessons", home: "lessons", mark: "🔬" },
+  kind: "Virtual Lab", brand: { name: "Interactive Lessons", home: "lessons", mark: "" },
   title: "Reading the Clues: Heredity & Punnett Squares",
   intro: "Become a genetics detective! Read real-world word problems, find the clues, translate words like “heterozygous,” “purebred,” and “carrier” into genotypes, build Punnett squares step by step, and breed virtual guinea pigs to test your predictions.",
   eq: "How can we use the words in a genetics problem to set up a Punnett square and predict the traits of offspring?",
@@ -44,28 +44,31 @@ window.CC = {
     <p><b>Science notes:</b> Examples use real single-gene traits: Mendel’s pea flower color, guinea pig coat color (simplified), snapdragon color, roan cattle and erminette chickens (codominance), Andalusian chickens (incomplete dominance), and hemophilia A (X-linked recessive). Many human traits are controlled by many genes, so this lab avoids oversimplified human examples like eye color or dimples.</p>
     <p><b>EL supports:</b> picture word bank with Spanish cognates (alelo, dominante, recesivo, genotipo, fenotipo, híbrido, portador…), a translate-the-words sort, sentence frames, and a CER builder with a tap-to-add word bank.</p>`,
   stations: [
-    { letters: ["R", "I"], title: "Warm-Up: The Words of Heredity", time: "5 min", goal: "Learn the key words, then translate describing words into genotypes.",
+    { letters: ["R", "I"], title: "Warm-Up: Review the Words of Heredity", time: "5 min", goal: "Review the vocabulary of genetics, then answer 4 quick questions.",
       blocks: [
-        { t: "vbank", title: "Picture word bank", how: "Tap a card to hear the word and what it means. Spanish cognates (palabras parecidas) are under each word.", words: [
-          { ic: "🧬", en: "Gene", es: "gen", def: "A section of DNA that controls a trait." },
-          { ic: "🔀", en: "Allele", es: "alelo", def: "One version of a gene. You get one allele from each parent." },
-          { ic: "🅱️", en: "Dominant", es: "dominante", def: "An allele that shows up even if there is only one. Written with a CAPITAL letter." },
-          { ic: "🙈", en: "Recessive", es: "recesivo", def: "An allele that only shows up when there are two. Written with a lowercase letter." },
-          { ic: "🔤", en: "Genotype", es: "genotipo", def: "The letters (alleles) an organism has, like Bb." },
-          { ic: "👀", en: "Phenotype", es: "fenotipo", def: "The trait you can see, like black fur." },
-          { ic: "👯", en: "Homozygous (purebred)", es: "homocigoto", def: "Two of the SAME allele: BB or bb." },
-          { ic: "🎭", en: "Heterozygous (hybrid)", es: "heterocigoto / híbrido", def: "Two DIFFERENT alleles: Bb." },
-          { ic: "🎒", en: "Carrier", es: "portador", def: "Has one hidden recessive allele but does not show the trait." },
-          { ic: "🥚", en: "Gamete", es: "gameto", def: "A sex cell (egg or sperm). It carries only ONE allele for each gene." },
-          { ic: "🔲", en: "Punnett square", es: "cuadro de Punnett", def: "A grid that shows every possible allele combination for the offspring." },
-          { ic: "🎲", en: "Probability", es: "probabilidad", def: "The chance that something will happen, as a fraction or percent." }] },
-        { t: "sort", label: "translate the words", title: "Translate the words into genotypes. In pea plants, tall (T) is dominant over short (t).", zones: ["TT · homozygous dominant", "Tt · heterozygous", "tt · homozygous recessive"], colors: ["#2b7de9", "#8a54e0", "#e08a00"],
-          tiles: [[PIC("🌱", "purebred tall"), 0], [PIC("✌️", "two dominant alleles"), 0], [PIC("🎭", "hybrid tall"), 1], [PIC("🔀", "heterozygous"), 1], [PIC("🎒", "carrier of the short allele"), 1], [PIC("🌿", "true-breeding short"), 2], [PIC("🙈", "short plant (shows the recessive trait)"), 2], [PIC("🔡", "two recessive alleles"), 2]],
-          why: "Purebred/true-breeding = two of the same allele. Hybrid, heterozygous, and carrier = two different alleles. If a plant SHOWS the recessive trait, it must have two recessive alleles." }
+        { t: "warmup", title: "Genes, alleles, and the words in a genetics problem", read: [
+          "A <b>gene</b> controls a trait, such as flower color. Different versions of a gene are called <b>alleles</b>. You inherit one allele for each gene from each parent, so you have <b>two</b> alleles for every trait.",
+          "A <b>dominant</b> allele (written with a capital letter, like <b>P</b>) shows its trait whenever it is present. A <b>recessive</b> allele (lowercase, like <b>p</b>) only shows when there are two copies (<b>pp</b>).",
+          "Your <b>genotype</b> is your pair of alleles (PP, Pp, or pp). Your <b>phenotype</b> is the trait you can observe (purple or white). Word problems use words instead of letters, so the first job is to translate the words into a genotype."],
+          vocab: [
+            ["allele", "alelo", "One version of a gene. Each parent gives one."],
+            ["dominant", "dominante", "An allele that shows when at least one copy is present (capital letter)."],
+            ["recessive", "recesivo", "An allele that shows only with two copies (lowercase letter)."],
+            ["genotype", "genotipo", "The pair of alleles, like Pp."],
+            ["phenotype", "fenotipo", "The observable trait, like purple flowers."],
+            ["homozygous", "homocigoto", "Two of the same allele (PP or pp). Also called purebred."],
+            ["heterozygous", "heterocigoto", "Two different alleles (Pp). Also called hybrid."]],
+          table: { cap: "Translate the words into a genotype (purple P is dominant over white p)", head: ["Words in the problem", "Genotype"], rows: [
+            ["“purebred purple” or “homozygous dominant”", "PP"], ["“hybrid” or “heterozygous”", "Pp"], ["“white” (shows the recessive trait)", "pp"], ["“carrier” (has one hidden recessive allele)", "Pp"]] } },
+        { t: "quiz", label: "warm-up check", title: "Check your understanding", items: [
+          { q: "Tall (T) is dominant over short (t). What is the genotype of a heterozygous plant?", opts: ["TT", "Tt", "tt", "T"], a: 1, why: "Heterozygous means two different alleles: Tt." },
+          { q: "What is the phenotype of a plant with the genotype Tt?", opts: ["Tall", "Short", "Medium", "It cannot be known"], a: 0, why: "The dominant allele T shows its trait, so a Tt plant is tall." },
+          { q: "A short pea plant shows the recessive trait. What is its genotype?", opts: ["TT", "Tt", "tt", "Either TT or Tt"], a: 2, why: "A recessive trait only shows with two recessive alleles: tt." },
+          { q: "In a genetics problem, “purebred” means…", opts: ["heterozygous", "homozygous", "a carrier", "a mutation"], a: 1, why: "Purebred means two of the same allele: homozygous." }] }
       ] },
     { letters: ["R"], title: "Reading Detective: How to Read a Genetics Problem", time: "5 min", goal: "Learn a 5-step strategy for turning a word problem into a Punnett square.",
       blocks: [
-        { t: "text", html: `<h3>🕵️ The 5 clue questions</h3>
+        { t: "text", html: `<h3>The 5 clue questions</h3>
           <ol>
             <li><b>What is the trait?</b> (flower color, fur color, blood clotting…)</li>
             <li><b>Which version is dominant?</b> Look for “dominant over,” “is dominant to,” or “masks.” The dominant trait gets the CAPITAL letter.</li>
@@ -78,12 +81,12 @@ window.CC = {
             <tr><td style="border:1px solid #ccc;padding:4px 8px">hybrid, heterozygous, carrier</td><td style="border:1px solid #ccc;padding:4px 8px">one capital + one lowercase</td><td style="border:1px solid #ccc;padding:4px 8px">Pp</td></tr>
             <tr><td style="border:1px solid #ccc;padding:4px 8px">shows the recessive trait, homozygous recessive</td><td style="border:1px solid #ccc;padding:4px 8px">two lowercase letters</td><td style="border:1px solid #ccc;padding:4px 8px">pp</td></tr></table></div>
           <div class="callout"><b>Worked example:</b> “In peas, round seeds (R) are dominant over wrinkled seeds (r). A <u>purebred round</u> plant is crossed with a <u>wrinkled</u> plant.” → Trait: seed shape. Dominant: round. Parents: <b>RR × rr</b>. Every box is <b>Rr</b>, so 100% of the offspring have round seeds.</div>` },
-        { t: "fill", icon: "🕵️", label: "reading frames", title: "Check the strategy", how: "Choose the word that makes each sentence true.", max: 4,
+        { t: "fill", icon: "", label: "reading frames", title: "Check the strategy", how: "Choose the word that makes each sentence true.", max: 4,
           items: [
-            { pic: "👯", parts: ["“Purebred” and “true-breeding” mean the organism is ", B(["homozygous", "heterozygous"], 0), " (two of the same allele)."] },
-            { pic: "🎭", parts: ["“Hybrid” and “carrier” mean the organism is ", B(["heterozygous", "homozygous"], 0), ", like ", B(["Pp", "PP", "pp"], 0), "."] },
-            { pic: "🙈", parts: ["If an organism SHOWS a recessive trait, its genotype must have ", B(["two lowercase letters", "one capital letter"], 0), "."] },
-            { pic: "🥚", parts: ["Each parent passes ", B(["one", "two"], 0), " allele for each gene to each offspring, so each gets ", B(["one side", "both sides"], 0), " of the square."] }],
+            { pic: "", parts: ["“Purebred” and “true-breeding” mean the organism is ", B(["homozygous", "heterozygous"], 0), " (two of the same allele)."] },
+            { pic: "", parts: ["“Hybrid” and “carrier” mean the organism is ", B(["heterozygous", "homozygous"], 0), ", like ", B(["Pp", "PP", "pp"], 0), "."] },
+            { pic: "", parts: ["If an organism SHOWS a recessive trait, its genotype must have ", B(["two lowercase letters", "one capital letter"], 0), "."] },
+            { pic: "", parts: ["Each parent passes ", B(["one", "two"], 0), " allele for each gene to each offspring, so each gets ", B(["one side", "both sides"], 0), " of the square."] }],
           why: "Translate the words first, then split each parent into its two possible gametes." }
       ] },
     { letters: ["R", "I"], title: "Punnett Lab 1: Mendel’s Pea Flowers", time: "6 min", goal: "Read a short problem, find the clues, and build your first square.",
@@ -132,7 +135,7 @@ window.CC = {
       ] },
     { letters: ["R", "I"], title: "Beyond Dominant and Recessive", time: "8 min", goal: "Cross pink snapdragons, then sort examples of incomplete dominance and codominance.",
       blocks: [
-        { t: "text", html: `<h3>🌸 Not every allele is dominant or recessive</h3>
+        { t: "text", html: `<h3>Not every allele is dominant or recessive</h3>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:8px 0">
             <div style="border:3px solid #2b7de9;border-radius:14px;padding:8px 10px"><b>Complete dominance</b><br>One allele hides the other. Pp pea plants look purple, just like PP.</div>
             <div style="border:3px solid #e8368f;border-radius:14px;padding:8px 10px"><b>Incomplete dominance</b><br>The heterozygous phenotype is a <b>blend</b> in between. Red × white snapdragons → <b>pink</b>.</div>
@@ -153,12 +156,12 @@ window.CC = {
             { q: "What percent of the offspring are expected to be pink?", opts: ["50%", "25%", "75%", "100%"], a: 0, why: "2 out of 4 boxes are CᴿCᵂ = 50% pink." }],
           why: "Pink × pink gives 1 red : 2 pink : 1 white. A florist who wants only pink flowers should cross red × white instead (100% pink)." },
         { t: "sort", label: "inheritance patterns", title: "Which pattern is it?", zones: ["Complete dominance", "Incomplete dominance (blend)", "Codominance (both show)"], colors: ["#2b7de9", "#e8368f", "#8a54e0"],
-          tiles: [[PIC("🌸", "Red × white snapdragons → pink flowers"), 1], [PIC("🐄", "Roan cow with red AND white hairs"), 2], [PIC("🩸", "Blood type AB (A and B both show)"), 2], [PIC("💜", "Pp pea plant with purple flowers"), 0], [PIC("🐹", "Bb guinea pig with black fur"), 0], [PIC("🐔", "Black × white Andalusian chickens → blue-gray chicks"), 1], [PIC("🐓", "Erminette chicken with separate black and white feathers"), 2]],
+          tiles: [[PIC("", "Red × white snapdragons → pink flowers"), 1], [PIC("", "Roan cow with red AND white hairs"), 2], [PIC("", "Blood type AB (A and B both show)"), 2], [PIC("", "Pp pea plant with purple flowers"), 0], [PIC("", "Bb guinea pig with black fur"), 0], [PIC("", "Black × white Andalusian chickens → blue-gray chicks"), 1], [PIC("", "Erminette chicken with separate black and white feathers"), 2]],
           why: "A blend (pink, blue-gray) = incomplete dominance. Both traits showing separately (red and white hairs, black and white feathers, A and B) = codominance. A hidden allele = complete dominance." }
       ] },
     { letters: ["R", "I", "W"], title: "Sex-Linked Traits: Hemophilia", time: "7 min", goal: "Set up a Punnett square with X and Y chromosomes and compare sons and daughters.",
       blocks: [
-        { t: "text", html: `<h3>🧪 Genes on the X chromosome</h3>
+        { t: "text", html: `<h3>Genes on the X chromosome</h3>
           <p>Some genes are on the <b>X chromosome</b>. Females are <b>XX</b> and males are <b>XY</b>. The Y chromosome does not carry these genes, so a male has only <b>one</b> allele for an X-linked trait.</p>
           <p>We write the allele as a superscript on the X: <b>Xᴴ</b> = normal blood clotting, <b>Xʰ</b> = hemophilia (recessive). A female who is <b>XᴴXʰ</b> is a <b>carrier</b>. A male who is <b>XʰY</b> has hemophilia, because he has no second X to hide the recessive allele.</p>
           <div class="callout">That’s why X-linked recessive conditions like hemophilia and red-green colorblindness are much more common in males.</div>` },
@@ -177,17 +180,17 @@ window.CC = {
             { q: "What percent of their SONS are expected to have hemophilia?", opts: ["0%", "25%", "50%", "100%"], a: 2, why: "The two son boxes are XᴴY and XʰY, so half of the sons are expected to have hemophilia." },
             { q: "What percent of ALL their children are expected to have hemophilia?", opts: ["0%", "25%", "50%", "75%"], a: 1, why: "1 box out of 4 (XʰY) = 25%." }],
           why: "Sons get their only X from their mother, so a carrier mother gives each son a 50% chance of hemophilia." },
-        { t: "fill", icon: "🧬", label: "sex-linked frames", title: "Explain the pattern", max: 3,
+        { t: "fill", icon: "", label: "sex-linked frames", title: "Explain the pattern", max: 3,
           items: [
-            { pic: "👦", parts: ["A son gets his X chromosome from his ", B(["mother", "father"], 0), " and his Y chromosome from his ", B(["father", "mother"], 0), "."] },
-            { pic: "👧", parts: ["A daughter with a carrier mother and an unaffected father can be a ", B(["carrier", "boy"], 0), ", but she will ", B(["not have hemophilia", "always have hemophilia"], 0), "."] },
-            { pic: "📈", parts: ["X-linked recessive traits are more common in ", B(["males", "females"], 0), " because they have only ", B(["one X", "two X"], 0), " chromosome."] }],
+            { pic: "", parts: ["A son gets his X chromosome from his ", B(["mother", "father"], 0), " and his Y chromosome from his ", B(["father", "mother"], 0), "."] },
+            { pic: "", parts: ["A daughter with a carrier mother and an unaffected father can be a ", B(["carrier", "boy"], 0), ", but she will ", B(["not have hemophilia", "always have hemophilia"], 0), "."] },
+            { pic: "", parts: ["X-linked recessive traits are more common in ", B(["males", "females"], 0), " because they have only ", B(["one X", "two X"], 0), " chromosome."] }],
           why: "Fathers pass Y to sons and X to daughters. Mothers pass an X to every child." }
       ] },
     { letters: ["W", "C"], title: "CER: The Surprise White Pup", time: "6 min", goal: "Use Punnett square evidence to explain a surprising result.",
       blocks: [
         { t: "cerg", title: "CER Builder", q: "<b>Question:</b> Two black guinea pigs had a litter with one white pup. A classmate says, “That’s impossible! Both parents are black.” Is the classmate right? Use your Punnett square evidence.", claimA: 1, need: 3,
-          claims: ["❌ The classmate is right. Two black parents can only have black pups.", "✅ It is possible. Both parents must be heterozygous (Bb), so each one can pass on a hidden b allele.", "🟣 The white pup must have a different mother."],
+          claims: ["The classmate is right. Two black parents can only have black pups.", "It is possible. Both parents must be heterozygous (Bb), so each one can pass on a hidden b allele.", "The white pup must have a different mother."],
           evidence: [["Black (B) is dominant, so a <b>Bb</b> guinea pig has black fur but carries a hidden white allele.", true],
             ["A white pup must be <b>bb</b>, so it received one b from EACH parent.", true],
             ["A Bb × Bb Punnett square has 1 bb box out of 4, a <b>25%</b> chance of a white pup.", true],
@@ -199,13 +202,13 @@ window.CC = {
       ] },
     { letters: ["O", "R", "I"], title: "Closure: The Purple Corn Problem", time: "4 min", goal: "Solve a new problem on your own, then answer the exit ticket.",
       blocks: [
-        { t: "text", html: `<h3>🌽 New problem</h3><div class="callout" style="font-size:1.05rem">In corn, <b>purple kernels (P)</b> are dominant over <b>yellow kernels (p)</b>. A farmer crosses <b>two hybrid purple</b> corn plants. One ear of corn from this cross has about <b>400 kernels</b>.</div>` },
-        { t: "fill", icon: "🌽", label: "corn frames", title: "Solve the corn problem", max: 4,
+        { t: "text", html: `<h3>New problem</h3><div class="callout" style="font-size:1.05rem">In corn, <b>purple kernels (P)</b> are dominant over <b>yellow kernels (p)</b>. A farmer crosses <b>two hybrid purple</b> corn plants. One ear of corn from this cross has about <b>400 kernels</b>.</div>` },
+        { t: "fill", icon: "", label: "corn frames", title: "Solve the corn problem", max: 4,
           items: [
-            { pic: "🧬", parts: ["“Hybrid purple” means each parent is ", B(["Pp", "PP", "pp"], 0), "."] },
-            { pic: "🔲", parts: ["The Punnett square has ", B(["1 PP, 2 Pp, 1 pp", "2 PP, 2 pp", "4 Pp"], 0), "."] },
-            { pic: "📊", parts: ["The expected phenotype ratio is ", B(["3 purple : 1 yellow", "1 purple : 1 yellow", "all purple"], 0), "."] },
-            { pic: "🌽", parts: ["Out of 400 kernels, about ", B(["100", "200", "300", "400"], 0), " should be yellow."] }],
+            { pic: "", parts: ["“Hybrid purple” means each parent is ", B(["Pp", "PP", "pp"], 0), "."] },
+            { pic: "", parts: ["The Punnett square has ", B(["1 PP, 2 Pp, 1 pp", "2 PP, 2 pp", "4 Pp"], 0), "."] },
+            { pic: "", parts: ["The expected phenotype ratio is ", B(["3 purple : 1 yellow", "1 purple : 1 yellow", "all purple"], 0), "."] },
+            { pic: "", parts: ["Out of 400 kernels, about ", B(["100", "200", "300", "400"], 0), " should be yellow."] }],
           why: "Pp × Pp → 1 PP : 2 Pp : 1 pp → 3 purple : 1 yellow. 25% of 400 = 100 yellow kernels." },
         { t: "quiz", label: "exit ticket", title: "Exit ticket", items: [
           { q: "A pea plant has white flowers (white is recessive). What is its genotype?", opts: ["PP", "Pp", "pp", "It can’t be known."], a: 2, why: "A recessive trait only shows with two recessive alleles." },
@@ -215,9 +218,9 @@ window.CC = {
   ]
 };
 </script>
-<script src="cc-bblab.js?v=5"></script>
-<script src="cc-protsyn.js?v=2"></script>
-<script src="cc-punnett.js?v=1"></script>
+<script src="cc-bblab.js?v=7"></script>
+<script src="cc-protsyn.js?v=3"></script>
+<script src="cc-punnett.js?v=2"></script>
 <script src="cc-blocks2.js?v=1"></script>
 <script src="hub-config.js?v=3"></script>
 <script src="cc-lesson.js?v=4"></script>

@@ -150,16 +150,16 @@
       }
       const steps = [["pick", "1 · Pick a gene"], ["tx", "2 · Transcription (nucleus)"], ["move", "3 · Move the mRNA"], ["tl", "4 · Translation (ribosome)"], ["done", "5 · Protein → trait"]];
       const idx = steps.findIndex(s => s[0] === phase);
-      let h = `<div class="ps"><h4>🧬 ${b.title || "Protein Synthesis Lab"}</h4><div class="ps-steps">${steps.filter(s => !(b.gene && s[0] === "pick")).map((s, i) => `<span class="${s[0] === phase ? "on" : steps.findIndex(x => x[0] === s[0]) < idx ? "done" : ""}">${s[1]}</span>`).join("")}</div>
+      let h = `<div class="ps"><h4>${b.title || "Protein Synthesis Lab"}</h4><div class="ps-steps">${steps.filter(s => !(b.gene && s[0] === "pick")).map((s, i) => `<span class="${s[0] === phase ? "on" : steps.findIndex(x => x[0] === s[0]) < idx ? "done" : ""}">${s[1]}</span>`).join("")}</div>
         <div class="ps-map">${cellMap(st, phase)}</div>`;
       if (phase === "pick") {
-        h += `<div class="ps-bench"><h5>🧬 Choose a gene to express</h5><p class="mu small">Each gene card shows the real first codons of that gene. Real genes are hundreds to thousands of bases long, so we added a stop codon to keep it short.</p>
+        h += `<div class="ps-bench"><h5>Choose a gene to express</h5><p class="mu small">Each gene card shows the real first codons of that gene. Real genes are hundreds to thousands of bases long, so we added a stop codon to keep it short.</p>
           <div class="ps-genes">${(b.choices || ["hbb", "gfp", "ins"]).map(k => { const G = GENES[k]; return `<button class="ps-gene" data-gene="${k}"><span class="ic">${G.icon}</span><b>${G.short}</b><small>${G.name}<br>Found in: ${G.where}</small></button>`; }).join("")}</div></div>`;
       }
       if (g && phase === "tx") {
         const dna = g.dna, tmp = templateOf(g), m = st.m || "", pre = (b.prefill || 0) * 3, n = dna.length;
         const cur = Math.max(m.length, 0);
-        h += `<div class="ps-bench"><h5>📍 In the NUCLEUS: Transcription (DNA → mRNA)</h5>
+        h += `<div class="ps-bench"><h5>In the NUCLEUS: Transcription (DNA → mRNA)</h5>
           <p>${g.icon} <b>${g.name}</b>. RNA polymerase unzips the DNA and reads the <b>template strand</b>. Build the matching <b>mRNA</b>: tap the base that pairs with each template base.</p>
           <div class="ps-rule"><span>DNA A → mRNA <b style="color:${BASECOL.U}">U</b></span><span>DNA T → mRNA <b style="color:${BASECOL.A}">A</b></span><span>DNA C → mRNA <b style="color:${BASECOL.G}">G</b></span><span>DNA G → mRNA <b style="color:${BASECOL.C}">C</b></span><span>⚠️ RNA has <b>U</b> instead of T</span></div>
           <div class="ps-unzip" style="margin-top:10px">
@@ -171,14 +171,14 @@
       }
       if (g && phase === "move") {
         const pos = st.pos || "nucleus";
-        h += `<div class="ps-bench"><h5>🚚 Move the mRNA</h5><p><b>${pos === "nucleus" ? "Drag the orange mRNA to a nuclear pore (a white circle on the edge of the nucleus)." : "Now drag the mRNA through the cytoplasm to a ribosome (purple)."}</b> The DNA stays safe inside the nucleus. Only the mRNA copy leaves.</p>
+        h += `<div class="ps-bench"><h5>Move the mRNA</h5><p><b>${pos === "nucleus" ? "Drag the orange mRNA to a nuclear pore (a white circle on the edge of the nucleus)." : "Now drag the mRNA through the cytoplasm to a ribosome (purple)."}</b> The DNA stays safe inside the nucleus. Only the mRNA copy leaves.</p>
           <div class="ps-move"><button class="btn ghost" data-mv="pore" ${pos !== "nucleus" ? "disabled" : ""}>➡️ Move to a nuclear pore</button><button class="btn ghost" data-mv="ribosome" ${pos !== "pore" ? "disabled" : ""}>➡️ Move to a ribosome</button><span class="mu small">(drag on the map, or use these buttons)</span></div>
           <p class="ps-msg" aria-live="polite">${st.msg || ""}</p></div>`;
       }
       if (g && phase === "tl") {
         const cods = codons(mrnaOf(g)), done = st.aa || [], ci = done.length, cur = cods[ci], pre = b.prefill || 0;
         const last = done.length && cods[done.length - 1];
-        h += `<div class="ps-bench"><h5>📍 At the RIBOSOME in the cytoplasm: Translation (mRNA → protein)</h5>
+        h += `<div class="ps-bench"><h5>At the RIBOSOME in the cytoplasm: Translation (mRNA → protein)</h5>
           <p>The ribosome reads the mRNA <b>3 bases at a time</b> (a <b>codon</b>). Find the highlighted codon in the codon chart and tap it. A <b>tRNA</b> brings that amino acid.</p>
           <div class="ps-tl"><div><div class="ps-codons">${cods.map((c, i) => `<span class="ps-cod ${i === ci ? "cur" : i < ci ? "done" : ""}">${[...c].map(x => tile(x)).join("")}</span>`).join("")}</div>
             ${last ? `<div class="ps-trna"><span class="t"><small>tRNA</small><span>${[...last].map(x => RPAIR[x]).join("")}</span><small>anticodon</small></span><span>carried <b>${CODE[last]}</b> (${AA[CODE[last]]})</span></div>` : ""}
@@ -188,7 +188,7 @@
       }
       if (g && phase === "done") {
         const prot = codons(mrnaOf(g)).map(c => CODE[c]).filter(a => a !== "Stop");
-        h += `<div class="ps-done"><div>${g.art}</div><div><h5>🎉 You made ${g.protein}!</h5>
+        h += `<div class="ps-done"><div>${g.art}</div><div><h5>You made ${g.protein}!</h5>
           <div class="ps-chain">${prot.map(a => `<span class="ps-aa" style="--ac:${aaColor(a)}" title="${AA[a]}">${a}</span>`).join('<span class="ps-link"></span>')}</div>
           <p><b>Trait:</b> ${g.trait}.</p>
           <p class="mu small">Gene (DNA) → mRNA → protein (amino acids) → trait. The order of the amino acids decides the protein’s shape, and the shape decides its job.</p>
@@ -263,7 +263,7 @@
     html(b, st) {
       const ev = st.ev || [], chk = !!st.checked;
       const box = (cc, title, inner) => `<div class="cer-box" style="--cc:${cc}"><h5>${title}</h5>${inner}</div>`;
-      let h = `<div class="bb"><h4>✍️ ${b.title}</h4><p class="mu">${b.q}</p><div class="cer">` +
+      let h = `<div class="bb"><h4>${b.title}</h4><p class="mu">${b.q}</p><div class="cer">` +
         box("#2b7de9", "C · Claim: choose your answer", `<div class="cg-opts">${b.claims.map((c, i) => `<button class="cg-opt ${st.claim === i ? "on" : ""}" style="--cc:#2b7de9" data-cl="${i}"><span>${c}</span></button>`).join("")}</div>`) +
         box("#1aa36f", `E · Evidence: choose the ${b.need || 2} BEST pieces of evidence`, `<div class="cg-opts">${b.evidence.map((c, i) => `<button class="cg-opt ${ev.includes(i) ? "on" : ""}" style="--cc:#1aa36f" data-ev="${i}"><span>${c[0]}</span></button>`).join("")}</div>`) +
         box("#e08a00", "R · Reasoning: explain WHY", `<div class="wbank"><b>Word bank (tap to add)</b>${b.words.map(w => `<button class="wchip" data-w="${w}">${w}</button>`).join("")}</div>
@@ -357,7 +357,7 @@
       const dnaTiles = [...dna].map((x, i) => `<span class="ps-b ${i % 3 === 2 ? "gap" : ""} ${st.sel === i ? "sel" : ""} ${chgIdx.has(i) ? "chg" : ""}" data-ml="${i}" style="--bc:${BASECOL[x]}" role="button" tabindex="0" aria-label="Base ${i + 1}: ${x}">${x}</span>`).join("");
       const mr = dna.replace(/T/g, "U");
       const aaRow = list => `<span class="ml-aa">${list.map((a, i) => `<span class="${a === "Stop" ? "stop" : ""} ${list !== P0 && a !== P0[i] ? "diff" : ""}" style="background:${aaColor(a)}">${a === "Stop" ? "STOP" : a}</span>`).join("")}${list.length < P0.length && list[list.length - 1] === "Stop" ? P0.slice(list.length).map(() => `<span class="gone">—</span>`).join("") : ""}</span>`;
-      return `<div class="ps"><h4>🧪 ${b.title || "Mutation Lab"}</h4>
+      return `<div class="ps"><h4>${b.title || "Mutation Lab"}</h4>
         <p>This is a short section from the middle of the <b>GFP gene</b> (amino acids 63–69). Ser, Tyr, and Gly (amino acids 65–67) fold into the protein’s <b>glowing center</b>. Change the DNA and watch what happens to the mRNA, the protein, and the glow.</p>
         <div class="ml-top"><div>
           <div class="ml-tools"><b>Tool:</b>

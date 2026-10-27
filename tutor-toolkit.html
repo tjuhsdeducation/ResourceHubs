@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tutor Center | AVID Tutors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cc-lesson.css?v=2">
+<!--
+  TUTOR CENTER (tutors only): tutorial training review and in-the-moment tools.
+  Content lives in tutor-toolkit.js. Printable PDFs live in the tutor-docs folder.
+  The same tutor code as the Math Tutor Guide unlocks this page (see TUTOR_CODE below).
+  Open one printable directly:  tutor-toolkit.html?doc=trf
+-->
+<style>
+  :root{--lc:#0e9aa7}
+  .tt-gate{max-width:440px;margin:60px auto;background:var(--surface);border:2px solid var(--line);border-radius:24px;padding:26px;box-shadow:var(--shadow);text-align:center}
+  .tt-gate input{width:100%;font:700 1.1rem var(--body);padding:12px 14px;border-radius:14px;border:2px solid var(--line);margin:12px 0;text-align:center;background:var(--surface);color:var(--fg)}
+  .tt-msg{min-height:1.3em;font-weight:800;color:#b0302a}
+  .tt-nav{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0}
+  .tt-nav a{font:700 .95rem var(--display);border:2px solid var(--line);background:var(--surface);color:var(--fg);border-radius:14px;padding:7px 14px;text-decoration:none}
+  .tt-nav a.on{border-color:var(--lc);background:color-mix(in srgb,var(--lc) 14%,var(--surface))}
+  .tt-card{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:16px 20px;box-shadow:var(--shadow);margin:14px 0}
+  .tt-card h2{margin:0 0 8px;font-size:1.3rem}
+  .tt-card h3{margin:14px 0 6px;font-size:1.05rem}
+  .tt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+  .tt-tile{display:block;text-decoration:none;color:var(--fg);background:var(--surface);border:2px solid var(--line);border-left:8px solid var(--tc,var(--lc));border-radius:18px;padding:14px 16px;box-shadow:var(--shadow)}
+  .tt-tile:hover{border-color:var(--tc,var(--lc))}
+  .tt-tile b{display:block;font:700 1.12rem var(--display);margin-bottom:4px}
+  .tt-tile span{color:var(--muted);font-size:.92rem;line-height:1.45}
+  .tt-run{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start}
+  .tt-phase{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .tt-phase button{font:800 .85rem var(--body);border:2px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:4px 12px;cursor:pointer}
+  .tt-phase button.on{background:var(--lc);border-color:var(--lc);color:#fff}
+  .tt-step h2{display:flex;gap:10px;align-items:center}
+  .tt-step .num{flex:none;width:40px;height:40px;border-radius:50%;background:var(--lc);color:#fff;display:grid;place-items:center;font:700 1.2rem var(--display)}
+  .tt-step ul{margin:4px 0 8px;padding-left:22px;line-height:1.55}
+  .tt-say{background:#eef7f8;border-left:5px solid var(--lc);border-radius:0 12px 12px 0;padding:8px 12px;margin:6px 0;line-height:1.5}
+  .tt-dots{display:flex;gap:4px;flex-wrap:wrap;margin:10px 0}
+  .tt-dots button{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:var(--surface);font:800 .8rem var(--body);cursor:pointer;color:var(--fg)}
+  .tt-dots button.on{background:var(--lc);border-color:var(--lc);color:#fff}
+  .tt-timer{font:700 2.4rem var(--display);text-align:center;margin:4px 0}
+  .tt-timer.low{color:#b0302a}
+  .tt-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .tt-stu{border:2px solid var(--line);border-radius:14px;padding:8px 10px;margin:6px 0;display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center}
+  .tt-stu.pres{border-color:var(--lc);background:color-mix(in srgb,var(--lc) 8%,var(--surface))}
+  .tt-stu b{font-size:1rem}
+  .tt-stu small{color:var(--muted);font-weight:700;display:block}
+  .tt-stu .tt-row button{font:800 .78rem var(--body);border:2px solid var(--line);background:var(--surface);color:var(--fg);border-radius:10px;padding:4px 8px;cursor:pointer}
+  .tt-stu .tt-row button.on{background:var(--lc);color:#fff;border-color:var(--lc)}
+  .tt-in{width:100%;min-width:0;font:600 .95rem var(--body);padding:8px 10px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--fg)}
+  .tt-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+  .tt-chips button{font:800 .88rem var(--body);border:2px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:5px 12px;cursor:pointer}
+  .tt-chips button.on{background:var(--lc);border-color:var(--lc);color:#fff}
+  .tt-stems li{margin:5px 0;line-height:1.5}
+  .tt-big{font:700 1.2rem var(--body);line-height:1.5;background:#fff7d6;border-left:6px solid #e0a100;border-radius:0 14px 14px 0;padding:12px 14px;min-height:2em}
+  .tt-tbl{width:100%;border-collapse:collapse;font-size:.93rem}
+  .tt-tbl th,.tt-tbl td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top;line-height:1.45}
+  .tt-tbl th{background:var(--soft)}
+  .tt-tw{overflow-x:auto}
+  .tt-fix{border:2px solid var(--line);border-radius:16px;margin:8px 0;background:var(--surface)}
+  .tt-fix summary{cursor:pointer;padding:10px 14px;font-weight:800;display:flex;gap:8px;align-items:center}
+  .tt-fix summary span{margin-left:auto;font:800 .72rem var(--body);text-transform:uppercase;color:var(--muted);border:1.5px solid var(--line);border-radius:999px;padding:1px 8px}
+  .tt-fix div{padding:0 14px 12px} .tt-fix ul{margin:4px 0;padding-left:22px;line-height:1.55}
+  .tt-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .tt-do{border:2px solid #1aa36f;border-radius:16px;padding:10px 14px} .tt-dont{border:2px solid #d0453a;border-radius:16px;padding:10px 14px}
+  .tt-do ul,.tt-dont ul{margin:4px 0;padding-left:22px;line-height:1.55}
+  .tt-cont{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .tt-cont > div{border:2px solid var(--cc);border-radius:14px;padding:8px 10px}
+  .tt-cont h4{margin:0 0 6px;color:var(--cc);font-size:.95rem}
+  .tt-cont label{display:flex;gap:6px;font-size:.86rem;line-height:1.35;margin:4px 0;align-items:flex-start}
+  .tt-q{border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin:8px 0}
+  .tt-q .opts{display:grid;gap:6px;margin-top:6px}
+  .tt-q .opts button{all:unset;cursor:pointer;border:2px solid var(--line);border-radius:12px;padding:7px 10px;font-weight:700}
+  .tt-q .opts button.right{border-color:#1aa36f;background:#e4f6ea}.tt-q .opts button.wrong{border-color:#d0453a;background:#fde8e6}
+  .tt-q .why{margin-top:6px;font-size:.92rem;color:var(--muted)}
+  .tt-docs .tt-tile{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+  .tt-docs .tt-row a{font:800 .85rem var(--body);text-decoration:none;border:2px solid var(--line);border-radius:10px;padding:5px 10px;color:var(--fg);background:var(--surface)}
+  .tt-docs .tt-row a.pri{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  .tt-flow{display:grid;gap:6px} .tt-flow div{border:2px solid var(--line);border-radius:12px;padding:7px 10px} .tt-flow b{color:var(--lc)}
+  /* ---------- printable documents ---------- */
+  .doc{max-width:8in;margin:0 auto;background:#fff;color:#111;padding:.45in .5in;font:11pt/1.4 Nunito,Arial,sans-serif}
+  .doc h1{font:700 20pt Fredoka,Arial,sans-serif;margin:0 0 2px}
+  .doc .dsub{color:#555;margin:0 0 10px;font-size:10pt}
+  .doc h2{font:700 13pt Fredoka,Arial,sans-serif;margin:12px 0 4px;border-bottom:2px solid #0e9aa7;padding-bottom:2px}
+  .doc table{width:100%;border-collapse:collapse;margin:4px 0 8px}
+  .doc th,.doc td{border:1px solid #888;padding:4px 6px;text-align:left;vertical-align:top;font-size:9.5pt}
+  .doc th{background:#e7f4f5}
+  .doc ul{margin:2px 0 6px;padding-left:18px} .doc li{margin:1px 0}
+  .doc .box{border:1.5px solid #333;border-radius:4px;padding:4px 6px;margin:6px 0}
+  .doc .lbl{font-weight:800;font-size:9.5pt;display:flex;justify-content:space-between}
+  .doc .ln{border-bottom:1px solid #999;height:22px}
+  .doc .pb{break-before:page;page-break-before:always}
+  .doc .foot{margin-top:10px;color:#666;font-size:8pt;text-align:center}
+  .doc .cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .doc .cols2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .doc .pill{display:inline-block;background:#0e9aa7;color:#fff;border-radius:10px;padding:0 6px;font-weight:800;font-size:9pt}
+  .doc.dense{font-size:9.5pt}.doc.dense th,.doc.dense td{font-size:8.6pt;padding:3px 5px}.doc.dense li{font-size:9pt;margin:0}.doc.dense h2{margin:8px 0 3px}
+  .docbar{max-width:8in;margin:14px auto;display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+  body.docmode{background:#e9ecef}
+  @media (max-width:900px){.tt-run{grid-template-columns:1fr}.tt-two{grid-template-columns:1fr}.tt-cont{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){.tt-cont{grid-template-columns:1fr}.doc{padding:16px;overflow-wrap:anywhere}.doc table{display:block;overflow-x:auto}.docbar{padding:0 12px}.doc .cols3,.doc .cols2{grid-template-columns:1fr}}
+  @media print{
+    @page{size:letter;margin:.4in}
+    header.top,.tt-nav,.docbar,.no-print{display:none!important}
+    body,body.docmode{background:#fff}
+    .doc{padding:0;max-width:none}
+    .tt-card{box-shadow:none;break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<header class="top no-print"><div class="bar"><a class="brand" href="index.html"><span class="mark">🧑‍🏫</span><span>Tutor Center</span></a><span class="crumb" id="tt-crumb"></span><span class="spacer"></span><a class="btn ghost" href="tutor-math.html" id="tt-mathlink" hidden style="text-decoration:none;margin-right:6px">Math Guide</a><button class="btn ghost" id="tt-lock" hidden>Lock</button></div></header>
+<main class="wrap" id="tt-root"><p style="padding:40px;text-align:center;font-weight:800">Loading…</p></main>
+<script src="hub-config.js?v=4"></script>
+<script src="tutor-toolkit.js?v=1"></script>
+<script>
+/* =====================================================================
+   ✏️ TUTOR CODE: keep this the same as TUTOR_CODE in tutor-math.html.
+   (You can also add  tutorPasscode: "..."  to hub-config.js.)
+   ⚠️ A simple lock that runs in the browser. It is NOT real security.
+   ===================================================================== */
+const TUTOR_CODE = "tutor2026";
+
+(function () {
+  const D = window.TT, CFG = window.HUB_CONFIG || {};
+  const CODES = [TUTOR_CODE, CFG.tutorPasscode, CFG.teacherPasscode || "avid2026"].filter(Boolean).map(s => String(s).trim().toLowerCase());
+  const root = document.getElementById("tt-root"), crumb = document.getElementById("tt-crumb");
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const LS = { get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const raw = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }, del(k) { try { localStorage.removeItem(k); } catch (e) {} } };
+  const params = new URLSearchParams(location.search);
+  const SECTIONS = [
+    ["home", "Home"], ["run", "Run a Tutorial"], ["questions", "Question Finder"], ["fixes", "Quick Fixes"], ["trf", "TRF Guide"], ["basics", "Tutor Basics"], ["review", "Training Review"], ["print", "Printables"]];
+  const twoTap = (btn, fn, label) => { btn.onclick = () => { if (!btn.dataset.sure) { btn.dataset.sure = "1"; const t = btn.textContent; btn.textContent = label || "Tap again to confirm"; setTimeout(() => { if (btn.isConnected) { delete btn.dataset.sure; btn.textContent = t; } }, 4000); return; } fn(); }; };
+
+  /* ================= GATE ================= */
+  const unlocked = () => raw.get("hubTutor") === "1";
+  function gate() {
+    crumb.innerHTML = "";
+    root.innerHTML = `<div class="tt-gate"><h1 style="margin:6px 0">Tutor Center</h1><p>Tutors: enter the tutor code from your AVID teacher.</p>
+      <form id="tt-form"><input id="tt-code" type="password" autocomplete="off" placeholder="Tutor code" aria-label="Tutor code"><button class="btn" type="submit" style="width:100%">Open the Tutor Center</button></form>
+      <p class="tt-msg" id="tt-msg" aria-live="polite"></p></div>`;
+    document.getElementById("tt-form").onsubmit = e => { e.preventDefault(); const v = document.getElementById("tt-code").value.trim().toLowerCase();
+      if (CODES.includes(v)) { raw.set("hubTutor", "1"); route(); } else document.getElementById("tt-msg").textContent = "That code didn’t work. Check with your AVID teacher."; };
+  }
+
+  /* ================= LAYOUT ================= */
+  function frame(key, inner) {
+    document.getElementById("tt-lock").hidden = false; document.getElementById("tt-mathlink").hidden = false;
+    crumb.innerHTML = key === "home" ? "" : `<span>›</span><b>${SECTIONS.find(s => s[0] === key)[1]}</b>`;
+    root.innerHTML = `<section class="banner" style="--lc:#0e9aa7"><span class="kick">For AVID tutors</span><h1>Tutor Center</h1>
+      <p>Your training, all in one place, plus tools to use while you run a tutorial. Keep it open on your Chromebook or phone during tutorials.</p></section>
+      <nav class="tt-nav no-print">${SECTIONS.map(s => `<a href="#${s[0]}" class="${s[0] === key ? "on" : ""}">${s[1]}</a>`).join("")}<a href="tutor-math.html">Math Guide</a></nav>${inner}<div style="height:40px"></div>`;
+  }
+
+  /* ================= HOME ================= */
+  function home() {
+    const T = [["run", "Run a Tutorial", "Step-by-step coach for all 10 steps with what to say, a 30-second speech timer, and a participation tracker.", "#0e9aa7"],
+      ["questions", "Question Finder", "Level 1, 2, and 3 question stems for every subject, plus a “give me a question” button.", "#2b7de9"],
+      ["fixes", "Quick Fixes", "What to do when a student has no pre-work, wants the answer, is off-task, and more.", "#e08a00"],
+      ["trf", "TRF Guide", "What goes in every box of the Tutorial Request Form, what to check at the door, and point values.", "#8a54e0"],
+      ["basics", "Tutor Basics", "Your role, do’s and don’ts, boundaries, and a self-check: is your tutorial collaborative?", "#1aa36f"],
+      ["review", "Training Review", "12 quick questions to check that you remember the key parts of your training.", "#d0453a"],
+      ["print", "Printables", "Clean PDFs to download or print: TRF, three-column notes, question stem cards, and more.", "#5b5fe0"],
+      ["math", "Math Tutor Guide", "Notes, worked examples, and questions to ask for every Algebra 1 and Geometry unit.", "#c2297a"]];
+    frame("home", `<section class="tt-card"><h2>What do you need right now?</h2><div class="tt-grid">${T.map(t => `<a class="tt-tile" style="--tc:${t[3]}" href="${t[0] === "math" ? "tutor-math.html" : "#" + t[0]}"><b>${t[1]}</b><span>${t[2]}</span></a>`).join("")}</div></section>
+      <section class="tt-card"><h2>The tutorial in one sentence</h2><p style="font-size:1.08rem;line-height:1.6;margin:0">A student presents a real point of confusion, the <b>group</b> asks questions to guide the presenter’s thinking, and the tutor <b>facilitates</b>: you take notes, track participation, and push everyone to higher-level thinking. <b>You are not the answer key.</b></p></section>`);
+  }
+
+  /* ================= RUN A TUTORIAL ================= */
+  let stepIdx = 0, timer = null, tLeft = 30, tMode = "speech", pres0 = 0;
+  function run() {
+    const st = D.steps[stepIdx], trk = LS.get("ttTracker", { names: [], s: {}, ahas: [] });
+    const phases = ["Before", "During", "After"];
+    frame("run", `<div class="tt-run">
+      <section class="tt-card tt-step"><div class="tt-phase">${phases.map(p => `<button data-ph="${p}" class="${st.phase === p ? "on" : ""}">${p} the tutorial</button>`).join("")}</div>
+        <h2><span class="num">${st.n}</span>${esc(st.title)}</h2>
+        <p style="line-height:1.55">${esc(st.what)}</p>
+        <h3>Your job</h3><ul>${st.job.map(j => `<li>${esc(j)}</li>`).join("")}</ul>
+        <h3>Say it like this</h3>${st.say.map(s => `<div class="tt-say">${esc(s)}</div>`).join("")}
+        <div class="tt-dots" aria-label="Steps">${D.steps.map((s, i) => `<button data-st="${i}" class="${i === stepIdx ? "on" : ""}" aria-label="Step ${s.n}">${s.n}</button>`).join("")}</div>
+        <div class="tt-row"><button class="btn ghost" data-prev ${stepIdx ? "" : "disabled"}>← Back</button><button class="btn" data-nextst ${stepIdx < 9 ? "" : "disabled"}>Next step →</button></div>
+      </section>
+      <div>
+        <section class="tt-card"><h2>Timer</h2><div class="tt-chips"><button data-tm="speech" class="${tMode === "speech" ? "on" : ""}">30-Second Speech</button><button data-tm="present" class="${tMode === "present" ? "on" : ""}">Presenter time</button><button data-tm="reflect" class="${tMode === "reflect" ? "on" : ""}">5-min reflection</button></div>
+          <div class="tt-timer" id="tt-clock">0:30</div><div class="tt-row" style="justify-content:center"><button class="btn" id="tt-start">Start</button><button class="btn ghost" id="tt-reset">Reset</button></div></section>
+        <section class="tt-card"><h2>Participation tracker</h2><p class="mu small" style="margin:0 0 6px">Type your group’s first names, separated by commas. Tap L1, L2, or L3 each time a student asks a question. Saved on this device only.</p>
+          <div class="tt-row"><input class="tt-in" id="tt-names" placeholder="e.g., Ana, Jordan, Luis, Mia" value="${esc(trk.names.join(", "))}" style="flex:1"><button class="btn ghost" id="tt-setnames">Set group</button></div>
+          <div id="tt-stus">${trk.names.map(n => { const s = trk.s[n] || {}; const tot = (s[1] || 0) + (s[2] || 0) + (s[3] || 0);
+            return `<div class="tt-stu ${s.p ? "pres" : ""}"><div><b>${esc(n)}</b><small>${tot} question${tot === 1 ? "" : "s"} · L1 ${s[1] || 0} · L2 ${s[2] || 0} · L3 ${s[3] || 0}${s.p ? " · presented" : ""}</small></div>
+              <div class="tt-row"><button data-q="${esc(n)}|1">L1</button><button data-q="${esc(n)}|2">L2</button><button data-q="${esc(n)}|3">L3</button><button data-pr="${esc(n)}" class="${s.p ? "on" : ""}">Presented</button><button data-aha="${esc(n)}" title="Mark the ah-ha moment">!</button></div></div>`; }).join("") || `<p class="mu small">No group yet.</p>`}</div>
+          ${trk.names.length ? `<p class="small" style="margin:8px 0 0"><b>Present first next time:</b> ${esc(trk.names.filter(n => !(trk.s[n] || {}).p).join(", ") || "everyone presented")}</p>
+            <p class="small" style="margin:4px 0 0"><b>No questions yet:</b> ${esc(trk.names.filter(n => { const s = trk.s[n] || {}; return !((s[1] || 0) + (s[2] || 0) + (s[3] || 0)); }).join(", ") || "everyone has asked a question")}</p>
+            ${trk.ahas.length ? `<p class="small" style="margin:4px 0 0"><b>Ah-ha moments:</b> ${trk.ahas.map(a => esc(a)).join(" · ")}</p>` : ""}
+            <div class="tt-row" style="margin-top:8px"><button class="btn ghost" id="tt-clear">Clear for a new tutorial</button></div>` : ""}</section>
+        <section class="tt-card"><h2>Need a question?</h2><div class="tt-chips" id="tt-qsub">${Object.keys(D.stems).map((k, i) => `<button data-qs="${esc(k)}" class="${i === 0 ? "on" : ""}">${esc(k)}</button>`).join("")}</div>
+          <div class="tt-row"><button class="btn ghost" data-rq="1">Level 1</button><button class="btn ghost" data-rq="2">Level 2</button><button class="btn ghost" data-rq="3">Level 3</button></div><div class="tt-big" id="tt-rq" style="margin-top:8px">Tap a level to get a question stem.</div></section>
+      </div></div>`);
+    root.querySelectorAll("[data-ph]").forEach(b => b.onclick = () => { stepIdx = D.steps.findIndex(s => s.phase === b.dataset.ph); run(); });
+    root.querySelectorAll("[data-st]").forEach(b => b.onclick = () => { stepIdx = +b.dataset.st; run(); });
+    const pv = root.querySelector("[data-prev]"); pv.onclick = () => { if (stepIdx) { stepIdx--; run(); } };
+    root.querySelector("[data-nextst]").onclick = () => { if (stepIdx < 9) { stepIdx++; run(); } };
+    /* timer */
+    const clock = document.getElementById("tt-clock"), MODES = { speech: 30, present: 0, reflect: 300 };
+    const fmt = s => `${Math.floor(Math.abs(s) / 60)}:${String(Math.abs(s) % 60).padStart(2, "0")}`;
+    const paint = () => { clock.textContent = fmt(tLeft); clock.classList.toggle("low", tMode !== "present" && tLeft <= 5); };
+    if (!timer) tLeft = MODES[tMode]; paint();
+    root.querySelectorAll("[data-tm]").forEach(b => b.onclick = () => { clearInterval(timer); timer = null; tMode = b.dataset.tm; tLeft = MODES[tMode]; run(); });
+    document.getElementById("tt-start").textContent = timer ? "Pause" : "Start";
+    document.getElementById("tt-start").onclick = () => {
+      if (timer) { clearInterval(timer); timer = null; document.getElementById("tt-start").textContent = "Start"; return; }
+      timer = setInterval(() => { if (!document.getElementById("tt-clock")) { clearInterval(timer); timer = null; return; }
+        tLeft += tMode === "present" ? 1 : -1; if (tMode !== "present" && tLeft <= 0) { tLeft = 0; clearInterval(timer); timer = null; const st2 = document.getElementById("tt-start"); if (st2) st2.textContent = "Start"; }
+        const c = document.getElementById("tt-clock"); if (c) { c.textContent = fmt(tLeft); c.classList.toggle("low", tMode !== "present" && tLeft <= 5); } }, 1000);
+      document.getElementById("tt-start").textContent = "Pause"; };
+    document.getElementById("tt-reset").onclick = () => { clearInterval(timer); timer = null; tLeft = MODES[tMode]; run(); };
+    /* tracker */
+    const save = t => { LS.set("ttTracker", t); run(); };
+    document.getElementById("tt-setnames").onclick = () => { const names = document.getElementById("tt-names").value.split(",").map(s => s.trim()).filter(Boolean).slice(0, 10); const t = LS.get("ttTracker", { names: [], s: {}, ahas: [] }); t.names = [...new Set(names)]; save(t); };
+    root.querySelectorAll("[data-q]").forEach(b => b.onclick = () => { const [n, l] = b.dataset.q.split("|"); const t = LS.get("ttTracker", { names: [], s: {}, ahas: [] }); t.s[n] = t.s[n] || {}; t.s[n][l] = (t.s[n][l] || 0) + 1; save(t); });
+    root.querySelectorAll("[data-pr]").forEach(b => b.onclick = () => { const n = b.dataset.pr, t = LS.get("ttTracker", { names: [], s: {}, ahas: [] }); t.s[n] = t.s[n] || {}; t.s[n].p = !t.s[n].p; save(t); });
+    root.querySelectorAll("[data-aha]").forEach(b => b.onclick = () => { const n = b.dataset.aha, t = LS.get("ttTracker", { names: [], s: {}, ahas: [] }); const d = new Date(); t.ahas.push(`${n} (${d.getHours() % 12 || 12}:${String(d.getMinutes()).padStart(2, "0")})`); save(t); });
+    const cl = document.getElementById("tt-clear"); if (cl) twoTap(cl, () => { const t = LS.get("ttTracker", { names: [], s: {}, ahas: [] }); save({ names: t.names, s: {}, ahas: [] }); }, "Tap again to clear the counts");
+    /* random question */
+    let qsub = Object.keys(D.stems)[0];
+    root.querySelectorAll("[data-qs]").forEach(b => b.onclick = () => { qsub = b.dataset.qs; root.querySelectorAll("[data-qs]").forEach(x => x.classList.toggle("on", x === b)); });
+    root.querySelectorAll("[data-rq]").forEach(b => b.onclick = () => { const L = D.stems[qsub][b.dataset.rq]; document.getElementById("tt-rq").innerHTML = `<small class="mu" style="font-size:.8rem;display:block">${esc(qsub)} · Level ${b.dataset.rq}</small>${esc(L[Math.floor(Math.random() * L.length)])}`; });
+  }
+
+  /* ================= QUESTION FINDER ================= */
+  let qfSub = "Any subject", qfLvl = 0, qfFind = "";
+  function questions() {
+    const subs = Object.keys(D.stems), lv = qfLvl ? [qfLvl] : [1, 2, 3];
+    const f = qfFind.trim().toLowerCase();
+    frame("questions", `<section class="tt-card"><h2>Question Finder</h2><p class="mu" style="margin:0 0 6px">Start with Level 1 to find what the student knows, move to Level 2 to make connections, and finish with Level 3 to check and apply.</p>
+      <div class="tt-chips">${subs.map(s => `<button data-sub="${esc(s)}" class="${s === qfSub ? "on" : ""}">${esc(s)}</button>`).join("")}</div>
+      <div class="tt-chips"><button data-lv="0" class="${!qfLvl ? "on" : ""}">All levels</button>${[1, 2, 3].map(l => `<button data-lv="${l}" class="${qfLvl === l ? "on" : ""}">Level ${l}</button>`).join("")}</div>
+      <input class="tt-in" id="tt-find" placeholder="Search question stems (e.g., check, compare, evidence)" value="${esc(qfFind)}">
+      ${lv.map(l => { const L = D.levels[l - 1], items = D.stems[qfSub][l].filter(q => !f || q.toLowerCase().includes(f));
+        return `<h3>${esc(L.name)}</h3><p class="mu small" style="margin:0">${esc(L.sub)} <i>Thinking verbs: ${esc(L.verbs)}</i></p><ul class="tt-stems">${items.map(q => `<li>${esc(q)}</li>`).join("") || "<li class='mu'>No matches.</li>"}</ul>`; }).join("")}</section>
+      <section class="tt-card"><h2>The inquiry path for each presenter</h2><div class="tt-flow">${D.flow.map(r => `<div><b>${esc(r[0])}</b><br>${esc(r[1])}</div>`).join("")}</div></section>
+      <section class="tt-card"><h2>Checking for understanding</h2><div class="tt-tw"><table class="tt-tbl"><thead><tr><th>Standard</th><th>Ask…</th></tr></thead><tbody>${D.checks.map(r => `<tr><td><b>${r[0]}</b></td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table></div></section>
+      <section class="tt-card"><h2>Socratic follow-up questions</h2><div class="tt-grid">${D.socratic.map(r => `<div class="tt-fix" style="margin:0"><div style="padding:10px 14px"><b>${esc(r[0])}</b><ul>${r[1].map(q => `<li>${esc(q)}</li>`).join("")}</ul></div></div>`).join("")}</div></section>`);
+    root.querySelectorAll("[data-sub]").forEach(b => b.onclick = () => { qfSub = b.dataset.sub; questions(); });
+    root.querySelectorAll("[data-lv]").forEach(b => b.onclick = () => { qfLvl = +b.dataset.lv; questions(); });
+    const fi = document.getElementById("tt-find"); fi.oninput = () => { qfFind = fi.value; const pos = fi.selectionStart; questions(); const n = document.getElementById("tt-find"); n.focus(); n.setSelectionRange(pos, pos); };
+  }
+
+  /* ================= QUICK FIXES ================= */
+  let fxTag = "All";
+  function fixes() {
+    const tags = ["All", ...new Set(D.fixes.map(f => f.tag))];
+    frame("fixes", `<section class="tt-card"><h2>Quick Fixes</h2><p class="mu" style="margin:0 0 6px">Tap a situation to see what to do and what to say.</p>
+      <div class="tt-chips">${tags.map(t => `<button data-tag="${t}" class="${t === fxTag ? "on" : ""}">${t}</button>`).join("")}</div>
+      ${D.fixes.filter(f => fxTag === "All" || f.tag === fxTag).map(f => `<details class="tt-fix"><summary>${esc(f.t)}<span>${esc(f.tag)}</span></summary><div><ul>${f.d.map(x => `<li>${esc(x)}</li>`).join("")}</ul>${f.say ? `<div class="tt-say">${esc(f.say)}</div>` : ""}</div></details>`).join("")}</section>`);
+    root.querySelectorAll("[data-tag]").forEach(b => b.onclick = () => { fxTag = b.dataset.tag; fixes(); });
+  }
+
+  /* ================= TRF GUIDE ================= */
+  function trf() {
+    frame("trf", `<section class="tt-card"><h2>The Tutorial Request Form (TRF), box by box</h2><p class="mu" style="margin:0 0 8px">Use this when you check TRFs at the door and when you pre-grade. Total: 25 points (pre-work 12, resources 1, collaborative inquiry 2, three-column notes 3, reflection 7).</p>
+      <div class="tt-tw"><table class="tt-tbl"><thead><tr><th>Box</th><th>Points</th><th>What a strong answer looks like</th><th>Think-aloud questions</th></tr></thead><tbody>${D.trf.map(r => `<tr><td><b>${esc(r.box)}</b></td><td>${r.pts}</td><td>${esc(r.look)}</td><td>${r.ask.length ? `<ul style="margin:0;padding-left:18px">${r.ask.map(a => `<li>${esc(a)}</li>`).join("")}</ul>` : "<span class='mu'>Check during the tutorial</span>"}</td></tr>`).join("")}</tbody></table></div></section>
+      <section class="tt-card"><h2>Check at the door (Step 3)</h2><ul style="line-height:1.6"><li>Is the initial question copied exactly, with the source and problem number?</li><li>Are the vocabulary, what-I-know, and critical thinking boxes filled in?</li><li>Does the student show work up to the point where they got stuck?</li><li>Is the point of confusion written as a <b>specific question</b>?</li><li>Did they bring resources (Cornell notes, textbook, quiz)?</li></ul></section>
+      <section class="tt-card"><h2>Vague vs. strong points of confusion</h2><div class="tt-tw"><table class="tt-tbl"><thead><tr><th>Vague</th><th>Strong</th></tr></thead><tbody>${D.pocExamples.map(r => `<tr><td style="color:#b0302a">${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table></div>
+        <div class="tt-say" style="margin-top:10px">Frame to share with students: “I understand ___, but I get stuck when ___ because ___.”</div></section>
+      <section class="tt-card"><h2>Three-column notes</h2><div class="tt-tw"><table class="tt-tbl"><thead><tr><th>Point of confusion question</th><th>Tutorial notes</th><th>Steps (math/science) or process (English/history)</th></tr></thead><tbody><tr><td>The presenter’s POC question</td><td>What is written on the board and the key ideas from the group’s questions</td><td>The steps that clear up the POC, in order</td></tr></tbody></table></div>
+        <p class="mu small">You take these notes on the presenter’s paper while they are at the board. Group members take their own on their notebook paper.</p></section>`);
+  }
+
+  /* ================= TUTOR BASICS ================= */
+  function basics() {
+    const sc = LS.get("ttSelf", {});
+    const counts = D.continuum.map((c, i) => c.items.filter((_, j) => sc[i + "-" + j]).length), mx = Math.max(...counts);
+    frame("basics", `<section class="tt-card"><h2>Your role during tutorials</h2><div class="tt-two"><div class="tt-do"><h3 style="margin-top:0">The tutor DOES</h3><ul>${D.role.does.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div><div class="tt-dont"><h3 style="margin-top:0">The tutor does NOT</h3><ul>${D.role.doesnt.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div></div></section>
+      <section class="tt-card"><h2>Self-check: how did my tutorial look today?</h2><p class="mu" style="margin:0 0 8px">Check everything that describes what you did. The goal is the green column.</p>
+        <div class="tt-cont">${D.continuum.map((c, i) => `<div style="--cc:${c.c}"><h4>${esc(c.name)}${mx && counts[i] === mx ? " ◀" : ""}</h4>${c.items.map((it, j) => `<label><input type="checkbox" data-sc="${i}-${j}" ${sc[i + "-" + j] ? "checked" : ""}>${esc(it)}</label>`).join("")}</div>`).join("")}</div>
+        ${mx ? `<p style="margin:10px 0 0"><b>Most of your checks are in: ${esc(D.continuum[counts.indexOf(mx)].name)}.</b> ${counts.indexOf(mx) === 3 ? "Great work. Keep facilitating so the group does the thinking." : "Next time, try one more thing from the green column."}</p>` : ""}
+        <div class="tt-row" style="margin-top:8px"><button class="btn ghost" id="tt-scclear">Clear my checks</button></div></section>
+      <section class="tt-card"><h2>Guidelines for effective tutorials</h2><div class="tt-tw"><table class="tt-tbl"><tbody>${D.guidelines.map(g => `<tr><td style="width:30%"><b>${esc(g[0])}</b></td><td>${esc(g[1])}</td></tr>`).join("")}</tbody></table></div></section>
+      <section class="tt-card"><h2>Boundaries: tutors should never</h2><ul style="line-height:1.6">${D.never.map(x => `<li>${esc(x)}</li>`).join("")}</ul><div class="tt-say">If a student shares something about drugs, abuse, or their safety, you are legally required to tell the AVID teacher. The AVID teacher is the final authority in the classroom.</div></section>
+      <section class="tt-card"><h2>The ideal tutor</h2><ol style="line-height:1.6">${D.top10.map(x => `<li>${esc(x)}</li>`).join("")}</ol></section>
+      <section class="tt-card"><h2>WICOR in tutorials</h2><div class="tt-tw"><table class="tt-tbl"><tbody>${D.wicor.map(r => `<tr><td style="width:20%"><b>${r[0]}</b></td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table></div></section>
+      <section class="tt-card"><h2>Cornell notes: the 10 steps (C-O-R-N-E-L-L W-A-Y)</h2><div class="tt-tw"><table class="tt-tbl"><tbody>${D.cornell.map(r => `<tr><td style="width:6%"><b>${r[0]}</b></td><td style="width:28%"><b>${esc(r[1])}</b></td><td>${esc(r[2])}</td></tr>`).join("")}</tbody></table></div></section>`);
+    root.querySelectorAll("[data-sc]").forEach(x => x.onchange = () => { const s = LS.get("ttSelf", {}); s[x.dataset.sc] = x.checked; LS.set("ttSelf", s); basics(); });
+    twoTap(document.getElementById("tt-scclear"), () => { LS.set("ttSelf", {}); basics(); }, "Tap again to clear");
+  }
+
+  /* ================= TRAINING REVIEW ================= */
+  let qa = {};
+  function review() {
+    const done = Object.keys(qa).length, right = D.quiz.filter((q, i) => qa[i] === q.a).length;
+    frame("review", `<section class="tt-card"><h2>Training Review</h2><p class="mu" style="margin:0 0 6px">Tap an answer to see if you’re right. This is just for you; nothing is sent.</p>
+      ${D.quiz.map((q, i) => `<div class="tt-q"><b>${i + 1}. ${esc(q.q)}</b><div class="opts">${q.o.map((o, j) => `<button data-qa="${i}|${j}" class="${qa[i] == null ? "" : j === q.a ? "right" : qa[i] === j ? "wrong" : ""}" ${qa[i] == null ? "" : "disabled"}>${esc(o)}</button>`).join("")}</div>${qa[i] == null ? "" : `<div class="why">${qa[i] === q.a ? "Correct." : "Not quite."} ${esc(q.why)}</div>`}</div>`).join("")}
+      <p style="font-weight:800">Score: ${right} / ${D.quiz.length}${done < D.quiz.length ? ` (${D.quiz.length - done} left)` : ""}</p><button class="btn ghost" id="tt-qreset">Start over</button></section>`);
+    root.querySelectorAll("[data-qa]").forEach(b => b.onclick = () => { const [i, j] = b.dataset.qa.split("|").map(Number); qa[i] = j; review(); });
+    document.getElementById("tt-qreset").onclick = () => { qa = {}; review(); };
+  }
+
+  /* ================= PRINTABLES ================= */
+  const DOCS = [
+    ["glance", "Tutorial at a Glance", "The 10 steps and your job at each step (1 page)."],
+    ["stems", "Question Stem Cards", "Level 1, 2, and 3 stems for every subject (2 pages)."],
+    ["script", "Tutor Facilitation Script", "What to say at each step of the tutorial (1 page)."],
+    ["checks", "Checking for Understanding", "Inquiry path, critical thinking standards, and Socratic follow-ups (1 page)."],
+    ["trf", "Tutorial Request Form (blank)", "Pre-work and reflection pages for students (2 pages)."],
+    ["notes3", "Three-Column Notes Sheet", "Question | Notes | Steps or Process (1 page)."],
+    ["trfguide", "TRF Guide for Tutors", "What goes in each box, point values, and think-aloud questions (1 page)."],
+    ["basics", "Tutor Do’s, Don’ts & Boundaries", "Your role, guidelines, and boundaries (1 page)."],
+    ["observe", "Observe a Fellow Tutor + Reflection", "Peer observation form and tutor reflection (2 pages)."]];
+  function printables() {
+    frame("print", `<section class="tt-card tt-docs"><h2>Printables</h2><p class="mu" style="margin:0 0 8px">Open a page to print it, or download the PDF to keep on your device or share with students.</p>
+      <div class="tt-grid">${DOCS.map(d => `<div class="tt-tile"><div><b>${esc(d[1])}</b><span>${esc(d[2])}</span></div><div class="tt-row"><a class="pri" href="?doc=${d[0]}">Open</a><a href="tutor-docs/${d[0]}.pdf" download>PDF</a></div></div>`).join("")}</div></section>`);
+  }
+
+  /* ---------- printable document layouts ---------- */
+  const FOOT = `<p class="foot">Adapted from the AVID Tutorial Guide training handouts for our tutors. Tutor Center · AVID</p>`;
+  const lines = n => Array.from({ length: n }, () => `<div class="ln"></div>`).join("");
+  function docHTML(id) {
+    if (id === "glance") return `<h1>Tutorial at a Glance</h1><p class="dsub">The 10 steps of the AVID tutorial and your job as the tutor.</p>
+      ${["Before", "During", "After"].map(p => `<h2>${p} the tutorial</h2><table><thead><tr><th style="width:5%">#</th><th style="width:33%">Step</th><th>Tutor’s job</th></tr></thead><tbody>${D.steps.filter(s => s.phase === p).map(s => `<tr><td><b>${s.n}</b></td><td><b>${esc(s.title)}</b></td><td>${esc(s.job[0])}${s.job[1] ? " " + esc(s.job[1]) : ""}</td></tr>`).join("")}</tbody></table>`).join("")}
+      <h2>Remember</h2><ul><li>One group, the whole period. Sit with the group, away from the board.</li><li>Group members ask the questions. You have one equal voice.</li><li>Take three-column notes for the presenter and mark the “ah ha” with a <b>!</b></li><li>Leave about 5 minutes for reflections.</li></ul>${FOOT}`;
+    if (id === "stems") return `<h1>Question Stem Cards</h1><p class="dsub">Level 1: gathering (on the page) · Level 2: processing (between the lines) · Level 3: applying (off the page)</p>
+      ${Object.keys(D.stems).map((k, i) => `${i === 2 ? '<div class="pb"></div>' : ""}<h2>${esc(k)}</h2><div class="cols3">${[1, 2, 3].map(l => `<div><span class="pill">Level ${l}</span><ul>${D.stems[k][l].map(q => `<li>${esc(q)}</li>`).join("")}</ul></div>`).join("")}</div>`).join("")}${FOOT}`;
+    if (id === "script") return `<h1>Tutor Facilitation Script</h1><p class="dsub">What it might sound like at each step.</p><table><thead><tr><th style="width:5%">#</th><th style="width:30%">Step</th><th>Say it like this</th></tr></thead><tbody>${D.steps.map(s => `<tr><td><b>${s.n}</b></td><td><b>${esc(s.title)}</b></td><td>${s.say.map(x => esc(x)).join("<br>")}</td></tr>`).join("")}</tbody></table>${FOOT}`;
+    if (id === "checks") return `<h1>Checking for Understanding</h1><p class="dsub">Questions that push the presenter’s thinking deeper.</p>
+      <h2>The inquiry path for each presenter</h2><table><tbody>${D.flow.map(r => `<tr><td style="width:34%"><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table>
+      <h2>Critical thinking standards</h2><table><tbody>${D.checks.map(r => `<tr><td style="width:18%"><b>${r[0]}</b></td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table>
+      <h2>Socratic follow-ups</h2><div class="cols3">${D.socratic.map(r => `<div><b>${esc(r[0])}</b><ul>${r[1].map(q => `<li>${esc(q)}</li>`).join("")}</ul></div>`).join("")}</div>${FOOT}`;
+    if (id === "trf") return `<h1>Tutorial Request Form (TRF)</h1><p class="dsub">Pre-work inquiry: complete before the tutorial.</p>
+      <div class="cols2"><div>Name: ____________________________</div><div>AVID Period: ______ Date: __________</div><div>Subject: __________________________</div><div>Essential Question: ________________</div></div>
+      <table style="margin-top:6px"><tr><th>Pre-work /12</th><th>Resources /1</th><th>Collaborative inquiry /2</th><th>Three-column notes /3</th><th>Reflection /7</th><th>Total /25</th></tr><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr></table>
+      <div class="box"><div class="lbl"><span>Initial / Original Question (copy it exactly). Source, page, and problem #: ____________</span><span>/1</span></div>${lines(2)}</div>
+      <div class="box"><div class="lbl"><span>Key Academic Vocabulary and Definitions</span><span>/2</span></div>1. ${lines(1)}2. ${lines(1)}</div>
+      <div class="box"><div class="lbl"><span>What I Know About My Question</span><span>/2</span></div>1. ${lines(1)}2. ${lines(1)}</div>
+      <div class="cols2"><div class="box" style="min-height:2.6in"><div class="lbl"><span>Critical Thinking About the Initial Question (show your work)</span><span>/3</span></div></div><div class="box" style="min-height:2.6in"><div class="lbl"><span>Identify the General Process and Steps</span><span>/2</span></div></div></div>
+      <div class="box"><div class="lbl"><span>Question From My Point of Confusion (use vocabulary: “I understand ___, but I get stuck when ___”)</span><span>/2</span></div>${lines(2)}</div>
+      <div class="pb"></div><h1>TRF: Reflection</h1><p class="dsub">During the tutorial, take three-column notes on your own paper. After the tutorial, complete this reflection.</p>
+      <p>I was a student presenter today: ☐ Yes ☐ No &nbsp;&nbsp; My POC is from a focus area on my grade reflection: ☐ Yes ☐ No</p>
+      <div class="box"><div class="lbl"><span>My point of confusion was…</span><span>/1</span></div>${lines(3)}</div>
+      <div class="box"><div class="lbl"><span>What I learned about my point of confusion is…</span><span>/1</span></div>${lines(3)}</div>
+      <div class="box"><div class="lbl"><span>I gained a new or greater understanding of my point of confusion by/when…</span><span>/2</span></div>${lines(3)}</div>
+      <div class="box"><div class="lbl"><span>This learning is important because it connects to my previous learning / myself / my world (circle one) in this way…</span><span>/2</span></div>${lines(3)}</div>
+      <div class="box"><div class="lbl"><span>What I found meaningful about today’s tutorial is…</span><span>/1</span></div>${lines(2)}</div>${FOOT}`;
+    if (id === "notes3") return `<h1>Three-Column Notes</h1><p class="dsub">Name: ______________________ Date: __________ Take notes on each student presenter’s question.</p>
+      <table><thead><tr><th style="width:30%">Point of Confusion Question</th><th>Tutorial Notes</th><th style="width:30%">Steps (Math/Science) or Process (English/History)</th></tr></thead><tbody><tr><td style="height:8.6in"></td><td></td><td></td></tr></tbody></table>${FOOT}`;
+    if (id === "trfguide") return `<h1>TRF Guide for Tutors</h1><p class="dsub">Use when checking TRFs at the door and when pre-grading. Total 25 points.</p><table><thead><tr><th style="width:22%">Box</th><th style="width:6%">Pts</th><th>Strong answer</th><th style="width:34%">Think-aloud questions</th></tr></thead><tbody>${D.trf.map(r => `<tr><td><b>${esc(r.box)}</b></td><td>${r.pts}</td><td>${esc(r.look)}</td><td>${r.ask.map(a => esc(a)).join("<br>")}</td></tr>`).join("")}</tbody></table>
+      <h2>Vague vs. strong points of confusion</h2><table><tbody>${D.pocExamples.map(r => `<tr><td style="width:30%">${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table>${FOOT}`;
+    if (id === "basics") return `<h1>Tutor Do’s, Don’ts & Boundaries</h1><div class="cols2"><div><h2>The tutor DOES</h2><ul>${D.role.does.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div><div><h2>The tutor does NOT</h2><ul>${D.role.doesnt.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div></div>
+      <h2>Guidelines for effective tutorials</h2><table><tbody>${D.guidelines.map(g => `<tr><td style="width:28%"><b>${esc(g[0])}</b></td><td>${esc(g[1])}</td></tr>`).join("")}</tbody></table>
+      <h2>Tutors should never</h2><ul>${D.never.map(x => `<li>${esc(x)}</li>`).join("")}</ul><p><b>Required:</b> If a student shares something about drugs, abuse, or their safety, tell the AVID teacher right away. The AVID teacher is the final authority in the classroom.</p>${FOOT}`;
+    if (id === "observe") { const E = ["Gets students working right away and uses tutorial time well", "Students use their Cornell notes to form their questions", "Students bring authentic points of confusion from their classes", "Uses students’ Cornell notes and class resources in the tutorial", "Students take three-column notes on each presenter", "Uses the levels of inquiry (Level 1, 2, 3 questions)", "Coaches students to ask each other questions", "Is a facilitator, not an answer giver", "Involves every student and tracks participation", "Group closes with each student writing a reflection"];
+      return `<h1>Observing a Fellow Tutor</h1><p class="dsub">Observer: ______________ Tutor observed: ______________ Date: ________ Then switch roles and debrief.</p>
+        <table><thead><tr><th style="width:45%">Element</th><th>What I see / what I hear</th></tr></thead><tbody>${E.map(e => `<tr><td>${e}</td><td style="height:.62in"></td></tr>`).join("")}</tbody></table>
+        <div class="box"><div class="lbl"><span>Highlights</span></div>${lines(2)}</div><div class="box"><div class="lbl"><span>Next steps</span></div>${lines(2)}</div>
+        <div class="pb"></div><h1>Tutor Reflection</h1><p class="dsub">Name: ______________ Date: ________</p>
+        ${["How are students’ Cornell notes and reference materials used during the tutorial?", "What are three ways you check a student’s understanding of the point of confusion?", "What three strategies keep students engaged during the tutorial?", "How do you support students who struggle with the written reflection?", "How do you give input to your teacher so your tutorial groups work collaboratively, effectively, and efficiently?"].map((q, i) => `<div class="box"><div class="lbl"><span>${i + 1}. ${q}</span></div>${lines(4)}</div>`).join("")}${FOOT}`; }
+    return "<p>Document not found.</p>";
+  }
+  function doc(id) {
+    document.body.classList.add("docmode"); document.querySelector("header.top").style.display = "none";
+    const d = DOCS.find(x => x[0] === id);
+    root.className = ""; root.innerHTML = `<div class="docbar no-print"><a class="btn ghost" href="tutor-toolkit.html#print">← Back to Printables</a><span class="tt-row"><a class="btn ghost" href="tutor-docs/${id}.pdf" download>Download PDF</a><button class="btn" onclick="window.print()">Print</button></span></div><article class="doc ${["stems", "trfguide"].includes(id) ? "dense" : ""}">${docHTML(id)}</article>`;
+    document.title = (d ? d[1] : "Printable") + " | Tutor Center";
+  }
+
+  /* ================= ROUTER ================= */
+  const VIEWS = { home, run, questions, fixes, trf, basics, review, print: printables };
+  function route() {
+    const id = params.get("doc");
+    if (id) { if (!unlocked()) return gate(); return doc(id); }
+    if (!unlocked()) return gate();
+    const k = (location.hash || "#home").slice(1); (VIEWS[k] || home)(); window.scrollTo(0, 0);
+  }
+  document.getElementById("tt-lock").onclick = () => { raw.del("hubTutor"); gate(); };
+  window.addEventListener("hashchange", route);
+  route();
+})();
+</script>
+</body>
+</html>

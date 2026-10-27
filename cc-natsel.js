@@ -174,7 +174,7 @@
         : `<div class="btnrow"><button class="btn" data-nscheck>Check my data table</button><span class="msg"></span></div>`;
       if (b.compare && done) { const o = findLab(ctx, b.compare);
         const ov = o && o.st.gens ? avgs(o.st) : [];
-        h += `<h4 style="margin-top:14px">📈 Compare the two environments</h4>${lines([{ v: ov, c: "#2b7de9", l: "With hurricanes (your Station 4 lab)" }, { v: avgs(st), c: "#e08a00", l: "No hurricanes (this lab)" }], G)}${ov.length < 2 ? `<p class="ns-cap">Finish the hurricane lab to see its line here.</p>` : ""}`; }
+        h += `<h4 style="margin-top:14px">Compare the two environments</h4>${lines([{ v: ov, c: "#2b7de9", l: "With hurricanes (your Station 4 lab)" }, { v: avgs(st), c: "#e08a00", l: "No hurricanes (this lab)" }], G)}${ov.length < 2 ? `<p class="ns-cap">Finish the hurricane lab to see its line here.</p>` : ""}`; }
       return h + `</div>`;
     },
     total(b) { const G = b.gens || 5; return (G + 1) + G; },
@@ -226,7 +226,7 @@
   BT.nsgraph = {
     html(b, st, ctx) {
       const o = findLab(ctx, b.src || "hurricane"), G = o ? (o.b.gens || 5) : 5, A = o && o.st.gens ? avgs(o.st) : [];
-      if (A.length < G + 1) return `<div class="ns"><h4>📈 ${b.title}</h4><p class="callout">Finish all ${G} generations of the Hurricane Lab (the station before this one) first. Then your data will appear here.</p></div>`;
+      if (A.length < G + 1) return `<div class="ns"><h4>${b.title}</h4><p class="callout">Finish all ${G} generations of the Hurricane Lab (the station before this one) first. Then your data will appear here.</p></div>`;
       const pts = st.pts || {}, chk = !!st.checked, sel = st.sel ?? Math.min(G, Object.keys(pts).length);
       const W = 420, Hh = 290, sx = g => 56 + g * (W - 80) / G, sy = v => Hh - 44 - (v - 1) / 8 * (Hh - 64);
       let g = `<rect x="0" y="0" width="${W}" height="${Hh}" fill="transparent"/>`;
@@ -239,7 +239,7 @@
       ks.forEach(k => { const ok = Math.abs(pts[k] - A[k]) <= 0.31; g += `<circle cx="${sx(k)}" cy="${sy(pts[k])}" r="6" fill="${chk ? (ok ? "#1d7a45" : "#d0453a") : "#2b7de9"}" stroke="#fff" stroke-width="2"/>`; });
       if (chk) g += `<polyline fill="none" stroke="#999" stroke-dasharray="5 4" stroke-width="2" points="${A.map((v, k) => `${sx(k)},${sy(v)}`).join(" ")}"/>`;
       const rec = (o.st.rec || {}).a || {};
-      return `<div class="ns"><h4>📈 ${b.title}</h4><p class="mu">${b.how || ""}</p>
+      return `<div class="ns"><h4>${b.title}</h4><p class="mu">${b.how || ""}</p>
         <div class="ns-grid"><div><svg class="ns-plot" viewBox="0 0 ${W} ${Hh}" data-plot role="img" aria-label="Your line graph. Tap to place the point for the selected generation.">${g}</svg>
           ${chk ? `<p class="ns-cap">Gray dashed line = the lab’s exact averages.</p>` : ""}</div>
         <div><table class="ns-tbl"><thead><tr><th>Generation</th><th>Average toepad size (your data)</th></tr></thead><tbody>${A.map((v, k) => `<tr><td>${k}</td><td>${rec[k] ?? f1(v)}</td></tr>`).join("")}</tbody></table>

@@ -107,7 +107,7 @@
       const tubes = TESTS.map(t => { const state = r[t.k] || null;
         return `<div class="mx-tube" data-tube="${t.k}">${tubeSVG(sel, t, state === "heating" ? "added" : state, state === "heating")}<span>${t.name}</span>
           <span class="res">${state === "done" ? resultText(sel, t) : state === "added" ? `<button class="btn ghost mx-heat" data-heat="${t.k}">🔥 Heat it</button>` : state === "heating" ? "Heating…" : "empty"}</span></div>`; }).join("");
-      let h = `<div class="mx"><h4>🧪 ${b.title}</h4>${b.how ? `<p class="mu">${b.how}</p>` : ""}
+      let h = `<div class="mx"><h4>${b.title}</h4>${b.how ? `<p class="mu">${b.how}</p>` : ""}
         <div class="mx-shelf" role="group" aria-label="Samples">${shelf}</div>
         <div class="mx-bench"><div class="mx-bottles"><b class="small">Indicators</b>${TESTS.map(t => `<button class="mx-btl ${hold === t.k ? "on" : ""}" data-btl="${t.k}" title="Tests for ${t.macro}">${bottle(t)}<span>${t.name}<br><small class="mu">tests for ${t.macro}</small></span></button>`).join("")}</div>
         <div><div class="mu small" style="margin-bottom:4px">Sample: <b>${SAMPLES[sel].icon} ${SAMPLES[sel].name}</b> · Drag an indicator onto a tube (or tap the indicator, then the tube).</div><div class="mx-rack">${tubes}</div></div></div>
@@ -172,7 +172,7 @@
       const v = recOf(ctx, "vomit"), m = st.m || {}, acc = st.acc, chk = !!st.checked;
       const chips = (rec, cmp) => TESTS.map(t => { const x = rec[t.k]; const mism = cmp && x && cmp[t.k] && x !== cmp[t.k];
         return `<span class="${x === "+" ? "p" : "m"} ${mism ? "bad" : ""}">${t.short} ${x || "?"}</span>`; }).join("");
-      let h = `<div class="mx"><h4>🕵️ ${b.title}</h4><p class="mu">${b.how}</p>
+      let h = `<div class="mx"><h4>${b.title}</h4><p class="mu">${b.how}</p>
         <div class="sp-vomit"><b>🤢 Stomach sample (from your Crime Lab results):</b><div class="sp-chips">${chips(v)}</div></div>
         <div class="sp-grid">${b.list.map(k => { const S = SAMPLES[k], rr = recOf(ctx, k), [shop, dish] = S.name.split(": ");
           return `<div class="sp-card ${m[k] === "x" ? "x" : ""} ${acc === k ? "acc" : ""}"><span class="i">${S.icon}</span><h5>${shop}</h5><small>${dish}</small><div class="mu small">${b.who[k]}</div>

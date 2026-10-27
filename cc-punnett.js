@@ -88,7 +88,7 @@
       const stepBox = (n, inner) => `<div class="pq-step ${step < n ? "lock" : ""} ${step > n ? "done" : ""}"><h5><i>${step > n ? "✓" : n + 1}</i>${STEPS[n]}</h5>${inner}</div>`;
       const hint = (n, txt) => (miss[n] || 0) >= 2 && step === n ? `<div class="pq-hint">💡 <b>Hint:</b> ${txt}</div>` : "";
       const msg = n => step === n && st.msg ? `<p class="pq-msg ${st.mok ? "ok" : "no"}">${st.msg}</p>` : "";
-      let h = `<div class="pq"><h4>🧬 ${b.title}</h4>`;
+      let h = `<div class="pq"><h4>${b.title}</h4>`;
       /* 1 clues */
       const found = Object.keys(st.tap || {}).length, need = nClues(b);
       h += stepBox(0, `<div class="pq-pass">${passage(b, st)}</div><p class="mu small">Tap every word or phrase that you NEED to set up the Punnett square (the trait, which allele is dominant, and what each parent is). Found <b>${found} of ${need}</b>.</p>${msg(0)}${hint(0, b.clueHint || "Look for the trait, the words dominant or recessive, and words that describe each parent.")}`);
@@ -196,7 +196,7 @@
         svg += `<rect x="${x}" y="${10 + Hh - e / 100 * Hh}" width="${bw}" height="${e / 100 * Hh}" fill="${b.colors[p]}" opacity=".35" stroke="${b.stroke || "#555"}" stroke-dasharray="4 3"/><rect x="${x + bw + 4}" y="${10 + Hh - o / 100 * Hh}" width="${bw}" height="${o / 100 * Hh}" fill="${b.colors[p]}" stroke="#333"/>
           <text x="${x + bw + 2}" y="${Hh + 26}" font-size="11" font-weight="700" text-anchor="middle" fill="var(--fg)">${p}</text>`; });
       svg += `<rect x="${W - 150}" y="12" width="10" height="10" fill="#bbb" opacity=".5" stroke="#555" stroke-dasharray="3 2"/><text x="${W - 136}" y="21" font-size="10" fill="var(--fg)">expected</text><rect x="${W - 82}" y="12" width="10" height="10" fill="#888" stroke="#333"/><text x="${W - 68}" y="21" font-size="10" fill="var(--fg)">observed</text></svg>`;
-      return `<div class="pq"><h4>🐹 ${b.title}</h4><p class="mu">${b.how || ""}</p>
+      return `<div class="pq"><h4>${b.title}</h4><p class="mu">${b.how || ""}</p>
         <div class="br-par"><span>Parent 1: <span class="g">${b.p1}</span></span><span>×</span><span>Parent 2: <span class="g">${b.p2}</span></span></div>
         <div class="btnrow" style="margin-top:8px"><button class="btn" data-br="1">Breed 1</button><button class="btn" data-br="10">Breed 10</button><button class="btn" data-br="100">Breed 100</button><span class="mu small">Total offspring: <b>${n}</b></span></div>
         <div class="pq-row"><div style="flex:1;min-width:0;max-width:100%"><div class="br-dots">${kids.slice(-100).map(k => `<span title="${k}: ${b.pheno[k]}" style="background:${b.colors[b.pheno[k]]}"></span>`).join("")}</div>

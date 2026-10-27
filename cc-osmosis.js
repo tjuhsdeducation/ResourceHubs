@@ -87,7 +87,7 @@
       if (st.going && !window.__osRunning) st.going = false;
       const run = b.mode === "run", tt = run ? (st.done ? 1 : (st.tt || 0)) : 0, hours = Math.round(tt * 24);
       const pred = run ? (predState(ctx).p || {}) : (st.p || {}), w = st.w || {};
-      let h = `<div class="os"><h4>🐻 ${b.title || "Gummy Bear Soak"}</h4>
+      let h = `<div class="os"><h4>${b.title || "Gummy Bear Soak"}</h4>
         <p class="mu small">Six identical gummy bears were weighed and placed in six beakers. ${run ? "Start the soak, then weigh each bear." : "Predict what each bear will do after soaking for 24 hours."}</p>
         <div class="os-bench">${SOL.map((s, i) => `<div class="os-bk">${beaker(s, i, tt)}<span>${s.name}</span><span class="mu" style="font-weight:700">start ${fmt(s.start)} g</span>
           ${run ? (st.done ? `<button class="wbtn ${st.on === s.k ? "on" : ""}" data-weigh="${s.k}">⚖️ ${w[s.k] ? "Weighed" : "Weigh"}</button>` : "")
@@ -153,7 +153,7 @@
   BT.osmodel = {
     html(b, st) {
       const out = st.out ?? 4;
-      return `<div class="os"><h4>🔬 ${b.title || "Zoom In: The Membrane Model"}</h4><p class="mu small">${b.how || "Left: inside the gummy bear. Right: the solution. 🔵 water molecules can pass through the membrane. 🟠 solute particles (sugar or salt) are too big to pass through."}</p>
+      return `<div class="os"><h4>${b.title || "Zoom In: The Membrane Model"}</h4><p class="mu small">${b.how || "Left: inside the gummy bear. Right: the solution. 🔵 water molecules can pass through the membrane. 🟠 solute particles (sugar or salt) are too big to pass through."}</p>
         <div class="os-mdl"><svg viewBox="0 0 400 230" role="img" aria-label="Particle model with a membrane"><g data-g></g></svg>
         <div class="os-out"><label class="os-sl">Solute particles in the solution (right side): <b data-ov>${out}</b><input type="range" min="0" max="30" step="1" value="${out}" data-out aria-label="Solute particles outside"></label>
           <div data-txt></div><div class="btnrow"><button class="btn" data-mgo>▶ Let osmosis happen</button><button class="btn ghost" data-mreset>↺ Reset model</button></div>
@@ -217,7 +217,7 @@
           <text x="${x + w / 2}" y="${B + 16}" text-anchor="middle" font-size="10" font-weight="700">${String.fromCharCode(65 + i)}</text><text x="${x + w / 2}" y="${B + 28}" text-anchor="middle" font-size="8.5" fill="#555">${s.short}</text>`; });
       g += `<text x="13" y="${(T + B) / 2}" transform="rotate(-90 13 ${(T + B) / 2})" text-anchor="middle" font-size="11" font-weight="700">% change in mass</text>`;
       const right = SOL.filter(s => Math.abs((v[s.k] ?? 0) - s.pct) <= 5).length;
-      return `<div class="os"><h4>📊 ${b.title || "Build the Graph"}</h4><p class="mu small">${b.how || "Use your data table. Drag each slider so the bar shows that bear’s % change in mass. Bars above 0 gained mass; bars below 0 lost mass."}</p>
+      return `<div class="os"><h4>${b.title || "Build the Graph"}</h4><p class="mu small">${b.how || "Use your data table. Drag each slider so the bar shows that bear’s % change in mass. Bars above 0 gained mass; bars below 0 lost mass."}</p>
         <div class="os-g"><svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Bar graph of percent change in mass for each solution">${g}</svg>
         <div class="os-gs">${SOL.map((s, i) => `<label>${String.fromCharCode(65 + i)}. ${s.name}: <b data-gv="${s.k}">${v[s.k] ?? 0}%</b><input type="range" min="-40" max="160" step="1" value="${v[s.k] ?? 0}" data-gs="${s.k}" ${chk ? "disabled" : ""}></label>`).join("")}</div></div>
         ${chk ? `<p class="score">Bars within 5% of the lab data: <b>${right} / 6</b>.</p>${right < 6 ? `<div class="btnrow"><button class="btn ghost" data-gfix>✏️ Fix my graph</button></div>` : ""}` : `<div class="btnrow"><button class="btn" data-gcheck>Check my graph</button><span class="msg"></span></div>`}</div>`;
