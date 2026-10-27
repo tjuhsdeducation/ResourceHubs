@@ -111,7 +111,7 @@
         <div class="mx-shelf" role="group" aria-label="Samples">${shelf}</div>
         <div class="mx-bench"><div class="mx-bottles"><b class="small">Indicators</b>${TESTS.map(t => `<button class="mx-btl ${hold === t.k ? "on" : ""}" data-btl="${t.k}" title="Tests for ${t.macro}">${bottle(t)}<span>${t.name}<br><small class="mu">tests for ${t.macro}</small></span></button>`).join("")}</div>
         <div><div class="mu small" style="margin-bottom:4px">Sample: <b>${SAMPLES[sel].icon} ${SAMPLES[sel].name}</b> · Drag an indicator onto a tube (or tap the indicator, then the tube).</div><div class="mx-rack">${tubes}</div></div></div>
-        <p class="mx-msg" aria-live="polite">${st.msg || ""}</p>`;
+        <div class="btnrow" style="margin-top:6px"><p class="mx-msg" aria-live="polite" style="flex:1;margin:0">${st.msg || ""}</p>${Object.keys(ran).length ? `<button class="btn ghost" data-mxreset title="Empty every tube and clear the data table">↺ Reset the lab</button>` : ""}</div>`;
       if (b.key) h += `<div class="mx-key">${TESTS.map(t => `<div><b>${t.name}</b> → ${t.macro}<br>✅ <span class="mx-sw" style="background:${t.pos}"></span>${t.posTxt}<br>❌ <span class="mx-sw" style="background:${t.neg}"></span>${t.negTxt}</div>`).join("")}</div>`;
       if (b.record !== false) {
         h += `<table class="mx-tbl"><thead><tr><th>Sample</th>${TESTS.map(t => `<th>${t.name}<br><small>${t.macro}</small></th>`).join("")}</tr></thead><tbody>${b.samples.map(k => `<tr><td>${SAMPLES[k].icon} ${SAMPLES[k].name}</td>${TESTS.map(t => { const v = (rec[k] || {})[t.k], can = (ran[k] || {})[t.k] === "done", ok = v === (SAMPLES[k].has[t.for] ? "+" : "−");
@@ -151,6 +151,9 @@
       $$("[data-heat]", root).forEach(x => x.onclick = () => { const r = st.ran[sel]; r.benedict = "heating"; save(); redraw();
         setTimeout(() => { if (!r) return; r.benedict = "done"; const t = TESTS[0]; st.msg = `Heated! Benedict’s ${resultText(sel, t).slice(2)}. ${SAMPLES[sel].has.sugar ? "Simple sugar IS present." : "NO simple sugar."}`; save(); redraw(); }, window.MX_FAST ? 50 : 1800); });
       $$("[data-rec]", root).forEach(x => x.onclick = () => { const [k, tk] = x.dataset.rec.split("|"); st.rec = st.rec || {}; st.rec[k] = st.rec[k] || {}; const v = st.rec[k][tk]; st.rec[k][tk] = v === "+" ? "−" : "+"; save(); redraw(); });
+      const rs = $("[data-mxreset]", root);
+      if (rs) rs.onclick = () => { if (!confirm("Reset this lab? All the tubes are emptied and the data table is cleared.")) return;
+        st.ran = {}; st.rec = {}; st.checked = false; st.hold = null; st.msg = "Lab reset. Choose a sample and start testing."; save(); redraw(); };
       const fx = $("[data-mxfix]", root); if (fx) fx.onclick = () => { st.checked = false; save(); redraw(); };
       const c = $("[data-mxcheck]", root); if (c) c.onclick = () => { const rec = st.rec || {}; if (b.samples.some(k => TESTS.some(t => !(rec[k] || {})[t.k]))) { $(".msg", root).textContent = "Run every test and record every box first."; return; } st.checked = true; save(); redraw(); };
     },

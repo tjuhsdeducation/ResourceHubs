@@ -122,7 +122,7 @@
         const n = Object.values(pred).filter(Boolean).length;
         h += `<p class="mu small" style="margin-top:10px">Predictions made: <b>${n} of 8</b>. ${n === 8 ? "✅ All set! Explain your thinking below." : "Use the drop-down under each tube."}</p>`;
       } else {
-        h += `<div class="bb-ctrl"><button class="btn" data-bbrun ${st.done || st.going ? "disabled" : ""}>${st.done ? "✅ 24 hours complete" : "▶ Start the 24-hour lab"}</button><span class="bb-clock">⏱ ${hours} h</span><span class="mu small">${st.done ? "Now record the color of every tube." : "Watch the tubes. Elodea in light gives off tiny bubbles."}</span></div>`;
+        h += `<div class="bb-ctrl"><button class="btn" data-bbrun ${st.done || st.going ? "disabled" : ""}>${st.done ? "✅ 24 hours complete" : "▶ Start the 24-hour lab"}</button><span class="bb-clock">⏱ ${hours} h</span>${st.done ? `<button class="btn ghost" data-bbreset title="Clear the results and run the 24-hour lab again">↺ Reset the lab</button>` : ""}<span class="mu small">${st.done ? "Now record the color of every tube." : "Watch the tubes. Elodea in light gives off tiny bubbles."}</span></div>`;
         if (st.done) {
           const rec = st.r || {}, co = st.c || {}, chk = !!st.checked;
           h += `<table class="bb-table"><thead><tr><th>Tube</th><th>Contents</th><th>Light?</th><th>My prediction</th><th>Start</th><th>End color (observed)</th><th>CO₂ compared to start</th></tr></thead><tbody>` +
@@ -154,6 +154,9 @@
         };
         go.disabled = true; requestAnimationFrame(step);
       };
+      const rs = $("[data-bbreset]", root);
+      if (rs) rs.onclick = () => { if (!confirm("Reset the lab? The tubes go back to green and your data table is cleared. Your predictions are kept.")) return;
+        st.done = false; st.going = false; st.tt = 0; st.r = {}; st.c = {}; st.checked = false; save(); redraw(); };
       const c = $("[data-bbcheck]", root);
       if (c) c.onclick = () => { const r = st.r || {}, co = st.c || {}; if (TUBES.some(t => !r[t.n] || !co[t.n])) { $(".msg", root).textContent = "Fill in every box first."; return; } st.checked = true; save(); redraw(); };
     },
