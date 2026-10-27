@@ -211,7 +211,7 @@
     .vb-def{display:block;font-size:.82rem;color:var(--muted);margin-top:2px}
     .fl-item{display:flex;gap:14px;align-items:center;border:2px solid var(--line);border-radius:16px;padding:10px 12px;margin:10px 0;background:var(--surface)}
     .fl-pic{flex:none;text-align:center;font-size:2rem;min-width:60px} .fl-pic svg{width:46px;height:auto}
-    .fl-txt{font-size:1.08rem;line-height:2.1}
+    .fl-txt{font-size:1.08rem;line-height:2.1;min-width:0}.fl-txt select{max-width:100%}
     .fl-txt select{font:inherit;font-weight:800;padding:2px 6px;border-radius:10px;border:2.5px solid var(--lc);background:color-mix(in srgb,var(--lc) 8%,#fff);color:#1f2430}
     .fl-txt select.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,#fff)} .fl-txt select.no{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,#fff)}
     .fl-fix{font-size:.85rem;color:var(--ok);font-weight:800;margin-left:4px}

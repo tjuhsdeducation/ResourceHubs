@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Math Tutor Guide | AVID Tutors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cc-lesson.css?v=2">
+<!--
+  MATH TUTOR GUIDE (tutors only): completed notes, worked examples, common
+  mistakes, and questions to ask for every Algebra 1 and Geometry unit.
+  Content lives in tutor-alg1.js (Algebra 1) and tutor-geo.js (Geometry).
+  ✏️ To change the tutor code, edit TUTOR_CODE at the top of the script below
+     (or add  tutorPasscode: "..."  to hub-config.js).
+  Link to one unit directly:  tutor-math.html?unit=a1-03
+-->
+<style>
+  :root{--lc:#2b7de9}
+  .tg-gate{max-width:440px;margin:60px auto;background:var(--surface);border:2px solid var(--line);border-radius:24px;padding:26px;box-shadow:var(--shadow);text-align:center}
+  .tg-gate input{width:100%;font:700 1.1rem var(--body);padding:12px 14px;border-radius:14px;border:2px solid var(--line);margin:12px 0;text-align:center;background:var(--surface);color:var(--fg)}
+  .tg-msg{min-height:1.3em;font-weight:800;color:#b0302a}
+  .tg-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:16px 0 0}
+  .tg-tab{font:700 1.05rem var(--display);border:3px solid var(--line);background:var(--surface);color:var(--fg);border-radius:16px;padding:8px 18px;cursor:pointer}
+  .tg-tab[aria-pressed="true"]{border-color:var(--lc);background:color-mix(in srgb,var(--lc) 14%,var(--surface))}
+  .tg-search{flex:1;min-width:200px;font:600 1rem var(--body);padding:10px 14px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--fg)}
+  .tg-layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:18px;margin-top:16px;align-items:start}
+  .tg-side{position:sticky;top:74px;max-height:calc(100vh - 90px);overflow:auto;background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:10px}
+  .tg-side a{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border-radius:12px;text-decoration:none;color:var(--fg);font-weight:700;font-size:.92rem}
+  .tg-side a:hover{background:var(--soft)} .tg-side a.on{background:color-mix(in srgb,var(--lc) 14%,var(--surface));color:var(--lc)}
+  .tg-side a i{font-style:normal;min-width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--soft);font-size:.8rem}
+  .tg-side .tg-sl{font:800 .75rem var(--body);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:6px 10px}
+  .tg-card{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:16px 20px;box-shadow:var(--shadow);margin-bottom:14px}
+  .tg-card h2{margin:0 0 6px;font-size:1.25rem;display:flex;align-items:center;gap:8px}
+  .tg-unit h1{margin:4px 0 6px;font-size:1.7rem}
+  .tg-pills{display:flex;flex-wrap:wrap;gap:6px;font-size:.8rem;font-weight:800}
+  .tg-pills span{border-radius:999px;padding:3px 10px;background:color-mix(in srgb,var(--lc) 12%,var(--surface));color:color-mix(in srgb,var(--lc) 75%,var(--fg))}
+  .tg-big{font-size:1.1rem;line-height:1.55;background:#fff7d6;border-left:6px solid #e0a100;border-radius:0 14px 14px 0;padding:10px 14px}
+  .tg-voc{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+  .tg-voc div{border:2px solid var(--line);border-radius:14px;padding:8px 12px;font-size:.93rem;line-height:1.45}
+  .tg-voc b{display:block;color:var(--lc);font-size:1rem}
+  .tg-steps ol{margin:6px 0 10px;padding-left:24px;line-height:1.6}
+  .tg-steps h3{margin:10px 0 2px;font-size:1.05rem}
+  .tg-ex{border:2px solid var(--line);border-radius:16px;padding:10px 14px;margin:10px 0}
+  .tg-ex .q{font:700 1.08rem var(--body);line-height:1.5}
+  .tg-ex ol{margin:8px 0;padding-left:24px;line-height:1.6}
+  .tg-ex li{animation:simpop .3s}
+  .tg-ex .ans{font-weight:800;color:#1d7a45;background:#e4f6ea;border-radius:10px;padding:6px 10px;display:inline-block;margin-top:4px}
+  .tg-mis{width:100%;border-collapse:collapse;font-size:.93rem}
+  .tg-mis th,.tg-mis td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top;line-height:1.45}
+  .tg-mis th{background:var(--soft)} .tg-mis td:first-child{color:#b0302a;font-weight:700;width:42%}
+  .tg-ask li{margin:5px 0;line-height:1.5}
+  .tg-chk{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+  .tg-chk button{all:unset;cursor:pointer;border:2px solid var(--line);border-radius:14px;padding:10px 12px;line-height:1.45;background:var(--surface)}
+  .tg-chk button .a{display:none;margin-top:6px;color:#1d7a45;font-weight:800}
+  .tg-chk button.open .a{display:block} .tg-chk button.open{border-color:#1aa36f}
+  .tg-chk button small{display:block;color:var(--muted);font-weight:700;margin-top:4px}
+  .tg-vis{display:flex;justify-content:center;overflow-x:auto} .tg-vis svg{max-width:100%;height:auto}
+  .tg-tip{background:#eef5ff;border-radius:14px;padding:10px 14px;line-height:1.5}
+  .tg-how ul{margin:6px 0;padding-left:22px;line-height:1.55} .tg-how li{margin:3px 0}
+  .tg-cheat table{width:100%;border-collapse:collapse;font-size:.88rem;margin:4px 0 14px} .tg-cheat td,.tg-cheat th{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+  .tg-cheat h3{margin:14px 0 4px;font-size:1.05rem} .tg-cheat th{background:var(--soft);width:26%}
+  .tg-none{color:var(--muted);font-weight:700}
+  mark{background:#fff2a8;border-radius:4px;padding:0 2px}
+  .tg-res a{display:block;text-decoration:none;color:var(--fg);border:2px solid var(--line);border-radius:14px;padding:8px 12px;margin:6px 0}
+  .tg-res a small{display:block;color:var(--muted)}
+  .tg-msel{display:none;font:700 .95rem var(--body);padding:8px 10px;border-radius:12px;border:2px solid var(--line);margin-top:8px;width:100%;background:var(--surface);color:var(--fg)}
+  @media (max-width:860px){.tg-msel{display:block}.tg-layout.has-unit .tg-side{display:none}.tg-layout{grid-template-columns:1fr}.tg-side{position:static;max-height:none;display:flex;flex-wrap:wrap;gap:4px}.tg-side .tg-sl{width:100%}.tg-side a{font-size:.85rem;padding:6px 8px}}
+  @media print{
+    header.top,.tg-bar,.tg-side,.tg-how,.banner,.no-print,.btnrow{display:none!important}
+    .tg-layout{display:block}.tg-card{box-shadow:none;break-inside:avoid;border-width:1px}
+    .tg-ex ol li{display:list-item!important}.tg-chk button .a{display:block}
+    body{background:#fff}
+  }
+</style>
+</head>
+<body>
+<header class="top"><div class="bar"><a class="brand" href="index.html"><span class="mark">🧑‍🏫</span><span>Math Tutor Guide</span></a><span class="crumb" id="tg-crumb"></span><span class="spacer"></span><button class="btn ghost no-print" id="tg-lock" hidden style="padding:6px 12px;font-size:.85rem">🔒 Lock</button></div></header>
+<main class="wrap" id="tg-root"><p style="padding:40px;text-align:center;font-weight:800">Loading…</p></main>
+<script src="hub-config.js?v=4"></script>
+<script src="tutor-alg1.js?v=1"></script>
+<script src="tutor-geo.js?v=1"></script>
+<script>
+/* =====================================================================
+   ✏️ TUTOR CODE: change "tutor2026" to anything you like.
+   (You can also add  tutorPasscode: "..."  to hub-config.js.)
+   The teacher passcode also works.
+   ⚠️ This is a simple lock to keep students out of the answer pages. It
+   runs in the browser, so it is NOT real security.
+   ===================================================================== */
+const TUTOR_CODE = "tutor2026";
+
+(function () {
+  const CFG = window.HUB_CONFIG || {};
+  const CODES = [TUTOR_CODE, CFG.tutorPasscode, CFG.teacherPasscode || "avid2026"].filter(Boolean).map(s => String(s).trim().toLowerCase());
+  const ALL = (window.TUTOR_UNITS || []).slice().sort((a, b) => (a.course === b.course ? a.unit - b.unit : a.course < b.course ? -1 : 1));
+  const COURSES = ["Algebra 1", "Geometry"];
+  const COLOR = { "Algebra 1": "#2b7de9", "Geometry": "#0e9aa7" };
+  const root = document.getElementById("tg-root"), crumb = document.getElementById("tg-crumb"), lockBtn = document.getElementById("tg-lock");
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const strip = h => { const d = document.createElement("div"); d.innerHTML = h || ""; return d.textContent; };
+  const LS = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }, del(k) { try { localStorage.removeItem(k); } catch (e) {} } };
+  const params = new URLSearchParams(location.search);
+  let course = "Algebra 1", cur = null, query = "";
+
+  const unlocked = () => LS.get("hubTutor") === "1";
+  function gate() {
+    crumb.innerHTML = ""; lockBtn.hidden = true;
+    root.innerHTML = `<div class="tg-gate"><div style="font-size:3rem">🧑‍🏫🔒</div><h1 style="margin:6px 0">Math Tutor Guide</h1>
+      <p>Tutors: enter the tutor code from your AVID teacher.</p>
+      <form id="tg-form"><input id="tg-code" type="password" autocomplete="off" placeholder="Tutor code" aria-label="Tutor code"><button class="btn" type="submit" style="width:100%">Open the guide</button></form>
+      <p class="tg-msg" id="tg-msg" aria-live="polite"></p><p class="mu small">This guide has answers and teaching notes, so it is for tutors and teachers only.</p></div>`;
+    document.getElementById("tg-form").onsubmit = e => { e.preventDefault(); const v = document.getElementById("tg-code").value.trim().toLowerCase();
+      if (CODES.includes(v)) { LS.set("hubTutor", "1"); start(); } else { document.getElementById("tg-msg").textContent = "That code didn’t work. Check with your AVID teacher."; } };
+    document.getElementById("tg-code").focus();
+  }
+
+  const HOW = `<section class="tg-card tg-how"><details><summary style="cursor:pointer"><h2 style="display:inline-flex">🤝 How to tutor math (even if math isn’t your thing)</h2></summary>
+    <ul>
+      <li><b>Let the student drive.</b> Ask them to read the problem out loud and explain what they already tried. Don’t take the pencil.</li>
+      <li><b>Find the exact step.</b> Ask, “Show me the last step you’re sure about.” The point of confusion is the very next step. Most mistakes are small: a sign, a skipped step, or the order of operations.</li>
+      <li><b>Use this guide side by side.</b> Open the unit, find a worked example like theirs, and reveal it one step at a time with the student. Ask, “Which step is like the one you’re on?”</li>
+      <li><b>Check with a calculator.</b> Calculators are great for checking arithmetic. Type negative numbers with the (−) key and use parentheses: (−3)² = 9 but −3² = −9.</li>
+      <li><b>Plug the answer back in.</b> For any equation, substitute the answer into the original problem. If both sides match, it’s right. This works even if you don’t know the method.</li>
+      <li><b>Ask, don’t tell.</b> Use the “Questions to Ask” list in each unit. If the student is stuck after 2–3 questions, show ONE step of a worked example, then let them try the next step.</li>
+      <li><b>Name the mistake kindly.</b> “This is a really common mistake” helps students relax. Each unit lists the most common mistakes and what to say.</li>
+      <li><b>End with a check.</b> Have the student try one Quick Check problem on their own before they leave.</li>
+    </ul></details></section>`;
+
+  function start() {
+    lockBtn.hidden = false;
+    const want = params.get("unit"); const w = want && ALL.find(u => u.id === want);
+    if (w) { course = w.course; cur = w.id; }
+    shell();
+  }
+  function shell() {
+    root.innerHTML = `<section class="banner" style="--lc:${COLOR[course]}"><span class="kick">🧑‍🏫 For AVID tutors · Algebra 1 &amp; Geometry (9th–10th grade)</span><h1>Math Tutor Guide</h1>
+      <p>Completed notes, step-by-step worked examples, common mistakes, and questions to ask for every unit. Use it next to the student’s work during tutorials.</p></section>
+      ${HOW}
+      <div class="tg-bar">${COURSES.map(c => `<button class="tg-tab" data-c="${c}" aria-pressed="${c === course}">${c === "Algebra 1" ? "📈" : "📐"} ${c}</button>`).join("")}
+        <input class="tg-search" id="tg-q" type="search" placeholder="Search: slope, factoring, Pythagorean, x-intercept…" value="${esc(query)}" aria-label="Search the guide">
+        <button class="btn ghost" id="tg-cheat">📄 Cheat sheet</button></div>
+      <div class="tg-layout"><nav class="tg-side" id="tg-side" aria-label="Units"></nav><div id="tg-main"></div></div>`;
+    root.querySelectorAll("[data-c]").forEach(b => b.onclick = () => { course = b.dataset.c; cur = null; query = ""; shell(); });
+    const q = document.getElementById("tg-q"); q.oninput = () => { query = q.value; query.trim() ? results() : (cur ? unit(cur) : home()); side(); };
+    document.getElementById("tg-cheat").onclick = cheat;
+    side(); query.trim() ? results() : cur ? unit(cur) : home();
+  }
+  const units = () => ALL.filter(u => u.course === course);
+  function side() {
+    const us = units(); document.getElementById("tg-side").innerHTML = `<div class="tg-sl">${course} units</div>` + (us.length ? us.map(u => `<a href="?unit=${u.id}" data-u="${u.id}" class="${u.id === cur ? "on" : ""}"><i>${u.unit}</i><span>${esc(u.title)}</span></a>`).join("") : `<p class="tg-none" style="padding:8px">Coming soon.</p>`);
+    document.querySelectorAll("#tg-side [data-u]").forEach(a => a.onclick = e => { e.preventDefault(); cur = a.dataset.u; query = ""; const q = document.getElementById("tg-q"); if (q) q.value = ""; history.replaceState(null, "", "?unit=" + cur); side(); unit(cur); window.scrollTo({ top: document.getElementById("tg-main").offsetTop - 80, behavior: "smooth" }); });
+  }
+  function home() {
+    document.querySelector(".tg-layout").classList.remove("has-unit");
+    crumb.innerHTML = `<span>›</span><b>${course}</b>`;
+    const us = units();
+    document.getElementById("tg-main").innerHTML = us.length ? `<section class="tg-card"><h2>${course === "Algebra 1" ? "📈" : "📐"} Choose a unit</h2><p class="mu">Pick the unit the student is working on. Each unit has the big idea, vocabulary, step-by-step methods, worked examples, common mistakes, questions to ask, and quick checks.</p>
+      <div class="tg-res">${us.map(u => `<a href="?unit=${u.id}" data-go="${u.id}"><b>Unit ${u.unit}: ${esc(u.title)}</b><small>${esc(strip(u.bigIdea))}</small></a>`).join("")}</div></section>`
+      : `<section class="tg-card"><p class="tg-none">The ${course} units are coming soon.</p></section>`;
+    document.querySelectorAll("[data-go]").forEach(a => a.onclick = e => { e.preventDefault(); cur = a.dataset.go; history.replaceState(null, "", "?unit=" + cur); side(); unit(cur); });
+  }
+  function hl(text) { const t = query.trim(); if (!t) return text; const re = new RegExp("(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig"); return text.replace(re, "<mark>$1</mark>"); }
+  function results() {
+    document.querySelector(".tg-layout").classList.remove("has-unit");
+    const t = query.trim().toLowerCase(); crumb.innerHTML = `<span>›</span><b>Search</b>`;
+    const hits = [];
+    ALL.forEach(u => {
+      const where = [];
+      if (u.title.toLowerCase().includes(t)) where.push("title");
+      u.vocab.forEach(v => { if ((v[0] + " " + strip(v[1])).toLowerCase().includes(t)) where.push("vocab: " + strip(v[0])); });
+      (u.examples || []).forEach((x, i) => { if ((strip(x.q) + " " + x.steps.map(strip).join(" ")).toLowerCase().includes(t)) where.push("example " + (i + 1)); });
+      (u.steps || []).forEach(s => { if ((s.name + " " + s.list.map(strip).join(" ")).toLowerCase().includes(t)) where.push("steps: " + strip(s.name)); });
+      if (where.length) hits.push([u, [...new Set(where)]]);
+    });
+    document.getElementById("tg-main").innerHTML = `<section class="tg-card"><h2>🔎 Results for “${esc(query.trim())}”</h2>${hits.length ? `<div class="tg-res">${hits.map(([u, w]) => `<a href="?unit=${u.id}" data-go="${u.id}"><b>${u.course} · Unit ${u.unit}: ${hl(esc(u.title))}</b><small>Found in: ${hl(esc(w.slice(0, 5).join(" · ")))}</small></a>`).join("")}</div>` : `<p class="tg-none">No matches. Try a shorter word, like “slope” or “angle”.</p>`}</section>`;
+    document.querySelectorAll("[data-go]").forEach(a => a.onclick = e => { e.preventDefault(); const u = ALL.find(x => x.id === a.dataset.go); course = u.course; cur = u.id; query = ""; history.replaceState(null, "", "?unit=" + cur); shell(); });
+  }
+  function unit(id) {
+    const u = ALL.find(x => x.id === id); if (!u) return home();
+    document.title = `${u.title} | Math Tutor Guide`;
+    crumb.innerHTML = `<span>›</span><a href="#" id="tg-ch">${u.course}</a><span>›</span><b>Unit ${u.unit}</b>`;
+    document.getElementById("tg-ch").onclick = e => { e.preventDefault(); cur = null; history.replaceState(null, "", location.pathname); side(); home(); };
+    const m = document.getElementById("tg-main"); document.querySelector(".tg-layout").classList.add("has-unit");
+    m.innerHTML = `<div class="tg-unit" style="--lc:${COLOR[u.course]}">
+      <section class="tg-card"><div class="tg-pills"><span>${u.course}</span><span>Unit ${u.unit}</span>${u.standards ? `<span>${esc(u.standards)}</span>` : ""}</div>
+        <h1>${esc(u.title)}</h1><select class="tg-msel no-print" aria-label="Jump to another unit">${units().map(x => `<option value="${x.id}" ${x.id === u.id ? "selected" : ""}>Unit ${x.unit}: ${esc(x.title)}</option>`).join("")}</select><div class="tg-big">💡 <b>Big idea:</b> ${u.bigIdea}</div>
+        <div class="btnrow no-print" style="margin-top:10px"><button class="btn ghost" data-print>🖨️ Print this unit</button>${(() => { const us = units(), i = us.indexOf(u); return `${i > 0 ? `<button class="btn ghost" data-nav="${us[i - 1].id}">← Unit ${us[i - 1].unit}</button>` : ""}${i < us.length - 1 ? `<button class="btn ghost" data-nav="${us[i + 1].id}">Unit ${us[i + 1].unit} →</button>` : ""}`; })()}</div></section>
+      ${u.tips ? `<section class="tg-card"><h2>🧑‍🏫 Tutor tip</h2><div class="tg-tip">${u.tips}</div></section>` : ""}
+      <section class="tg-card"><h2>📚 Key vocabulary</h2><div class="tg-voc">${u.vocab.map(v => `<div><b>${v[0]}</b>${v[1]}</div>`).join("")}</div></section>
+      ${(u.steps || []).length ? `<section class="tg-card tg-steps"><h2>🪜 Step by step</h2>${u.steps.map(s => `<h3>${s.name}</h3><ol>${s.list.map(x => `<li>${x}</li>`).join("")}</ol>`).join("")}</section>` : ""}
+      ${u.visual ? `<section class="tg-card"><h2>👀 Visual</h2><div class="tg-vis">${u.visual}</div></section>` : ""}
+      <section class="tg-card"><h2>✏️ Worked examples</h2><p class="mu small no-print" style="margin:0">Reveal one step at a time with the student. Pause and ask, “What do you think comes next?”</p>
+        ${u.examples.map((x, i) => `<div class="tg-ex" data-ex="${i}"><div class="q">Example ${i + 1}. ${x.q}</div><ol></ol><div class="ansbox"></div>
+          <div class="btnrow no-print"><button class="btn" data-next>Show next step</button><button class="btn ghost" data-all>Show all</button><button class="btn ghost" data-hide>Hide</button></div></div>`).join("")}</section>
+      <section class="tg-card"><h2>⚠️ Common mistakes &amp; what to say</h2><table class="tg-mis"><thead><tr><th>What the student does</th><th>What you can say or check</th></tr></thead><tbody>${u.mistakes.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table></section>
+      <section class="tg-card tg-ask"><h2>❓ Questions to ask (instead of giving the answer)</h2><ul>${u.ask.map(a => `<li>${a}</li>`).join("")}</ul></section>
+      <section class="tg-card"><h2>✅ Quick check</h2><p class="mu small no-print" style="margin:0 0 8px">Have the student try one. Tap a card to see the answer.</p><div class="tg-chk">${u.check.map(c => `<button type="button"><span>${c.q}</span><small class="no-print">Tap for the answer</small><span class="a">${c.a}</span></button>`).join("")}</div></section></div>`;
+    m.querySelectorAll(".tg-ex").forEach(box => {
+      const x = u.examples[+box.dataset.ex], ol = box.querySelector("ol"), ans = box.querySelector(".ansbox"); let n = 0;
+      const draw = () => { ol.innerHTML = x.steps.slice(0, n).map(s => `<li>${s}</li>`).join(""); ans.innerHTML = n >= x.steps.length ? `<div class="ans">✔ ${x.answer}</div>` : "";
+        box.querySelector("[data-next]").disabled = n >= x.steps.length; box.querySelector("[data-next]").textContent = n >= x.steps.length ? "All steps shown" : `Show next step (${n + 1} of ${x.steps.length})`; };
+      box.querySelector("[data-next]").onclick = () => { n++; draw(); };
+      box.querySelector("[data-all]").onclick = () => { n = x.steps.length; draw(); };
+      box.querySelector("[data-hide]").onclick = () => { n = 0; draw(); };
+      draw();
+    });
+    m.querySelector(".tg-msel").onchange = e => { cur = e.target.value; history.replaceState(null, "", "?unit=" + cur); side(); unit(cur); window.scrollTo({ top: 0 }); };
+    m.querySelectorAll(".tg-chk button").forEach(b => b.onclick = () => b.classList.toggle("open"));
+    m.querySelectorAll("[data-nav]").forEach(b => b.onclick = () => { cur = b.dataset.nav; history.replaceState(null, "", "?unit=" + cur); side(); unit(cur); window.scrollTo({ top: m.offsetTop - 80 }); });
+    m.querySelector("[data-print]").onclick = () => { m.querySelectorAll(".tg-ex").forEach(b => b.querySelector("[data-all]").click()); setTimeout(() => window.print(), 100); };
+  }
+  function cheat() {
+    document.querySelector(".tg-layout").classList.remove("has-unit");
+    cur = null; side(); crumb.innerHTML = `<span>›</span><b>${course} cheat sheet</b>`;
+    const us = units();
+    document.getElementById("tg-main").innerHTML = `<section class="tg-card tg-cheat"><div class="btnrow no-print" style="justify-content:space-between"><h2>📄 ${course}: Formula &amp; vocabulary cheat sheet</h2><button class="btn ghost" data-print>🖨️ Print</button></div>
+      ${us.length ? us.map(u => `<h3>Unit ${u.unit}: ${esc(u.title)}</h3><table><tbody>${u.vocab.map(v => `<tr><th>${v[0]}</th><td>${v[1]}</td></tr>`).join("")}${(u.steps || []).map(s => `<tr><th>${s.name}</th><td>${s.list.join(" → ")}</td></tr>`).join("")}</tbody></table>`).join("") : `<p class="tg-none">Coming soon.</p>`}</section>`;
+    document.querySelector(".tg-cheat [data-print]").onclick = () => window.print();
+  }
+  lockBtn.onclick = () => { LS.del("hubTutor"); gate(); };
+  unlocked() ? start() : gate();
+})();
+</script>
+</body>
+</html>
