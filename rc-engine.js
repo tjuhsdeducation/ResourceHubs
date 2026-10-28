@@ -601,7 +601,7 @@ window.RCG = (function () {
       if (b.fig) return `<figure class="rc-fig ${b.paper ? "paper" : ""} ${b.wide ? "wide" : ""}"><div class="figbox">${b.fig}</div>${b.cap ? `<figcaption>${b.cap}</figcaption>` : ""}</figure>`;
       if (b.img) return `<figure class="rc-fig"><div class="figbox"><img src="${b.img}" alt="${esc(b.alt || "")}"></div>${b.cap ? `<figcaption>${b.cap}</figcaption>` : ""}</figure>`;
       if (b.table) { const t = b.table; return `<figure class="rc-fig tbl"><div class="figbox"><div class="tablewrap"><table>${t.head ? `<thead><tr>${t.head.map(x => `<th>${x}</th>`).join("")}</tr></thead>` : ""}<tbody>${t.rows.map(r => `<tr>${r.map((x, i) => i === 0 && t.rowHead ? `<th scope="row">${x}</th>` : `<td>${x}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div>${t.cap ? `<figcaption>${t.cap}</figcaption>` : ""}</figure>`; }
-      if (b.vocab) return `<div class="vocab"><b class="rc-noann">Key words</b><dl>${b.vocab.map(v => `<div><dt>${v[0]}</dt><dd>${v[1]}</dd></div>`).join("")}</dl></div>`;
+      if (b.vocab) return `<div class="vocab"><b class="rc-noann">Key words</b><dl>${b.vocab.map(v => `<div><dt>${v[0]}${v[2] ? ` <i class="rc-es">(${v[2]})</i>` : ""}</dt><dd>${v[1]}</dd></div>`).join("")}</dl></div>`;
       if (b.box) return `<div class="callout">${b.box}</div>`;
       if (b.src) return `<p class="srcline">${b.src}</p>`;
       if (b.listen) { const i = SAY.push(b.listen.map(strip).join(" ")) - 1;

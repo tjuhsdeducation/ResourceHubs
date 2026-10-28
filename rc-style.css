@@ -392,3 +392,5 @@ select.ib.ok,.numin.ok{border-color:var(--ok)}select.ib.bad,.numin.bad{border-co
   body.rs-printing #rsprintbox button{display:none}
   body.rs-printing{background:#fff}
 }
+
+.rc-es{color:var(--muted);font-weight:600;font-style:italic;font-size:.88em}
