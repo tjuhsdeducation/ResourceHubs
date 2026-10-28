@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cell City: Organelle Explorer | Virtual Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cc-lesson.css?v=2">
+</head>
+<body>
+<script>
+/* =====================================================================
+   BIOLOGY VIRTUAL LAB (≈ 50 min): Cell City: Organelle Explorer
+   Students explore animated animal, plant, and bacterial cells (tap each
+   organelle to learn its job and its "Cell City" job), label a plant
+   cell, sort traits in two Venn diagrams (plant vs. animal, prokaryote
+   vs. eukaryote), sort organisms by cell type, identify mystery cells
+   under a microscope, and write a CER.
+   Built for EL students: pictures, Spanish cognates, read-aloud, Cell City
+   analogies, and drop-down sentence frames.
+   To change wording, edit the text between the quotes/backticks.
+   ===================================================================== */
+const B = (o, a) => ({ o, a });
+window.CC = {
+  id: "lab-cell-explorer", subject: "Biology", short: "Virtual Lab: Cell City", color: "#1aa36f", emoji: "🏙️", time: "≈ 50 min",
+  kind: "Virtual Lab", brand: { name: "Interactive Lessons", home: "lessons", mark: "" },
+  title: "Cell City: Exploring Plant, Animal & Bacterial Cells",
+  intro: "A cell is like a busy city: it has a city hall, power plants, factories, a post office, and delivery trucks, all moving and working at once. Explore living, moving cells, find every organelle, and figure out what makes plant cells, animal cells, and bacteria different.",
+  eq: "How do the parts of a cell work together to keep it alive, and how are plant, animal, and bacterial cells alike and different?",
+  targets: {
+    R: "I can name the main organelles and explain the job of each one.",
+    I: "I can use clues I observe under a microscope to identify a cell as plant, animal, or prokaryote.",
+    O: "I can organize the differences between plant and animal cells and between prokaryotes and eukaryotes in Venn diagrams.",
+    W: "I can write a CER that uses organelles as evidence to identify a cell."
+  },
+  teacher: `<p><b>Pacing:</b> Stations 2–4 are the explorers. Students must tap every organelle to earn the points. The ⏸ button stops the motion, and the motion starts paused for students whose devices are set to "reduce motion."</p>
+    <p><b>The motion is real biology:</b> chloroplasts stream around the plant cell (cytoplasmic streaming), vesicles travel from the rough ER to the Golgi to the membrane, mitochondria and lysosomes drift, the membrane flexes, and the bacterium’s flagellum spins.</p>
+    <p><b>Key idea for the mystery cells and CER:</b> onion skin cells are plant cells even though they have no chloroplasts (they grow underground). The cell wall and large central vacuole are the evidence.</p>`,
+  stations: [
+    { letters: ["R"], title: "Warm-Up: Welcome to Cell City", time: "5 min", goal: "Review the cell theory and the two big kinds of cells.",
+      blocks: [
+        { t: "warmup", title: "Every living thing is made of cells", read: [
+          "The <b>cell theory</b> says: 1) all living things are made of one or more cells, 2) the cell is the basic unit of life, and 3) all cells come from other cells.",
+          "Inside cells are <b>organelles</b> (“little organs”). Each organelle has a job, like the buildings in a city: city hall gives the orders, power plants make energy, and the post office ships packages.",
+          "There are two big kinds of cells. <b>Prokaryotes</b> (bacteria) are small and simple, with <b>no nucleus</b>. <b>Eukaryotes</b> (plants, animals, fungi, and protists) have a <b>nucleus</b> and many organelles wrapped in membranes."],
+          vocab: [["organelle", "organelo", "A small part inside a cell that has a special job."], ["nucleus", "núcleo", "The organelle that holds the DNA and controls the cell."], ["prokaryote", "procariota", "A cell with no nucleus, like a bacterium."], ["eukaryote", "eucariota", "A cell with a nucleus and membrane-bound organelles."], ["chloroplast", "cloroplasto", "The organelle where photosynthesis happens."], ["mitochondria", "mitocondrias", "The organelles that release energy from food."]],
+          table: { cap: "Cell City", head: ["Organelle", "City job"], rows: [["Nucleus", "🏛️ City hall"], ["Mitochondria", "⚡ Power plant"], ["Ribosomes", "👷 Construction workers"], ["Golgi apparatus", "📦 Post office"], ["Cell membrane", "🚧 City border with gates"]] } },
+        { t: "quiz", label: "warm-up check", title: "Quick check", items: [
+          { q: "Which statement is part of the cell theory?", opts: ["All cells come from other cells", "Only animals are made of cells", "Cells appear out of nothing", "Viruses are the smallest cells"], a: 0, why: "Cells only come from other cells, by dividing." },
+          { q: "What is the biggest difference between a prokaryote and a eukaryote?", opts: ["Prokaryotes are green", "Eukaryotes have a nucleus; prokaryotes do not", "Prokaryotes have more organelles", "Eukaryotes have no DNA"], a: 1, why: "“Pro” = before, “karyon” = nucleus. Prokaryotes have DNA but no nucleus." }] }
+      ] },
+    { letters: ["I"], title: "Explore an Animal Cell", time: "6 min", goal: "Tap all 13 parts of the animal cell and learn each job.",
+      blocks: [
+        { t: "cellexp", cell: "animal", title: "🐾 Animal cell (like a cell from your cheek or muscle)", how: "Tap any part of the cell to learn its job. Watch the pink vesicles travel from the ER to the Golgi to the membrane!" },
+        { t: "quiz", label: "animal cell check", title: "Check", items: [
+          { q: "Which organelle releases energy from food so the cell can work?", opts: ["Golgi apparatus", "Lysosome", "Mitochondria", "Nucleolus"], a: 2, why: "Mitochondria are the power plants. They do cellular respiration and make ATP." },
+          { q: "Which organelle packages proteins and ships them in vesicles?", opts: ["Golgi apparatus", "Centriole", "Smooth ER", "Vacuole"], a: 0, why: "The Golgi is the post office: it packages, labels, and ships." }] }
+      ] },
+    { letters: ["I"], title: "Explore a Plant Cell", time: "6 min", goal: "Tap all 12 parts of the plant cell. Find the parts animal cells don’t have.",
+      blocks: [
+        { t: "cellexp", cell: "plant", title: "🌿 Plant cell (like a cell from a leaf)", how: "Tap any part to learn its job. Watch the green chloroplasts stream around the cell: this real motion is called cytoplasmic streaming." },
+        { t: "quiz", label: "plant cell check", title: "Check", items: [
+          { q: "Which THREE parts do plant cells have that animal cells don’t?", opts: ["Nucleus, ribosomes, mitochondria", "Cell wall, chloroplasts, large central vacuole", "Cell membrane, cytoplasm, Golgi", "Lysosomes, centrioles, vesicles"], a: 1, why: "The cell wall, chloroplasts, and big central vacuole are the plant-only parts." },
+          { q: "Do plant cells have mitochondria?", opts: ["No, plants only have chloroplasts", "Yes, plant cells use mitochondria to release energy from the glucose they make", "Only at night", "Only in flowers"], a: 1, why: "Chloroplasts MAKE glucose. Mitochondria RELEASE its energy. Plant cells need both." }] }
+      ] },
+    { letters: ["I"], title: "Explore a Bacterium (Prokaryote)", time: "4 min", goal: "Tap all 9 parts of a bacterial cell.",
+      blocks: [
+        { t: "cellexp", cell: "bacteria", title: "🦠 Bacterial cell (prokaryote)", how: "Tap each part. Notice what is MISSING: there is no nucleus, and no mitochondria. Watch the flagellum spin!" },
+        { t: "quiz", label: "bacteria check", title: "Check", items: [
+          { q: "Where is the DNA in a bacterium?", opts: ["In the nucleus", "In a loop called the nucleoid, floating in the cytoplasm", "In the mitochondria", "Bacteria have no DNA"], a: 1, why: "Prokaryotes have DNA but no nucleus. Their DNA is in the nucleoid (plus small plasmids)." },
+          { q: "Which organelle is found in EVERY cell: bacteria, plants, and animals?", opts: ["Nucleus", "Chloroplast", "Ribosome", "Golgi apparatus"], a: 2, why: "All cells make proteins, so all cells have ribosomes (and a membrane, cytoplasm, and DNA)." }] }
+      ] },
+    { letters: ["O", "R"], title: "Organelle Jobs", time: "6 min", goal: "Label a plant cell and match organelles to their Cell City jobs.",
+      blocks: [
+        { t: "celllabel", cell: "plant", title: "Label the plant cell", max: 4, pins: [
+          { k: "nucleus", x: 85, y: 122, lx: -40, ly: 112 }, { k: "rer", x: 148, y: 69, lx: -40, ly: 40 }, { k: "membrane", x: 34, y: 234, lx: -40, ly: 190 }, { k: "golgi", x: 96, y: 210, lx: -40, ly: 256 }, { k: "wall", x: 18, y: 320, lx: -40, ly: 330 },
+          { k: "mito", x: 464, y: 120, lx: 575, ly: 110 }, { k: "chloro", x: 447, y: 248, lx: 575, ly: 250 }, { k: "vac", x: 330, y: 260, lx: 575, ly: 340 }] },
+        { t: "fill", label: "Cell City jobs", title: "Cell City: who does which job?", max: 3,
+          items: [
+            { parts: ["The ", B(["chloroplast", "nucleus", "vacuole"], 1), " is like city hall because it holds the DNA plans and gives the orders."] },
+            { parts: ["The ", B(["Golgi apparatus", "mitochondria"], 1), " are like power plants, and the ", B(["ribosomes", "lysosomes"], 1), " are like the recycling center."] },
+            { parts: ["The ", B(["cell wall", "cell membrane"], 1), " is like the city border with security gates because it controls what goes in and out, and the ", B(["chloroplast", "cytoplasm"], 0), " is like a solar power plant."] }],
+          why: "Nucleus = city hall, mitochondria = power plant, lysosomes = recycling, cell membrane = gates, chloroplast = solar power." }
+      ] },
+    { letters: ["O"], title: "Compare with Venn Diagrams", time: "7 min", goal: "Sort what is unique and what is shared.",
+      blocks: [
+        { t: "venn", label: "plant vs. animal Venn", title: "Plant cells vs. animal cells", A: "Plant cell", B: "Animal cell", colors: ["#1aa36f", "#e5627d"], max: 3,
+          tiles: [["Cell wall", 0], ["Chloroplasts", 0], ["Large central vacuole", 0], ["Box (rectangle) shape", 0], ["Centrioles", 2], ["Lysosomes (common)", 2], ["Round, flexible shape", 2], ["Nucleus", 1], ["Mitochondria", 1], ["Cell membrane", 1], ["Ribosomes", 1], ["Golgi apparatus", 1], ["Endoplasmic reticulum (ER)", 1]],
+          why: "Plant cells have three extras (wall, chloroplasts, big vacuole). Animal cells have centrioles and more lysosomes. Both are eukaryotes, so they share the nucleus and other organelles." },
+        { t: "venn", label: "prokaryote vs. eukaryote Venn", title: "Prokaryotes vs. eukaryotes", A: "Prokaryote", B: "Eukaryote", colors: ["#e08a00", "#8a54e0"], max: 3,
+          tiles: [["No nucleus (DNA in a nucleoid)", 0], ["Plasmids", 0], ["Very small (about 1–10 µm)", 0], ["Example: bacteria", 0], ["DNA", 1], ["Ribosomes", 1], ["Cell membrane", 1], ["Cytoplasm", 1], ["Nucleus", 2], ["Mitochondria", 2], ["Membrane-bound organelles", 2], ["Examples: plants, animals, fungi, protists", 2], ["Usually bigger (about 10–100 µm)", 2]],
+          why: "Every cell has DNA, ribosomes, a membrane, and cytoplasm. Only eukaryotes have a nucleus and membrane-bound organelles like mitochondria." }
+      ] },
+    { letters: ["I"], title: "Check for Understanding: Who Has Which Cells?", time: "4 min", goal: "Sort organisms by the kind of cells they are made of.",
+      blocks: [
+        { t: "sort", label: "organism sort", title: "What kind of cells is each organism made of?", zones: ["Plant cells", "Animal cells", "Other eukaryotes (fungi & protists)", "Prokaryotes (bacteria)"], colors: ["#1aa36f", "#e5627d", "#8a54e0", "#e08a00"],
+          tiles: [["🌻 Sunflower", 0], ["🌳 Oak tree", 0], ["🥬 Lettuce", 0], ["🐕 Dog", 1], ["🧍 Human", 1], ["🐟 Goldfish", 1], ["🦋 Butterfly", 1], ["🍄 Mushroom", 2], ["🍞 Yeast (in bread)", 2], ["🫧 Amoeba", 2], ["🧫 E. coli", 3], ["🥛 Lactobacillus (in yogurt)", 3], ["🤒 Strep throat bacteria", 3]],
+          why: "Plants and animals are eukaryotes. Mushrooms and yeast are fungi, and amoebas are protists (also eukaryotes). Bacteria are prokaryotes." }
+      ] },
+    { letters: ["I"], title: "Mystery Cells", time: "5 min", goal: "Use clues to identify four cells under the microscope.",
+      blocks: [
+        { t: "mystery", title: "Mystery cells under the microscope", max: 4 }
+      ] },
+    { letters: ["W"], title: "CER: Is Specimen 1 a Plant Cell?", time: "5 min", goal: "Use organelles as evidence.",
+      blocks: [
+        { t: "cerg", title: "Claim · Evidence · Reasoning", q: "<b>Question:</b> Specimen 1 (onion skin) has no green chloroplasts. Is it a plant cell or an animal cell?", claimA: 2, need: 2,
+          claims: ["It is an animal cell because it is not green.", "It is a bacterium because it has no chloroplasts.", "It is a plant cell, because it has a cell wall and a large central vacuole, even though it has no chloroplasts.", "It cannot be identified without chloroplasts."],
+          evidence: [["Specimen 1 has box-shaped cells with thick cell walls.", true], ["Specimen 1 has a nucleus, so it is a eukaryote.", true], ["Specimen 1 was looked at on a Tuesday.", false], ["Specimen 1 has a large clear central vacuole that fills most of each cell.", true]],
+          words: ["cell wall", "vacuole", "nucleus", "chloroplast", "eukaryote", "plant", "animal", "sunlight", "underground", "evidence"],
+          frames: ["My claim is that Specimen 1 is…", "The evidence is that it has…", "Only plant cells have…", "It has no chloroplasts because…"],
+          must: ["wall", "vacuole", "plant", "chloroplast|sunlight|underground|green"] }
+      ] },
+    { letters: ["R", "O"], title: "Exit Ticket", time: "2 min", goal: "Connect structure to function.",
+      blocks: [
+        { t: "quiz", label: "exit ticket", title: "Exit ticket", items: [
+          { q: "Muscle cells use a lot of energy. Which organelle would you expect them to have MANY of?", opts: ["Chloroplasts", "Mitochondria", "Cell walls", "Central vacuoles"], a: 1, why: "More work needs more energy, and mitochondria release energy from food." },
+          { q: "A plant is left without water and wilts. Which organelle lost water?", opts: ["The central vacuole", "The nucleus", "The ribosomes", "The Golgi apparatus"], a: 0, why: "The central vacuole pushes against the cell wall to keep the plant firm. Without water it shrinks and the plant droops." },
+          { q: "A scientist finds a cell with ribosomes, DNA, and a cell wall, but no nucleus. What is it?", opts: ["An animal cell", "A plant cell", "A prokaryote (bacterium)", "A fungus"], a: 2, why: "No nucleus means prokaryote. Plants and fungi have walls too, but they also have a nucleus." }] }
+      ] }
+  ]
+};
+</script>
+<script src="cc-bblab.js?v=7"></script>
+<script src="cc-protsyn.js?v=3"></script>
+<script src="cc-cells.js?v=1"></script>
+<script src="cc-blocks2.js?v=1"></script>
+<script src="hub-config.js?v=3"></script>
+<script src="cc-lesson.js?v=4"></script>
+</body>
+</html>

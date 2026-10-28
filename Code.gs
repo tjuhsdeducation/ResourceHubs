@@ -78,6 +78,7 @@ const ACTIVITIES = [
   ["WICOR Lessons", "Virtual lab", "Biology: Elodea, Snails & Bromothymol Blue: Who Uses CO₂?"],
   ["WICOR Lessons", "Virtual lab", "Biology: From Gene to Trait: A Protein Synthesis Journey"],
   ["WICOR Lessons", "Virtual lab", "Biology: The Case of the Poisoned Food Critic: A Macromolecule Mystery"],
+  ["WICOR Lessons", "Virtual lab", "Biology: Cell City: Exploring Plant, Animal & Bacterial Cells"],
   ["WICOR Lessons", "Virtual lab", "Biology: The Great Gummy Bear Soak: Osmosis and Cell Transport"],
   ["WICOR Lessons", "Virtual lab", "Biology: Reading the Clues: Heredity & Punnett Squares"],
   ["WICOR Lessons", "Virtual lab", "Biology: Hurricane Lizards: How Natural Selection Changes a Population"],
