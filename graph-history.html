@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graphs in History | Graphing Mini Lesson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cc-lesson.css?v=2">
+</head>
+<body>
+<script>
+/* =====================================================================
+   GRAPHING MINI LESSON (≈ 25 min): Graphs in History
+   Graph blocks (gplot, glabel, gread, gview) come from cc-graphs.js.
+   ===================================================================== */
+const UN = [[1929, 3.2], [1930, 8.7], [1931, 15.9], [1932, 23.6], [1933, 24.9], [1934, 21.7], [1935, 20.1], [1936, 16.9], [1937, 14.3], [1938, 19.0], [1939, 17.2], [1940, 14.6], [1941, 9.9], [1942, 4.7]];
+const DEP = { type: "line", title: "U.S. Unemployment Rate, 1929–1942",
+  src: "Source: U.S. Census Bureau, Historical Statistics of the United States (Lebergott estimates)",
+  x: { label: "Year", min: 1929, max: 1942, step: 1, every: 1, noComma: true }, y: { label: "Unemployment rate (% of workers)", min: 0, max: 30, step: 5 },
+  series: [{ name: "Unemployment", color: "#e08a00", pts: UN }] };
+window.CC = {
+  id: "graph-history", subject: "History", short: "Graphs in History", color: "#e08a00", emoji: "🏛️", time: "≈ 25 min",
+  kind: "Graphing Mini Lesson", brand: { name: "WICOR", home: "wicor/history", mark: "" },
+  title: "Graphs in History: The Great Depression in One Line",
+  intro: "Historians use graphs to see how events affected millions of people. One line graph can tell the story of the Great Depression, the New Deal, and World War II. Label it, build part of it, read it, and connect it to history.",
+  eq: "How can a graph help us understand the effects of historical events?",
+  targets: {
+    R: "I can read a historical line graph and identify its peak and trends.",
+    O: "I can label a historical graph, including its source, and plot data by year.",
+    I: "I can connect changes on a graph to historical events.",
+    W: "I can write a claim about history using evidence from a graph."
+  },
+  teacher: `<p><b>Focus:</b> reading and interpreting a historical data graph (U.S. History, Unit: Great Depression and New Deal).</p>
+    <p><b>Data:</b> annual civilian unemployment rates, 1929–1942, from the Stanley Lebergott estimates published in the Census Bureau’s <i>Historical Statistics of the United States</i> (series D 86). These are the figures most textbooks use. Other estimates (for example, Darby’s, which count New Deal relief workers as employed) are lower for 1934–1941, which is a good discussion point about sources.</p>
+    <p><b>Events:</b> stock market crash (Oct. 1929) and bank failures; New Deal begins (1933); the “Roosevelt Recession” of 1937–38 after federal spending cuts; war production and the draft (1940–42).</p>`,
+  stations: [
+    { letters: ["R"], title: "Warm-Up: The Story Behind the Line", time: "5 min", goal: "Learn the events you will look for on the graph.",
+      blocks: [
+        { t: "warmup", title: "The Great Depression, 1929–1942", read: [
+          "In <b>October 1929</b>, the stock market crashed. Over the next few years, thousands of banks failed, businesses closed, and millions of Americans lost their jobs. This time is called the <b>Great Depression</b>.",
+          "In <b>1933</b>, President Franklin D. Roosevelt began the <b>New Deal</b>, government programs that created jobs (building roads, dams, and schools) and helped banks and farmers. In <b>1937</b>, the government cut spending, and a sharp <b>recession</b> followed in 1937–1938.",
+          "As <b>World War II</b> began in Europe, U.S. factories started making weapons, ships, and planes. After the U.S. entered the war in December 1941, millions of people joined the military or went to work in war factories."],
+          vocab: [["Great Depression", "Gran Depresión", "The worst economic crisis in U.S. history, about 1929–1941."], ["unemployment rate", "tasa de desempleo", "The percent of workers who want a job but cannot find one."], ["New Deal", "Nuevo Trato", "Roosevelt’s programs to create jobs and fix the economy."], ["recession", "recesión", "A time when the economy shrinks and jobs are lost."], ["peak", "punto máximo", "The highest point on a graph."], ["source", "fuente", "Where the data comes from."]] },
+        { t: "quiz", label: "warm-up check", title: "Quick check", items: [
+          { q: "What does an unemployment rate of 25% mean?", opts: ["25 people had no job", "About 1 out of every 4 workers could not find a job", "Prices went up 25%", "25% of people were rich"], a: 1, why: "25% is one quarter, so about 1 in 4 workers was unemployed." },
+          { q: "When did the New Deal begin?", opts: ["1929", "1933", "1941", "1945"], a: 1, why: "Roosevelt took office in March 1933 and started New Deal programs right away." }] }
+      ] },
+    { letters: ["O"], title: "Label It: Title, Axes, and Source", time: "4 min", goal: "Label every part of a historical graph.",
+      blocks: [
+        { t: "glabel", title: "Label the historian’s graph", how: "Historians always check where data comes from. Pick the best label for each letter, including the source.", g: DEP, max: 3, label: "label the graph",
+          parts: [
+            { k: "title", a: "U.S. Unemployment Rate, 1929–1942", opts: ["U.S. Unemployment Rate, 1929–1942", "History", "World War II Battles", "Money"], why: "The title tells WHAT the data is, WHERE (U.S.), and WHEN (1929–1942)." },
+            { k: "x", a: "Year", opts: ["Year", "Unemployment rate (% of workers)", "Presidents", "Number of banks"], why: "The x-axis numbers are years, from 1929 to 1942." },
+            { k: "y", a: "Unemployment rate (% of workers)", opts: ["Year", "Number of people", "Unemployment rate (% of workers)", "Dollars"], why: "The y-axis shows the percent of workers without a job." },
+            { k: "src", a: "Source: U.S. Census Bureau, Historical Statistics of the United States (Lebergott estimates)", opts: ["Source: a blog post", "Source: U.S. Census Bureau, Historical Statistics of the United States (Lebergott estimates)", "Source: my grandpa", "Source: unknown"], why: "Historians trust data more when they can see who collected it. A government statistics book is a strong source." }] }
+      ] },
+    { letters: ["O"], title: "Build It: Plot the Crash Years", time: "6 min", goal: "Plot data by year from a table.",
+      blocks: [
+        { t: "text", html: "<p>Plot the unemployment rate for <b>1929 to 1936</b>. The numbers fall between grid lines, so estimate carefully (for example, 8.7 is a little below 10). Use ▲ ▼ to fine-tune each point.</p>" },
+        { t: "gplot", title: "Plot 1929–1936", g: Object.assign({}, DEP, { series: [] }), data: UN.slice(0, 8), head: ["Year", "Unemployment (%)"], snap: 0.5, tol: 1.3, max: 3, label: "plot the data",
+          axisQ: [{ q: "Each grid line on the y-axis is worth…", opts: ["1%", "5%", "10%", "1 year"], a: 1, why: "The y-axis goes 0, 5, 10, 15… so each grid line is 5%." }] }
+      ] },
+    { letters: ["I"], title: "Read It: Connect the Line to History", time: "6 min", goal: "Match changes on the graph to events.",
+      blocks: [
+        { t: "gread", title: "Read the whole graph, 1929–1942", g: DEP, max: 3, label: "read the graph", items: [
+          { q: "In what year did unemployment reach its <b>peak</b>?", opts: ["1929", "1933", "1938", "1942"], a: 1, why: "The highest point is 1933, at 24.9%. That is about 1 in 4 workers." },
+          { q: "About what was the unemployment rate in <b>1933</b>?", num: 25, tol: 1.5, unit: "%", why: "The peak is just under the 25% grid line (24.9%)." },
+          { q: "Which event best explains the steep rise from <b>1929 to 1933</b>?", opts: ["World War II factories", "The stock market crash and bank failures", "The New Deal", "The end of the Depression"], a: 1, why: "After the 1929 crash, banks failed and businesses closed, so jobs disappeared." },
+          { q: "Unemployment went DOWN from <b>1933 to 1937</b>. Which event matches this?", opts: ["The New Deal created jobs", "The stock market crashed", "The U.S. lost a war", "Banks closed"], a: 0, why: "New Deal programs hired millions of workers and helped the economy recover." },
+          { q: "What happened between <b>1937 and 1938</b>?", opts: ["Unemployment kept falling", "Unemployment rose again during a recession", "Unemployment hit 0%", "Nothing changed"], a: 1, why: "It jumped from 14.3% to 19.0% after government spending was cut." },
+          { q: "Why did unemployment fall to <b>4.7%</b> by 1942?", opts: ["The stock market crashed again", "War production and the military created millions of jobs", "People stopped looking for work", "The New Deal ended all jobs"], a: 1, why: "World War II factories and the draft put millions of people to work." }] }
+      ] },
+    { letters: ["W"], title: "Write It: A Claim With Graph Evidence", time: "4 min", goal: "Use the graph to support a historical claim.",
+      blocks: [
+        { t: "write", title: "Historical claim", label: "graph claim", min: 30, rows: 5,
+          prompt: "Historians still debate this question: <b>Did the New Deal end the Great Depression?</b> Use the graph to answer. Include at least <b>two years</b> and <b>one percent</b> from the graph.",
+          frames: ["The graph shows that in ___, unemployment was ___%.", "After the New Deal began in 1933, …", "However, in 1938…", "This suggests that…"],
+          checks: [{ re: /19[2-4]\d/g, min: 2, label: "Uses at least 2 years from the graph" }, { re: /\d+(\.\d+)?\s*(%|percent)/gi, label: "Cites a percent from the graph" }, { re: /new deal|war|recession|depression|crash/gi, label: "Connects the graph to a historical event" }] },
+        { t: "quiz", label: "exit ticket", title: "Exit ticket", items: [
+          { q: "What is something this graph CANNOT tell us?", opts: ["The unemployment rate in 1933", "Which groups of people were hit hardest, like farmers or Black workers", "The peak year", "Whether unemployment went up or down"], a: 1, why: "This graph shows one number for the whole country. Historians need other sources to learn about different groups." },
+          { q: "Why do historians check a graph’s source?", opts: ["To see the colors", "To decide whether the data is trustworthy", "To find the title", "Sources don’t matter"], a: 1, why: "Different sources can count things differently, so the source affects how much we trust the data." }] }
+      ] }
+  ]
+};
+</script>
+<script src="cc-bblab.js?v=7"></script>
+<script src="cc-graphs.js?v=1"></script>
+<script src="cc-blocks2.js?v=1"></script>
+<script src="hub-config.js?v=3"></script>
+<script src="cc-lesson.js?v=4"></script>
+</body>
+</html>

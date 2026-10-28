@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graphing in Science | Graphing Mini Lesson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cc-lesson.css?v=2">
+</head>
+<body>
+<script>
+/* =====================================================================
+   GRAPHING MINI LESSON (≈ 25 min): Graphing in Science
+   Graph blocks (gplot, glabel, gread, gview) come from cc-graphs.js.
+   ===================================================================== */
+const ENZ = { type: "line", title: "Effect of Temperature on Catalase Reaction Rate",
+  x: { label: "Temperature (°C)", min: 0, max: 70, step: 10 }, y: { label: "Reaction rate (bubbles per minute)", min: 0, max: 40, step: 5 },
+  series: [{ name: "Catalase", color: "#1aa36f", pts: [[0, 4], [10, 10], [20, 18], [30, 28], [40, 34], [50, 20], [60, 6], [70, 1]] }] };
+const PLANT = { type: "line", title: "Effect of Fertilizer on Bean Plant Height",
+  x: { label: "Time (days)", min: 0, max: 20, step: 5 }, y: { label: "Plant height (cm)", min: 0, max: 20, step: 2 },
+  series: [{ name: "With fertilizer", color: "#1aa36f", pts: [[0, 2], [5, 5], [10, 9], [15, 14], [20, 18]] }, { name: "No fertilizer", color: "#2b7de9", pts: [[0, 2], [5, 4], [10, 6], [15, 8], [20, 10]] }] };
+window.CC = {
+  id: "graph-science", subject: "Science", short: "Graphing in Science", color: "#1aa36f", emoji: "📈", time: "≈ 25 min",
+  kind: "Graphing Mini Lesson", brand: { name: "WICOR", home: "wicor/science", mark: "" },
+  title: "Graphing in Science: Make, Label, and Read a Lab Graph",
+  intro: "Scientists use graphs to find patterns in their data. In this mini lesson you will build a line graph from enzyme lab data, label a graph so anyone can read it, and use the graph as evidence.",
+  eq: "How do scientists use graphs to show and explain the results of an experiment?",
+  targets: {
+    R: "I can use TAILS and DRY MIX to describe the parts of a science graph.",
+    O: "I can plot lab data on a line graph and label the title, axes, and key.",
+    I: "I can read values, find trends, and make predictions from a graph.",
+    W: "I can write a conclusion that uses numbers from a graph as evidence."
+  },
+  teacher: `<p><b>Focus:</b> graphing skills in a science context. <b>TAILS</b> = Title, Axes, Intervals, Labels (with units), Scale. <b>DRY MIX</b> = Dependent/Responding variable on the Y-axis, Manipulated/Independent variable on the X-axis.</p>
+    <p><b>Data:</b> the catalase (potato + hydrogen peroxide) and bean plant numbers are SAMPLE data made up for practice. They follow the real pattern: catalase activity rises with temperature to an optimum near 37–40 °C, then falls as the enzyme denatures.</p>
+    <p><b>Tip:</b> the Trace tool in Station 4 draws guide lines from a tapped point to both axes. Model it on the projector first.</p>`,
+  stations: [
+    { letters: ["R"], title: "Warm-Up: TAILS and DRY MIX", time: "5 min", goal: "Learn the parts of a science graph.",
+      blocks: [
+        { t: "warmup", title: "Every good science graph has TAILS", read: [
+          "A graph turns a table of numbers into a picture so you can see a <b>pattern</b> (a <b>trend</b>). Every science graph needs <b>TAILS</b>: a <b>T</b>itle, two <b>A</b>xes, equal <b>I</b>ntervals, <b>L</b>abels with units, and a <b>S</b>cale that fits all of the data.",
+          "Which variable goes where? Remember <b>DRY MIX</b>. The <b>D</b>ependent (<b>R</b>esponding) variable goes on the <b>Y</b>-axis. The <b>M</b>anipulated (<b>I</b>ndependent) variable goes on the <b>X</b>-axis.",
+          "A good title often follows this pattern: <b>“The Effect of [independent variable] on [dependent variable].”</b>"],
+          vocab: [["independent variable", "variable independiente", "What the scientist changes on purpose. Goes on the x-axis."], ["dependent variable", "variable dependiente", "What the scientist measures. Goes on the y-axis."], ["axis", "eje", "One of the two number lines on a graph (x is across, y is up)."], ["interval", "intervalo", "The equal jump between numbers on an axis, like 0, 5, 10, 15."], ["scale", "escala", "The range of numbers on an axis; it must fit all of the data."], ["trend", "tendencia", "The overall pattern in the data, like increasing or decreasing."], ["units", "unidades", "What the number measures, like °C, cm, or minutes."]] },
+        { t: "quiz", label: "warm-up check", title: "Quick check", items: [
+          { q: "A student changes the amount of light and measures plant growth. What goes on the x-axis?", opts: ["Plant growth", "Amount of light", "The title", "Time of day"], a: 1, why: "Light is the manipulated (independent) variable, so it goes on the X-axis (DRY MIX)." },
+          { q: "Why does an axis label need units, like “Temperature (°C)”?", opts: ["It looks nicer", "So the reader knows what the numbers measure", "Units are only needed in the title", "Graphs never use units"], a: 1, why: "Without units, a reader can’t tell if 30 means 30 °C, 30 minutes, or 30 cm." },
+          { q: "Which set of numbers has EQUAL intervals?", opts: ["0, 5, 10, 20, 40", "0, 10, 20, 30, 40", "0, 2, 3, 10, 12", "5, 10, 12, 30"], a: 1, why: "Every jump is 10. Equal intervals keep the graph from stretching or squishing the data." }] }
+      ] },
+    { letters: ["O"], title: "Build It: Plot the Enzyme Data", time: "6 min", goal: "Turn a data table into a line graph.",
+      blocks: [
+        { t: "text", html: "<p><b>The lab:</b> Students put potato pieces (which contain the enzyme <b>catalase</b>) in hydrogen peroxide at different temperatures. Catalase breaks down hydrogen peroxide and makes oxygen bubbles. They counted the bubbles per minute. <i>(Sample data.)</i></p>" },
+        { t: "gplot", title: "Plot the catalase data", g: ENZ, data: ENZ.series[0].pts, head: ["Temperature (°C)", "Bubbles per minute"], snap: 1, tol: 1, max: 3, label: "plot the data",
+          axisQ: [{ q: "Which variable is the <b>independent</b> variable, the one the students changed on purpose?", opts: ["Bubbles per minute", "Temperature"], a: 1, why: "They chose the temperatures. Temperature is independent, so it goes on the x-axis." }] }
+      ] },
+    { letters: ["O"], title: "Label It: Complete the Graph", time: "4 min", goal: "Add a title, axis labels, and a key.",
+      blocks: [
+        { t: "glabel", title: "This graph is missing its labels", how: "Another class tested bean plants with and without fertilizer. Their graph is missing four parts. Pick the best label for each letter.", g: PLANT, max: 3, label: "label the graph",
+          parts: [
+            { k: "title", a: "The Effect of Fertilizer on Bean Plant Height", opts: ["Plants", "The Effect of Fertilizer on Bean Plant Height", "My Graph", "The Effect of Plant Height on Fertilizer"], why: "Use “The Effect of [independent] on [dependent].” Fertilizer is what they changed." },
+            { k: "x", a: "Time (days)", opts: ["Time (days)", "Days", "Plant height (cm)", "Fertilizer"], why: "The x-axis numbers go 0 to 20 across. That’s time, and the label needs the unit (days)." },
+            { k: "y", a: "Plant height (cm)", opts: ["Height", "Time (days)", "Plant height (cm)", "Growth amount"], why: "The y-axis shows what was measured: height, with its unit (cm)." },
+            { k: "key", a: "● With fertilizer   ● No fertilizer", opts: ["● Day 1   ● Day 20", "● With fertilizer   ● No fertilizer", "● Tall   ● Short", "● Water   ● Soil"], why: "When a graph has two lines, the key tells which line is which group." }] }
+      ] },
+    { letters: ["I"], title: "Read It: Analyze the Enzyme Graph", time: "6 min", goal: "Read values, find the trend, and predict.",
+      blocks: [
+        { t: "gread", title: "Read the catalase graph", g: ENZ, max: 3, label: "read the graph", items: [
+          { q: "At what temperature did catalase work the <b>fastest</b> (the optimum temperature)?", opts: ["20 °C", "40 °C", "50 °C", "70 °C"], a: 1, why: "The highest point on the line is at 40 °C (34 bubbles per minute)." },
+          { q: "What was the reaction rate at <b>20 °C</b>?", num: 18, tol: 1, unit: "bubbles per minute", why: "Go up from 20 °C to the line, then across to the y-axis: 18." },
+          { q: "How many MORE bubbles per minute were made at 40 °C than at 10 °C?", num: 24, tol: 1, unit: "more bubbles per minute", why: "34 − 10 = 24." },
+          { q: "Describe the trend from <b>0 °C to 40 °C</b>.", opts: ["The rate decreases", "The rate increases", "The rate stays the same", "There is no pattern"], a: 1, why: "The line goes up from left to right, so the rate increases as temperature increases." },
+          { q: "<b>Predict:</b> about how many bubbles per minute at <b>45 °C</b>? (It was not tested, so use the line.)", num: 27, tol: 6, unit: "bubbles per minute", why: "45 °C is between 40 °C (34) and 50 °C (20), so a good estimate is about 27. Reading between points is called interpolating." },
+          { q: "Why does the rate drop above 40 °C?", opts: ["The potato ran away", "High heat changes the enzyme’s shape (denatures it)", "Cold slows the enzyme", "There was more hydrogen peroxide"], a: 1, why: "High heat denatures catalase, so it can no longer fit its substrate." }] }
+      ] },
+    { letters: ["W"], title: "Write It: Use the Graph as Evidence", time: "4 min", goal: "Write a conclusion with numbers from the graph.",
+      blocks: [
+        { t: "write", title: "Conclusion with graph evidence", label: "graph conclusion", min: 30, rows: 5,
+          prompt: "Answer the question: <b>How does temperature affect how fast catalase works?</b> Use at least <b>two numbers</b> from the graph as evidence.",
+          frames: ["As temperature increased from ___ to ___ °C, the reaction rate…", "The highest rate was ___ bubbles per minute at ___ °C.", "Above ___ °C, the rate decreased because…"],
+          checks: [{ re: /\d+/g, min: 2, label: "Uses at least 2 numbers from the graph" }, { re: /temperature|°c|degrees/gi, label: "Talks about temperature" }, { re: /increase|decrease|highest|peak|drop|rise|optimum/gi, label: "Describes the trend" }] },
+        { t: "quiz", label: "exit ticket", title: "Exit ticket", items: [
+          { q: "A graph’s y-axis goes 0, 5, 10, 25, 50. What is wrong?", opts: ["Nothing", "The intervals are not equal", "It needs more colors", "The y-axis should be on the right"], a: 1, why: "Intervals must be equal, or the graph will make the data look wrong." },
+          { q: "In DRY MIX, what does the Y stand for?", opts: ["The y-axis, where the dependent (responding) variable goes", "Yesterday’s data", "Your name", "The independent variable"], a: 0, why: "Dependent, Responding, Y-axis." }] }
+      ] }
+  ]
+};
+</script>
+<script src="cc-bblab.js?v=7"></script>
+<script src="cc-graphs.js?v=1"></script>
+<script src="cc-blocks2.js?v=1"></script>
+<script src="hub-config.js?v=3"></script>
+<script src="cc-lesson.js?v=4"></script>
+</body>
+</html>

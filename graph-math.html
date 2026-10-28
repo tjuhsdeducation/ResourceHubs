@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graphing in Math | Graphing Mini Lesson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cc-lesson.css?v=2">
+</head>
+<body>
+<script>
+/* =====================================================================
+   GRAPHING MINI LESSON (≈ 25 min): Graphing in Math
+   Graph blocks (gplot, glabel, gread, gview) come from cc-graphs.js.
+   ===================================================================== */
+const wk = n => Array.from({ length: n + 1 }, (_, i) => i);
+const SAVE = { type: "line", title: "Maria and Diego Save for a Car",
+  x: { label: "Time (weeks)", min: 0, max: 10, step: 1 }, y: { label: "Money saved (dollars)", min: 0, max: 650, step: 50 },
+  series: [{ name: "Maria", color: "#5b5fe0", pts: wk(10).map(w => [w, 100 + 50 * w]) }, { name: "Diego", color: "#e08a00", pts: wk(10).map(w => [w, 300 + 25 * w]) }] };
+window.CC = {
+  id: "graph-math", subject: "Math", short: "Graphing in Math", color: "#5b5fe0", emoji: "📐", time: "≈ 25 min",
+  kind: "Graphing Mini Lesson", brand: { name: "WICOR", home: "wicor/math", mark: "" },
+  title: "Graphing in Math: Plot, Label, and Read a Linear Graph",
+  intro: "Maria and Diego are both saving money for their first car. In this mini lesson you will choose a good scale, plot points, label the graph, and read it to compare their plans.",
+  eq: "How can a graph help me compare two situations and make a decision?",
+  targets: {
+    R: "I can read coordinates, the y-intercept, and the rate of change on a graph.",
+    O: "I can choose a scale with equal intervals, plot points, and label a graph.",
+    I: "I can answer questions by reading values from a graph.",
+    W: "I can explain a decision using evidence from a graph."
+  },
+  teacher: `<p><b>Focus:</b> reading and building linear graphs (Algebra 1 / Math 1). Maria: y = 50x + 100. Diego: y = 25x + 300. The lines cross at (8, 500).</p>
+    <p><b>Skills:</b> choosing a scale and interval, plotting ordered pairs, labeling axes with units, reading a value, finding when a line reaches a value, slope as a rate of change, the y-intercept as a starting amount, and the meaning of an intersection.</p>
+    <p><b>Tip:</b> the Trace tool in Station 4 draws guide lines from a tapped point to both axes.</p>`,
+  stations: [
+    { letters: ["R"], title: "Warm-Up: How to Read a Point", time: "5 min", goal: "Review the words you need to read a graph.",
+      blocks: [
+        { t: "warmup", title: "Reading a point on a graph", read: [
+          "Every point on a graph is an <b>ordered pair</b> (x, y). To read a point, start at the <b>origin</b> (0, 0), go <b>across</b> to the x-value, then go <b>up</b> to the y-value. Think: <b>“walk before you climb.”</b>",
+          "On a money graph, the <b>y-intercept</b> is where the line starts on the y-axis (when x = 0). It is the <b>starting amount</b>.",
+          "The <b>rate of change</b> (slope) tells how much y changes each time x goes up by 1. A <b>steeper</b> line means a faster rate."],
+          vocab: [["ordered pair", "par ordenado", "A point written as (x, y)."], ["origin", "origen", "The point (0, 0), where the axes meet."], ["interval", "intervalo", "The equal jump between numbers on an axis."], ["y-intercept", "intersección con el eje y", "Where a line crosses the y-axis; the starting value."], ["rate of change", "tasa de cambio", "How much y changes for each 1 unit of x (slope)."], ["intersection", "intersección", "The point where two lines cross."]] },
+        { t: "quiz", label: "warm-up check", title: "Quick check", items: [
+          { q: "To plot the point (4, 300), what do you do first?", opts: ["Go up 300", "Go across to 4 on the x-axis", "Go across to 300", "Start at 4 on the y-axis"], a: 1, why: "x comes first: walk across to 4, then climb up to 300." },
+          { q: "Your data goes from $0 to $580. Which y-axis scale is best?", opts: ["0 to 100, by 10s", "0 to 600, by 50s", "0 to 6,000, by 1,000s", "0, 10, 100, 600"], a: 1, why: "0 to 600 fits all the data, and jumps of 50 are equal and easy to read." }] }
+      ] },
+    { letters: ["O"], title: "Build It: Plot Maria’s Savings", time: "6 min", goal: "Plot ordered pairs from a table.",
+      blocks: [
+        { t: "text", html: "<p>Maria already has <b>$100</b> and saves <b>$50 every week</b>. The table shows her total after each week. Plot each point (weeks, dollars).</p>" },
+        { t: "gplot", title: "Plot Maria’s line", g: Object.assign({}, SAVE, { title: "Maria’s Savings", series: [] }), data: wk(6).map(w => [w, 100 + 50 * w]), head: ["Week (x)", "Dollars saved (y)"], snap: 25, tol: 12, max: 3, label: "plot the data",
+          axisQ: [{ q: "On this graph, what is the <b>interval</b> on the y-axis?", opts: ["$1", "$10", "$50", "$100"], a: 2, why: "The numbers on the y-axis go 0, 50, 100, 150… so each grid line is $50." },
+            { q: "Where does Maria’s line start (the y-intercept)?", opts: ["(0, 0)", "(0, 100)", "(1, 150)", "(100, 0)"], a: 1, why: "At week 0 she already has $100, so the line starts at (0, 100)." }] }
+      ] },
+    { letters: ["O"], title: "Label It: Two Lines, One Graph", time: "4 min", goal: "Label a graph that compares two people.",
+      blocks: [
+        { t: "glabel", title: "Finish the comparison graph", how: "Diego already has $300 and saves $25 a week. The graph shows both plans, but four labels are missing. Pick the best label for each letter.", g: SAVE, max: 3, label: "label the graph",
+          parts: [
+            { k: "title", a: "Maria and Diego Save for a Car", opts: ["Graph", "Maria and Diego Save for a Car", "Weeks", "Lines"], why: "A title tells what the whole graph is about." },
+            { k: "x", a: "Time (weeks)", opts: ["Money saved (dollars)", "Time (weeks)", "x", "Cars"], why: "The x-axis counts the weeks, so it needs the unit: weeks." },
+            { k: "y", a: "Money saved (dollars)", opts: ["Money saved (dollars)", "Time (weeks)", "y", "Speed"], why: "The y-axis shows the amount of money, measured in dollars." },
+            { k: "key", a: "● Maria   ● Diego", opts: ["● Week 1   ● Week 2", "● Maria   ● Diego", "● Fast   ● Slow", "● x   ● y"], why: "With two lines, the key tells which line belongs to which person." }] }
+      ] },
+    { letters: ["I"], title: "Read It: Compare the Plans", time: "6 min", goal: "Answer questions by reading the graph.",
+      blocks: [
+        { t: "gread", title: "Read the savings graph", g: SAVE, max: 3, label: "read the graph", items: [
+          { q: "How much money does <b>Maria</b> have at week 4?", num: 300, tol: 5, pre: "$", unit: "", why: "Walk to week 4, climb to Maria’s line, read across: $300." },
+          { q: "In what week does <b>Diego</b> reach $400?", num: 4, tol: 0, pre: "Week", unit: "", why: "Find $400 on the y-axis, go across to Diego’s line, then down: week 4." },
+          { q: "How much does <b>Maria</b> save each week (her rate of change)?", num: 50, tol: 0, pre: "$", unit: "per week", why: "Her line goes up $50 for every 1 week (for example, $100 → $150)." },
+          { q: "Who saves money <b>faster</b>, and how can you tell from the graph?", opts: ["Diego, because his line starts higher", "Maria, because her line is steeper", "They save at the same speed", "Diego, because his line is longer"], a: 1, why: "A steeper line means a bigger rate of change. Diego starts higher, but Maria’s line climbs faster." },
+          { q: "The lines cross at (8, 500). What does that point mean?", opts: ["Both stop saving at week 8", "At week 8, they both have $500", "Diego has $8 and Maria has $500", "Maria has twice as much"], a: 1, why: "An intersection is where both lines have the same x AND the same y: same week, same amount." },
+          { q: "Who has more money at <b>week 10</b>?", opts: ["Maria", "Diego", "They have the same", "You can’t tell"], a: 0, why: "After the lines cross at week 8, Maria’s line is on top. At week 10, Maria has $600 and Diego has $550." }] }
+      ] },
+    { letters: ["W"], title: "Write It: Which Plan Is Better?", time: "4 min", goal: "Use the graph to support a decision.",
+      blocks: [
+        { t: "write", title: "Explain with graph evidence", label: "graph explanation", min: 30, rows: 5,
+          prompt: "A car costs <b>$600</b>. Whose plan gets there first, Maria’s or Diego’s? Use at least <b>two points</b> or numbers from the graph to explain.",
+          frames: ["According to the graph, Maria reaches $___ at week ___.", "Diego starts with more money, but…", "The lines cross at ___, which means…", "So the better plan is ___ because…"],
+          checks: [{ re: /\d+/g, min: 2, label: "Uses at least 2 numbers from the graph" }, { re: /week/gi, label: "Mentions weeks (the x-axis)" }, { re: /steep|faster|rate|per week|cross|intersect/gi, label: "Explains the rate or the intersection" }] },
+        { t: "quiz", label: "exit ticket", title: "Exit ticket", items: [
+          { q: "On a graph, the point (6, 400) means…", opts: ["At week 6, there is $400", "At week 400, there is $6", "6 people have $400", "The slope is 400"], a: 0, why: "x first (week 6), then y ($400)." },
+          { q: "Two lines that cross show…", opts: ["A mistake", "The point where both situations have the same value", "The y-intercept", "The title"], a: 1, why: "The intersection is where both have the same x and y." }] }
+      ] }
+  ]
+};
+</script>
+<script src="cc-bblab.js?v=7"></script>
+<script src="cc-graphs.js?v=1"></script>
+<script src="cc-blocks2.js?v=1"></script>
+<script src="hub-config.js?v=3"></script>
+<script src="cc-lesson.js?v=4"></script>
+</body>
+</html>

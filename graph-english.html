@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graphs in Arguments | Graphing Mini Lesson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cc-lesson.css?v=2">
+</head>
+<body>
+<script>
+/* =====================================================================
+   GRAPHING MINI LESSON (≈ 25 min): Graphs in Arguments
+   Graph blocks (gplot, glabel, gread, gview) come from cc-graphs.js.
+   ===================================================================== */
+const CATS = ["Less than 1", "1 to 2", "2 to 3", "More than 3"];
+const SLEEP = { type: "bar", title: "Screen Time at Night and Hours of Sleep",
+  src: "Source: survey of 200 high school students (sample data for practice)",
+  x: { label: "Screen time after 9 p.m. (hours per night)", cats: CATS }, y: { label: "Average sleep (hours per night)", min: 0, max: 9, step: 1 },
+  series: [{ name: "Average sleep", color: "#e8368f", vals: [8.1, 7.4, 6.8, 6.1] }] };
+const ZOOM = Object.assign({}, SLEEP, { title: "Graph B", src: "", y: { label: "Average sleep (hours per night)", min: 5.5, max: 8.5, step: 0.5 } });
+const FAIR = Object.assign({}, SLEEP, { title: "Graph A", src: "" });
+window.CC = {
+  id: "graph-english", subject: "English", short: "Graphs in Arguments", color: "#e8368f", emoji: "📊", time: "≈ 25 min",
+  kind: "Graphing Mini Lesson", brand: { name: "WICOR", home: "wicor/english", mark: "" },
+  title: "Graphs in Arguments: Does the Data Support the Claim?",
+  intro: "Authors use graphs as evidence in articles and arguments. A good reader checks what the graph really shows, and whether it is being honest. Read a short article, read its graph, spot a misleading graph, and cite the graph in your own writing.",
+  eq: "How can I tell whether a graph really supports an author’s claim?",
+  targets: {
+    R: "I can read an informational graph and connect it to the author’s claim.",
+    I: "I can spot a misleading graph by checking the scale.",
+    O: "I can label the parts of a graph, including its source.",
+    W: "I can cite a graph with a specific number to support or question a claim."
+  },
+  teacher: `<p><b>Focus:</b> graphs as evidence in informational text and argument (ELA standards RI.7: integrate information in different formats; RI.8: evaluate claims and evidence).</p>
+    <p><b>Data:</b> the survey and article are SAMPLE material written for practice. The pattern (more late-night screen time with less sleep) matches what real studies report, but this survey is not a real study.</p>
+    <p><b>Key ideas:</b> a graph shows a pattern (correlation), not proof of cause; always check the source and the y-axis starting point; cite with “According to the graph…” plus a number.</p>`,
+  stations: [
+    { letters: ["R"], title: "Read the Article", time: "5 min", goal: "Find the author’s claim and the evidence.",
+      blocks: [
+        { t: "warmup", title: "Article: “Lights Out for Better Sleep” (sample article)", read: [
+          "Most teens need 8 to 10 hours of sleep each night, but many get much less. A big reason may be the phone in their hand. <b>Teens who spend more time on screens late at night sleep less</b>, and that can hurt their grades, mood, and health.",
+          "A school surveyed 200 of its students. Students reported how many hours they used a screen after 9 p.m. and how many hours they slept on school nights. The graph shows the results.",
+          "The pattern is clear: students with the least late-night screen time slept the most. The author argues that schools should teach students to put screens away an hour before bed."],
+          vocab: [["claim", "afirmación", "The main point the author wants you to believe."], ["evidence", "evidencia", "Facts or data that support a claim."], ["survey", "encuesta", "Questions asked to many people to collect data."], ["source", "fuente", "Where the data came from."], ["misleading", "engañoso", "Giving the wrong idea, even if the numbers are true."], ["cite", "citar", "To point to exact evidence, like a number from a graph."], ["correlation", "correlación", "Two things change together; it does not prove one causes the other."]] },
+        { t: "quiz", label: "article check", title: "Quick check", items: [
+          { q: "What is the author’s <b>claim</b>?", opts: ["Teens need 15 hours of sleep", "Teens who spend more time on screens late at night sleep less", "Phones are expensive", "The survey had 200 students"], a: 1, why: "That sentence is the main point the author wants you to believe." },
+          { q: "What kind of <b>evidence</b> does the author use?", opts: ["A personal story", "A quote from a celebrity", "Survey data shown in a graph", "No evidence"], a: 2, why: "The author uses data from a survey of 200 students, shown in a graph." }] }
+      ] },
+    { letters: ["R", "I"], title: "Read the Graph", time: "6 min", goal: "Read the numbers and connect them to the claim.",
+      blocks: [
+        { t: "gread", title: "Read the article’s graph", g: SLEEP, max: 3, label: "read the graph", items: [
+          { q: "How many hours do students with <b>more than 3 hours</b> of late-night screen time sleep?", num: 6.1, tol: 0.15, unit: "hours", why: "The last bar reaches 6.1 hours." },
+          { q: "How many MORE hours does the “Less than 1” group sleep than the “More than 3” group?", num: 2, tol: 0.15, unit: "hours", why: "8.1 − 6.1 = 2 hours. That’s a big difference every night!" },
+          { q: "What <b>trend</b> does the graph show?", opts: ["More screen time, more sleep", "More screen time, less sleep", "Screen time has no pattern", "Everyone sleeps 8 hours"], a: 1, why: "The bars get shorter from left to right as screen time goes up." },
+          { q: "Which sentence from the article does the graph support <b>best</b>?", opts: ["“Most teens need 8 to 10 hours of sleep.”", "“Students with the least late-night screen time slept the most.”", "“Schools should teach students to put screens away.”", "“A big reason may be the phone in their hand.”"], a: 1, why: "The graph directly shows this: the “Less than 1” bar is tallest. The other sentences are background or opinions." },
+          { q: "Does this graph <b>prove</b> that screens CAUSE students to sleep less?", opts: ["Yes, it proves it", "No. It shows a pattern (correlation), but something else could explain it, like homework or stress", "Yes, because there are 200 students", "No, because graphs are always wrong"], a: 1, why: "A graph can show two things change together. To prove cause, scientists need a controlled experiment." }] }
+      ] },
+    { letters: ["O"], title: "Label It: Title, Axes, and Source", time: "4 min", goal: "Name every part of an informational graph.",
+      blocks: [
+        { t: "glabel", title: "Label the article’s graph", how: "In articles, a graph needs a title, axis labels, AND a source so readers can trust it. Pick the best label for each letter.", g: SLEEP, max: 3, label: "label the graph",
+          parts: [
+            { k: "title", a: "Screen Time at Night and Hours of Sleep", opts: ["Phones Are Bad", "Screen Time at Night and Hours of Sleep", "Survey", "Bars"], why: "A title should describe the data, not argue an opinion." },
+            { k: "x", a: "Screen time after 9 p.m. (hours per night)", opts: ["Average sleep (hours per night)", "Screen time after 9 p.m. (hours per night)", "Students", "Phones"], why: "The groups along the bottom are amounts of late-night screen time." },
+            { k: "y", a: "Average sleep (hours per night)", opts: ["Average sleep (hours per night)", "Number of phones", "Screen time after 9 p.m. (hours per night)", "Grades"], why: "The bar heights show how many hours students slept." },
+            { k: "src", a: "Source: survey of 200 high school students (sample data for practice)", opts: ["Source: my friend", "Source: survey of 200 high school students (sample data for practice)", "Source: the internet", "No source needed"], why: "A source tells who collected the data and how. “The internet” or “my friend” isn’t specific enough to trust." }] }
+      ] },
+    { letters: ["I", "C"], title: "Spot the Misleading Graph", time: "6 min", goal: "Check the scale before you believe a graph.",
+      blocks: [
+        { t: "gview", title: "Same data, two graphs", gs: [FAIR, ZOOM], caps: ["Graph A: the y-axis starts at 0.", "Graph B: the y-axis starts at 5.5."], cap: "Both graphs use the SAME four numbers: 8.1, 7.4, 6.8, and 6.1 hours. Look closely at the y-axis on each one. Talk with a partner: what do you notice?" },
+        { t: "quiz", label: "misleading graphs", title: "What changed?", items: [
+          { q: "In Graph B, the “More than 3” bar looks about how tall compared to the “Less than 1” bar?", opts: ["About the same", "Less than one quarter as tall", "Twice as tall", "Taller"], a: 1, why: "In Graph B, the “More than 3” bar looks tiny next to the “Less than 1” bar. But 6.1 hours is really about 75% of 8.1 hours, which Graph A shows honestly." },
+          { q: "What makes Graph B misleading?", opts: ["It uses different data", "Its y-axis starts at 5.5 instead of 0, so small differences look huge", "It has no colors", "The bars are too wide"], a: 1, why: "Cutting off the bottom of the y-axis exaggerates differences. This is called a truncated axis." },
+          { q: "What should a careful reader check FIRST on any graph?", opts: ["The colors", "The scale and where the y-axis starts", "How many bars there are", "The font"], a: 1, why: "Always check the scale. The same numbers can tell different stories." }] },
+        { t: "sort", label: "supported or not", title: "Supported by the graph or not?", zones: ["Supported by the graph", "NOT supported by the graph"], colors: ["#1aa36f", "#d0453a"],
+          tiles: [["Students with less late-night screen time slept more.", 0], ["The “More than 3” group slept about 6 hours.", 0], ["Phones cause bad grades.", 1], ["All teens in the world sleep 6 hours.", 1], ["The difference between the groups was about 2 hours.", 0], ["Students with more screen time are lazy.", 1]],
+          why: "The graph only shows screen time and sleep for 200 students. It doesn’t show grades, the whole world, or anyone’s character." }
+      ] },
+    { letters: ["W"], title: "Write It: Cite the Graph", time: "4 min", goal: "Use a number from the graph in your writing.",
+      blocks: [
+        { t: "write", title: "Cite the graph", label: "cite the graph", min: 30, rows: 5,
+          prompt: "Do you agree with the author that schools should teach students to put screens away an hour before bed? Write 2–3 sentences. <b>Cite the graph with at least one number</b>, and name one thing the graph does NOT prove.",
+          frames: ["According to the graph, students who…", "For example, the ___ group slept ___ hours, but…", "However, the graph does not show…", "This suggests that…"],
+          checks: [{ re: /according to|the graph shows|the data|the survey/gi, label: "Introduces the evidence (“According to the graph…”)" }, { re: /\d+(\.\d+)?/g, label: "Cites a number from the graph" }, { re: /however|does not|doesn’t|doesn't|but|cause/gi, label: "Names a limit of the evidence" }] },
+        { t: "quiz", label: "exit ticket", title: "Exit ticket", items: [
+          { q: "Which is the best way to cite a graph?", opts: ["“The graph is good.”", "“According to the graph, students with more than 3 hours of screen time slept only 6.1 hours.”", "“I think phones are bad.”", "“Graphs prove everything.”"], a: 1, why: "A strong citation names the source and gives a specific number." },
+          { q: "A graph’s y-axis starts at 90 instead of 0. What might happen?", opts: ["Small differences may look very big", "The graph becomes more honest", "Nothing changes", "The data changes"], a: 0, why: "A truncated axis makes small differences look dramatic." }] }
+      ] }
+  ]
+};
+</script>
+<script src="cc-bblab.js?v=7"></script>
+<script src="cc-graphs.js?v=1"></script>
+<script src="cc-blocks2.js?v=1"></script>
+<script src="hub-config.js?v=3"></script>
+<script src="cc-lesson.js?v=4"></script>
+</body>
+</html>
