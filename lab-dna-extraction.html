@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harvest DNA: Extracting DNA | Virtual Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cc-lesson.css?v=2">
+</head>
+<body>
+<script>
+/* =====================================================================
+   BIOLOGY VIRTUAL LAB (≈ 50 min): Harvest DNA
+   Introduces the DNA unit. Students extract DNA from strawberries,
+   kiwi, bananas, pumpkins, apples, baked pumpkin pie, candy corn, and a
+   plastic pumpkin bucket; compare living, once living, and never-living
+   samples; look at cells and an onion root tip under a microscope;
+   label the phases of mitosis; and copy a DNA molecule (replication).
+   Built for EL students: pictures, Spanish cognates, read-aloud, and
+   drop-down sentence frames.
+   To change wording, edit the text between the quotes/backticks.
+   ===================================================================== */
+const B = (o, a) => ({ o, a });
+window.CC = {
+  id: "lab-dna-extraction", subject: "Biology", short: "Virtual Lab: DNA Extraction", color: "#e8731a", emoji: "🍓", time: "≈ 50 min",
+  kind: "Virtual Lab", brand: { name: "Interactive Lessons", home: "lessons", mark: "" },
+  title: "Harvest DNA: Extracting DNA from Strawberries, Pumpkins & More",
+  intro: "Every living thing has DNA, and you can actually see it! Extract DNA from fall fruits and treats, find out which samples have DNA and which don’t, then zoom in with a microscope to watch cells copy their DNA and divide.",
+  eq: "Where is DNA found, how can we get it out of cells, and why do cells copy their DNA before they divide?",
+  targets: {
+    R: "I can explain where DNA is found in a cell using the words cell, nucleus, chromosome, and DNA.",
+    I: "I can follow a procedure to extract DNA and explain what each step does.",
+    O: "I can organize extraction data and compare living, once-living, and never-living samples.",
+    W: "I can write a CER about which things have DNA and why cells copy DNA before mitosis."
+  },
+  teacher: `<p><b>Real-lab option:</b> This virtual lab follows the classic strawberry DNA extraction. Per group: 1 strawberry (or ~10 g of kiwi, banana, or pumpkin), a zip bag, 10 mL extraction buffer (100 mL water + 10 mL dish soap + 1.5 g / ¼ tsp salt), a coffee filter and cup, a test tube, 10 mL ice-cold 70–91% isopropyl alcohol, and a wooden stick. Alcohol is flammable: no flames, and wear goggles.</p>
+    <p><b>The science:</b> Soap dissolves the lipid membranes, salt neutralizes DNA’s negative charges so the strands clump, and DNA precipitates in cold alcohol. Strawberries are octoploid, so they give a lot of DNA. Candy corn and plastic have no cells and give none. Baked pie gives only a few flecks because heat breaks DNA into short pieces. Masses are SAMPLE data made for practice that follow the real pattern.</p>
+    <p><b>Microscope:</b> In real onion root tips, most cells are in interphase because it is the longest part of the cell cycle. The 20-cell field here has 12 interphase, 3 prophase, 2 metaphase, 1 anaphase, and 2 telophase cells.</p>`,
+  stations: [
+    { letters: ["R"], title: "Warm-Up: What Is DNA?", time: "6 min", goal: "Learn where DNA is and why every living thing has it.",
+      blocks: [
+        { t: "warmup", title: "DNA: the instructions for life", read: [
+          "<b>DNA</b> (deoxyribonucleic acid) is the molecule that holds the instructions for building and running a living thing. Your eye color, a strawberry’s red color, and a pumpkin’s shape all come from instructions in DNA.",
+          "Every <b>living thing is made of cells</b>, and almost every cell has DNA. In plants and animals, DNA is inside the <b>nucleus</b>, packed into <b>chromosomes</b>. Things that were never alive, like plastic or candy, have no cells and no DNA.",
+          "Before a cell divides by <b>mitosis</b>, it must make a copy of all its DNA. This is called <b>DNA replication</b>. That way, each new cell gets a complete set of instructions."],
+          vocab: [["DNA", "ADN", "The molecule that carries the genetic instructions of a living thing."], ["cell", "célula", "The smallest unit of life. All living things are made of cells."], ["nucleus", "núcleo", "The part of the cell that holds the DNA."], ["chromosome", "cromosoma", "A long, coiled strand of DNA."], ["extract", "extraer", "To pull something out."], ["replication", "replicación", "Making an exact copy of the DNA."]],
+          table: { cap: "Characteristics of living things", head: ["Living things…", "Example"], rows: [["are made of cells", "A strawberry has millions of cells."], ["have DNA", "DNA is in the nucleus of each cell."], ["grow and reproduce", "A pumpkin seed grows into a vine."], ["use energy and respond", "A plant bends toward light."]] } },
+        { t: "dnazoom", title: "Zoom in: from a strawberry to DNA" },
+        { t: "quiz", label: "warm-up check", title: "Quick check", items: [
+          { q: "Where is most of the DNA in a plant or animal cell?", opts: ["In the cell wall", "In the nucleus", "Outside the cell", "In the water"], a: 1, why: "DNA is stored in the nucleus, packed into chromosomes." },
+          { q: "Which of these has DNA?", opts: ["A plastic spoon", "A glass marble", "A strawberry", "A metal paper clip"], a: 2, why: "A strawberry is made of cells, and cells contain DNA. The others were never alive." }] }
+      ] },
+    { letters: ["O", "I"], title: "Living, Once Living, or Never Had Cells?", time: "5 min", goal: "Sort the samples, then predict which will give you DNA.",
+      blocks: [
+        { t: "sort", label: "living sort", title: "Sort each item", zones: ["Living (has living cells)", "Once living (cells are dead)", "Never had cells"], colors: ["#1aa36f", "#e08a00", "#6b7280"],
+          tiles: [["A fresh strawberry", 0], ["A ripe banana", 0], ["A pumpkin from the patch", 0], ["A baked pumpkin pie", 1], ["A wooden stick", 1], ["Candy corn", 2], ["A plastic pumpkin bucket", 2], ["A glass ornament", 2]],
+          why: "Fresh fruit is still made of living cells. Pie and wood came from living things, but their cells are dead. Candy, plastic, and glass never had cells." },
+        { t: "dnaex", mode: "predict", title: "Predict: which samples will give DNA?" }
+      ] },
+    { letters: ["I", "O"], title: "The Extraction Bench", time: "12 min", goal: "Extract DNA from all 8 samples and record your data.",
+      blocks: [
+        { t: "text", html: `<div class="callout"><b>Your mission:</b> 1) Choose a sample. 2) Tap the 5 steps in the <b>right order</b>: mash, add buffer, filter, add cold alcohol, spool. If you pick the wrong step, read the hint. 3) Read the scale and fill in the table. 4) Do all 8 samples, then press <b>Check my data table</b>.</div>` },
+        { t: "dnaex", mode: "run", title: "DNA Extraction Bench", max: 6 }
+      ] },
+    { letters: ["O", "W"], title: "Analyze Your DNA", time: "7 min", goal: "Use your data and explain what each step did.",
+      blocks: [
+        { t: "chart", title: "DNA collected from 10 g of each sample (mg)", max: 30, rows: [["Strawberry 🍓", 28, 1], ["Kiwi 🥝", 18], ["Banana 🍌", 14], ["Pumpkin 🎃", 8], ["Apple 🍎", 5], ["Pumpkin pie 🥧", 2], ["Candy corn 🍬", 0], ["Plastic bucket 🪣", 0]], cap: "Sample class data. Strawberries have 8 copies of each chromosome, so each cell has extra DNA." },
+        { t: "sort", label: "steps sort", title: "What did each step do?", zones: ["Mashing", "Soap", "Salt", "Filter", "Cold alcohol"], colors: ["#e8476a", "#2b7de9", "#6b7280", "#a0703c", "#1aa36f"],
+          tiles: [["Breaks the tough cell walls apart", 0], ["Dissolves the cell and nuclear membranes (made of lipids)", 1], ["Helps the DNA strands clump together", 2], ["Removes the pulp and cell pieces", 3], ["Makes the DNA come out of the liquid as white strands", 4]],
+          why: "Mashing breaks cell walls, soap breaks membranes, salt clumps DNA, the filter removes pulp, and DNA does not dissolve in cold alcohol." },
+        { t: "fill", label: "analysis frames", title: "What does the data show?", max: 3,
+          items: [
+            { parts: ["The strawberry gave the most DNA because each of its cells has ", B(["8 copies", "no copies", "1 copy"], 0), " of every chromosome."] },
+            { parts: ["Candy corn and the plastic bucket gave no DNA because they ", B(["are too sweet", "never had cells", "were too cold"], 1), "."] },
+            { parts: ["The baked pie gave only a little DNA because ", B(["pies have no cells at all", "heat from baking breaks DNA into tiny pieces"], 1), ". This shows that once-living things can still have ", B(["some DNA", "no DNA"], 0), "."] }],
+          why: "The amount of DNA depends on how many chromosome copies are in each cell and whether the DNA is still in long strands. Things that never had cells have no DNA." }
+      ] },
+    { letters: ["I"], title: "Under the Microscope", time: "8 min", goal: "Find the nucleus, compare slides, and label the phases of mitosis.",
+      blocks: [
+        { t: "text", html: `<div class="callout"><b>Look at all 4 slides</b> at 4x, 10x, and 40x. Then go to the <b>🧅 Onion root tip at 40x</b> and label every cell. Use this guide:<br>
+          <b>Interphase</b> ${'<i class="dx-es">(interfase)</i>'}: round nucleus, DNA spread out · <b>Prophase</b>: X-shaped chromosomes appear · <b>Metaphase</b>: chromosomes line up in the middle · <b>Anaphase</b>: chromosomes pulled apart to the ends · <b>Telophase</b>: two new nuclei and a line splitting the cell.</div>` },
+        { t: "scope", title: "Virtual Microscope", max: 4 },
+        { t: "quiz", label: "microscope check", title: "What did you see?", items: [
+          { q: "Most of the onion root tip cells were in which phase?", opts: ["Anaphase", "Metaphase", "Interphase", "Telophase"], a: 2, why: "Interphase is the longest part of the cell cycle, so at any moment most cells are in interphase." },
+          { q: "What did you NOT find in the candy corn slide?", opts: ["Sugar crystals", "Cells with a nucleus", "Sharp edges", "Shiny specks"], a: 1, why: "Candy corn has no cells, so there is no nucleus and no DNA." }] }
+      ] },
+    { letters: ["I", "R"], title: "Copying DNA Before Mitosis", time: "6 min", goal: "See when DNA is copied, then copy a DNA molecule yourself.",
+      blocks: [
+        { t: "cellcycle", title: "The cell cycle: DNA is copied before mitosis", cap: "A cell spends most of its life in interphase. During the S phase it copies all of its DNA, then mitosis splits the copies into two new cells." },
+        { t: "replicate", title: "Copy the DNA: Replication", max: 3 },
+        { t: "fill", label: "replication frames", title: "Explain replication", max: 2,
+          items: [
+            { parts: ["The enzyme ", B(["helicase", "salt"], 0), " unzips the DNA. Then new bases pair up: A with ", B(["G", "T", "C"], 1), " and C with ", B(["A", "G", "T"], 1), "."] },
+            { parts: ["Each new DNA molecule has ", B(["two new strands", "one old strand and one new strand", "two old strands"], 1), ", so both new cells get ", B(["identical", "different"], 0), " DNA."] }],
+          why: "Helicase unzips the molecule, bases pair A–T and C–G, and each copy keeps one original strand (semi-conservative replication), so both cells get identical DNA." }
+      ] },
+    { letters: ["W"], title: "CER: What Has DNA?", time: "5 min", goal: "Write a claim, evidence, and reasoning.",
+      blocks: [
+        { t: "cerg", title: "Claim · Evidence · Reasoning", q: "<b>Question:</b> Which of our samples have DNA, and why do living cells need to copy their DNA?", claimA: 1, need: 2,
+          claims: ["Everything we tested has DNA, even plastic.", "Only things made of cells (living or once living) had DNA, and cells copy their DNA so each new cell gets a full set of instructions.", "Only sweet foods have DNA.", "DNA is only found in animals, not plants."],
+          evidence: [["The strawberry gave 28 mg of DNA, but candy corn and the plastic bucket gave 0 mg.", true], ["Under the microscope, strawberry and cheek cells had a nucleus, but candy corn had no cells.", true], ["The pumpkin bucket was orange.", false], ["In the onion root tip, cells were dividing by mitosis, and DNA is copied in the S phase before mitosis.", true]],
+          words: ["DNA", "cell", "nucleus", "living", "nonliving", "chromosome", "replication", "mitosis", "copy", "evidence"],
+          frames: ["Only samples that…", "For example, the strawberry gave… but candy corn gave…", "This is because DNA is found in…", "Cells copy their DNA before mitosis so that…"],
+          must: ["cell|nucleus", "living|alive|once", "copy|replicat|duplicat", "mitosis|divid|new cell"] }
+      ] },
+    { letters: ["R", "O"], title: "Exit Ticket", time: "3 min", goal: "Show what you learned.",
+      blocks: [
+        { t: "quiz", label: "exit ticket", title: "Exit ticket", items: [
+          { q: "In the extraction, why did we add dish soap?", opts: ["To make the DNA red", "To break open the cell and nuclear membranes", "To make the DNA heavier", "To kill the cells"], a: 1, why: "Membranes are made of lipids. Soap breaks up lipids, like it breaks up grease on dishes." },
+          { q: "Why does a cell copy its DNA before mitosis?", opts: ["So each new cell gets a complete set of DNA", "So the cell can stop growing", "To turn DNA into protein", "So the cell can lose half its DNA"], a: 0, why: "After mitosis there are two cells, and each needs a full, identical copy of the instructions." },
+          { q: "Your friend says, “Candy corn is food, so it must have DNA.” What is the best answer?", opts: ["True: all food has DNA", "False: candy corn is made of processed sugar and wax, so it has no cells and no DNA", "True: candy corn is orange like a pumpkin", "False: only animals have DNA"], a: 1, why: "DNA comes from cells. Candy corn has no cells, so the extraction found no DNA." }] }
+      ] }
+  ]
+};
+</script>
+<script src="cc-bblab.js?v=7"></script>
+<script src="cc-visuals.js?v=2"></script>
+<script src="cc-protsyn.js?v=3"></script>
+<script src="cc-dnaex.js?v=1"></script>
+<script src="cc-blocks2.js?v=1"></script>
+<script src="hub-config.js?v=3"></script>
+<script src="cc-lesson.js?v=4"></script>
+</body>
+</html>
