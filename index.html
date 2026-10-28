@@ -527,7 +527,7 @@ a.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
   </div>
 </header>
 <main id="app"></main>
-<footer style="text-align:center;color:var(--muted);font-size:.8rem;padding:18px 0 28px">Site version: Oct 21 · update 21 (new lab warm-ups + tutor button)</footer>
+<footer style="text-align:center;color:var(--muted);font-size:.8rem;padding:18px 0 28px">Site version: Oct 21 · update 24 (Tutors: AP courses)</footer>
 <script src="hub-config.js?v=4"></script>
 <div id="modal" class="modal" hidden></div>
 
@@ -644,8 +644,9 @@ const SECTIONS = [
      {k:'print', group:'📂 Google Slides Sets', url:'https://docs.google.com/presentation/d/1xQoh20QALtYrz5cGlk9ypN5cTTOI6hl9K21-h6tkgMw/edit?usp=sharing', aud:'both', title:'Graphic Organizers', desc:'A full set of organizers to print'},
      {k:'print', group:'📂 Google Slides Sets', url:'https://docs.google.com/presentation/d/1wD4HNJSi3oadfh2T6bLwSZzG-OvIhI8d4apTmWmhQsw/edit?usp=sharing', aud:'both', title:'Graphic Organizers (Large)', desc:'Same organizers, bigger print', isNew:true},
    ]},
-   {name:'Tutors Only: Math Support', sub:'For AVID tutors (you do NOT need to be a math expert). Completed notes, step-by-step worked examples, common mistakes with what to say, and questions to ask for every Algebra 1 and Geometry unit. Tutors need the tutor code from their AVID teacher.', items:[
-     {k:'page', feature:true, label:'Tutors only · 🔒 code required', subj:'AVID', url:'tutor-math.html', title:'Tutor Math Guide: Algebra 1 & Geometry', desc:'All 12 Algebra 1 units and 12 Geometry units: plain-English big ideas, vocabulary, step-by-step methods, worked examples you reveal one step at a time, quick checks, a printable cheat sheet, and AVID tutorial tips.', meta:'24 units', go:'Open the tutor guide →'}
+   {name:'Tutors Only: Tutor Center', sub:'For AVID tutors. Your tutor training review, in-the-moment tutorial tools, printable forms, and the Tutor Guide for every unit of Algebra 1, Geometry, Algebra 2, Chemistry, AP Calculus AB, AP Physics 1, AP Chemistry, and APUSH. Tutors need the tutor code from their AVID teacher.', items:[
+     {k:'page', feature:true, label:'Tutors only · 🔒 code required', subj:'AVID', url:'tutor-toolkit.html', title:'Tutor Center: Training & Tutorial Toolkit', desc:'Everything from tutor training in one place: a step-by-step coach for all 10 tutorial steps with what to say, a 30-second speech timer and participation tracker, question stems by subject, quick fixes, a TRF guide, a training review, and printable PDFs.', meta:'8 tools', go:'Open the Tutor Center →'},
+     {k:'page', feature:true, label:'Tutors only · 🔒 code required', subj:'AVID', url:'tutor-math.html', title:'Tutor Guide: Core & AP Courses', desc:'Algebra 1, Geometry, Algebra 2, Chemistry, AP Calculus AB, AP Physics 1, AP Chemistry, and APUSH (83 units): plain-English big ideas, vocabulary, step-by-step methods, worked examples you reveal one step at a time, visuals, common mistakes, quick checks, a printable cheat sheet, and AVID tutorial tips.', meta:'83 units', go:'Open the tutor guide →'}
    ]},
   ]},
  {id:'new', name:'New Teacher Resources', color:'var(--c-new)', blurb:'Everything a first- or second-year teacher needs for the first weeks: checklists, procedures, family communication, and support contacts.',
@@ -2071,7 +2072,7 @@ function wireDaily(){
 /* =====================================================================
    FOLDER BUTTONS for every space (AVID, Interactive Lessons, etc.)
    ===================================================================== */
-const FOLDER_ICON=[[/reading check/i,'📖'],[/costa/i,'🧠'],[/vocab/i,'🔤'],[/resume|interview/i,'💼'],[/fundrais/i,'💵'],[/honors/i,'🎓'],[/study guide/i,'📘'],[/biology lab/i,'🧪'],[/tutors only/i,'🔒'],[/grade it/i,'🧑‍🏫'],[/digital/i,'💻'],[/career wicor/i,'🧭'],[/caaspp/i,'📝'],[/uc & csu/i,'🎓'],[/a–g/i,'📋'],[/essay/i,'✍️'],[/fafsa/i,'💰'],[/scholarship/i,'🏆'],[/tour/i,'🏛️'],[/timeline/i,'📅'],[/tulare county programs/i,'📍'],[/ideas/i,'💡'],[/log my hours/i,'⏱️'],[/community/i,'🤝'],[/start here/i,'🚀'],[/binder/i,'🗂️'],[/focused|note-taking/i,'📝'],[/tutorial/i,'❓'],[/confusion/i,'🤔'],[/graphic/i,'🧩'],[/goal|contract/i,'🎯'],[/^tutors$/i,'🧑‍🏫'],[/field trip/i,'🚌'],[/site team|certif/i,'🏅'],[/collaboration/i,'💬'],[/science/i,'🔬'],[/math/i,'📐'],[/english/i,'📚'],[/history/i,'🏛️'],[/coming soon/i,'🚧']];
+const FOLDER_ICON=[[/reading check/i,'📖'],[/costa/i,'🧠'],[/vocab/i,'🔤'],[/resume|interview/i,'💼'],[/fundrais/i,'💵'],[/honors/i,'🎓'],[/study guide/i,'📘'],[/biology lab/i,'🧪'],[/tutors only/i,'💡'],[/grade it/i,'🧑‍🏫'],[/digital/i,'💻'],[/career wicor/i,'🧭'],[/caaspp/i,'📝'],[/uc & csu/i,'🎓'],[/a–g/i,'📋'],[/essay/i,'✍️'],[/fafsa/i,'💰'],[/scholarship/i,'🏆'],[/tour/i,'🏛️'],[/timeline/i,'📅'],[/tulare county programs/i,'📍'],[/ideas/i,'💡'],[/log my hours/i,'⏱️'],[/community/i,'🤝'],[/start here/i,'🚀'],[/binder/i,'🗂️'],[/focused|note-taking/i,'📝'],[/tutorial/i,'❓'],[/confusion/i,'🤔'],[/graphic/i,'🧩'],[/goal|contract/i,'🎯'],[/^tutors$/i,'🧑‍🏫'],[/field trip/i,'🚌'],[/site team|certif/i,'🏅'],[/collaboration/i,'💬'],[/science/i,'🔬'],[/math/i,'📐'],[/english/i,'📚'],[/history/i,'🏛️'],[/coming soon/i,'🚧']];
 const FOLDER_COLORS=['#5b5fe0','#14a37f','#ee7d1c','#1f95e0','#e0408a','#8a54e0','#f25c54','#0e9f6e','#e08a00','#2b7de9','#c2185b','#00897b'];
 const ficon=n=>(FOLDER_ICON.find(([r])=>r.test(n))||[0,'📁'])[1];
 const spaceChips=s=>`<nav class="switch" aria-label="Spaces"><a class="back" href="#home">← All spaces</a>${SECTIONS.map(x=>`<a class="swchip ${x===s?'on':''}" style="--c:${x.color}" href="#${x.id}">${x.name}</a>`).join('')}</nav>`;
@@ -2809,7 +2810,7 @@ function home(filter=''){
     return;
   }
   app.innerHTML=`<div class="wrap"><div class="hero">${CONFETTI}${IS_TEACHER?'<h1>Welcome, <span>teachers!</span></h1><p>Pick a space to find handouts, tools, and lessons for your classroom. You are in the 🍎 teacher view.</p>':'<h1>Welcome, <span>AVID students!</span></h1><p>Pick a space to practice WICOR, find lessons, and plan for college and career.</p>'}</div>
-  <div class="tiles">${SECTIONS.map(s=>`<a class="tile" href="#${s.id}" style="--c:${s.color}"><span class="stk">${ART[s.id]}</span><h2>${s.name}</h2></a>`).join('')}<a class="tile" href="tutor-math.html" style="--c:#0e9aa7"><span class="stk"><span class="bigemoji">🧑‍🏫</span></span><h2>Tutor Math Guide</h2><small style="text-align:center;display:block">🔒 Tutors only · Algebra 1 &amp; Geometry</small></a></div></div>`;
+  <div class="tiles">${SECTIONS.map(s=>`<a class="tile" href="#${s.id}" style="--c:${s.color}"><span class="stk">${ART[s.id]}</span><h2>${s.name}</h2></a>`).join('')}<a class="tile" href="tutor-toolkit.html" style="--c:#f5b700"><span class="stk"><span class="bigemoji">💡</span></span><h2>Tutors</h2><small style="text-align:center;display:block">🔒 Tutors only · training, tools &amp; subject guides</small></a></div></div>`;
 }
 let spy=null;
 function section(s){

@@ -10,7 +10,7 @@
 <!--
   TUTOR CENTER (tutors only): tutorial training review and in-the-moment tools.
   Content lives in tutor-toolkit.js. Printable PDFs live in the tutor-docs folder.
-  The same tutor code as the Math Tutor Guide unlocks this page (see TUTOR_CODE below).
+  The same tutor code as the Tutor Guide (tutor-math.html) unlocks this page (see TUTOR_CODE below).
   Open one printable directly:  tutor-toolkit.html?doc=trf
 -->
 <style>
@@ -111,7 +111,7 @@
 </style>
 </head>
 <body>
-<header class="top no-print"><div class="bar"><a class="brand" href="index.html"><span class="mark">🧑‍🏫</span><span>Tutor Center</span></a><span class="crumb" id="tt-crumb"></span><span class="spacer"></span><a class="btn ghost" href="tutor-math.html" id="tt-mathlink" hidden style="text-decoration:none;margin-right:6px">Math Guide</a><button class="btn ghost" id="tt-lock" hidden>Lock</button></div></header>
+<header class="top no-print"><div class="bar"><a class="brand" href="index.html"><span class="mark">💡</span><span>Tutor Center</span></a><span class="crumb" id="tt-crumb"></span><span class="spacer"></span><a class="btn ghost" href="tutor-math.html" id="tt-mathlink" hidden style="text-decoration:none;margin-right:6px">Subject Guides</a><button class="btn ghost" id="tt-lock" hidden>Lock</button></div></header>
 <main class="wrap" id="tt-root"><p style="padding:40px;text-align:center;font-weight:800">Loading…</p></main>
 <script src="hub-config.js?v=4"></script>
 <script src="tutor-toolkit.js?v=1"></script>
@@ -150,9 +150,9 @@ const TUTOR_CODE = "tutor2026";
   function frame(key, inner) {
     document.getElementById("tt-lock").hidden = false; document.getElementById("tt-mathlink").hidden = false;
     crumb.innerHTML = key === "home" ? "" : `<span>›</span><b>${SECTIONS.find(s => s[0] === key)[1]}</b>`;
-    root.innerHTML = `<section class="banner" style="--lc:#0e9aa7"><span class="kick">For AVID tutors</span><h1>Tutor Center</h1>
+    root.innerHTML = `<section class="banner" style="--lc:#e0a800"><span class="kick">💡 For AVID tutors</span><h1>Tutor Center</h1>
       <p>Your training, all in one place, plus tools to use while you run a tutorial. Keep it open on your Chromebook or phone during tutorials.</p></section>
-      <nav class="tt-nav no-print">${SECTIONS.map(s => `<a href="#${s[0]}" class="${s[0] === key ? "on" : ""}">${s[1]}</a>`).join("")}<a href="tutor-math.html">Math Guide</a></nav>${inner}<div style="height:40px"></div>`;
+      <nav class="tt-nav no-print">${SECTIONS.map(s => `<a href="#${s[0]}" class="${s[0] === key ? "on" : ""}">${s[1]}</a>`).join("")}<a href="tutor-math.html">Subject Guides</a></nav>${inner}<div style="height:40px"></div>`;
   }
 
   /* ================= HOME ================= */
@@ -164,7 +164,7 @@ const TUTOR_CODE = "tutor2026";
       ["basics", "Tutor Basics", "Your role, do’s and don’ts, boundaries, and a self-check: is your tutorial collaborative?", "#1aa36f"],
       ["review", "Training Review", "12 quick questions to check that you remember the key parts of your training.", "#d0453a"],
       ["print", "Printables", "Clean PDFs to download or print: TRF, three-column notes, question stem cards, and more.", "#5b5fe0"],
-      ["math", "Math Tutor Guide", "Notes, worked examples, and questions to ask for every Algebra 1 and Geometry unit.", "#c2297a"]];
+      ["math", "Subject Tutor Guides", "Notes, worked examples, visuals, and questions to ask for every unit: Algebra 1, Geometry, Algebra 2, Chemistry, AP Calculus AB, AP Physics 1, AP Chemistry, and APUSH.", "#c2297a"]];
     frame("home", `<section class="tt-card"><h2>What do you need right now?</h2><div class="tt-grid">${T.map(t => `<a class="tt-tile" style="--tc:${t[3]}" href="${t[0] === "math" ? "tutor-math.html" : "#" + t[0]}"><b>${t[1]}</b><span>${t[2]}</span></a>`).join("")}</div></section>
       <section class="tt-card"><h2>The tutorial in one sentence</h2><p style="font-size:1.08rem;line-height:1.6;margin:0">A student presents a real point of confusion, the <b>group</b> asks questions to guide the presenter’s thinking, and the tutor <b>facilitates</b>: you take notes, track participation, and push everyone to higher-level thinking. <b>You are not the answer key.</b></p></section>`);
   }

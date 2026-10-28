@@ -3,17 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Math Tutor Guide | AVID Tutors</title>
+<title>Tutor Guide | AVID Tutors</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="cc-lesson.css?v=2">
 <!--
-  MATH TUTOR GUIDE (tutors only): completed notes, worked examples, common
-  mistakes, and questions to ask for every Algebra 1 and Geometry unit.
-  Content lives in tutor-alg1.js (Algebra 1) and tutor-geo.js (Geometry).
+  TUTOR GUIDE (tutors only): completed notes, worked examples, common
+  mistakes, and questions to ask for every unit of Algebra 1, Geometry,
+  Algebra 2, and Chemistry.
+  Content lives in tutor-alg1.js, tutor-geo.js, tutor-alg2.js, tutor-chem.js.
   ✏️ To change the tutor code, edit TUTOR_CODE at the top of the script below
      (or add  tutorPasscode: "..."  to hub-config.js).
-  Link to one unit directly:  tutor-math.html?unit=a1-03
+  Link to one unit directly:  tutor-math.html?unit=a1-03  (or ?unit=c-06)
+  Open a subject directly:   tutor-math.html?course=Chemistry
 -->
 <style>
   :root{--lc:#2b7de9}
@@ -23,6 +25,8 @@
   .tg-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:16px 0 0}
   .tg-tab{font:700 1.05rem var(--display);border:3px solid var(--line);background:var(--surface);color:var(--fg);border-radius:16px;padding:8px 18px;cursor:pointer}
   .tg-tab[aria-pressed="true"]{border-color:var(--lc);background:color-mix(in srgb,var(--lc) 14%,var(--surface))}
+  .tg-grp{display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:100%}
+  .tg-gl{font:800 .75rem var(--body);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);min-width:42px}
   .tg-search{flex:1;min-width:200px;font:600 1rem var(--body);padding:10px 14px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--fg)}
   .tg-layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:18px;margin-top:16px;align-items:start}
   .tg-side{position:sticky;top:74px;max-height:calc(100vh - 90px);overflow:auto;background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:10px}
@@ -55,7 +59,7 @@
   .tg-chk button .a{display:none;margin-top:6px;color:#1d7a45;font-weight:800}
   .tg-chk button.open .a{display:block} .tg-chk button.open{border-color:#1aa36f}
   .tg-chk button small{display:block;color:var(--muted);font-weight:700;margin-top:4px}
-  .tg-vis{display:flex;justify-content:center;overflow-x:auto} .tg-vis svg{max-width:100%;height:auto}
+  .tg-vis{display:flex;flex-direction:column;align-items:center;overflow-x:auto}.tg-vis>p{max-width:560px} .tg-vis svg{max-width:100%;height:auto}
   .tg-tip{background:#eef5ff;border-radius:14px;padding:10px 14px;line-height:1.5}
   .tg-how ul{margin:6px 0;padding-left:22px;line-height:1.55} .tg-how li{margin:3px 0}
   .tg-cheat table{width:100%;border-collapse:collapse;font-size:.88rem;margin:4px 0 14px} .tg-cheat td,.tg-cheat th{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
@@ -75,11 +79,17 @@
 </style>
 </head>
 <body>
-<header class="top"><div class="bar"><a class="brand" href="index.html"><span class="mark">🧑‍🏫</span><span>Math Tutor Guide</span></a><span class="crumb" id="tg-crumb"></span><span class="spacer"></span><a class="btn ghost no-print" href="tutor-toolkit.html" style="text-decoration:none;margin-right:6px">Tutor Center</a><button class="btn ghost no-print" id="tg-lock" hidden style="padding:6px 12px;font-size:.85rem">🔒 Lock</button></div></header>
+<header class="top"><div class="bar"><a class="brand" href="index.html"><span class="mark">💡</span><span>Tutor Guide</span></a><span class="crumb" id="tg-crumb"></span><span class="spacer"></span><a class="btn ghost no-print" href="tutor-toolkit.html" style="text-decoration:none;margin-right:6px">Tutor Center</a><button class="btn ghost no-print" id="tg-lock" hidden style="padding:6px 12px;font-size:.85rem">🔒 Lock</button></div></header>
 <main class="wrap" id="tg-root"><p style="padding:40px;text-align:center;font-weight:800">Loading…</p></main>
 <script src="hub-config.js?v=4"></script>
 <script src="tutor-alg1.js?v=1"></script>
 <script src="tutor-geo.js?v=1"></script>
+<script src="tutor-alg2.js?v=1"></script>
+<script src="tutor-chem.js?v=1"></script>
+<script src="tutor-apcalc.js?v=1"></script>
+<script src="tutor-apphys.js?v=1"></script>
+<script src="tutor-apchem.js?v=1"></script>
+<script src="tutor-apush.js?v=1"></script>
 <script>
 /* =====================================================================
    ✏️ TUTOR CODE: change "tutor2026" to anything you like.
@@ -94,8 +104,11 @@ const TUTOR_CODE = "tutor2026";
   const CFG = window.HUB_CONFIG || {};
   const CODES = [TUTOR_CODE, CFG.tutorPasscode, CFG.teacherPasscode || "avid2026"].filter(Boolean).map(s => String(s).trim().toLowerCase());
   const ALL = (window.TUTOR_UNITS || []).slice().sort((a, b) => (a.course === b.course ? a.unit - b.unit : a.course < b.course ? -1 : 1));
-  const COURSES = ["Algebra 1", "Geometry"];
-  const COLOR = { "Algebra 1": "#2b7de9", "Geometry": "#0e9aa7" };
+  const GROUPS = [["Core", ["Algebra 1", "Geometry", "Algebra 2", "Chemistry"]], ["AP", ["AP Calculus AB", "AP Physics 1", "AP Chemistry", "AP U.S. History"]]];
+  const COURSES = GROUPS.flatMap(g => g[1]);
+  const COLOR = { "Algebra 1": "#2b7de9", "Geometry": "#0e9aa7", "Algebra 2": "#8a54e0", "Chemistry": "#d9480f", "AP Calculus AB": "#1565c0", "AP Physics 1": "#00838f", "AP Chemistry": "#c2410c", "AP U.S. History": "#9a3b5c" };
+  const ICON = { "Algebra 1": "📈", "Geometry": "📐", "Algebra 2": "🧮", "Chemistry": "🧪", "AP Calculus AB": "∫", "AP Physics 1": "⚙️", "AP Chemistry": "⚗️", "AP U.S. History": "🏛️" };
+  const KIND = c => c === "AP U.S. History" ? "history" : /Chemistry/.test(c) ? "chem" : c === "AP Physics 1" ? "phys" : "math";
   const root = document.getElementById("tg-root"), crumb = document.getElementById("tg-crumb"), lockBtn = document.getElementById("tg-lock");
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const strip = h => { const d = document.createElement("div"); d.innerHTML = h || ""; return d.textContent; };
@@ -106,7 +119,7 @@ const TUTOR_CODE = "tutor2026";
   const unlocked = () => LS.get("hubTutor") === "1";
   function gate() {
     crumb.innerHTML = ""; lockBtn.hidden = true;
-    root.innerHTML = `<div class="tg-gate"><div style="font-size:3rem">🧑‍🏫🔒</div><h1 style="margin:6px 0">Math Tutor Guide</h1>
+    root.innerHTML = `<div class="tg-gate"><div style="font-size:3rem">💡🔒</div><h1 style="margin:6px 0">Tutor Guide</h1>
       <p>Tutors: enter the tutor code from your AVID teacher.</p>
       <form id="tg-form"><input id="tg-code" type="password" autocomplete="off" placeholder="Tutor code" aria-label="Tutor code"><button class="btn" type="submit" style="width:100%">Open the guide</button></form>
       <p class="tg-msg" id="tg-msg" aria-live="polite"></p><p class="mu small">This guide has answers and teaching notes, so it is for tutors and teachers only.</p></div>`;
@@ -127,18 +140,52 @@ const TUTOR_CODE = "tutor2026";
       <li><b>End with a check.</b> Have the student try one Quick Check problem on their own before they leave.</li>
     </ul></details></section>`;
 
+  const HOWCHEM = `<section class="tg-card tg-how"><details><summary style="cursor:pointer"><h2 style="display:inline-flex">🤝 How to tutor chemistry (even if chemistry isn’t your thing)</h2></summary>
+    <ul>
+      <li><b>Get the reference sheet out first.</b> Most chemistry problems need the periodic table, a polyatomic ion list, or a formula sheet. Students are allowed to use them, so make sure they do.</li>
+      <li><b>Units on every number.</b> Ask the student to write the unit next to every number. If the units cancel to the unit the question asks for, the setup is almost always right.</li>
+      <li><b>Find the exact step.</b> Ask, “Show me the last step you’re sure about.” In chemistry it is often a setup problem (which formula, which conversion) more than a math problem.</li>
+      <li><b>Use this guide side by side.</b> Find a worked example like theirs and reveal it one step at a time. Ask, “Which step is like the one you’re on?”</li>
+      <li><b>Ask “does that make sense?”</b> A huge or tiny answer is a clue. More pressure should mean less volume. A few grams should be a small number of moles. A pH should be between 0 and 14.</li>
+      <li><b>Ask, don’t tell.</b> Use the “Questions to Ask” list in each unit. If the student is stuck after 2–3 questions, show ONE step of a worked example, then let them try the next step.</li>
+      <li><b>Name the mistake kindly.</b> “This is a really common mistake” helps students relax. Each unit lists the most common mistakes and what to say.</li>
+      <li><b>End with a check.</b> Have the student try one Quick Check problem on their own before they leave.</li>
+    </ul></details></section>`;
+
+  const HOWPHYS = `<section class="tg-card tg-how"><details><summary style="cursor:pointer"><h2 style="display:inline-flex">🤝 How to tutor AP Physics (even if physics isn’t your thing)</h2></summary>
+    <ul>
+      <li><b>Picture first.</b> Ask the student to sketch the situation and draw a free-body diagram (or energy bar chart) before writing any equation. Most mistakes come from skipping this.</li>
+      <li><b>Use the equation sheet.</b> AP provides one. The skill is choosing the right equation, not memorizing it. Have the student list knowns and unknowns, then find the equation that connects them.</li>
+      <li><b>Pick a positive direction.</b> Wrong signs cause more errors than anything else. Ask, “Which way did you call positive?”</li>
+      <li><b>Units and sense checks.</b> Does the answer have the right units? Is it reasonable (a car doesn’t go 900 m/s)?</li>
+      <li><b>Explain in words.</b> AP free responses ask students to justify answers in sentences. Ask, “Can you explain WHY without numbers?”</li>
+      <li><b>Ask, don’t tell.</b> Use the “Questions to Ask” list. After 2–3 questions, show ONE step of a worked example, then let them try the next step.</li>
+      <li><b>End with a check.</b> Have the student try one Quick Check on their own before they leave.</li>
+    </ul></details></section>`;
+  const HOWHIST = `<section class="tg-card tg-how"><details><summary style="cursor:pointer"><h2 style="display:inline-flex">🤝 How to tutor APUSH (even if history isn’t your thing)</h2></summary>
+    <ul>
+      <li><b>Start with the prompt.</b> Ask, “What is this question really asking: cause, change over time, comparison, or ‘to what extent’?” Underline the task and the dates.</li>
+      <li><b>Focus on skills, not trivia.</b> You don’t need to know every fact. Use the Writing Skills unit (Unit 10) to check thesis, context, evidence, and analysis against the rubric.</li>
+      <li><b>Push for specifics.</b> “People were upset” → “Who? About what law? When?” Specific names, laws, and events earn points.</li>
+      <li><b>Always ask “so what?”</b> After every piece of evidence, the student should explain how it proves their argument (“This shows… because…”).</li>
+      <li><b>Use the timeline.</b> Each period has one. Ask the student to place the event and say what came before and after it.</li>
+      <li><b>Ask, don’t tell.</b> Use the “Questions to Ask” list. Let the student talk through their reasoning out loud before writing.</li>
+      <li><b>End with a check.</b> Have the student answer one Quick Check (or write one SAQ) before they leave.</li>
+    </ul></details></section>`;
+
   function start() {
     lockBtn.hidden = false;
     const want = params.get("unit"); const w = want && ALL.find(u => u.id === want);
-    if (w) { course = w.course; cur = w.id; }
+    const wc = params.get("course"); const c2 = wc && COURSES.find(c => c.toLowerCase() === wc.toLowerCase());
+    if (w) { course = w.course; cur = w.id; } else if (c2) course = c2;
     shell();
   }
   function shell() {
-    root.innerHTML = `<section class="banner" style="--lc:${COLOR[course]}"><span class="kick">🧑‍🏫 For AVID tutors · Algebra 1 &amp; Geometry (9th–10th grade)</span><h1>Math Tutor Guide</h1>
+    root.innerHTML = `<section class="banner" style="--lc:${COLOR[course]}"><span class="kick">💡 For AVID tutors · Core &amp; AP courses</span><h1>Tutor Guide</h1>
       <p>Completed notes, step-by-step worked examples, common mistakes, and questions to ask for every unit. Use it next to the student’s work during tutorials.</p></section>
-      ${HOW}
-      <div class="tg-bar">${COURSES.map(c => `<button class="tg-tab" data-c="${c}" aria-pressed="${c === course}">${c === "Algebra 1" ? "📈" : "📐"} ${c}</button>`).join("")}
-        <input class="tg-search" id="tg-q" type="search" placeholder="Search: slope, factoring, Pythagorean, x-intercept…" value="${esc(query)}" aria-label="Search the guide">
+      ${{ chem: HOWCHEM, phys: HOWPHYS, history: HOWHIST }[KIND(course)] || HOW}
+      <div class="tg-bar">${GROUPS.map(g => `<div class="tg-grp"><span class="tg-gl">${g[0]}</span>${g[1].map(c => `<button class="tg-tab" data-c="${c}" style="--lc:${COLOR[c]}" aria-pressed="${c === course}">${ICON[c]} ${c}</button>`).join("")}</div>`).join("")}
+        <input class="tg-search" id="tg-q" type="search" placeholder="Search: slope, mole, torque, DBQ…" value="${esc(query)}" aria-label="Search the guide">
         <button class="btn ghost" id="tg-cheat">📄 Cheat sheet</button></div>
       <div class="tg-layout"><nav class="tg-side" id="tg-side" aria-label="Units"></nav><div id="tg-main"></div></div>`;
     root.querySelectorAll("[data-c]").forEach(b => b.onclick = () => { course = b.dataset.c; cur = null; query = ""; shell(); });
@@ -155,7 +202,7 @@ const TUTOR_CODE = "tutor2026";
     document.querySelector(".tg-layout").classList.remove("has-unit");
     crumb.innerHTML = `<span>›</span><b>${course}</b>`;
     const us = units();
-    document.getElementById("tg-main").innerHTML = us.length ? `<section class="tg-card"><h2>${course === "Algebra 1" ? "📈" : "📐"} Choose a unit</h2><p class="mu">Pick the unit the student is working on. Each unit has the big idea, vocabulary, step-by-step methods, worked examples, common mistakes, questions to ask, and quick checks.</p>
+    document.getElementById("tg-main").innerHTML = us.length ? `<section class="tg-card"><h2>${ICON[course]} Choose a unit</h2><p class="mu">Pick the unit the student is working on. Each unit has the big idea, vocabulary, step-by-step methods, worked examples, common mistakes, questions to ask, and quick checks.</p>
       <div class="tg-res">${us.map(u => `<a href="?unit=${u.id}" data-go="${u.id}"><b>Unit ${u.unit}: ${esc(u.title)}</b><small>${esc(strip(u.bigIdea))}</small></a>`).join("")}</div></section>`
       : `<section class="tg-card"><p class="tg-none">The ${course} units are coming soon.</p></section>`;
     document.querySelectorAll("[data-go]").forEach(a => a.onclick = e => { e.preventDefault(); cur = a.dataset.go; history.replaceState(null, "", "?unit=" + cur); side(); unit(cur); });
@@ -178,7 +225,7 @@ const TUTOR_CODE = "tutor2026";
   }
   function unit(id) {
     const u = ALL.find(x => x.id === id); if (!u) return home();
-    document.title = `${u.title} | Math Tutor Guide`;
+    document.title = `${u.title} | Tutor Guide`;
     crumb.innerHTML = `<span>›</span><a href="#" id="tg-ch">${u.course}</a><span>›</span><b>Unit ${u.unit}</b>`;
     document.getElementById("tg-ch").onclick = e => { e.preventDefault(); cur = null; history.replaceState(null, "", location.pathname); side(); home(); };
     const m = document.getElementById("tg-main"); document.querySelector(".tg-layout").classList.add("has-unit");
@@ -214,7 +261,7 @@ const TUTOR_CODE = "tutor2026";
     document.querySelector(".tg-layout").classList.remove("has-unit");
     cur = null; side(); crumb.innerHTML = `<span>›</span><b>${course} cheat sheet</b>`;
     const us = units();
-    document.getElementById("tg-main").innerHTML = `<section class="tg-card tg-cheat"><div class="btnrow no-print" style="justify-content:space-between"><h2>📄 ${course}: Formula &amp; vocabulary cheat sheet</h2><button class="btn ghost" data-print>🖨️ Print</button></div>
+    document.getElementById("tg-main").innerHTML = `<section class="tg-card tg-cheat"><div class="btnrow no-print" style="justify-content:space-between"><h2>📄 ${course}: ${KIND(course) === "math" ? "Formula" : KIND(course) === "history" ? "Key terms" : "Key ideas"} &amp; vocabulary cheat sheet</h2><button class="btn ghost" data-print>🖨️ Print</button></div>
       ${us.length ? us.map(u => `<h3>Unit ${u.unit}: ${esc(u.title)}</h3><table><tbody>${u.vocab.map(v => `<tr><th>${v[0]}</th><td>${v[1]}</td></tr>`).join("")}${(u.steps || []).map(s => `<tr><th>${s.name}</th><td>${s.list.join(" → ")}</td></tr>`).join("")}</tbody></table>`).join("") : `<p class="tg-none">Coming soon.</p>`}</section>`;
     document.querySelector(".tg-cheat [data-print]").onclick = () => window.print();
   }
