@@ -11,7 +11,7 @@
   TUTOR CENTER (tutors only): tutorial training review and in-the-moment tools.
   Content lives in tutor-toolkit.js. Printable PDFs live in the tutor-docs folder.
   The same tutor code as the Tutor Guide (tutor-math.html) unlocks this page (see TUTOR_CODE below).
-  Open one printable directly:  tutor-toolkit.html?doc=trf
+  Open one printable directly:  tutor-toolkit.html?doc=trf  (binder checks: ?doc=binder1 … binder4)
 -->
 <style>
   :root{--lc:#0e9aa7}
@@ -93,6 +93,19 @@
   .doc .ln{border-bottom:1px solid #999;height:22px}
   .doc .pb{break-before:page;page-break-before:always}
   .doc .foot{margin-top:10px;color:#666;font-size:8pt;text-align:center}
+  .doc .trfh{font-size:10.5pt}.doc .trfh .fl{display:flex;gap:6px;margin:0 0 10px;align-items:flex-end}.doc .trfh .fl i{flex:1;border-bottom:1px solid #333;height:14px}
+  .doc .trfh .fl2{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}.doc .trfh .fl3{display:grid;grid-template-columns:1fr .7fr 1.6fr;gap:16px}
+  .doc h1.trft{color:#1f3f8f;font:600 19pt Fredoka,Arial,sans-serif;border-bottom:1.5px solid #333;padding-bottom:4px;margin:2px 0 12px}
+  .doc .trf{border:3px solid #2a3f8f;font-size:10pt}.doc .trf table.trfs{margin:0;border-bottom:2px solid #2a3f8f}.doc .trfs td{border:0;border-right:2px solid #2a3f8f;text-align:center;padding:6px 4px;font-size:10pt;position:relative;width:20%}.doc .trfs td:last-child{border-right:0}
+  .doc .trfs .ph{display:block;font-size:7.5pt;letter-spacing:.08em;color:#555;font-weight:700}.doc .tp{white-space:nowrap}.doc .tp b{font-size:12pt}
+  .doc .trfc{border-bottom:1px solid #2a3f8f;padding:6px 10px}.doc .trfc p{margin:0 0 4px}.doc ul.ck{list-style:none;padding:0;margin:4px 0}.doc ul.ck li{margin:2px 0;padding-left:1.2em;text-indent:-1.2em;line-height:1.3}
+  .doc .srow{display:flex;gap:8px;align-items:flex-end}.doc .srow i{flex:1;border-bottom:1px solid #333;height:12px}
+  .doc h1.btitle{text-align:center;font:700 14pt Arial,sans-serif;margin:0 0 6px}
+  .doc .bname{display:flex;gap:6px;align-items:flex-end;font:700 13pt Arial,sans-serif;margin:0 0 3px .3in}.doc .bname i{flex:1;border-bottom:1.5px solid #333;height:16px;margin-right:.3in}
+  .doc table.bc{margin:0;table-layout:fixed}.doc table.bc td{border:1.5px solid #222;font:9pt/1.25 Arial,sans-serif;padding:4px 5px;vertical-align:top}.doc table.bc tr.r td{height:.31in}.doc table.bc tr.h td{height:.42in}
+  .doc table.bc .g{background:#d9d9d9}.doc table.bc .c{text-align:center}.doc table.bc .tiny{font-size:6.5pt;line-height:1.15}.doc table.bc .sm{font-size:8pt}.doc table.bc .big{font-size:12pt}
+  .doc .bfoot{font:8pt Arial,sans-serif;margin:2px 0 0}
+  .doc *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .doc .cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
   .doc .cols2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .doc .pill{display:inline-block;background:#0e9aa7;color:#fff;border-radius:10px;padding:0 6px;font-weight:800;font-size:9pt}
@@ -260,9 +273,9 @@ const TUTOR_CODE = "tutor2026";
 
   /* ================= TRF GUIDE ================= */
   function trf() {
-    frame("trf", `<section class="tt-card"><h2>The Tutorial Request Form (TRF), box by box</h2><p class="mu" style="margin:0 0 8px">Use this when you check TRFs at the door and when you pre-grade. Total: 25 points (pre-work 12, resources 1, collaborative inquiry 2, three-column notes 3, reflection 7).</p>
+    frame("trf", `<section class="tt-card"><h2>The Tutorial Request Form (TRF), box by box</h2><p class="mu" style="margin:0 0 8px">Use this when you check TRFs at the door and when you pre-grade. Total: 50 points. Before: TRF Pre-Work 20. During: Collaborative Inquiry 12 and Communication 8. After: Closure 10.</p>
       <div class="tt-tw"><table class="tt-tbl"><thead><tr><th>Box</th><th>Points</th><th>What a strong answer looks like</th><th>Think-aloud questions</th></tr></thead><tbody>${D.trf.map(r => `<tr><td><b>${esc(r.box)}</b></td><td>${r.pts}</td><td>${esc(r.look)}</td><td>${r.ask.length ? `<ul style="margin:0;padding-left:18px">${r.ask.map(a => `<li>${esc(a)}</li>`).join("")}</ul>` : "<span class='mu'>Check during the tutorial</span>"}</td></tr>`).join("")}</tbody></table></div></section>
-      <section class="tt-card"><h2>Check at the door (Step 3)</h2><ul style="line-height:1.6"><li>Is the initial question copied exactly, with the source and problem number?</li><li>Are the vocabulary, what-I-know, and critical thinking boxes filled in?</li><li>Does the student show work up to the point where they got stuck?</li><li>Is the point of confusion written as a <b>specific question</b>?</li><li>Did they bring resources (Cornell notes, textbook, quiz)?</li></ul></section>
+      <section class="tt-card"><h2>Check at the door (Step 3)</h2><ul style="line-height:1.6"><li>Is the Topic / Essential Question filled in?</li><li>Is the initial question copied exactly, with the source written on the line?</li><li>Are there 2 vocabulary words with definitions and 2 things they know?</li><li>Does the critical thinking box show their work, with the Point of Confusion marked with a <b>?</b></li><li>Are the general steps listed up to the Point of Confusion?</li><li>Is the Tutorial Question <b>specific</b> and <b>different</b> from the initial question?</li><li>Did they bring resources (Cornell notes, textbook, quiz)?</li></ul></section>
       <section class="tt-card"><h2>Vague vs. strong points of confusion</h2><div class="tt-tw"><table class="tt-tbl"><thead><tr><th>Vague</th><th>Strong</th></tr></thead><tbody>${D.pocExamples.map(r => `<tr><td style="color:#b0302a">${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table></div>
         <div class="tt-say" style="margin-top:10px">Frame to share with students: “I understand ___, but I get stuck when ___ because ___.”</div></section>
       <section class="tt-card"><h2>Three-column notes</h2><div class="tt-tw"><table class="tt-tbl"><thead><tr><th>Point of confusion question</th><th>Tutorial notes</th><th>Steps (math/science) or process (English/history)</th></tr></thead><tbody><tr><td>The presenter’s POC question</td><td>What is written on the board and the key ideas from the group’s questions</td><td>The steps that clear up the POC, in order</td></tr></tbody></table></div>
@@ -304,11 +317,15 @@ const TUTOR_CODE = "tutor2026";
     ["stems", "Question Stem Cards", "Level 1, 2, and 3 stems for every subject (2 pages)."],
     ["script", "Tutor Facilitation Script", "What to say at each step of the tutorial (1 page)."],
     ["checks", "Checking for Understanding", "Inquiry path, critical thinking standards, and Socratic follow-ups (1 page)."],
-    ["trf", "Tutorial Request Form (blank)", "Pre-work and reflection pages for students (2 pages)."],
+    ["trf", "Tutorial Request Form (TRF)", "The 50-point TRF: pre-work, engagement checklist, and critical thinking (2 pages)."],
     ["notes3", "Three-Column Notes Sheet", "Question | Notes | Steps or Process (1 page)."],
-    ["trfguide", "TRF Guide for Tutors", "What goes in each box, point values, and think-aloud questions (1 page)."],
+    ["trfguide", "TRF Guide for Tutors", "What goes in each box of the 50-point TRF, point values, and think-aloud questions (2 pages)."],
     ["basics", "Tutor Do’s, Don’ts & Boundaries", "Your role, guidelines, and boundaries (1 page)."],
-    ["observe", "Observe a Fellow Tutor + Reflection", "Peer observation form and tutor reflection (2 pages)."]];
+    ["observe", "Observe a Fellow Tutor + Reflection", "Peer observation form and tutor reflection (2 pages)."],
+    ["binder1", "Binder Check: AVID I", "10 pages of focused notes (score = notes × 3). Two forms per page."],
+    ["binder2", "Binder Check: AVID II", "10 pages of focused notes (score = notes × 3). Two forms per page."],
+    ["binder3", "Binder Check: AVID III", "15 pages of focused notes (score = notes × 2). Two forms per page."],
+    ["binder4", "Binder Check: AVID IV", "15 pages of focused notes (score = notes × 2). Two forms per page."]];
   function printables() {
     frame("print", `<section class="tt-card tt-docs"><h2>Printables</h2><p class="mu" style="margin:0 0 8px">Open a page to print it, or download the PDF to keep on your device or share with students.</p>
       <div class="tt-grid">${DOCS.map(d => `<div class="tt-tile"><div><b>${esc(d[1])}</b><span>${esc(d[2])}</span></div><div class="tt-row"><a class="pri" href="?doc=${d[0]}">Open</a><a href="tutor-docs/${d[0]}.pdf" download>PDF</a></div></div>`).join("")}</div></section>`);
@@ -328,24 +345,35 @@ const TUTOR_CODE = "tutor2026";
       <h2>The inquiry path for each presenter</h2><table><tbody>${D.flow.map(r => `<tr><td style="width:34%"><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table>
       <h2>Critical thinking standards</h2><table><tbody>${D.checks.map(r => `<tr><td style="width:18%"><b>${r[0]}</b></td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table>
       <h2>Socratic follow-ups</h2><div class="cols3">${D.socratic.map(r => `<div><b>${esc(r[0])}</b><ul>${r[1].map(q => `<li>${esc(q)}</li>`).join("")}</ul></div>`).join("")}</div>${FOOT}`;
-    if (id === "trf") return `<h1>Tutorial Request Form (TRF)</h1><p class="dsub">Pre-work inquiry: complete before the tutorial.</p>
-      <div class="cols2"><div>Name: ____________________________</div><div>AVID Period: ______ Date: __________</div><div>Subject: __________________________</div><div>Essential Question: ________________</div></div>
-      <table style="margin-top:6px"><tr><th>Pre-work /12</th><th>Resources /1</th><th>Collaborative inquiry /2</th><th>Three-column notes /3</th><th>Reflection /7</th><th>Total /25</th></tr><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr></table>
-      <div class="box"><div class="lbl"><span>Initial / Original Question (copy it exactly). Source, page, and problem #: ____________</span><span>/1</span></div>${lines(2)}</div>
-      <div class="box"><div class="lbl"><span>Key Academic Vocabulary and Definitions</span><span>/2</span></div>1. ${lines(1)}2. ${lines(1)}</div>
-      <div class="box"><div class="lbl"><span>What I Know About My Question</span><span>/2</span></div>1. ${lines(1)}2. ${lines(1)}</div>
-      <div class="cols2"><div class="box" style="min-height:2.6in"><div class="lbl"><span>Critical Thinking About the Initial Question (show your work)</span><span>/3</span></div></div><div class="box" style="min-height:2.6in"><div class="lbl"><span>Identify the General Process and Steps</span><span>/2</span></div></div></div>
-      <div class="box"><div class="lbl"><span>Question From My Point of Confusion (use vocabulary: “I understand ___, but I get stuck when ___”)</span><span>/2</span></div>${lines(2)}</div>
-      <div class="pb"></div><h1>TRF: Reflection</h1><p class="dsub">During the tutorial, take three-column notes on your own paper. After the tutorial, complete this reflection.</p>
-      <p>I was a student presenter today: ☐ Yes ☐ No &nbsp;&nbsp; My POC is from a focus area on my grade reflection: ☐ Yes ☐ No</p>
-      <div class="box"><div class="lbl"><span>My point of confusion was…</span><span>/1</span></div>${lines(3)}</div>
-      <div class="box"><div class="lbl"><span>What I learned about my point of confusion is…</span><span>/1</span></div>${lines(3)}</div>
-      <div class="box"><div class="lbl"><span>I gained a new or greater understanding of my point of confusion by/when…</span><span>/2</span></div>${lines(3)}</div>
-      <div class="box"><div class="lbl"><span>This learning is important because it connects to my previous learning / myself / my world (circle one) in this way…</span><span>/2</span></div>${lines(3)}</div>
-      <div class="box"><div class="lbl"><span>What I found meaningful about today’s tutorial is…</span><span>/1</span></div>${lines(2)}</div>${FOOT}`;
+    if (id === "trf") { const ck = a => a.map(x => `<li>☐ ${x}</li>`).join(""), pts = n => `<span class="tp">____ / <b>${n}</b></span>`;
+      const mag = `<svg width="13" height="13" viewBox="0 0 16 16" style="vertical-align:-2px"><circle cx="6.5" cy="6.5" r="4.5" fill="none" stroke="#111" stroke-width="1.8"/><line x1="10" y1="10" x2="15" y2="15" stroke="#111" stroke-width="2"/></svg>`;
+      return `<div class="trfh"><div class="fl">Name: <i></i></div><div class="fl2"><div class="fl">AVID Teacher: <i></i></div><div class="fl">AVID Tutor: <i></i></div></div><div class="fl3"><div class="fl">Date: <i></i></div><div class="fl">AVID Period: <i></i></div><div class="fl">Subject: <i></i></div></div></div>
+      <h1 class="trft">Tutorial Request Form (TRF)</h1>
+      <div class="trf"><table class="trfs"><tr><td><span class="ph">BEFORE</span>TRF Pre-Work<br>${pts(20)}</td><td><span class="ph">DURING</span>Collaborative Inquiry<br>${pts(12)}</td><td>Communication<br>${pts(8)}</td><td><span class="ph">AFTER</span>Closure<br>${pts(10)}</td><td>Total<br>${pts(50)}</td></tr></table>
+        <div class="trfc"><p>Indicate how the student demonstrated engagement in tutorials. Check all that apply.</p><div class="cols3"><div><b>Collaborative Inquiry</b><ul class="ck">${ck(["Uses Socratic questioning", "Utilizes resources to investigate student presenter’s POC", "Takes focused notes (Phase 1) or supplements academic class notes (Phases 2–3)"])}</ul></div><div><b>Communication</b><ul class="ck">${ck(["Communicates clearly, both verbally and nonverbally", "Listens effectively to decipher meaning", "Demonstrates command of academic vocabulary", "Adapts speech to an academic setting"])}</ul></div><div><b>Closure</b><ul class="ck">${ck(["Summarizes key academic learning points", "Reflects on today’s tutorial process and identifies next steps"])}</ul></div></div></div>
+        <div class="trfc" style="height:.72in">Topic/Essential Question from Academic Class:</div>
+        <div class="trfc" style="height:1.45in;display:flex;flex-direction:column"><b>Initial Question:</b><div style="flex:1"></div><div class="srow"><span>Source:</span><i></i>${pts(2)}</div></div>
+        <div class="trfc" style="height:1.5in;display:flex;flex-direction:column">Key Academic Vocabulary and Definition Associated with Topic/Question:<div style="flex:1;padding-top:6px">1.<div style="height:.45in"></div>2.</div><div style="text-align:right">${pts(4)}</div></div>
+        <div class="trfc" style="height:1.5in;display:flex;flex-direction:column;border-bottom:0">What I Know About My Question:<div style="flex:1;padding-top:6px">1.<div style="height:.45in"></div>2.</div><div style="text-align:right">${pts(4)}</div></div></div>
+      <div class="pb"></div>
+      <div class="trf" style="margin-top:.1in"><div class="trfc"><b>Critical Thinking About Initial Question with Corresponding Steps:</b><p style="margin:6px 0 2px">Use these symbols in the Critical Thinking box and on the board to identify the following:</p><p style="margin:0 0 0 14px"><b>!</b> = <i>A-Ha!</i> moments &nbsp;&nbsp; <b>?</b> = Point of Confusion &nbsp;&nbsp; ${mag} = Need to research &nbsp;&nbsp; ☺ = I’m confident about…</p></div>
+        <div class="trfc" style="height:6.6in"><div class="srow" style="margin:2px 0 10px"><span>1. Show your thinking about your initial question, and identify your Point of Confusion.</span><i style="border:0"></i>${pts(4)}</div><div class="srow"><span>2. List the general steps that you took leading up to your Point of Confusion.</span><i style="border:0"></i>${pts(4)}</div></div>
+        <div class="trfc" style="height:2.05in;display:flex;flex-direction:column;border-bottom:0"><div><b>Tutorial Question</b> (from Point of Confusion):</div><div style="margin-top:6px"><i>Write an authentic question about your Point of Confusion that is different from your initial question.</i></div><div style="flex:1"></div><div style="text-align:right">${pts(2)}</div></div></div>`; }
+    if (/^binder[1-4]$/.test(id)) { const lv = ["I", "II", "III", "IV"][+id.slice(6) - 1], pg = +id.slice(6) <= 2 ? 10 : 15, mult = +id.slice(6) <= 2 ? 3 : 2;
+      const form = () => `<div class="bname">Name <i></i></div><table class="bc">
+        <colgroup><col style="width:14%"><col style="width:36%"><col style="width:10%"><col style="width:10%"><col style="width:10%"><col style="width:20%"></colgroup>
+        <tr class="h"><td><b>Date:</b></td><td class="c">AVID ${lv} <b><u>${pg}</u></b> <b><u>pages</u></b> of focused notes required<br>(2 digital notes max)</td><td colspan="4" class="g"><b>Tutor Name:</b><div class="c" style="margin-top:8px"><b>(Tutor section only)</b></div></td></tr>
+        <tr><td class="c"><b>Period</b></td><td class="c"><b>Class</b><div class="tiny">List the class you have notes for and<br>how many pages in parenthesis</div></td><td class="g c"><b>1</b></td><td class="g c"><b>2</b></td><td class="g c"><b>3</b></td><td class="g c"><b class="sm">Score (Notes x ${mult}) / 90</b></td></tr>
+        ${'<tr class="r"><td></td><td></td><td class="g"></td><td class="g"></td><td class="g"></td><td class="g"></td></tr>'.repeat(5)}
+        <tr class="r"><td><b>Digital</b> ○</td><td></td><td class="g"></td><td class="g"></td><td class="g"></td><td class="g"></td></tr>
+        <tr class="r"><td class="tiny"><b>*No Extra Credit</b></td><td class="c"><b>Notes Total</b></td><td class="g"></td><td class="g"></td><td class="g"></td><td class="g"></td></tr>
+        <tr class="h"><td class="c big"><b>Agenda</b></td><td class="c"><b>1 entry per academic class in the agenda.</b></td><td colspan="3" class="c"><b># of academic classes:</b><br>__________</td><td class="c"><b class="big">30 - 15 - 0</b><br><b class="sm">Agenda Score</b></td></tr>
+        <tr style="height:.34in"><td colspan="2" class="g"><b>*Organization (30 pts)______</b></td><td colspan="3" class="g c"><b class="big">30 - 15 - 0</b></td><td><b>Total:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>/150</b></td></tr></table>
+        <p class="bfoot"><b>*</b>Organization (15 pts: Dividers/No loose papers) (15 pts: Pencil Pouch with supplies)</p>`;
+      return `<h1 class="btitle">AVID ${lv} BINDER CHECK FORM</h1>${form()}<div style="height:.32in"></div>${form()}`; }
     if (id === "notes3") return `<h1>Three-Column Notes</h1><p class="dsub">Name: ______________________ Date: __________ Take notes on each student presenter’s question.</p>
       <table><thead><tr><th style="width:30%">Point of Confusion Question</th><th>Tutorial Notes</th><th style="width:30%">Steps (Math/Science) or Process (English/History)</th></tr></thead><tbody><tr><td style="height:8.6in"></td><td></td><td></td></tr></tbody></table>${FOOT}`;
-    if (id === "trfguide") return `<h1>TRF Guide for Tutors</h1><p class="dsub">Use when checking TRFs at the door and when pre-grading. Total 25 points.</p><table><thead><tr><th style="width:22%">Box</th><th style="width:6%">Pts</th><th>Strong answer</th><th style="width:34%">Think-aloud questions</th></tr></thead><tbody>${D.trf.map(r => `<tr><td><b>${esc(r.box)}</b></td><td>${r.pts}</td><td>${esc(r.look)}</td><td>${r.ask.map(a => esc(a)).join("<br>")}</td></tr>`).join("")}</tbody></table>
+    if (id === "trfguide") return `<h1>TRF Guide for Tutors</h1><p class="dsub">Use when checking TRFs at the door and when grading. Total 50 points: Pre-Work 20 · Collaborative Inquiry 12 · Communication 8 · Closure 10.</p><table><thead><tr><th style="width:22%">Box</th><th style="width:6%">Pts</th><th>Strong answer</th><th style="width:34%">Think-aloud questions</th></tr></thead><tbody>${D.trf.map(r => `<tr><td><b>${esc(r.box)}</b></td><td>${r.pts}</td><td>${esc(r.look)}</td><td>${r.ask.map(a => esc(a)).join("<br>")}</td></tr>`).join("")}</tbody></table>
       <h2>Vague vs. strong points of confusion</h2><table><tbody>${D.pocExamples.map(r => `<tr><td style="width:30%">${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table>${FOOT}`;
     if (id === "basics") return `<h1>Tutor Do’s, Don’ts & Boundaries</h1><div class="cols2"><div><h2>The tutor DOES</h2><ul>${D.role.does.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div><div><h2>The tutor does NOT</h2><ul>${D.role.doesnt.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div></div>
       <h2>Guidelines for effective tutorials</h2><table><tbody>${D.guidelines.map(g => `<tr><td style="width:28%"><b>${esc(g[0])}</b></td><td>${esc(g[1])}</td></tr>`).join("")}</tbody></table>
