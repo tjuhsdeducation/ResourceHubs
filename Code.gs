@@ -92,6 +92,7 @@ const ACTIVITIES = [
   ["WICOR Lessons", "Virtual lab", "Biology: Boom and Bust: Predators, Prey, and Symbiosis"],
   ["WICOR Lessons", "Virtual lab", "Biology: Harvest DNA: Extracting DNA from Strawberries, Pumpkins & More"],
   ["WICOR Lessons", "Virtual lab", "Biology: ATP Power-Up: Why Every Living Thing Does Cellular Respiration"],
+  ["WICOR Lessons", "Virtual lab", "Biology: The Mystery Balloon: What Are the Yeast Doing?"],
   ["WICOR Lessons", "Virtual lab", "Biology: Mini Lab: Sickle Cell & Malaria (DNA → Genetics → Evolution)"],
   ["WICOR Lessons", "Virtual lab", "Biology: Mini Lab: Yeast Balloons (Macromolecules → Enzymes → Cellular Respiration)"],
   ["WICOR Lessons", "Virtual lab", "Biology: Mini Lab: The Green Pond (Ecology → Photosynthesis → Cellular Respiration)"],

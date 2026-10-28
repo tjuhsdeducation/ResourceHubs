@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Mystery Balloon: Yeast Lab | Virtual Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cc-lesson.css?v=2">
+</head>
+<body>
+<script>
+/* =====================================================================
+   BIOLOGY VIRTUAL LAB (≈ 50 min): The Mystery Balloon
+   Discovery lab for cellular respiration. Students run 5 flasks of yeast,
+   sugar, and water with balloons on top, watch a glucose test strip and a
+   thermometer, then run chemical tests on the balloon gas and use a gas
+   ID guide to figure out what it is. The process (cellular respiration)
+   and the gas (carbon dioxide) are NOT named until students infer them
+   in Stations 4–5.
+   Built for EL students: pictures, Spanish cognates, read-aloud, and
+   drop-down sentence frames.
+   To change wording, edit the text between the quotes/backticks.
+   ===================================================================== */
+const B = (o, a) => ({ o, a });
+window.CC = {
+  id: "lab-yeast-balloon", subject: "Biology", short: "Virtual Lab: The Mystery Balloon", color: "#c0392b", emoji: "🎈", time: "≈ 50 min",
+  kind: "Virtual Lab", brand: { name: "Interactive Lessons", home: "lessons", mark: "" },
+  title: "The Mystery Balloon: What Are the Yeast Doing?",
+  intro: "Bakers have used yeast for thousands of years to make bread rise. Yeast is alive, but it is so small you need a microscope to see one cell. Today you will mix yeast with sugar water, stretch a balloon over the flask, and become a detective: observe what happens, test the mystery gas, and figure out what the yeast are doing.",
+  eq: "What process are yeast cells doing, and what evidence proves it?",
+  targets: {
+    R: "I can use observations and a reference guide to make inferences.",
+    I: "I can run a controlled experiment and identify an unknown gas from test results.",
+    O: "I can organize flask data in a table and sort evidence by what it shows.",
+    W: "I can write a CER that names a life process and supports it with evidence."
+  },
+  teacher: `<p><b>Discovery design:</b> students are never told the gas or the process up front. They observe the balloon (a gas is made), the glucose strip (glucose is used up), and the thermometer (energy is released as heat), then identify the gas with limewater, glowing/burning splints, and BTB using a gas ID guide. They name the process in Station 5.</p>
+    <p><b>The science:</b> yeast (<i>Saccharomyces cerevisiae</i>) is a single-celled fungus. It breaks down glucose by cellular respiration (C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP). In a sealed flask the oxygen runs out quickly, so yeast switch to alcoholic fermentation (glucose → ethanol + CO₂ + a little ATP). Both release CO₂. Limewater (calcium hydroxide) turns milky because CO₂ forms calcium carbonate. CO₂ forms carbonic acid in water, which turns BTB yellow.</p>
+    <p><b>Data:</b> balloon sizes, glucose readings, and temperatures are SAMPLE data that follow the real pattern. Controls: B (no sugar), C (no yeast), D (boiled, dead yeast); E tests temperature.</p>`,
+  stations: [
+    { letters: ["R", "W"], title: "Warm-Up: Observe Like a Scientist", time: "6 min", goal: "Learn the setup and make a prediction.",
+      blocks: [
+        { t: "warmup", title: "The setup", read: [
+          "<b>Yeast</b> is a living thing. It is a single-celled <b>fungus</b>, in the same kingdom as mushrooms. Yeast has no chloroplasts, so it cannot make its own food.",
+          "In this lab, each flask gets warm water. Some flasks also get yeast, some get <b>glucose</b> (a sugar), and one gets yeast that was boiled first. A balloon is stretched over the top of every flask, so anything that comes out of the liquid gets trapped inside.",
+          "Scientists make <b>observations</b> (what you see, measure, or smell) and then <b>inferences</b> (what you think it means, based on evidence). Today, you will observe first and figure out the meaning yourself."],
+          vocab: [["observation", "observación", "Something you notice with your senses or measure."], ["inference", "inferencia", "A conclusion you make from evidence."], ["glucose", "glucosa", "A simple sugar that cells use for energy."], ["fungus", "hongo", "A living thing like yeast or a mushroom; it cannot make its own food."], ["control", "control", "A flask that leaves something out, to compare with the others."], ["reactant", "reactivo", "Something that is used up in a reaction."], ["product", "producto", "Something that is made by a reaction."]] },
+        { t: "write", title: "Make a prediction", label: "prediction", min: 12, rows: 3,
+          prompt: "Flask A has live yeast + glucose + warm water. <b>Predict:</b> what will happen to the balloon on Flask A, and why do you think so?",
+          frames: ["I predict the balloon will…", "I think this because yeast…"],
+          checks: [{ re: /balloon/gi, label: "Says what will happen to the balloon" }, { re: /because|since|so/gi, label: "Gives a reason" }] }
+      ] },
+    { letters: ["I", "O"], title: "Run the Flasks", time: "8 min", goal: "Run all 5 flasks and record your observations.",
+      blocks: [
+        { t: "yeastsim", title: "Five flasks, five balloons", max: 4, label: "flask data",
+          how: "Tap ▶ Run 30 minutes on each flask. Watch the liquid, the balloon, the glucose test strip (on the left), and the thermometer (on the right). Then record what you measured after 30 minutes." }
+      ] },
+    { letters: ["I", "O"], title: "What Do the Flasks Show?", time: "7 min", goal: "Compare the flasks to the controls.",
+      blocks: [
+        { t: "quiz", label: "compare flasks", title: "Compare the flasks", items: [
+          { q: "Flask A’s glucose strip went from 100% to 25%. What can you <b>infer</b>?", opts: ["The yeast made more glucose", "Something in the flask used up the glucose", "The strip is broken", "Glucose turned into water"], a: 1, why: "Most of the glucose disappeared, so it was used up. Glucose is a reactant." },
+          { q: "Which flask shows that the yeast need <b>glucose</b> to fill the balloon?", opts: ["Flask B (yeast, no sugar)", "Flask C (sugar, no yeast)", "Flask E (cold)", "Flask A"], a: 0, why: "With yeast but no sugar, the balloon stayed almost flat." },
+          { q: "Which flask shows that sugar water <b>by itself</b> does not make the gas?", opts: ["Flask A", "Flask B", "Flask C (sugar, no yeast)", "Flask E"], a: 2, why: "With no yeast, the glucose stayed at 100% and the balloon stayed flat." },
+          { q: "Flask D had <b>boiled</b> yeast, and nothing happened. What does that tell you?", opts: ["Yeast must be ALIVE to make the gas", "Boiling makes more gas", "Yeast don’t need sugar", "The balloon was too small"], a: 0, why: "Dead cells can’t carry out life processes. This is a living process, not just a chemical mixing." },
+          { q: "Flask A got <b>warmer</b> (37 → 39 °C). What does that suggest?", opts: ["Energy was released as the glucose was broken down", "The balloon heated the flask", "Cold water was added", "Nothing; temperature never matters"], a: 0, why: "When cells break down food, some of the energy is released as heat." }] },
+        { t: "sort", label: "evidence sort", title: "What does each observation show?", zones: ["Something was USED UP", "Something was MADE", "Energy was RELEASED"], colors: ["#e08a00", "#c0392b", "#8a54e0"],
+          tiles: [["Flask A glucose strip: 100% → 25%", 0], ["Flask A balloon grew to 26 cm", 1], ["Bubbles rose through the liquid in Flask A", 1], ["Flask A temperature: 37 → 39 °C", 2], ["Brown strip turned teal (less sugar)", 0], ["Flask E got a little gas, but slowly", 1]],
+          why: "The yeast used up glucose (a reactant), made a gas (a product), and released energy (some as heat)." }
+      ] },
+    { letters: ["I"], title: "Identify the Mystery Gas", time: "8 min", goal: "Test the gas and use the guide to name it.",
+      blocks: [
+        { t: "gastest", title: "What gas is in balloon A?", answer: "Carbon dioxide", max: 4, label: "identify the gas",
+          how: "Gas from balloon A is bubbled into four different tests. Run all four tests on the balloon gas. Run them on room air too, so you can compare. Then use the Gas ID guide to figure out what the gas is.",
+          items: [
+            { q: "Which observation rules out <b>oxygen</b>?", opts: ["The limewater turned milky", "The glowing splint went out instead of bursting into flame", "The balloon is red", "The BTB stayed blue"], a: 1, why: "Oxygen makes a glowing splint burst into flame. This gas put it out." },
+            { q: "Nitrogen also puts out a flame. Which test proves the gas is NOT nitrogen?", opts: ["The burning splint test", "The limewater test (it turned milky)", "The glowing splint test", "No test can tell"], a: 1, why: "Nitrogen leaves limewater clear. Only one gas in the guide turns limewater milky." },
+            { q: "Where did the gas come from?", opts: ["The air in the room", "The yeast, as they broke down glucose", "The balloon rubber", "The warm water"], a: 1, why: "Flasks with no yeast (C), dead yeast (D), or no sugar (B) made almost no gas. Live yeast + glucose made the gas." }] }
+      ] },
+    { letters: ["R", "W"], title: "Put the Process Together", time: "7 min", goal: "Name the process the yeast were doing.",
+      blocks: [
+        { t: "fill", label: "build the equation", title: "Build the word equation from YOUR evidence", max: 3,
+          items: [
+            { parts: ["The yeast used up ", B(["glucose", "oxygen gas from the balloon", "water"], 0), " (the glucose strip dropped)."] },
+            { parts: ["The yeast made ", B(["oxygen", "carbon dioxide", "hydrogen"], 1), " gas (the limewater turned milky and the BTB turned yellow)."] },
+            { parts: ["The yeast released ", B(["energy", "glucose", "light"], 0), " (the flask got warmer)."] },
+            { parts: ["Word equation: glucose + oxygen → ", B(["carbon dioxide + water + energy", "glucose + light", "oxygen + sugar"], 0), "."] }],
+          why: "Your evidence shows glucose going in and carbon dioxide and energy coming out. Scientists also measured that oxygen is used and water is made." },
+        { t: "quiz", label: "name the process", title: "Name the process", items: [
+          { q: "Breaking down glucose to release energy and give off carbon dioxide is called…", opts: ["Photosynthesis", "Cellular respiration", "Evaporation", "Digestion"], a: 1, why: "Cellular respiration breaks down glucose to release energy (ATP), making carbon dioxide and water." },
+          { q: "Why can’t this be <b>photosynthesis</b>?", opts: ["Photosynthesis USES carbon dioxide and MAKES glucose, but the yeast used glucose and made carbon dioxide", "Photosynthesis only happens at night", "Yeast are plants", "Photosynthesis makes balloons"], a: 0, why: "It’s the opposite! Also, yeast have no chloroplasts and there was no light needed." },
+          { q: "Yeast are fungi, not animals. Do <b>you</b> do this same process?", opts: ["No, only yeast do it", "Yes. Every living cell, including yours, does cellular respiration to get energy", "Only when you exercise", "Only plants and yeast do it"], a: 1, why: "All living things (animals, plants, fungi, bacteria) break down glucose for energy. You breathe out carbon dioxide too!" }] }
+      ] },
+    { letters: ["O", "I"], title: "Analyze the Data", time: "5 min", goal: "Use the graph to explain the differences.",
+      blocks: [
+        { t: "chart", title: "Balloon size after 30 minutes (cm around)", max: 30, rows: [["A · Yeast + sugar, warm", 26, 1], ["B · Yeast, no sugar", 1], ["C · Sugar, no yeast", 0], ["D · Boiled yeast + sugar", 0], ["E · Yeast + sugar, cold", 5]], cap: "Sample class data." },
+        { t: "text", html: "<p><b>Did you know?</b> In a sealed flask, the yeast use up the oxygen quickly. Then they switch to <b>fermentation</b>, which breaks down glucose WITHOUT oxygen. Fermentation still makes carbon dioxide (that’s what makes bread rise), plus a little ethanol, but only about 2 ATP per glucose instead of about 36.</p>" },
+        { t: "quiz", label: "analyze", title: "Explain the results", items: [
+          { q: "Why did Flask E (ice cold) make much less gas than Flask A?", opts: ["Cold slows down the enzymes that break down glucose", "Cold kills all yeast instantly", "Ice has no sugar", "The balloon was frozen"], a: 0, why: "The yeast were still alive (some gas, glucose dropped a little), but their enzymes worked slowly in the cold." },
+          { q: "What is the <b>independent variable</b> when you compare Flask A and Flask E?", opts: ["Balloon size", "Temperature", "Type of balloon", "Amount of glucose"], a: 1, why: "Everything was the same except temperature: 37 °C vs. 5 °C." },
+          { q: "Bread dough has tiny holes after it rises. What made the holes?", opts: ["Bubbles of carbon dioxide from the yeast", "Oxygen from the flour", "Steam from the sugar", "The baker poked them"], a: 0, why: "Yeast in the dough break down sugar and release carbon dioxide, which gets trapped as bubbles." }] }
+      ] },
+    { letters: ["W"], title: "CER: What Were the Yeast Doing?", time: "7 min", goal: "Write a CER with evidence from every part of the lab.",
+      blocks: [
+        { t: "cerg", title: "CER: the mystery balloon", q: "<b>Question:</b> What process were the yeast doing in Flask A, and what evidence proves it?", claimA: 2, need: 3,
+          claims: ["The yeast were doing photosynthesis.", "The balloon filled with air from the room.", "The yeast were doing cellular respiration: breaking down glucose to release energy and carbon dioxide.", "The sugar water reacted by itself."],
+          evidence: [["Flask A’s glucose strip dropped from 100% to 25%.", true], ["The gas turned limewater milky and BTB yellow, and put out a flame.", true], ["Flask A warmed from 37 °C to 39 °C.", true], ["Flasks with no yeast or boiled yeast made no gas.", true], ["The balloons were red.", false]],
+          words: ["cellular respiration", "glucose", "carbon dioxide", "energy", "living", "limewater", "reactant", "product", "fungus"],
+          frames: ["The yeast were doing… because…", "The glucose strip shows…", "The limewater test shows the gas was…", "The temperature rose, which means…", "Flask D proves that…"],
+          must: ["respiration", "glucose", "carbon dioxide|CO", "energy|heat|warm"] }
+      ] },
+    { letters: ["R"], title: "Exit Ticket", time: "3 min", goal: "Show what you figured out.",
+      blocks: [
+        { t: "quiz", label: "exit ticket", title: "Exit ticket", items: [
+          { q: "Which gas turns limewater milky?", opts: ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"], a: 1, why: "Carbon dioxide reacts with limewater to make a milky solid." },
+          { q: "In cellular respiration, glucose is a ___ and carbon dioxide is a ___.", opts: ["product, reactant", "reactant, product", "product, product", "reactant, reactant"], a: 1, why: "Glucose is used up (reactant). Carbon dioxide is made (product)." },
+          { q: "Which living things do cellular respiration?", opts: ["Only animals", "Only yeast", "Only plants", "All living things: animals, plants, fungi, and bacteria"], a: 3, why: "Every living cell needs energy, so every living thing does cellular respiration." }] }
+      ] }
+  ]
+};
+</script>
+<script src="cc-bblab.js?v=7"></script>
+<script src="cc-protsyn.js?v=3"></script>
+<script src="cc-yeast.js?v=1"></script>
+<script src="cc-blocks2.js?v=1"></script>
+<script src="hub-config.js?v=3"></script>
+<script src="cc-lesson.js?v=4"></script>
+</body>
+</html>

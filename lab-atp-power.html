@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ATP Power-Up: Cellular Respiration | Virtual Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cc-lesson.css?v=2">
+</head>
+<body>
+<script>
+/* =====================================================================
+   BIOLOGY VIRTUAL LAB (≈ 50 min): ATP Power-Up
+   Students snap and recharge ATP, break down glucose step by step
+   (glycolysis, Krebs cycle, electron transport chain) with and without
+   oxygen, then "spend" their ATP on real cell jobs (active transport,
+   muscle contraction, DNA replication, enzymes, proteins, vesicles) in a
+   human cell AND in a plant, a dog, a mushroom, and a bacterium, to see
+   that ALL living things do cellular respiration.
+   Built for EL students: pictures, Spanish cognates, read-aloud, and
+   drop-down sentence frames.
+   To change wording, edit the text between the quotes/backticks.
+   ===================================================================== */
+const B = (o, a) => ({ o, a });
+window.CC = {
+  id: "lab-atp-power", subject: "Biology", short: "Virtual Lab: ATP Power-Up", color: "#e0a100", emoji: "⚡", time: "≈ 50 min",
+  kind: "Virtual Lab", brand: { name: "Interactive Lessons", home: "lessons", mark: "" },
+  title: "ATP Power-Up: Why Every Living Thing Does Cellular Respiration",
+  intro: "Every cell in every living thing needs energy to move, build, copy, and pump. That energy comes in tiny rechargeable batteries called ATP. Break down glucose to charge up your ATP, then spend it to keep a cell alive. Can a plant skip this step because it makes its own food? Play to find out!",
+  eq: "Why do ALL living things, including plants, need cellular respiration, and how do cells use ATP?",
+  targets: {
+    R: "I can explain that ATP is the energy molecule cells use, and that cellular respiration breaks down glucose to make it.",
+    I: "I can compare how much ATP a cell makes with and without oxygen.",
+    O: "I can organize which organisms do photosynthesis, cellular respiration, or both.",
+    W: "I can write a CER explaining why plants need cellular respiration too."
+  },
+  teacher: `<p><b>Big misconception this lab targets:</b> many students think plants do photosynthesis <i>instead of</i> cellular respiration. In the game, the sunflower makes its own glucose but still has to burn it in its mitochondria to get ATP, just like the dog, the mushroom, and the bacterium (which does respiration across its cell membrane, since prokaryotes have no mitochondria).</p>
+    <p><b>Numbers:</b> we use 2 (glycolysis) + 2 (Krebs) + 32 (electron transport chain) = 36 ATP per glucose; modern estimates are about 30–38, and the data table accepts 34–38 for the total. Job costs are simplified for the game (for example, the sodium–potassium pump really uses 1 ATP per cycle, so 3 cycles = 3 ATP).</p>
+    <p><b>Without oxygen</b> the cell only gets the 2 ATP from glycolysis, and fermentation makes lactic acid (the “burn” in a hard sprint).</p>`,
+  stations: [
+    { letters: ["R"], title: "Warm-Up: The Cell’s Energy Currency", time: "6 min", goal: "Learn what ATP is and where it comes from.",
+      blocks: [
+        { t: "warmup", title: "Energy for every living thing", read: [
+          "Every cell needs energy to do work: pump materials in and out, move, build proteins, and copy its DNA. Cells can’t use the energy in food directly. First they turn it into <b>ATP</b> (adenosine triphosphate), a small molecule that works like a <b>rechargeable battery</b>.",
+          "<b>Cellular respiration</b> breaks down glucose to recharge ATP: <b>glucose + oxygen → carbon dioxide + water + ATP</b> (C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP). Most of it happens in the <b>mitochondria</b>.",
+          "<b>Photosynthesis</b> makes glucose, but only plants, algae, and some bacteria can do it. <b>Cellular respiration happens in ALL living things</b>: plants, animals, fungi, protists, and bacteria, because every living cell needs ATP."],
+          vocab: [["ATP", "ATP (trifosfato de adenosina)", "The energy molecule cells spend to do work."], ["cellular respiration", "respiración celular", "Breaking down glucose to make ATP."], ["glucose", "glucosa", "A sugar that stores chemical energy."], ["mitochondria", "mitocondrias", "Organelles where most cellular respiration happens."], ["fermentation", "fermentación", "Making a little ATP without oxygen."], ["active transport", "transporte activo", "Moving materials across a membrane using energy."]],
+          table: { cap: "Photosynthesis vs. cellular respiration", head: ["", "Photosynthesis", "Cellular respiration"], rows: [["Who does it?", "Plants, algae, some bacteria", "ALL living things"], ["Where?", "Chloroplasts", "Mitochondria (cell membrane in bacteria)"], ["Goes in", "CO₂ + water + sunlight", "Glucose + oxygen"], ["Comes out", "Glucose + oxygen", "CO₂ + water + ATP"]] } },
+        { t: "atpmodel", title: "Try it: ATP is a rechargeable battery" },
+        { t: "quiz", label: "warm-up check", title: "Quick check", items: [
+          { q: "What happens when a cell “spends” an ATP?", opts: ["It adds a phosphate", "It breaks off a phosphate and releases energy, leaving ADP", "It turns into glucose", "It becomes DNA"], a: 1, why: "ATP → ADP + P + energy. Later, cellular respiration recharges ADP back into ATP." },
+          { q: "Which living things do cellular respiration?", opts: ["Only animals", "Only plants", "Only things that breathe with lungs", "All living things"], a: 3, why: "Every living cell needs ATP, so every living thing does cellular respiration." }] }
+      ] },
+    { letters: ["O"], title: "Who Does What?", time: "4 min", goal: "Sort organisms by the energy processes they do.",
+      blocks: [
+        { t: "sort", label: "process sort", title: "Which processes does each organism do?", zones: ["Photosynthesis AND cellular respiration", "Cellular respiration only"], colors: ["#1aa36f", "#e0a100"],
+          tiles: [["🌳 Oak tree", 0], ["🌻 Sunflower", 0], ["🌿 Algae in a pond", 0], ["🌵 Cactus", 0], ["🐕 Dog", 1], ["🧍 You", 1], ["🍄 Mushroom", 1], ["🍞 Yeast", 1], ["🐟 Goldfish", 1], ["🪱 Earthworm", 1]],
+          why: "Producers make glucose by photosynthesis AND break it down by cellular respiration. Consumers and decomposers only do cellular respiration. Nobody skips respiration!" },
+        { t: "quiz", label: "misconception check", title: "True or false?", items: [
+          { q: "“Plants do photosynthesis instead of cellular respiration.”", opts: ["True: plants don’t need respiration", "False: plants do BOTH, because their cells need ATP too", "True: only at night", "False: plants do neither"], a: 1, why: "Photosynthesis MAKES the glucose. Cellular respiration BREAKS it down to make ATP. Plant cells do respiration all day and all night." }] }
+      ] },
+    { letters: ["I", "O"], title: "Power Up: Break Down Glucose", time: "9 min", goal: "Make ATP from 1 glucose, with and without oxygen, and record your data.",
+      blocks: [
+        { t: "text", html: `<div class="callout"><b>Your mission:</b> 1) With <b>🫁 Oxygen available</b>, tap the 3 steps in order and watch the ATP battery fill. 2) Switch to <b>🚫 No oxygen</b> and try again. 3) Fill in the data table and press <b>Check my data table</b>.</div>` },
+        { t: "atpmake", title: "Power Up: break down 1 glucose", max: 5 }
+      ] },
+    { letters: ["I"], title: "Spend It: A Day in Your Muscle Cell", time: "8 min", goal: "Use ATP to do 6 different jobs.",
+      blocks: [
+        { t: "text", html: `<div class="callout"><b>Your mission:</b> Keep a human muscle cell alive for one busy minute. Burn glucose to charge your battery, then tap each job to spend ATP and watch it happen. 💡 Try a job with <b>Oxygen OFF</b>. Do you get enough ATP?</div>` },
+        { t: "atpspend", mode: "cell", org: "human", title: "⚡ A day in a human muscle cell", max: 3 }
+      ] },
+    { letters: ["I"], title: "Every Organism Needs ATP", time: "8 min", goal: "Run a day for a plant, a dog, a mushroom, and a bacterium.",
+      blocks: [
+        { t: "text", html: `<div class="callout"><b>Your mission:</b> Finish every job for all 4 organisms. Read the top of each one: does it do photosynthesis? Does it still need cellular respiration?</div>` },
+        { t: "atpspend", mode: "orgs", orgs: ["plant", "dog", "fungus", "bacteria"], title: "🌍 Four organisms, one energy molecule", max: 4 }
+      ] },
+    { letters: ["O", "R"], title: "Analyze the Energy", time: "6 min", goal: "Use your data to explain how cells get and use energy.",
+      blocks: [
+        { t: "chart", title: "ATP made from 1 glucose", max: 40, rows: [["With oxygen", 36, 1], ["Without oxygen", 2]], cap: "With oxygen, a cell gets about 18 times more ATP from the same glucose." },
+        { t: "sort", label: "equation sort", title: "Cellular respiration: what goes in and what comes out?", zones: ["Goes IN (reactants)", "Comes OUT (products)"], colors: ["#2b7de9", "#e0a100"],
+          tiles: [["Glucose (C₆H₁₂O₆)", 0], ["Oxygen (O₂)", 0], ["Carbon dioxide (CO₂)", 1], ["Water (H₂O)", 1], ["ATP (energy)", 1]],
+          why: "Glucose + oxygen → carbon dioxide + water + ATP. You breathe in the oxygen and breathe out the CO₂." },
+        { t: "fill", label: "analysis frames", title: "What does the data show?", max: 3,
+          items: [
+            { parts: ["With oxygen, 1 glucose made about ", B(["2", "36", "100"], 1), " ATP. Without oxygen, it made only ", B(["2", "36"], 0), ", so muscles get tired and lactic acid builds up."] },
+            { parts: ["Pumping sodium out of a cell needs ATP because it is ", B(["active transport against the gradient", "diffusion from high to low"], 0), "."] },
+            { parts: ["Enzymes ", B(["are used up in every reaction", "speed up reactions by lowering activation energy"], 1), ", but building bigger molecules still needs energy from ", B(["ATP", "sunlight"], 0), "."] }],
+          why: "Oxygen lets the electron transport chain run, which makes most of the ATP. Active transport and building molecules always cost ATP; enzymes help reactions go faster but are not used up." }
+      ] },
+    { letters: ["W"], title: "CER: Do Plants Need Cellular Respiration?", time: "6 min", goal: "Write a claim, evidence, and reasoning.",
+      blocks: [
+        { t: "cerg", title: "Claim · Evidence · Reasoning", q: "<b>Question:</b> A plant can make its own glucose by photosynthesis. Does it still need cellular respiration? Why?", claimA: 0, need: 2,
+          claims: ["Yes. Plants make glucose by photosynthesis, but their cells still must break it down by cellular respiration to make ATP for jobs like active transport and copying DNA.", "No. Photosynthesis already gives plants all the ATP they need.", "No. Only animals need energy.", "Yes, but only at night when there is no sunlight."],
+          evidence: [["In the game, the sunflower cell had to burn glucose in its mitochondria before it could pump minerals or build cellulose.", true], ["The dog, mushroom, and bacterium also had to burn glucose to make ATP for their jobs.", true], ["Sunflowers are yellow.", false], ["With oxygen, 1 glucose made about 36 ATP; jobs like DNA replication cost ATP.", true]],
+          words: ["photosynthesis", "cellular respiration", "glucose", "ATP", "mitochondria", "energy", "active transport", "all living things", "chloroplast", "evidence"],
+          frames: ["My claim is that plants…", "In the game, the sunflower cell…", "Photosynthesis makes glucose, but…", "Every living cell needs ATP to…"],
+          must: ["respiration", "ATP|energy", "glucose", "mitochondri|break|burn|all living"] }
+      ] },
+    { letters: ["R", "O"], title: "Exit Ticket", time: "3 min", goal: "Show what you learned.",
+      blocks: [
+        { t: "quiz", label: "exit ticket", title: "Exit ticket", items: [
+          { q: "Where does MOST of the ATP from cellular respiration get made?", opts: ["In the nucleus", "In the cytoplasm during glycolysis", "In the mitochondria during the electron transport chain", "In the chloroplast"], a: 2, why: "The electron transport chain in the mitochondria makes about 32 of the 36 ATP." },
+          { q: "Bacteria have no mitochondria. Do they do cellular respiration?", opts: ["No, they don’t need energy", "Yes, on their cell membrane", "Only if they live in water", "No, they only do photosynthesis"], a: 1, why: "Bacteria need ATP too. They run the same steps using enzymes in their cytoplasm and on their cell membrane." },
+          { q: "Which cell job does NOT need ATP?", opts: ["Contracting a muscle", "Copying DNA", "Oxygen diffusing from high to low concentration", "Pumping sodium out of a cell"], a: 2, why: "Diffusion moves from high to low by itself (passive transport). The others are work, so they cost ATP." }] }
+      ] }
+  ]
+};
+</script>
+<script src="cc-bblab.js?v=7"></script>
+<script src="cc-protsyn.js?v=3"></script>
+<script src="cc-atp.js?v=1"></script>
+<script src="cc-blocks2.js?v=1"></script>
+<script src="hub-config.js?v=3"></script>
+<script src="cc-lesson.js?v=4"></script>
+</body>
+</html>
