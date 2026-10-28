@@ -518,13 +518,67 @@ window.RCG = (function () {
         const b = $("#resend"); if (b) b.textContent = "📤 Send again (backup)";
       } catch (e) { msg("⚠️ " + esc(e.message || "Could not send. Check your internet and press Send again.")); }
     }
+    /* ---------- review sheet (shown after submitting when skills are defined, e.g. CAASPP sets) ---------- */
+    function revSheet(d) {
+      const SK = window.RC_SKILLS; if (!SK || !A.qs.some(q => q.skill)) return "";
+      const NONE = `<i class="mu">No answer</i>`, L = arr => arr.length ? `<ul>${arr.map(x => `<li>${x}</li>`).join("")}</ul>` : NONE;
+      const show = (q, a, key) => {
+        if (!key && (a == null || (Array.isArray(a) && !a.length) || a === "")) return NONE;
+        switch (q.t) {
+          case "mc": return q.opts[key ? q.a : a] ?? NONE;
+          case "multi": return L((key ? q.a : a).map(j => q.opts[j]));
+          case "ebsr": { const B = key ? q.B.a : a.b, Bs = (Array.isArray(B) ? B : [B]).filter(x => x != null);
+            return `<b>Part A:</b> ${q.A.opts[key ? q.A.a : a.a] ?? "—"}<br><b>Part B:</b> ${Bs.length ? Bs.map(j => q.B.opts[j]).join("; ") : "—"}`; }
+          case "inline": { let i = 0; return q.text.replace(/\[\[\]\]/g, () => { const bl = q.blanks[i], v = key ? bl.a : a[i]; i++; return `<b class="rs-fill">${v == null ? "___" : strip(bl.opts[v])}</b>`; }); }
+          case "grid": return L(q.rows.map((r, i) => { const c = key ? r[1] : a[i]; const ok = !key && c === r[1]; return `${r[0]} → <b>${c == null ? "—" : q.cols[c]}</b>${key ? "" : ok ? " ✓" : " ✗"}`; }));
+          case "num": return `${q.pre ? esc(q.pre) + " " : ""}<b>${key ? q.a : esc(a)}</b>${q.unit ? " " + esc(q.unit) : ""}`;
+          case "hot": return L((key ? q.a : a).map(j => q.text[j]));
+          case "order": return `<ol>${(key ? q.items.map((_, i) => i) : a.v).map(i => `<li>${q.items[i]}</li>`).join("")}</ol>${!key && !a.moved ? `<i class="mu">(not moved)</i>` : ""}`;
+          case "write": if (key) return `<i>Sample answer:</i> ${q.model || ""}`;
+            return `<div class="rs-text">${esc(a)}</div>${L(writeEval(q, a).res.map(r => `${r.ok ? "✓" : "✗"} ${esc(r.label)}`))}`;
+        }
+        return NONE;
+      };
+      const stats = {}; A.qs.forEach((q, k) => { const id = q.skill || "_"; const x = stats[id] = stats[id] || { got: 0, max: 0 }; x.got += d.pts[k]; x.max += maxOf(q); });
+      const weak = Object.keys(stats).filter(id => SK[id] && stats[id].got < stats[id].max).sort((a, b) => stats[a].got / stats[a].max - stats[b].got / stats[b].max);
+      const strong = Object.keys(stats).filter(id => SK[id] && stats[id].got === stats[id].max);
+      const miss = A.qs.map((q, k) => k).filter(k => d.pts[k] < maxOf(A.qs[k]));
+      const nextIds = []; weak.forEach(id => (SK[id].next || []).forEach(n => { if (n !== A.id && window.RC[n] && !nextIds.includes(n) && nextIds.length < 3) nextIds.push(n); }));
+      if (!nextIds.length) (window.RC_FOCUS_SETS || []).forEach(n => { if (n !== A.id && nextIds.length < 2 && window.RC[n] && !nextIds.includes(n)) nextIds.push(n); });
+      const link = n => `<a href="?id=${n}">${esc(window.RC[n].title)}</a>`;
+      const qtext = q => q.t === "ebsr" ? `${q.A.q}<br><span class="mu">Part B:</span> ${q.B.q}` : q.q;
+      const when = new Date(d.when);
+      return `<section class="revsheet" id="revsheet">
+        <div class="rs-head"><h2>📋 My Review Sheet</h2><button class="pill-btn" id="rsprint">🖨️ Print</button></div>
+        <p class="rs-who"><b>${esc(who.name)}</b> · ${esc(A.title)} · <b>${d.score}/${d.total}</b> (${Math.round(d.score / d.total * 100)}%) · ${when.toLocaleDateString()}</p>
+        <div class="rs-sum"><div class="rs-col bad"><h3>🔧 Skills to work on</h3>${weak.length ? `<ul>${weak.map(id => `<li><b>${esc(SK[id].name)}</b> <span class="mu">(${stats[id].got}/${stats[id].max} points)</span></li>`).join("")}</ul>` : `<p>None! You earned every point.</p>`}</div>
+          <div class="rs-col ok"><h3>⭐ Skills you showed</h3>${strong.length ? `<ul>${strong.map(id => `<li>${esc(SK[id].name)}</li>`).join("")}</ul>` : `<p class="mu">Keep practicing. Each skill below has steps to help.</p>`}</div></div>
+        ${miss.length ? `<p class="mu">Below is every question you missed or got partial credit on. Read <b>why</b>, then use the <b>how to improve</b> steps.</p>` : `<p class="rs-yay">🎉 Perfect score! Try a harder set to keep growing.</p>`}
+        ${miss.map(k => { const q = A.qs[k], sk = SK[q.skill] || {}, s = d.pts[k], m = maxOf(q);
+          return `<article class="rs-q"><div class="rs-qh"><b>Question ${k + 1}</b><span class="rs-skill">${esc(sk.name || TYPE[q.t])}</span><span class="rs-pts ${s ? "part" : "wrong"}">${s}/${m} ${s ? "partial" : "missed"}</span></div>
+            <div class="rs-qt">${qtext(q)}</div>
+            <div class="rs-two"><div class="rs-you"><h4>Your answer</h4>${show(q, S.ans[k], false)}</div><div class="rs-key"><h4>Correct answer</h4>${show(q, null, true)}</div></div>
+            ${q.why || q.rubric ? `<div class="rs-why"><h4>${q.t === "write" && !q.why ? "💡 How it’s scored" : "💡 Why"}</h4>${q.why || ""}${q.t === "write" && q.rubric ? `<p class="${q.why ? "mu small" : ""}">${q.why ? "Scoring: " : ""}${q.rubric}</p>` : ""}</div>` : ""}
+            ${sk.how ? `<div class="rs-how"><h4>🪜 How to improve: ${esc(sk.name)}</h4><ol>${sk.how.map(x => `<li>${x}</li>`).join("")}</ol><p><b>Next time, try this:</b> ${sk.try}</p></div>` : ""}
+            <button class="pill-btn sm rs-go" data-k="${k}">↩ Look at this question again</button></article>`; }).join("")}
+        ${nextIds.length ? `<div class="rs-next"><h3>➡️ Practice next</h3><ul>${nextIds.map(n => `<li>${link(n)}</li>`).join("")}</ul></div>` : ""}
+      </section>`;
+    }
+    function printRev() {
+      const src = $("#revsheet"); if (!src) return;
+      const box = document.createElement("div"); box.id = "rsprintbox"; box.innerHTML = src.outerHTML; document.body.appendChild(box); document.body.classList.add("rs-printing");
+      const done = () => { document.body.classList.remove("rs-printing"); box.remove(); window.removeEventListener("afterprint", done); };
+      window.addEventListener("afterprint", done); setTimeout(() => { window.print(); setTimeout(done, 500); }, 50);
+    }
     function drawScore() {
       const d = S.done, pc = Math.round(d.score / d.total * 100);
       qbox.innerHTML = `<div class="scorecard"><div class="ring" style="--p:${pc}"><b>${pc}%</b></div><div><h2>${d.score} / ${d.total} points</h2>
         <p class="mu">Finished in about ${d.mins} min.</p><p id="sendmsg" class="sendmsg">${d.sent ? (preview ? "👀 Teacher preview: nothing was sent." : HUB_URL ? `✅ Sent to ${esc(who.teacher)}!` : "👀 Preview mode: saved on this computer only.") : ""}</p></div></div>
         <div class="rgrid">${A.qs.map((q, k) => { const s = d.pts[k], m = maxOf(q); return `<button data-k="${k}" class="${s === m ? "right" : s ? "part" : "wrong"}"><b>${k + 1}</b><span>${s}/${m}</span></button>`; }).join("")}</div>
-        <p class="mu">Tap a number to see the correct answer and why. Your highlights and notes are still on the left.</p>`;
-      $$(".rgrid button", qbox).forEach(b => b.onclick = () => { reviewScreen = false; S.cur = +b.dataset.k; save(); draw(); });
+        <p class="mu">Tap a number to see the correct answer and why. Your highlights and notes are still on the left.</p>${window.RC_SKILLS && A.qs.some(q => q.skill) ? `<p><button class="pill-btn dark" id="rsjump">📋 Open my review sheet</button></p>` : ""}${revSheet(d)}`;
+      $$(".rgrid button, .rs-go", qbox).forEach(b => b.onclick = () => { reviewScreen = false; S.cur = +b.dataset.k; save(); draw(); });
+      const rj = $("#rsjump"); if (rj) rj.onclick = () => $("#revsheet").scrollIntoView({ behavior: "smooth", block: "start" });
+      const rp = $("#rsprint"); if (rp) rp.onclick = printRev;
       qfoot.innerHTML = `<button class="pill-btn" id="resend" ${preview ? "hidden" : ""}>${d.sent ? "📤 Send again (backup)" : "📤 Send to my teacher"}</button><button class="pill-btn dark" id="again">↻ Try again</button>`;
       $("#resend").onclick = send;
       $("#again").onclick = () => { if (!confirm("Start a new attempt? Your answers will be cleared (your annotations stay). Your teacher will see your newest score.")) return;

@@ -361,3 +361,34 @@ select.ib.ok,.numin.ok{border-color:var(--ok)}select.ib.bad,.numin.bad{border-co
 .cbin small{color:var(--muted);font-size:.78rem}.cbin .cnt{font:700 1.2rem var(--display)}.cbin.k1{border-color:var(--c1)}.cbin.k2{border-color:var(--c2)}.cbin.k3{border-color:var(--c3)}.cbin.k4{border-color:var(--c4)}
 .cbin.flash{animation:simpop .4s;background:color-mix(in srgb,var(--ok) 15%,var(--surface))}
 .simsvg.trisvg{max-width:330px;margin:auto}.sim .tri3{fill:color-mix(in srgb,var(--lc) 10%,transparent);stroke:var(--lc);stroke-width:3}.sim .tdot{fill:var(--c3);stroke:var(--surface);stroke-width:3}
+
+/* ---------- CAASPP review sheet ---------- */
+.revsheet{margin-top:18px;border-top:3px solid var(--line);padding-top:12px}
+.rs-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.rs-head h2{margin:0;font-size:1.4rem}
+.rs-who{margin:4px 0 10px;color:var(--muted)}
+.rs-sum{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 12px}
+.rs-col{border:2px solid var(--line);border-radius:14px;padding:8px 12px}.rs-col h3{margin:0 0 4px;font-size:1rem}.rs-col ul{margin:0;padding-left:18px;line-height:1.5}
+.rs-col.bad{border-color:color-mix(in srgb,var(--bad) 45%,var(--line))}.rs-col.ok{border-color:color-mix(in srgb,var(--ok) 45%,var(--line))}
+.rs-q{border:2px solid var(--line);border-radius:16px;padding:10px 14px;margin:10px 0;break-inside:avoid}
+.rs-qh{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+.rs-skill{font-size:.8rem;font-weight:800;border-radius:999px;padding:2px 10px;background:color-mix(in srgb,var(--lc) 14%,var(--surface));color:color-mix(in srgb,var(--lc) 70%,var(--fg))}
+.rs-pts{margin-left:auto;font-size:.8rem;font-weight:800;border-radius:999px;padding:2px 10px}.rs-pts.wrong{background:color-mix(in srgb,var(--bad) 16%,var(--surface));color:var(--bad)}.rs-pts.part{background:color-mix(in srgb,var(--part) 18%,var(--surface));color:color-mix(in srgb,var(--part) 70%,var(--fg))}
+.rs-qt{line-height:1.5;margin-bottom:8px}.rs-qt .eqn{margin:4px 0}
+.rs-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rs-two>div{border-radius:12px;padding:8px 10px;line-height:1.45}.rs-two h4,.rs-why h4,.rs-how h4{margin:0 0 4px;font-size:.92rem}
+.rs-you{background:color-mix(in srgb,var(--bad) 8%,var(--surface));border:1px solid color-mix(in srgb,var(--bad) 30%,var(--line))}
+.rs-key{background:color-mix(in srgb,var(--ok) 9%,var(--surface));border:1px solid color-mix(in srgb,var(--ok) 35%,var(--line))}
+.rs-two ul,.rs-two ol,.rs-how ol{margin:2px 0;padding-left:20px}.rs-fill{text-decoration:underline}
+.rs-text{white-space:pre-wrap;font-style:italic;margin-bottom:4px}
+.rs-why{margin-top:8px;line-height:1.5}.rs-how{margin-top:8px;background:var(--soft);border-radius:12px;padding:8px 12px;line-height:1.5}.rs-how p{margin:4px 0 0}
+.rs-go{margin-top:8px}.rs-yay{font-weight:800;font-size:1.1rem}
+.rs-next{border:2px dashed var(--line);border-radius:14px;padding:8px 12px;margin-top:10px}.rs-next h3{margin:0 0 4px;font-size:1rem}.rs-next ul{margin:0;padding-left:18px;line-height:1.6}
+@media (max-width:640px){.rs-sum,.rs-two{grid-template-columns:1fr}}
+#rsprintbox{display:none}
+@media print{
+  body.rs-printing>*:not(#rsprintbox){display:none!important}
+  body.rs-printing #rsprintbox{display:block;padding:0 8px;color:#111}
+  body.rs-printing #rsprintbox .revsheet{border:0;margin:0}
+  body.rs-printing #rsprintbox button{display:none}
+  body.rs-printing{background:#fff}
+}
