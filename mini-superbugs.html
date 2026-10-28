@@ -54,12 +54,13 @@ window.CC = {
       ] },
     { letters: ["I", "O"], title: "Plate Lab: Measure the Zones", time: "8 min", goal: "Measure the zone of inhibition for six generations.",
       blocks: [
-        { t: "minisim", title: "Zone of inhibition around the same antibiotic disk (sample data)", how: "Each generation grew from the survivors of the last antibiotic treatment. Tap ▶ Test to measure the clear ring. Record the diameter and describe the bacteria.", measure: "Zone of inhibition", unit: "mm", top: 30, color: "#2b7de9", tol: 0.5, max: 4, label: "plate data",
+        { t: "minisim", title: "Zone of inhibition around the same antibiotic disk (sample data)", how: "Each generation grew from the survivors of the last antibiotic treatment. Tap ▶ Test to measure the clear ring. Record the diameter and describe the bacteria.", scene: "plate", measure: "Zone of inhibition", unit: "mm", top: 30, color: "#2b7de9", tol: 0.5, max: 4, label: "plate data",
           col: { head: "The bacteria are…", opts: ["Sensitive (mostly killed)", "Partly resistant", "Resistant"] },
           conds: [{ k: "g0", name: "Generation 0 (original)", val: 24, pick: 0 }, { k: "g1", name: "Generation 1", val: 21, pick: 0 }, { k: "g2", name: "Generation 2", val: 15, pick: 1 }, { k: "g3", name: "Generation 3", val: 9, pick: 1 }, { k: "g4", name: "Generation 4", val: 4, pick: 2 }, { k: "g5", name: "Generation 5", val: 0, pick: 2 }] }
       ] },
     { letters: ["I", "W"], title: "Analyze + Mini CER", time: "6 min", goal: "Explain how the bacteria became resistant.",
       blocks: [
+        { t: "visual", v: "selection", title: "Picture it: natural selection in a dish", cap: "Blue bacteria are killed by the antibiotic. Red bacteria have a resistance mutation. Watch who is left." },
         { t: "fill", label: "analysis frames", title: "What does the data show?", max: 3,
           items: [
             { parts: ["Over 5 generations, the zone of inhibition got ", B(["bigger", "smaller"], 1), ", which means the antibiotic killed ", B(["more", "fewer"], 1), " bacteria each time."] },
@@ -80,8 +81,9 @@ window.CC = {
 };
 </script>
 <script src="cc-bblab.js?v=7"></script>
+<script src="cc-visuals.js?v=2"></script>
 <script src="cc-protsyn.js?v=3"></script>
-<script src="cc-minisim.js?v=1"></script>
+<script src="cc-minisim.js?v=2"></script>
 <script src="cc-blocks2.js?v=1"></script>
 <script src="hub-config.js?v=3"></script>
 <script src="cc-lesson.js?v=4"></script>

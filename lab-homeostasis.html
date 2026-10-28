@@ -54,6 +54,7 @@ window.CC = {
             ["stimulus", "estímulo", "A change that starts the feedback loop."]],
           table: { cap: "Two pancreas hormones", head: ["Hormone", "Released when blood glucose is…", "What it does"], rows: [
             ["Insulin", "Too HIGH (after eating)", "Cells take in glucose; liver stores it as glycogen → glucose goes DOWN"], ["Glucagon", "Too LOW (exercise, skipping meals)", "Liver breaks down glycogen and releases glucose → glucose goes UP"]] } },
+        { t: "visual", v: "glucose", title: "Picture it: how the pancreas controls blood sugar", cap: "Follow the arrows. High glucose → insulin → glucose goes down. Low glucose → glucagon → glucose goes up." },
         { t: "quiz", label: "warm-up check", title: "Check your understanding", items: [
           { q: "Which is the best example of homeostasis?", opts: ["Growing taller over a year", "Sweating to cool down on a hot day", "Learning to ride a bike", "Catching a cold"], a: 1, why: "Sweating cools the body back toward its set point temperature, which keeps conditions stable." },
           { q: "Right after you eat a large meal, which hormone does the pancreas release?", opts: ["Glucagon", "Adrenaline", "Insulin", "Melatonin"], a: 2, why: "Blood glucose rises after eating, so the pancreas releases insulin to bring it back down." },
@@ -71,6 +72,7 @@ window.CC = {
             <li><b>Effector:</b> carries out the response. <i>The heater.</i></li>
             <li><b>Response:</b> what happens. <i>Warm air brings the room back to 70 °F, and the heater shuts off.</i></li></ol>
           <p style="margin-bottom:0">In your body, the control center is often the <b>brain</b> (the hypothalamus) or a gland like the <b>pancreas</b>. Effectors are usually <b>muscles</b>, <b>glands</b>, or organs like the <b>liver</b>.</p></div>` },
+        { t: "visual", v: "loop", title: "The five parts of a feedback loop", cap: "Every negative feedback loop goes around this circle until conditions return to the set point." },
         { t: "sort", label: "loop parts sort", title: "Blood sugar after lunch: sort each event into a part of the loop", zones: ["Stimulus", "Sensor", "Control center", "Effector", "Response"], colors: ["#d0453a", "#e08a00", "#8a54e0", "#2b7de9", "#1aa36f"],
           tiles: [["Blood glucose rises after a big lunch.", 0], ["Beta cells in the pancreas detect the high glucose.", 1], ["The pancreas “decides” to release insulin.", 2], ["Liver and muscle cells take in glucose and store it.", 3], ["Blood glucose falls back to about 90 mg/dL.", 4]],
           why: "Stimulus (change) → sensor (detects) → control center (decides) → effector (acts) → response (back toward the set point). In blood sugar, the pancreas is both the sensor and the control center." },
@@ -107,6 +109,7 @@ window.CC = {
     { letters: ["O", "R"], title: "Body Temperature Loop", time: "6 min", goal: "Sort how your body cools down and warms up.",
       blocks: [
         { t: "text", html: `<p>Your <b>hypothalamus</b> (a small part of the brain) is the control center for body temperature. Sensors in your skin and blood send it information. When you are too hot or too cold, it sends signals to <b>effectors</b>: sweat glands, blood vessels, and muscles.</p>` },
+        { t: "visual", v: "temp", title: "Picture it: cooling down vs. warming up", cap: "The hypothalamus sends signals to different effectors depending on whether you are too hot or too cold." },
         { t: "sort", label: "temperature sort", title: "Too hot or too cold? Sort each response.", zones: ["Too HOT: cools the body down", "Too COLD: warms the body up"], colors: ["#d0453a", "#2b7de9"],
           tiles: [["Sweat glands release sweat, which evaporates.", 0], ["Muscles shiver.", 1], ["Blood vessels near the skin widen (you look flushed).", 0], ["Blood vessels near the skin narrow (you look pale).", 1], ["Goosebumps: hairs stand up.", 1], ["You breathe faster and feel tired, so you move less.", 0]],
           why: "When hot, the body loses heat (sweat, wider vessels). When cold, it makes heat (shivering) and saves heat (narrow vessels)." },
@@ -117,6 +120,7 @@ window.CC = {
     { letters: ["W", "C"], title: "Negative vs. Positive Feedback + CER", time: "6 min", goal: "Compare the two types of feedback, then write a CER.",
       blocks: [
         { t: "text", html: `<p><b>Positive feedback</b> makes a change <i>bigger and bigger</i> until an event is finished. During childbirth, the baby pushes on the cervix, which causes the release of the hormone <b>oxytocin</b>, which causes stronger contractions, which push harder, and so on until the baby is born. Blood clotting is another example: platelets that stick to a cut release chemicals that attract more platelets until the cut is sealed.</p>` },
+        { t: "visual", v: "posneg", title: "Negative vs. positive feedback on a graph", cap: "Negative feedback brings a value back. Positive feedback pushes it farther until an event is finished." },
         { t: "sort", label: "feedback type sort", title: "Negative or positive feedback?", zones: ["Negative feedback (reverses the change)", "Positive feedback (makes the change bigger)"], colors: ["#2b7de9", "#e08a00"],
           tiles: [["Insulin lowers high blood glucose.", 0], ["Oxytocin causes stronger and stronger contractions during childbirth.", 1], ["Shivering warms you when you are cold.", 0], ["Platelets attract more platelets until a cut is sealed.", 1], ["Glucagon raises low blood glucose.", 0], ["Sweating cools you when you are hot.", 0]],
           why: "Most homeostasis uses negative feedback. Positive feedback is used for events that need to be finished quickly, like birth and clotting." },
@@ -141,8 +145,9 @@ window.CC = {
 };
 </script>
 <script src="cc-bblab.js?v=7"></script>
+<script src="cc-visuals.js?v=2"></script>
 <script src="cc-protsyn.js?v=3"></script>
-<script src="cc-homeo.js?v=1"></script>
+<script src="cc-homeo.js?v=3"></script>
 <script src="cc-blocks2.js?v=1"></script>
 <script src="hub-config.js?v=3"></script>
 <script src="cc-lesson.js?v=4"></script>

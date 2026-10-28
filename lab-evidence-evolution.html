@@ -74,6 +74,7 @@ window.CC = {
     { letters: ["O", "R"], title: "Comparative Anatomy", time: "8 min", goal: "Sort structures as homologous, analogous, or vestigial.",
       blocks: [
         { t: "text", html: `<p>The front limbs of a <b>human</b>, <b>cat</b>, <b>whale</b>, and <b>bat</b> look different and do different jobs (grab, walk, swim, fly). But all four have the same set of bones in the same order: one upper arm bone (humerus), two forearm bones (radius and ulna), wrist bones, and finger bones. The best explanation is that they inherited this pattern from a common ancestor.</p>` },
+        { t: "visual", v: "forelimbs", title: "Picture it: the same bones in four forelimbs", cap: "Each color is the same bone in every animal. Find the red upper arm bone in all four." },
         { t: "sort", label: "anatomy sort", title: "Homologous, analogous, or vestigial?", zones: ["Homologous (same structure, common ancestor)", "Analogous (same job, different structure)", "Vestigial (reduced, little or no use)"], colors: ["#8a54e0", "#e08a00", "#1aa36f"],
           tiles: [["Human arm and whale flipper", 0], ["Bat wing and cat front leg", 0], ["Bird wing and butterfly wing", 1], ["Shark fin and dolphin flipper (shape for swimming)", 1], ["Hip bones inside a whale", 2], ["Tiny leg bones inside some snakes (like pythons)", 2], ["Human tailbone (coccyx)", 2]],
           why: "Homologous structures share bones because of common ancestry. Analogous structures look alike because of similar environments, not shared ancestry. Vestigial structures are leftovers from ancestors." },
@@ -82,6 +83,7 @@ window.CC = {
     { letters: ["R", "I"], title: "Embryo Evidence", time: "4 min", goal: "Use embryos as another line of evidence.",
       blocks: [
         { t: "text", html: `<p>Early <b>embryos</b> of fish, chickens, pigs, and humans look surprisingly similar. All of them have a <b>tail</b> and small folds in the neck called <b>pharyngeal pouches</b> at an early stage. In fish, the pouches develop into gills. In humans, they develop into parts of the jaw, ear, and throat, and the tail shrinks to the tailbone. These shared stages suggest a common ancestor. (As embryos develop, they become more and more different from each other.)</p>` },
+        { t: "embryos", title: "Compare the embryos" },
         { t: "quiz", label: "embryo check", title: "Embryo check", items: [
           { q: "Human embryos have a tail early on. What does this suggest?", opts: ["Humans will grow tails as adults", "Humans share a common ancestor with other animals that have tails", "Embryos are fish", "Tails are useful for human babies"], a: 1, why: "Shared developmental features are evidence of shared ancestry." },
           { q: "In humans, the pharyngeal pouches develop into…", opts: ["Gills", "Parts of the jaw, ear, and throat", "Lungs only", "Nothing at all"], a: 1, why: "The same early structure develops differently in different species: gills in fish, ear and throat parts in humans." }] }
@@ -90,6 +92,7 @@ window.CC = {
       blocks: [
         { t: "text", html: `<p><b>Cytochrome c</b> is a protein used in cellular respiration, so almost every living thing has it. Its amino acid sequence is coded by DNA. When two species split from a common ancestor, mutations slowly build up in each line. So the <b>fewer differences</b> two species have, the <b>more recently</b> they shared a common ancestor.</p>` },
         { t: "seqcompare", max: 3, label: "protein comparison" },
+        { t: "visual", v: "tree", title: "Picture it: a family tree from your protein data", cap: "Species with fewer differences from humans branch off closer to the human line." },
         { t: "fill", label: "protein frames", title: "What do the proteins show?", max: 3,
           items: [
             { parts: ["The species most closely related to humans is the ", B(["yeast", "tuna", "chimpanzee"], 2), " because it has ", B(["the fewest", "the most"], 0), " differences."] },
@@ -121,8 +124,9 @@ window.CC = {
 };
 </script>
 <script src="cc-bblab.js?v=7"></script>
+<script src="cc-visuals.js?v=2"></script>
 <script src="cc-protsyn.js?v=3"></script>
-<script src="cc-evo.js?v=1"></script>
+<script src="cc-evo.js?v=2"></script>
 <script src="cc-blocks2.js?v=1"></script>
 <script src="hub-config.js?v=3"></script>
 <script src="cc-lesson.js?v=4"></script>

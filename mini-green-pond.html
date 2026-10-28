@@ -54,15 +54,16 @@ window.CC = {
       ] },
     { letters: ["I", "O"], title: "Pond Oxygen Lab", time: "8 min", goal: "Measure dissolved oxygen at dawn in five ponds.",
       blocks: [
-        { t: "minisim", title: "Dissolved oxygen at dawn, two weeks after fertilizing (sample data)", how: "Each pond got a different amount of fertilizer runoff. Tap ▶ Test to lower the oxygen probe at dawn. Record the DO and whether most fish can survive.", measure: "Dissolved oxygen", unit: "mg/L", top: 10, color: "#1aa36f", tol: 0.05, dec: 1, max: 4, label: "pond data",
+        { t: "minisim", title: "Dissolved oxygen at dawn, two weeks after fertilizing (sample data)", how: "Each pond got a different amount of fertilizer runoff. Tap ▶ Test to lower the oxygen probe at dawn. Record the DO and whether most fish can survive.", scene: "pond", measure: "Dissolved oxygen", unit: "mg/L", top: 10, color: "#1aa36f", tol: 0.05, dec: 1, max: 4, label: "pond data",
           col: { head: "Can most fish survive?", opts: ["Yes (healthy)", "Stressed", "No (dead zone)"] },
-          conds: [{ k: "p0", name: "Pond A: no runoff", val: 8.5, pick: 0 }, { k: "p1", name: "Pond B: low runoff", val: 7.2, pick: 0 }, { k: "p2", name: "Pond C: medium runoff", val: 4.6, pick: 1 }, { k: "p3", name: "Pond D: high runoff", val: 2.4, pick: 1 }, { k: "p4", name: "Pond E: very high runoff", val: 0.8, pick: 2 }] },
+          conds: [{ k: "p0", name: "Pond A: no runoff", val: 8.5, pick: 0, algae: 0, fish: 4 }, { k: "p1", name: "Pond B: low runoff", val: 7.2, pick: 0, algae: 0.25, fish: 4 }, { k: "p2", name: "Pond C: medium runoff", val: 4.6, pick: 1, algae: 0.5, fish: 3 }, { k: "p3", name: "Pond D: high runoff", val: 2.4, pick: 1, algae: 0.75, fish: 2 }, { k: "p4", name: "Pond E: very high runoff", val: 0.8, pick: 2, algae: 1, fish: 0 }] },
         { t: "sort", label: "sequence sort", title: "Put the dead zone story in order (first → last)", zones: ["1st", "2nd", "3rd", "4th", "5th"], colors: ["#1aa36f", "#2b7de9", "#8a54e0", "#e08a00", "#d0453a"],
           tiles: [["Rain washes fertilizer into the pond.", 0], ["Extra nutrients cause an algae bloom.", 1], ["Algae block sunlight, and many algae die.", 2], ["Decomposers break down the dead algae, using up oxygen.", 3], ["Oxygen drops so low that fish die.", 4]],
           why: "Nutrients → bloom → die-off → decomposers respire → low oxygen." }
       ] },
     { letters: ["I", "W"], title: "Analyze + Mini CER", time: "6 min", goal: "Explain why the green pond lost its fish.",
       blocks: [
+        { t: "visual", v: "eutro", title: "Picture it: how a dead zone forms", cap: "Each panel leads to the next. Which panels involve photosynthesis? Which involve cellular respiration?" },
         { t: "fill", label: "analysis frames", title: "What does the data show?", max: 3,
           items: [
             { parts: ["As fertilizer runoff increased, dissolved oxygen ", B(["increased", "decreased"], 1), "."] },
@@ -83,8 +84,9 @@ window.CC = {
 };
 </script>
 <script src="cc-bblab.js?v=7"></script>
+<script src="cc-visuals.js?v=2"></script>
 <script src="cc-protsyn.js?v=3"></script>
-<script src="cc-minisim.js?v=1"></script>
+<script src="cc-minisim.js?v=2"></script>
 <script src="cc-blocks2.js?v=1"></script>
 <script src="hub-config.js?v=3"></script>
 <script src="cc-lesson.js?v=4"></script>

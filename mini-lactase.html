@@ -42,6 +42,7 @@ window.CC = {
           "The instructions for lactase are in a gene called <b>LCT</b>. In most people, this gene is turned down after early childhood, so they make less lactase as adults. Undigested lactose is broken down by bacteria in the large intestine, which can cause gas and stomach pain. This is <b>lactose intolerance</b>."],
           vocab: [["lactose", "lactosa", "The disaccharide sugar in milk."], ["lactase", "lactasa", "The enzyme that splits lactose into glucose and galactose."], ["active site", "sitio activo", "The part of an enzyme where its molecule fits."], ["denature", "desnaturalizar", "To change an enzyme’s shape so it stops working."], ["lactase persistence", "persistencia de la lactasa", "Making lactase all through adulthood."]],
           table: { cap: "Enzyme names often end in “-ase”", head: ["Molecule", "Enzyme"], rows: [["Lactose", "Lactase"], ["Sucrose", "Sucrase"], ["Maltose", "Maltase"], ["Proteins", "Protease"]] } },
+        { t: "visual", v: "lactase", title: "Picture it: lactase is like a lock and key", cap: "The lactose fits the enzyme’s active site and is split. If the enzyme’s shape changes, the lactose no longer fits." },
         { t: "quiz", label: "warm-up check", title: "Quick check", items: [
           { q: "What does lactase do?", opts: ["Makes lactose", "Splits lactose into glucose and galactose", "Turns milk into protein", "Adds sugar to milk"], a: 1, why: "Lactase breaks the bond between the two sugars in lactose." },
           { q: "Why can a test strip that detects GLUCOSE show whether lactase worked?", opts: ["Milk is made of glucose", "When lactase splits lactose, glucose is released", "Lactase is glucose", "Glucose makes milk white"], a: 1, why: "Plain milk has little free glucose. Glucose only appears if lactose is split." }] }
@@ -54,7 +55,7 @@ window.CC = {
       ] },
     { letters: ["I", "O"], title: "Enzyme Lab: Test the Milk", time: "8 min", goal: "Test six tubes and record the glucose reading.",
       blocks: [
-        { t: "minisim", title: "Glucose test strip after 10 minutes (sample data)", how: "Each tube has the same amount of milk. Tap ▶ Test to dip a glucose strip. Record the reading and the reason for the result.", measure: "Glucose", unit: "mg/dL", top: 120, color: "#8a54e0", tol: 0.5, max: 4, label: "enzyme data",
+        { t: "minisim", title: "Glucose test strip after 10 minutes (sample data)", how: "Each tube has the same amount of milk. Tap ▶ Test to dip a glucose strip. Record the reading and the reason for the result.", scene: "strip", measure: "Glucose", unit: "mg/dL", top: 120, color: "#8a54e0", tol: 0.5, max: 4, label: "enzyme data",
           col: { head: "Reason", opts: ["Lactase split the lactose", "No lactase was added", "Cold slowed the enzyme", "Boiling denatured the enzyme", "Strong acid changed the enzyme’s shape", "The lactose was already split at the factory"] },
           conds: [
             { k: "m", name: "Milk only (37 °C)", val: 0, pick: 1 }, { k: "ml", name: "Milk + lactase (37 °C)", val: 95, pick: 0 }, { k: "mc", name: "Milk + lactase (4 °C)", val: 22, pick: 2 },
@@ -82,8 +83,9 @@ window.CC = {
 };
 </script>
 <script src="cc-bblab.js?v=7"></script>
+<script src="cc-visuals.js?v=2"></script>
 <script src="cc-protsyn.js?v=3"></script>
-<script src="cc-minisim.js?v=1"></script>
+<script src="cc-minisim.js?v=2"></script>
 <script src="cc-blocks2.js?v=1"></script>
 <script src="hub-config.js?v=3"></script>
 <script src="cc-lesson.js?v=4"></script>

@@ -41,6 +41,7 @@ window.CC = {
           "During respiration and fermentation, yeast breaks down glucose to release energy and gives off <b>carbon dioxide (CO₂)</b> gas. More CO₂ means more sugar was broken down."],
           vocab: [["monosaccharide", "monosacárido", "A single sugar, like glucose."], ["disaccharide", "disacárido", "Two sugars joined, like sucrose or lactose."], ["polysaccharide", "polisacárido", "A long chain of sugars, like starch."], ["enzyme", "enzima", "A protein that speeds up a reaction; it fits specific molecules."], ["denature", "desnaturalizar", "When heat or acid changes an enzyme’s shape so it stops working."], ["cellular respiration", "respiración celular", "Breaking down glucose to release energy; makes CO₂."]],
           table: { cap: "Carbohydrates in this lab", head: ["Food", "Type", "Made of"], rows: [["Glucose", "Monosaccharide", "1 sugar"], ["Sucrose (table sugar)", "Disaccharide", "Glucose + fructose"], ["Lactose (milk sugar)", "Disaccharide", "Glucose + galactose"], ["Starch", "Polysaccharide", "Hundreds of glucose units"]] } },
+        { t: "visual", v: "carbs", title: "Picture it: the carbohydrates in this lab", cap: "One ring = one sugar. Yeast can only use single sugars, or sugars it has an enzyme to split." },
         { t: "quiz", label: "warm-up check", title: "Quick check", items: [
           { q: "What gas fills the balloon?", opts: ["Oxygen", "Carbon dioxide", "Nitrogen", "Helium"], a: 1, why: "Yeast releases CO₂ as it breaks down sugar." },
           { q: "Why must starch be broken down before yeast can use it?", opts: ["Starch is a protein", "Cells use single sugars for respiration, and starch is a long chain", "Starch is already glucose", "Starch is a gas"], a: 1, why: "Only single sugars can enter respiration. Enzymes must split big carbohydrates first." }] }
@@ -53,11 +54,11 @@ window.CC = {
       ] },
     { letters: ["I", "O"], title: "Balloon Lab", time: "8 min", goal: "Test each flask and record how much CO₂ the yeast made.",
       blocks: [
-        { t: "minisim", title: "Yeast flasks: CO₂ after 30 minutes (sample data)", how: "Each flask has the same amount of yeast and water. Tap ▶ Test to measure the CO₂ collected in the balloon. Record the volume and the main reason for the result.", measure: "CO₂ collected", unit: "mL", top: 60, color: "#e08a00", tol: 0.5, max: 4, label: "balloon data",
+        { t: "minisim", title: "Yeast flasks: CO₂ after 30 minutes (sample data)", how: "Each flask has the same amount of yeast and water. Tap ▶ Test to measure the CO₂ collected in the balloon. Record the volume and the main reason for the result.", scene: "balloon", measure: "CO₂ collected", unit: "mL", top: 60, color: "#e08a00", tol: 0.5, max: 4, label: "balloon data",
           col: { head: "Main reason", opts: ["Yeast can use this sugar", "Yeast lacks the enzyme to break it down", "Too cold: enzymes slow down", "Too hot: yeast killed, enzymes denatured", "Control: no food"] },
           conds: [
-            { k: "w", name: "Water only (40 °C)", val: 0, pick: 4 }, { k: "glu", name: "Glucose (40 °C)", val: 48, pick: 0 }, { k: "suc", name: "Sucrose (40 °C)", val: 44, pick: 0 },
-            { k: "sta", name: "Starch (40 °C)", val: 5, pick: 1 }, { k: "lac", name: "Lactose (40 °C)", val: 1, pick: 1 }, { k: "cold", name: "Glucose (4 °C, fridge)", val: 9, pick: 2 }, { k: "hot", name: "Glucose (70 °C)", val: 0, pick: 3 }] },
+            { k: "w", name: "Water only (40 °C)", val: 0, pick: 4, liquid: "#dcebf5" }, { k: "glu", name: "Glucose (40 °C)", val: 48, pick: 0 }, { k: "suc", name: "Sucrose (40 °C)", val: 44, pick: 0 },
+            { k: "sta", name: "Starch (40 °C)", val: 5, pick: 1 }, { k: "lac", name: "Lactose (40 °C)", val: 1, pick: 1 }, { k: "cold", name: "Glucose (4 °C, fridge)", val: 9, pick: 2, liquid: "#cfe3f7" }, { k: "hot", name: "Glucose (70 °C)", val: 0, pick: 3, liquid: "#f7c9a8" }] },
         { t: "fill", label: "variables frames", title: "Name the variables", max: 2,
           items: [{ parts: ["The independent variables are the ", B(["amount of CO₂", "type of carbohydrate and the temperature"], 1), ". The dependent variable is the ", B(["amount of CO₂", "amount of yeast"], 0), ". The water-only flask is the ", B(["control", "hypothesis"], 0), "."] }],
           why: "We change the food and temperature, and we measure the CO₂. The water-only flask shows what happens with no food." }
@@ -84,8 +85,9 @@ window.CC = {
 };
 </script>
 <script src="cc-bblab.js?v=7"></script>
+<script src="cc-visuals.js?v=2"></script>
 <script src="cc-protsyn.js?v=3"></script>
-<script src="cc-minisim.js?v=1"></script>
+<script src="cc-minisim.js?v=2"></script>
 <script src="cc-blocks2.js?v=1"></script>
 <script src="hub-config.js?v=3"></script>
 <script src="cc-lesson.js?v=4"></script>

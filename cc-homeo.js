@@ -66,6 +66,11 @@
       if (s.shot) g += `<text x="${X(0) + 4}" y="${P.t + 12}" font-size="10" fill="#2b7de9" font-weight="700">💉 insulin shot at 0 h</text>`; }
     return `<svg class="gs-plot" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Graph of blood glucose over 4 hours">${g}</svg>`;
   }
+  /* blood-vessel view: one dot ≈ 10 mg/dL of glucose */
+  function vessel(gl) { const n = Math.max(0, Math.round(gl / 10)); let d = "";
+    for (let i = 0; i < n; i++) { const x = 16 + (i * 53) % 228, y = 22 + (i * 29) % 34; d += `<polygon points="${x},${y - 5} ${x + 5},${y - 2} ${x + 5},${y + 3} ${x},${y + 6} ${x - 5},${y + 3} ${x - 5},${y - 2}" fill="#f2b705" stroke="#a07c00" stroke-width="1"/>`; }
+    for (let i = 0; i < 5; i++) d += `<ellipse cx="${30 + i * 50}" cy="${40 + (i % 2) * 8}" rx="9" ry="6" fill="#d0453a" opacity=".55"/>`;
+    return `<svg viewBox="0 0 260 78" style="width:100%;height:auto;display:block;background:#fff;border:2px solid var(--line);border-radius:12px" role="img" aria-label="Blood vessel with ${n} glucose molecules"><rect x="4" y="10" width="252" height="52" rx="26" fill="#fde3e0" stroke="#d0453a" stroke-width="2"/>${d}<text x="130" y="74" font-size="9" text-anchor="middle" fill="#333" font-weight="700">⬢ = glucose (glucosa), about 10 mg/dL each</text></svg>`; }
   function twoTap(btn, fn) { btn.onclick = () => { if (!btn.dataset.sure) { btn.dataset.sure = "1"; const t = btn.textContent; btn.textContent = "⚠️ Tap again to reset"; setTimeout(() => { if (btn.isConnected) { delete btn.dataset.sure; btn.textContent = t; } }, 4000); return; } fn(); }; }
 
   BT.glucosim = {
@@ -77,6 +82,7 @@
         <div class="gs-sc">${SC.map(x => `<button class="${st.on === x.k ? "on" : ""} ${ran[x.k] ? "done" : ""}" data-gsc="${x.k}" ${st.going ? "disabled" : ""}><b>${x.name}</b><span class="mu">${x.desc}</span></button>`).join("")}</div>
         <div class="gs-main"><div>${plot(s, tt)}</div><div class="gs-body">
           ${s ? `<button class="btn" data-gsrun ${ran[s.k] || st.going ? "disabled" : ""}>${ran[s.k] ? "✅ 4 hours complete" : st.going ? "Running…" : "▶ Run 4 hours"}</button>` : `<p class="mu">👆 Choose a scenario to start.</p>`}
+          <div data-gsv>${vessel(s ? (ran[s.k] ? read(s, at) : s.g(tt)) : 90)}</div>
           <div class="gs-meter"><small>GLUCOSE METER${s && ran[s.k] ? ` · at ${at} h` : ""}</small><span data-gsm>${meter == null ? "--- " : meter} mg/dL</span></div>
           ${s && ran[s.k] ? `<div class="gs-times"><span class="mu small" style="width:100%">Read the meter at:</span>${TIMES.map(t => `<button class="${at === t ? "on" : ""}" data-gst="${t}">${t} h</button>`).join("")}</div>` : ""}
           <div class="gs-hb"><span>🟦 Insulin</span><div><i data-gsi style="width:${s && tt ? ins(s, Math.min(tt, ran[s.k] ? at : tt)) : 3}%;background:#2b7de9"></i></div><span>🟧 Glucagon</span><div><i data-gsg style="width:${s && tt ? glu(s, Math.min(tt, ran[s.k] ? at : tt)) : 3}%;background:#e08a00"></i></div></div>
@@ -110,6 +116,7 @@
           const m = $("[data-gsm]", root); if (m) m.textContent = Math.round(s.g(tt)) + " mg/dL";
           const bi = $("[data-gsi]", root); if (bi) bi.style.width = ins(s, tt) + "%";
           const bg = $("[data-gsg]", root); if (bg) bg.style.width = glu(s, tt) + "%";
+          const vv = $("[data-gsv]", root); if (vv) vv.innerHTML = vessel(s.g(tt));
           if (tt < TMAX) requestAnimationFrame(step); else { (st.ran = st.ran || {})[s.k] = true; st.going = false; window.__gsRunning = false; st.at = 0; save(); redraw(); }
         };
         requestAnimationFrame(step);
